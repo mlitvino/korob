@@ -15,7 +15,7 @@ export default function Button({
   size = 'medium',
   onPress,
   style,
-  disabled = false
+  disabled = false,
 }: Props) {
 
   const sizeStyles = {
@@ -32,7 +32,7 @@ export default function Button({
 
   return (
     <Pressable
-      style={({ pressed }) => [
+      style={() => [
         styles.buttonBase,
         sizeStyles[size],
         style,
@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-})
+});

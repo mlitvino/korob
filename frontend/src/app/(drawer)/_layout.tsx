@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <Drawer
       screenOptions={{
-        drawerStyle: styles.container
+        drawerStyle: styles.container,
       }}
     >
       <Drawer.Screen
@@ -24,12 +24,12 @@ export default function Layout() {
 const styles = StyleSheet.create({
   container: {
     width: 250,
-    backgroundColor: '#222025'
+    backgroundColor: '#222025',
   },
   header: {
-    backgroundColor: '#413d46'
+    backgroundColor: '#413d46',
   },
   headerTitle: {
     color: '#fff',
   },
-})
+});
