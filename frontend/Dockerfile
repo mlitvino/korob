@@ -11,7 +11,7 @@ RUN yarn install
 
 COPY . .
 
-EXPOSE 19006 8081
+EXPOSE 8081
 
 CMD ["npm", "run", "start"]
 
