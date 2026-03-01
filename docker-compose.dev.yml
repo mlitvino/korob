@@ -1,0 +1,28 @@
+include:
+  - docker-compose.yml
+
+services:
+
+  frontend:
+    build:
+      target: development
+    volumes:
+      - ./frontend/package.json:/app/package.json:ro
+      - ./frontend/tsconfig.json:/app/tsconfig.json:ro
+      - ./frontend/app.json:/app/app.json:ro
+      - ./frontend/eslint.config.js:/app/eslint.config.js:ro
+      - ./frontend/src:/app/src:rw
+    ports:
+      - "8081:8081"  # Metro bundler
+      - "19006:19006"  # Expo web dev server
+
+  # === Infrastructure ===
+
+  nginx:
+    build:
+      target: development
+    ports:
+      - "8080:8080"
+
+volumes:
+  node_modules_dev:

@@ -1,0 +1,39 @@
+services:
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    env_file:
+      - ./.env
+    networks:
+      - sef_net
+
+  # === Infrastructure ===
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    env_file:
+      - ./.env
+    depends_on:
+      - frontend
+    networks:
+      - sef_net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O /dev/null ${FRONTEND_URL} || exit 1"]
+      interval: 5s
+      timeout: 2s
+      start_period: 120s
+      retries: 1
+
+  healthchecker:
+    image: alpine:3.23.3
+    container_name: healthchecker
+    depends_on:
+      nginx:
+        condition: service_healthy
+    networks:
+      - sef_net
+
+networks:
+  sef_net:

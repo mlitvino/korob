@@ -13,7 +13,7 @@ COPY . .
 
 EXPOSE 19006 8081
 
-CMD ["npm", "run", "web"]
+CMD ["npm", "run", "start"]
 
 # ============================================
 # Production Stage
