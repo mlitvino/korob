@@ -5,6 +5,7 @@ COPY conf/dev.conf  /etc/nginx/dev.conf
 
 COPY init.sh /init.sh
 RUN chmod +x /init.sh
+RUN apk add --no-cache wget
 
 EXPOSE 80 443
 
