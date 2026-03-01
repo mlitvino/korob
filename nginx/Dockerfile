@@ -1,5 +1,6 @@
 FROM nginx:1.27.3-alpine
 
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY conf/prod.conf /etc/nginx/prod.conf
 COPY conf/dev.conf  /etc/nginx/dev.conf
 
