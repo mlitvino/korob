@@ -1,12 +1,12 @@
 import { Text, View, StyleSheet } from 'react-native';
-import { useState } from 'react';
 
 import { router } from 'expo-router';
 
 import Button from '@/components/Button';
+import { useBalance } from '@/contexts/BalanceContext';
 
 export default function Index() {
-  const [balance, setBalance] = useState(0);
+  const balance = useBalance();
 
   const addIncome = () => {
     router.push('/transaction-modal?type=income');
