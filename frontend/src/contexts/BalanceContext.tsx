@@ -31,11 +31,19 @@ export function BalanceProvider({ children }: BalanceProviderProps) {
 };
 
 export function useBalance() {
-  return useContext(BalanceContext);
+  const ctx = useContext(BalanceContext);
+  if (ctx === undefined) {
+    throw new Error('Error in BalanceContext.tsx: BalanceContext is undefined');
+  }
+  return ctx;
 }
 
 export function useBalanceDispatch() {
-  return useContext(BalanceDispatchContext);
+  const ctx = useContext(BalanceDispatchContext);
+  if (!ctx === undefined) {
+    throw new Error('Error in BalanceContext.tsx: BalanceDispatchContext is undefined');
+  }
+  return ctx;
 }
 
 function balanceReducer(balance: number, action: BalanceAction) {
