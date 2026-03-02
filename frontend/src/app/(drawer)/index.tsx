@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     alignItems: 'center',
-    padding: 3,
+    padding: 15,
   },
   balanceTitle: {
     color: '#fff',
