@@ -11,11 +11,6 @@ export default function TransactionModal() {
         headerStyle: styles.header,
         headerTitleStyle: styles.headerTitle,
       }}/>
-      <View style={styles.container}>
-        <Link href="/" style={styles.button}>
-          <Text>Go back to Home screen from modal</Text>
-        </Link>
-      </View>
 
       {type === 'income' && (
         <View style={styles.container}>
@@ -32,6 +27,7 @@ export default function TransactionModal() {
           </Link>
         </View>
       )}
+
     </>
   );
 }
