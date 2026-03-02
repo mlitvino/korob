@@ -13,22 +13,25 @@ export default function TransactionModal() {
       }}/>
       <View style={styles.container}>
         <Link href="/" style={styles.button}>
-          Go back to Home screen from modal
+          <Text>Go back to Home screen from modal</Text>
         </Link>
       </View>
-      {type === 'income' &&
+
+      {type === 'income' && (
         <View style={styles.container}>
           <Link href="/" style={styles.button}>
             <Text>Income screen. Go back</Text>
           </Link>
         </View>
-      } : {type === 'expense' &&
+      )}
+
+      {type === 'expense' && (
         <View style={styles.container}>
           <Link href="/" style={styles.button}>
             <Text>Expense screen. Go back</Text>
           </Link>
         </View>
-      }
+      )}
     </>
   );
 }
