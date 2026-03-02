@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { setBackgroundColorAsync } from 'expo-system-ui';
+import { AppProviders } from '@/context/AppProviders';
 
 export default function RootLayout() {
   useEffect(() => {
@@ -9,9 +10,11 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <Stack>
-      <Stack.Screen name={'(drawer)'} options={{ headerShown: false }}  />
-      <Stack.Screen name={'transaction-modal'} options={{ presentation: 'modal' }}  />
-    </Stack>
+    <AppProviders>
+      <Stack>
+        <Stack.Screen name={'(drawer)'} options={{ headerShown: false }}  />
+        <Stack.Screen name={'transaction-modal'} options={{ presentation: 'modal' }}  />
+      </Stack>
+    </AppProviders>
   );
 }
