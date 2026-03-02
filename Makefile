@@ -37,3 +37,6 @@ log-%:
 
 log-nginx:
 log-frontend:
+
+ps:
+	docker compose ps
