@@ -6,6 +6,9 @@ export default function Layout() {
     <Drawer
       screenOptions={{
         drawerStyle: styles.container,
+        drawerLabelStyle: styles.drawerLabel,
+        headerStyle: styles.header,
+        headerTitleStyle: styles.headerTitle,
       }}
     >
       <Drawer.Screen
@@ -13,8 +16,13 @@ export default function Layout() {
         options={{
           title: 'overview',
           drawerLabel: 'Home',
-          headerStyle: styles.header,
-          headerTitleStyle: styles.headerTitle,
+        }}
+      />
+      <Drawer.Screen
+        name={'transactions'}
+        options={{
+          title: 'Transactions',
+          drawerLabel: 'Transactions',
         }}
       />
     </Drawer>
@@ -32,4 +40,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: '#fff',
   },
+  drawerLabel: {
+    color: '#fff',
+  }
 });
