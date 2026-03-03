@@ -19,12 +19,12 @@ export default function Index() {
   return (
     <View style={styles.screen}>
       <View style={styles.buttonGroupContainer}>
-        <Button label={'minus'} onPress={addExpense} />
+        <Button label={'plus'} onPress={addIncome} />
         <View style={styles.balanceGroupContainer} >
           <Text style={styles.balanceTitle}>Balance:</Text>
           <Text style={styles.balance}>{balance}</Text>
         </View>
-        <Button label={'plus'} onPress={addIncome} />
+        <Button label={'minus'} onPress={addExpense} />
       </View>
     </View>
   );
