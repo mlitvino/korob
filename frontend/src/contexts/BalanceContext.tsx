@@ -40,7 +40,7 @@ export function useBalance() {
 
 export function useBalanceDispatch() {
   const ctx = useContext(BalanceDispatchContext);
-  if (!ctx === undefined) {
+  if (ctx === undefined) {
     throw new Error('Error in BalanceContext.tsx: BalanceDispatchContext is undefined');
   }
   return ctx;
@@ -55,8 +55,7 @@ function balanceReducer(balance: number, action: BalanceAction) {
       return balance - action.amount;
     };
     default: {
-      console.warn('WARN: balanceReducer unknwon action.type');
-      return balance;
+      throw new Error('Error in BalanceContext.tsx: balanceReducer unknwon action.type');
     }
   }
 }
