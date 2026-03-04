@@ -53,7 +53,6 @@ export default function Button({
 }
 
 const styles = StyleSheet.create({
-  // Base styles
   buttonBase: {
     borderRadius: 100,
     alignItems: 'center',
@@ -66,7 +65,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // Size variants (fixed dimensions for perfect circles)
   buttonSmall: {
     width: 60,
     height: 60,
