@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   Dispatch,
 } from 'react';
-import { randomUUID } from 'crypto';
+import uuid from 'react-native-uuid';
 
 import type { Transaction } from '@/types/Transaction';
 
@@ -58,7 +58,7 @@ function transactionReducer(transactions: TransactionState, action: TransactionA
     case 'add': {
       const newTransaction: Transaction = {
         ...action.transaction,
-        id: randomUUID(),
+        id: uuid.v4(),
       };
 
       return [
