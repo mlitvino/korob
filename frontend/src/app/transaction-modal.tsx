@@ -7,14 +7,14 @@ import TransactionForm from '@/components/TransactionForm';
 
 export default function TransactionModal() {
   const { type } = useLocalSearchParams<{ type: 'income' | 'expense' }>();
-  const dispatch = useBalanceDispatch();
+  const balanceDispatch = useBalanceDispatch();
 
   if (type !== 'income' && type !== 'expense') {
     throw new Error('Error in transaction-modal.tsx: type is invalid');
   }
 
   const handleSubmit = (amount: number) => {
-    dispatch({ type, amount });
+    balanceDispatch({ type, amount });
     router.back();
   };
 
