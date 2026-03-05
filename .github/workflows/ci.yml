@@ -14,9 +14,6 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
 
     steps:
       - name: Checkout code
@@ -30,7 +27,10 @@ jobs:
           cache-dependency-path: frontend/yarn.lock
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: make ci
+
+      - name: Build docker containers
+        run: make build
 
       - name: Run tests
-        run: yarn test
+        run: make test

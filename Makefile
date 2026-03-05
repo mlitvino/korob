@@ -13,6 +13,12 @@ down:
 
 restart: down dev
 
+install:
+	cd frontend && yarn install
+
+ci:
+	cd frontend && yarn install --frozen-lockfile
+
 build:
 	docker compose -f docker-compose.dev.yml up -d --build
 
