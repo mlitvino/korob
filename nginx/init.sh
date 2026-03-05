@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ "$NODE_ENV" = "production" ]; then
+if [ "$APP_STATE" = "production" ]; then
     cp /etc/nginx/prod.conf /etc/nginx/conf.d/default.conf
 else
     cp /etc/nginx/dev.conf /etc/nginx/conf.d/default.conf

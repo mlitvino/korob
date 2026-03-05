@@ -26,6 +26,9 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: frontend/yarn.lock
 
+      - name: Use env.example
+        run: cp .env.example .env
+
       - name: Install dependencies
         run: make ci
 
