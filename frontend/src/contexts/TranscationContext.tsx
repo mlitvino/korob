@@ -62,8 +62,8 @@ function transactionReducer(transactions: TransactionState, action: TransactionA
       };
 
       return [
-        ...transactions,
         newTransaction,
+        ...transactions,
       ];
     }
     case 'remove': {
