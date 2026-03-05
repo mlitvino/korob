@@ -18,7 +18,7 @@ export default function Layout() {
       <Drawer.Screen
         name={'index'}
         options={{
-          title: 'overview',
+          title: 'Home',
           drawerLabel: 'Home',
         }}
       />
@@ -27,6 +27,13 @@ export default function Layout() {
         options={{
           title: 'Transactions',
           drawerLabel: 'Transactions',
+        }}
+      />
+      <Drawer.Screen
+        name={'(settings)'}
+        options={{
+          title: 'Settings',
+          drawerLabel: 'Settings',
         }}
       />
     </Drawer>

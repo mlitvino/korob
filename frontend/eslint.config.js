@@ -41,7 +41,7 @@ module.exports = [
       'prefer-template': 'error',
       'prefer-arrow-callback': 'error',
       'arrow-body-style': ['warn', 'as-needed'],
-      'no-duplicate-imports': 'error',
+      'no-duplicate-imports': 'warn',
 
       // Formatting
       'semi': ['warn', 'always'],
