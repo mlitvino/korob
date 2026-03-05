@@ -19,6 +19,9 @@ install:
 ci:
 	cd frontend && yarn install --frozen-lockfile
 
+test:
+	cd frontend && yarn test
+
 build:
 	docker compose -f docker-compose.dev.yml up -d --build
 
