@@ -1,15 +1,18 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+
 import { useTheme, useSetTheme, useThemeName } from '@/contexts/ThemeContext';
+import { ThemeName } from '@/constants/theme';
 
 type ThemeOption = {
   label: string;
-  value: 'light' | 'dark';
+  value: ThemeName;
 };
 
 const THEME_OPTIONS: ThemeOption[] = [
   { label: 'Light', value: 'light' },
   { label: 'Dark', value: 'dark' },
+  { label: 'Original', value: 'original' },
 ];
 
 export default function Appearance() {
