@@ -8,17 +8,18 @@ export default function SettingsIndex() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Pressable
-        style={({ pressed }) => [
-          styles.row,
-          { backgroundColor: theme.surface, borderColor: theme.separator },
-          pressed && styles.pressed,
-        ]}
-        onPress={() => router.push('/(drawer)/(settings)/appearance')}
-      >
-        <Text style={[styles.rowLabel, { color: theme.text }]}>Appearance</Text>
-        <Text style={[styles.chevron, { color: theme.textMuted }]}>›</Text>
-      </Pressable>
+      <View style={[styles.section, { borderColor: theme.separator }]}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.row,
+            pressed && styles.pressed,
+          ]}
+          onPress={() => router.push('/(drawer)/(settings)/appearance')}
+        >
+          <Text style={[styles.rowLabel, { color: theme.text }]}>Appearance</Text>
+          <Text style={[styles.chevron, { color: theme.textMuted }]}>›</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -28,14 +29,22 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
+  section: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  sectionNotFirst: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 14,
     paddingHorizontal: 16,
-    borderWidth: 1,
-    borderRadius: 12,
+  },
+  separator: {
+    height: StyleSheet.hairlineWidth,
+    marginLeft: 16,
   },
   pressed: {
     opacity: 0.6,
