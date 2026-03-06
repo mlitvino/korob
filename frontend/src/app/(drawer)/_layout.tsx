@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 
-import { useTheme } from '@/hooks/use-theme-color';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function Layout() {
   const theme = useTheme();

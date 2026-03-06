@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import { useTransactions } from '@/contexts/TranscationContext';
 import { TransactionItem } from '@/components/TransactionItem';
-import { useTheme } from '@/hooks/use-theme-color';
+import { useTheme } from '@/contexts/ThemeContext';
 
 
 export default function Transactions() {

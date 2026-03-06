@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { useBalance } from '@/contexts/BalanceContext';
 import Button from '@/components/Button';
 import Total from '@/components/Total';
-import { useTheme } from '@/hooks/use-theme-color';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function Index() {
   const balance = useBalance();

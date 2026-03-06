@@ -4,8 +4,8 @@ import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { Transaction } from '@/types/Transaction';
 import { useBalanceDispatch } from '@/contexts/BalanceContext';
 import { useTransactionDispatch } from '@/contexts/TranscationContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import TransactionForm from '@/components/TransactionForm';
-import { useTheme } from '@/hooks/use-theme-color';
 
 
 export default function TransactionModal() {

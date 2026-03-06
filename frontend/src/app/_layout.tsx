@@ -3,22 +3,27 @@ import { useEffect } from 'react';
 import { setBackgroundColorAsync } from 'expo-system-ui';
 
 import { AppProviders } from '@/contexts/AppProviders';
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { useThemeColor } from '@/contexts/ThemeContext';
 
 export default function RootLayout() {
-  const canvas = useThemeColor({}, 'canvas');
+  return (
+    <AppProviders>
+      <Inner />
+    </AppProviders>
+  );
+}
+
+function Inner() {
+  const canvas = useThemeColor('canvas');
 
   useEffect(() => {
-    setBackgroundColorAsync(canvas)
-      .catch(err => console.error('Failed to change root background color:', err));
+    setBackgroundColorAsync(canvas).catch(console.error);
   }, [canvas]);
 
   return (
-    <AppProviders>
-      <Stack>
-        <Stack.Screen name={'(drawer)'} options={{ headerShown: false }}  />
-        <Stack.Screen name={'transaction-modal'} options={{ presentation: 'modal' }}  />
-      </Stack>
-    </AppProviders>
+    <Stack>
+      <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+      <Stack.Screen name="transaction-modal" options={{ presentation: 'modal' }} />
+    </Stack>
   );
 }

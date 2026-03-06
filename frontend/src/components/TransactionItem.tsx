@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 
 import type { Transaction } from '@/types/Transaction';
-import { useTheme } from '@/hooks/use-theme-color';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type TransactionItemProps = {
   transaction: Transaction;

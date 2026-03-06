@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from 'react-native';
 
 import type { TransactionType } from '@/types/Transaction';
 import { useTransactions } from '@/contexts/TranscationContext';
-import { useTheme } from '@/hooks/use-theme-color';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type TotalProps = {
   type: TransactionType;
