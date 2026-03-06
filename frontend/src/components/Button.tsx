@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default function Button({ label, onPress, style, disabled = false }: Props) {
-  const bgColor = useThemeColor('text');
+  const bgColor = useThemeColor('background');
 
   return (
     <Pressable

@@ -30,14 +30,14 @@ export default function Index() {
 
       <View style={styles.content}>
         <View style={[styles.buttonGroupContainer, { backgroundColor: theme.surface }]}>
-          <Button label={'plus'} onPress={addIncome} />
+          <Button label={'plus'} onPress={addIncome} style={{ backgroundColor: theme.income }} />
 
           <View style={[styles.balanceGroupContainer, { backgroundColor: theme.inset }]} >
             <Text style={[styles.balanceTitle, { color: theme.text }]}>Balance:</Text>
             <Text style={[styles.balance, { color: theme.text }]}>{balance}</Text>
           </View>
 
-          <Button label={'minus'} onPress={addExpense} />
+          <Button label={'minus'} onPress={addExpense} style={{ backgroundColor: theme.expense }} />
         </View>
       </View>
 
