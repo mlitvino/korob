@@ -2,92 +2,38 @@ import { Pressable, StyleSheet, Text, type ViewStyle } from 'react-native';
 
 import { useThemeColor } from '@/contexts/ThemeContext';
 
-type ButtonSize = 'small' | 'medium' | 'large';
-
 type Props = {
   label: string;
-  size?: ButtonSize;
   onPress?: () => void;
   style?: ViewStyle;
   disabled?: boolean;
 }
 
-export default function Button({
-  label,
-  size = 'medium',
-  onPress,
-  style,
-  disabled = false,
-}: Props) {
-  const textColor = useThemeColor('text');
-
-  const sizeStyles = {
-    small: styles.buttonSmall,
-    medium: styles.buttonMedium,
-    large: styles.buttonLarge,
-  };
-
-  const textSizeStyles = {
-    small: styles.textSmall,
-    medium: styles.textMedium,
-    large: styles.textLarge,
-  };
+export default function Button({ label, onPress, style, disabled = false }: Props) {
+  const bgColor = useThemeColor('text');
 
   return (
     <Pressable
-      style={() => [
-        styles.buttonBase,
-        sizeStyles[size],
-        style,
-        { backgroundColor: textColor },
-      ]}
+      style={() => [styles.button, { backgroundColor: bgColor }, style]}
       onPress={onPress}
       disabled={disabled}
     >
-      <Text
-        style={[
-          styles.textBase,
-          textSizeStyles[size],
-        ]}
-      >
-        {label}
-      </Text>
+      <Text style={styles.text}>{label}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonBase: {
+  button: {
+    width: 80,
+    height: 80,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textBase: {
+  text: {
     fontWeight: '600',
+    fontSize: 16,
     textAlign: 'center',
   },
-
-  buttonSmall: {
-    width: 60,
-    height: 60,
-  },
-  buttonMedium: {
-    width: 80,
-    height: 80,
-  },
-  buttonLarge: {
-    width: 100,
-    height: 100,
-  },
-
-  textSmall: {
-    fontSize: 14,
-  },
-  textMedium: {
-    fontSize: 16,
-  },
-  textLarge: {
-    fontSize: 18,
-  },
-
 });
