@@ -17,7 +17,6 @@ export default function SettingsIndex() {
           onPress={() => router.push('/(drawer)/(settings)/appearance')}
         >
           <Text style={[styles.rowLabel, { color: theme.text }]}>Appearance</Text>
-          <Text style={[styles.chevron, { color: theme.textMuted }]}>›</Text>
         </Pressable>
       </View>
     </View>
