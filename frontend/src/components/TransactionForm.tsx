@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-import Button from '@/components/Button';
+import IconButton from '@/components/IconButton';
 import { useThemeColor } from '@/contexts/ThemeContext';
 
 type Props = {
   onSubmit: (amount: number) => void;
-  buttonLabel: string;
 };
 
-export default function TransactionForm({ onSubmit, buttonLabel }: Props) {
+export default function TransactionForm({ onSubmit }: Props) {
   const [amount, setAmount] = useState('');
   const textColor = useThemeColor('text');
 
@@ -31,7 +30,7 @@ export default function TransactionForm({ onSubmit, buttonLabel }: Props) {
         value={amount}
         onChangeText={setAmount}
       />
-      <Button label={buttonLabel} onPress={handleSubmit} />
+      <IconButton icon={'check'} onPress={handleSubmit} style={{ backgroundColor: textColor }} />
     </View>
   );
 }

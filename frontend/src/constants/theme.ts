@@ -6,6 +6,7 @@ export type ThemeColor = {
     elevated: string;
 
     text: string;
+    contrastText: string;
     textMuted: string;
 
     separator: string;
@@ -28,6 +29,7 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     elevated: '#413d46',
 
     text:     '#ffffff',
+    contrastText: '#000',
     textMuted: 'rgba(255,255,255,0.5)',
 
     separator: 'rgba(255,255,255,0.1)',
@@ -43,6 +45,7 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     elevated: '#413d46',
 
     text:     '#ffffff',
+    contrastText: '#000',
     textMuted: 'rgba(255,255,255,0.5)',
 
     separator: 'rgba(255,255,255,0.1)',
@@ -58,6 +61,7 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     elevated: '#413d46',
 
     text:     '#ffffff',
+    contrastText: '#000',
     textMuted: 'rgba(255,255,255,0.5)',
 
     separator: 'rgba(255,255,255,0.1)',

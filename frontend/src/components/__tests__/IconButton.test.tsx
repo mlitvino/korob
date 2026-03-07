@@ -1,19 +1,17 @@
 import { render } from '@testing-library/react-native';
 
 import { AppProviders } from '@/contexts/AppProviders';
-import Button from '@/components/Button';
+import Icon from '@/components/IconButton';
 
-describe('Button component', () => {
-  test('Button renders correctly', () => {
-    const text = 'vampire';
+describe('IconButton component', () => {
+  test('IconButton renders correctly', () => {
 
     const tree = render(
       <AppProviders>
-        <Button label={text} />
+        <Icon icon={'check'} />
       </AppProviders>,
     );
 
-    expect(tree.getByText(text)).toBeVisible();
     expect(tree).toMatchSnapshot();
   });
 });

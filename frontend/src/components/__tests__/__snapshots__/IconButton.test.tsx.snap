@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button component Button renders correctly 1`] = `
+exports[`IconButton component IconButton renders correctly 1`] = `
 <View
   accessibilityState={
     {
@@ -36,33 +36,18 @@ exports[`Button component Button renders correctly 1`] = `
       {
         "alignItems": "center",
         "borderRadius": 100,
-        "justifyContent": "center",
-      },
-      {
         "height": 80,
+        "justifyContent": "center",
         "width": 80,
       },
-      undefined,
       {
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#413d46",
       },
+      undefined,
+      false,
     ]
   }
 >
-  <Text
-    style={
-      [
-        {
-          "fontWeight": "600",
-          "textAlign": "center",
-        },
-        {
-          "fontSize": 16,
-        },
-      ]
-    }
-  >
-    vampire
-  </Text>
+  <Text />
 </View>
 `;

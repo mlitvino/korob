@@ -43,7 +43,6 @@ export default function TransactionModal() {
         </Text>
         <TransactionForm
           onSubmit={handleSubmit}
-          buttonLabel={type === 'income' ? 'Add Income' : 'Add Expense'}
         />
       </View>
     </>

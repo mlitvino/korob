@@ -1,9 +1,8 @@
 import { Text, View, StyleSheet } from 'react-native';
-
 import { router } from 'expo-router';
 
 import { useBalance } from '@/contexts/BalanceContext';
-import Button from '@/components/Button';
+import IconButton from '@/components/IconButton';
 import Total from '@/components/Total';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -30,14 +29,14 @@ export default function Index() {
 
       <View style={styles.content}>
         <View style={[styles.buttonGroupContainer, { backgroundColor: theme.surface }]}>
-          <Button label={'plus'} onPress={addIncome} style={{ backgroundColor: theme.income }} />
+          <IconButton icon="add" onPress={addIncome} style={{ backgroundColor: theme.income }} />
 
           <View style={[styles.balanceGroupContainer, { backgroundColor: theme.inset }]} >
             <Text style={[styles.balanceTitle, { color: theme.text }]}>Balance:</Text>
             <Text style={[styles.balance, { color: theme.text }]}>{balance}</Text>
           </View>
 
-          <Button label={'minus'} onPress={addExpense} style={{ backgroundColor: theme.expense }} />
+          <IconButton icon="remove" onPress={addExpense} style={{ backgroundColor: theme.expense }} />
         </View>
       </View>
 
