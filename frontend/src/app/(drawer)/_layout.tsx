@@ -3,6 +3,7 @@ import { Drawer } from 'expo-router/drawer';
 import { useTranslation } from 'react-i18next';
 
 import { useTheme } from '@/contexts/ThemeContext';
+import HeaderLeft from '@/components/HeaderLeft';
 
 export default function Layout() {
   const theme = useTheme();
@@ -16,6 +17,7 @@ export default function Layout() {
         headerStyle: { backgroundColor: theme.elevated },
         headerTitleStyle: { color: theme.text },
         headerShadowVisible: false,
+        headerLeft: () => <HeaderLeft />,
       }}
     >
       <Drawer.Screen
