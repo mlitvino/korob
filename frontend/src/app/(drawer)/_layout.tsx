@@ -15,6 +15,7 @@ export default function Layout() {
         drawerLabelStyle: { color: theme.text },
         headerStyle: { backgroundColor: theme.elevated },
         headerTitleStyle: { color: theme.text },
+        headerShadowVisible: false,
       }}
     >
       <Drawer.Screen
