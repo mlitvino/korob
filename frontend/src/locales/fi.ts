@@ -15,7 +15,7 @@ export default {
     },
     appearance: {
       title: 'Ulkoasu',
-      original: 'Oletus',
+      black: 'Musta',
       light: 'Vaalea',
       dark: 'Tumma',
     },

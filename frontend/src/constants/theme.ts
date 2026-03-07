@@ -15,9 +15,9 @@ export type ThemeColor = {
 };
 
 export type ThemeName =
-  | 'original'
+  | 'dark'
   | 'light'
-  | 'dark';
+  | 'black';
 
 export const Themes: Record<ThemeName, ThemeColor> = {
   light:  {
@@ -35,7 +35,7 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     income:   '#4caf82',
     expense:  '#e05c5c',
   },
-  dark: {
+  black: {
     canvas:   '#3f3c44',
     background: '#0c0c0c',
     surface:  '#222125',
@@ -50,7 +50,7 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     income:   '#449e75',
     expense:  '#e05c5c',
   },
-  original: {
+  dark: {
     canvas:   '#222025',
     background: '#2f2e33',
     surface:  '#262236',

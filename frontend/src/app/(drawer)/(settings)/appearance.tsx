@@ -12,9 +12,9 @@ type ThemeOption = {
 };
 
 const getThemeOptions = (t: TFunction): ThemeOption[] => [
-  { label: t('appearance.original'), value: 'original' },
-  { label: t('appearance.light'),    value: 'light' },
-  { label: t('appearance.dark'),     value: 'dark' },
+  { label: t('appearance.dark'), value: 'dark' },
+  { label: t('appearance.light'), value: 'light' },
+  { label: t('appearance.black'), value: 'black' },
 ];
 
 export default function Appearance() {

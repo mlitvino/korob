@@ -15,7 +15,7 @@ export default {
     },
     appearance: {
       title: 'Appearance',
-      original: 'Original',
+      black: 'Black',
       light: 'Light',
       dark: 'Dark',
     },
