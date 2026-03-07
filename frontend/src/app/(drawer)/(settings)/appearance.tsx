@@ -10,9 +10,9 @@ type ThemeOption = {
 };
 
 const THEME_OPTIONS: ThemeOption[] = [
+  { label: 'Original', value: 'original' },
   { label: 'Light', value: 'light' },
   { label: 'Dark', value: 'dark' },
-  { label: 'Original', value: 'original' },
 ];
 
 export default function Appearance() {

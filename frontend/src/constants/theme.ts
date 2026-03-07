@@ -7,7 +7,6 @@ export type ThemeColor = {
 
     text: string;
     contrastText: string;
-    textMuted: string;
 
     separator: string;
 
@@ -16,41 +15,39 @@ export type ThemeColor = {
 };
 
 export type ThemeName =
+  | 'original'
   | 'light'
-  | 'dark'
-  | 'original';
+  | 'dark';
 
 export const Themes: Record<ThemeName, ThemeColor> = {
   light:  {
-    canvas:   '#190636',
-    background: '#281e4e',
-    surface:  '#262236',
-    inset:    '#3a3257',
-    elevated: '#413d46',
+    canvas:   '#c8c4cc',
+    background: '#ffffff',
+    surface:  '#c8c5d380',
+    inset:    '#b8c8cf',
+    elevated: '#c8c4cc',
 
-    text:     '#ffffff',
-    contrastText: '#000',
-    textMuted: 'rgba(255,255,255,0.5)',
+    text:     '#000000',
+    contrastText: '#ffffff',
 
-    separator: 'rgba(255,255,255,0.1)',
+    separator: '#020000',
 
     income:   '#4caf82',
     expense:  '#e05c5c',
   },
   dark: {
-    canvas:   '#222025',
-    background: '#2f2e33',
-    surface:  '#262236',
-    inset:    '#3a3257',
-    elevated: '#413d46',
+    canvas:   '#3f3c44',
+    background: '#0c0c0c',
+    surface:  '#222125',
+    inset:    '#413d4e',
+    elevated: '#2a292c',
 
     text:     '#ffffff',
     contrastText: '#000',
-    textMuted: 'rgba(255,255,255,0.5)',
 
-    separator: 'rgba(255,255,255,0.1)',
+    separator: '#ffffff1a',
 
-    income:   '#4caf82',
+    income:   '#449e75',
     expense:  '#e05c5c',
   },
   original: {
@@ -62,9 +59,8 @@ export const Themes: Record<ThemeName, ThemeColor> = {
 
     text:     '#ffffff',
     contrastText: '#000',
-    textMuted: 'rgba(255,255,255,0.5)',
 
-    separator: 'rgba(255,255,255,0.1)',
+    separator: '#ffffff1a',
 
     income:   '#fff',
     expense:  '#fff',

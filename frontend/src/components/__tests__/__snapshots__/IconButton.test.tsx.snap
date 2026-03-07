@@ -41,7 +41,7 @@ exports[`IconButton component IconButton renders correctly 1`] = `
         "width": 80,
       },
       {
-        "backgroundColor": "#413d46",
+        "backgroundColor": "#c8c4cc",
       },
       undefined,
       false,
@@ -49,7 +49,7 @@ exports[`IconButton component IconButton renders correctly 1`] = `
   }
 >
   <View
-    color="#000"
+    color="#ffffff"
     name="check"
     size={38}
   />
