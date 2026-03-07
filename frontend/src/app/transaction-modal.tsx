@@ -41,7 +41,7 @@ export default function TransactionModal() {
         headerTitleStyle: { color: theme.text },
       }}/>
 
-      <View style={[styles.container, { backgroundColor: theme.canvas }]}>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
         <Text style={[styles.title, { color: theme.text }]}>
           {type === 'income'
             ? t('total.income')
