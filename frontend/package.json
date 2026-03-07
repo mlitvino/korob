@@ -10,7 +10,8 @@
     "lint": "expo lint",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "tsc": "npx tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
