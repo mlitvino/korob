@@ -48,6 +48,10 @@ exports[`IconButton component IconButton renders correctly 1`] = `
     ]
   }
 >
-  <Text />
+  <View
+    color="#000"
+    name="check"
+    size={38}
+  />
 </View>
 `;
