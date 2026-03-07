@@ -3,10 +3,18 @@ import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
 
 import en from './en';
+import fi from './fi';
 
 export const resources = {
   en,
+  fi,
 };
+
+export type Language = keyof typeof resources;
+
+export function changeLanguage(lang: Language) {
+  return i18n.changeLanguage(lang);
+}
 
 const i18n = createInstance();
 

@@ -18,13 +18,17 @@ export default function Total({ type }: TotalProps) {
     .filter(t => t.type === type)
     .reduce((sum, t) => sum + t.amount, 0);
 
+  const header = type === 'income' ? t('total.income') : t('total.expense');
+
   return (
     <View style={styles.container}>
       <View style={[styles.header, { borderBottomColor: theme.separator}]}>
-        <Text style={[styles.headerText, { color: theme.text }]}>{type}</Text>
+        <Text style={[styles.headerText, { color: theme.text }]}>{header}</Text>
       </View>
       <View style={styles.body}>
-        <Text style={[styles.categoryText, { color: theme.text }]}>{t('total.allTime')}</Text>
+        <Text style={[styles.categoryText, { color: theme.text }]}>
+          {t('total.allTime')}
+        </Text>
         <Text style={[styles.totalText, { color: theme.text }]}>{total}</Text>
       </View>
     </View>
