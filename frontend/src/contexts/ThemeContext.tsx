@@ -3,7 +3,7 @@ import React, {
   useContext,
   useState,
   ReactNode,
-
+  useEffect,
 } from 'react';
 
 import { Themes, ThemeColor } from '@/constants/theme';
@@ -22,6 +22,10 @@ const ThemeDispatchContext = createContext<ThemeAction | undefined>(undefined);
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const systemTheme = useColorScheme() ?? 'light';
   const [theme, setTheme] = useState<ThemeState>(systemTheme);
+
+  useEffect(() => {
+    setTheme(systemTheme);
+  }, [systemTheme]);
 
   return (
     <ThemeStateContext.Provider value={ theme }>
