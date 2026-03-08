@@ -39,6 +39,7 @@ export default function TransactionModal() {
           : t('transaction.addExpense'),
         headerStyle: { backgroundColor: theme.elevated },
         headerTitleStyle: { color: theme.text },
+        headerShadowVisible: false,
         headerLeft: () => (
           <HeaderLeft
             icon={'keyboard-arrow-left'}
