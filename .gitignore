@@ -6,3 +6,6 @@
 # --- Dist / Build ---
 dist/
 build/
+
+# --- Local tools ---
+local
