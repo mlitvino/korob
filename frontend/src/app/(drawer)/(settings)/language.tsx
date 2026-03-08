@@ -1,18 +1,21 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { SvgProps } from 'react-native-svg';
 
 import { changeLanguage, LanguageName } from '@/locales';
 import { useTheme } from '@/contexts/ThemeContext';
+import * as Flags from '@/components/flags';
 
 type LanguageOption = {
+  flag: React.ComponentType<SvgProps>;
   label: string;
   value: LanguageName;
 };
 
 const getLanguageOptions = (): LanguageOption[] => [
-  { label: 'English', value: 'en' },
-  { label: 'Suomi', value: 'fi' },
+  { flag: Flags.GbFlag, label: 'English', value: 'en' },
+  { flag: Flags.FiFlag, label: 'Suomi', value: 'fi' },
 ];
 
 export default function Language() {
@@ -32,22 +35,31 @@ export default function Language() {
         <Text style={[styles.backLabel, { color: theme.text }]}>{t('settings.language')}</Text>
       </Pressable>
 
-      {langOptions.map((option) => (
-        <Pressable
-          key={option.value}
-          style={({ pressed }) => [
-            styles.row,
-            { backgroundColor: theme.surface, borderColor: theme.separator },
-            pressed && styles.pressed,
-          ]}
-          onPress={() => { void changeLanguage(option.value); }}
-        >
-          <Text style={[styles.rowLabel, { color: theme.text }]}>{option.label}</Text>
-          {curLang === option.value && (
-            <Text style={[styles.checkmark, { color: theme.income }]}>✓</Text>
-          )}
-        </Pressable>
-      ))}
+      {langOptions.map((option) => {
+        const Flag = option.flag;
+
+        return (
+          <Pressable
+            key={option.value}
+            style={({ pressed }) => [
+              styles.row,
+              { backgroundColor: theme.surface, borderColor: theme.separator },
+              pressed && styles.pressed,
+            ]}
+            onPress={() => { void changeLanguage(option.value); }}
+          >
+            <View style={styles.rowLeft}>
+              <Flag width={24} height={24} />
+              <Text style={[styles.rowLabel, { color: theme.text }]}>
+                {option.label}
+              </Text>
+            </View>
+            {curLang === option.value && (
+              <Text style={[styles.checkmark, { color: theme.income }]}>✓</Text>
+            )}
+          </Pressable>
+        );
+      })}
     </View>
   );
 }
@@ -86,6 +98,11 @@ const styles = StyleSheet.create({
   },
   rowLabel: {
     fontSize: 16,
+    marginLeft: 8,
+  },
+  rowLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   checkmark: {
     fontSize: 18,
