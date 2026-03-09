@@ -34,8 +34,22 @@ export default function Index() {
           <IconButton icon="add" onPress={addIncome} style={{ backgroundColor: theme.income }} />
 
           <View style={[styles.balanceGroupContainer, { backgroundColor: theme.inset }]} >
-            <Text style={[styles.balanceTitle, { color: theme.text }]}>{t('home.balance')}:</Text>
-            <Text style={[styles.balance, { color: theme.text }]}>{balance}</Text>
+            <Text
+              style={[styles.balanceTitle, { color: theme.text }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.5}
+            >
+              {t('home.balance')}:
+            </Text>
+            <Text
+              style={[styles.balance, { color: theme.text }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.5}
+            >
+              {balance}
+            </Text>
           </View>
 
           <IconButton icon="remove" onPress={addExpense} style={{ backgroundColor: theme.expense }} />
@@ -89,9 +103,13 @@ const styles = StyleSheet.create({
   },
   balanceTitle: {
     fontSize: 16,
+    flexShrink: 1,
+    textAlign: 'center',
   },
   balance: {
     fontSize: 40,
+    flexShrink: 1,
+    textAlign: 'center',
   },
 });
 
