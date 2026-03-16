@@ -17,7 +17,8 @@ export type ThemeColor = {
 export type ThemeName =
   | 'dark'
   | 'light'
-  | 'black';
+  | 'black'
+  | 'black_yellow';
 
 export const Themes: Record<ThemeName, ThemeColor> = {
   light:  {
@@ -64,5 +65,20 @@ export const Themes: Record<ThemeName, ThemeColor> = {
 
     income:   '#fff',
     expense:  '#fff',
+  },
+  black_yellow: {
+    canvas:      '#070607',
+    background:  '#000000',
+    surface:     '#12100d',
+    inset:       '#241f13',
+    elevated:    '#342b18',
+
+    text:        '#fff7a8',
+    contrastText: '#000000',
+
+    separator:   '#fff7a81a',
+
+    income:      '#ffd600',
+    expense:     '#ff9800',
   },
 };

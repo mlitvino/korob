@@ -18,6 +18,7 @@ export default {
       black: 'Musta',
       light: 'Vaalea',
       dark: 'Tumma',
+      black_yellow: 'Must Kultainen',
     },
     nav: {
       home: 'Koti',

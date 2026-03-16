@@ -18,6 +18,7 @@ export default {
       black: 'Black',
       light: 'Light',
       dark: 'Dark',
+      black_yellow: 'Black Yellow',
     },
     nav: {
       home: 'Home',
