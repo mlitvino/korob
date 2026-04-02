@@ -13,7 +13,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
   return (
     <View style={[styles.transactionItem, { backgroundColor: theme.canvas }]}>
       <Text style={{ color: theme.text }}>
-        {transaction.type}: {transaction.amount}
+        {transaction.createdAt.toLocaleTimeString()} {transaction.type}: {transaction.amount}
       </Text>
     </View>
   );

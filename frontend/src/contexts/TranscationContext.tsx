@@ -59,6 +59,7 @@ function transactionReducer(transactions: TransactionState, action: TransactionA
       const newTransaction: Transaction = {
         ...action.transaction,
         id: uuid.v4(),
+        createdAt: new Date(),
       };
 
       return [
