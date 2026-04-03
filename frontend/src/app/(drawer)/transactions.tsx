@@ -12,7 +12,7 @@ export default function Transactions() {
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
       <Text style={{ color: theme.text }}>list</Text>
-      <View>
+      <View style={styles.transactionList}>
         {transactions.map(t =>
           <TransactionItem key={t.id} transaction={t}/>,
         )}
@@ -26,5 +26,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  transactionList: {
+    width: '100%',
   },
 });

@@ -23,6 +23,5 @@ const styles = StyleSheet.create({
   transactionItem: {
     padding: 10,
     marginVertical: 5,
-    borderRadius: 8,
   },
 });
