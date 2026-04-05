@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { TransactionType } from '@/types/Transaction';
 import { useTransactions } from '@/contexts/TranscationContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 type TotalProps = {
   type: TransactionType;
@@ -12,6 +13,7 @@ type TotalProps = {
 export default function Total({ type }: TotalProps) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const formatCurrency = useCurrencyFormatter();
   const transactions = useTransactions();
 
   const total = transactions
@@ -29,7 +31,7 @@ export default function Total({ type }: TotalProps) {
         <Text style={[styles.categoryText, { color: theme.text }]}>
           {t('total.allTime')}
         </Text>
-        <Text style={[styles.totalText, { color: theme.text }]}>{total}</Text>
+        <Text style={[styles.totalText, { color: theme.text }]}>{formatCurrency(total)}</Text>
       </View>
     </View>
   );

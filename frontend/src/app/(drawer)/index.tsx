@@ -6,10 +6,12 @@ import { useBalance } from '@/contexts/BalanceContext';
 import IconButton from '@/components/IconButton';
 import Total from '@/components/Total';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 export default function Index() {
   const balance = useBalance();
   const theme = useTheme();
+  const formatCurrency = useCurrencyFormatter();
   const { t } = useTranslation();
 
   const addIncome = () => {
@@ -48,7 +50,7 @@ export default function Index() {
               adjustsFontSizeToFit
               minimumFontScale={0.5}
             >
-              {balance}
+              {formatCurrency(balance)}
             </Text>
           </View>
 
