@@ -8,11 +8,11 @@ import type { TransactionType } from '@/types/Transaction';
 
 type FilterType = 'all' | TransactionType;
 
-
 export default function Transactions() {
   const theme = useTheme();
   const transactions = useTransactions();
   const [filter, setFilter] = useState<FilterType>('all');
+  let previousDateKey = '';
 
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
@@ -66,11 +66,36 @@ export default function Transactions() {
       </View>
 
       <View style={styles.transactionList}>
-        {transactions.map((t) =>
-          filter === 'all' || t.type === filter
-            ? <TransactionItem key={t.id} transaction={t} />
-            : null,
-        )}
+        {transactions.map((t) => {
+          if (filter !== 'all' && t.type !== filter) {
+            return null;
+          }
+
+          const createdAt = new Date(t.createdAt);
+          const dateKey = createdAt.toDateString();
+          const showDateSeparator = dateKey !== previousDateKey;
+          previousDateKey = dateKey;
+
+          return (
+            <View key={t.id}>
+              {showDateSeparator && (
+                <View style={styles.dateSeparatorWrap}>
+                  <View style={[styles.dateLine, { backgroundColor: theme.separator }]} />
+                  <Text style={[styles.dateSeparatorText, { color: theme.text }]}>
+                    {createdAt.toLocaleDateString(undefined, {
+                      weekday: 'short',
+                      day: '2-digit',
+                      month: 'short',
+                    })}
+                  </Text>
+                  <View style={[styles.dateLine, { backgroundColor: theme.separator }]} />
+                </View>
+              )}
+
+              <TransactionItem transaction={t} />
+            </View>
+          );
+        })}
       </View>
     </View>
   );
@@ -83,12 +108,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 20,
     paddingHorizontal: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginBottom: 14,
-    alignSelf: 'flex-start',
   },
   filterRow: {
     width: '100%',
@@ -111,5 +130,23 @@ const styles = StyleSheet.create({
   transactionList: {
     width: '100%',
     alignSelf: 'stretch',
+  },
+  dateSeparatorWrap: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  dateLine: {
+    flex: 1,
+    height: 1,
+  },
+  dateSeparatorText: {
+    fontSize: 12,
+    fontWeight: '600',
+    opacity: 0.8,
+    textTransform: 'uppercase',
   },
 });
