@@ -1,4 +1,6 @@
-export default {
+import type { LocaleResource } from './types';
+
+const en: LocaleResource = {
   translation: {
     common: {
       done: 'Done',
@@ -47,3 +49,5 @@ export default {
     },
   },
 };
+
+export default en;

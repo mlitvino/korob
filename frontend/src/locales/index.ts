@@ -4,13 +4,19 @@ import * as Localization from 'expo-localization';
 
 import en from './en';
 import fi from './fi';
+import type { LocaleResource } from './types';
 
-export const resources = {
+export type Resources = {
+  en: LocaleResource;
+  fi: LocaleResource;
+};
+
+export const resources: Resources = {
   en,
   fi,
 };
 
-export type LanguageName = keyof typeof resources;
+export type LanguageName = keyof Resources;
 
 export async function changeLanguage(lang: LanguageName) {
   await i18n.changeLanguage(lang)
