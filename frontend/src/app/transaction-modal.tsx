@@ -41,10 +41,13 @@ export default function TransactionModal() {
         headerTitleStyle: { color: theme.text },
         headerShadowVisible: false,
         headerLeft: () => (
-          <HeaderLeft
-            icon={'keyboard-arrow-left'}
-            onPress={() => router.push('/(drawer)')}
-          />
+          <View style={styles.headerLeftOffset}>
+            <HeaderLeft
+              icon={'keyboard-arrow-left'}
+              onPress={() => router.push('/(drawer)')}
+              style={{ marginLeft: 0 }}
+            />
+          </View>
         ),
       }}/>
 
@@ -74,5 +77,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     fontWeight: 'bold',
+  },
+  headerLeftOffset: {
+    marginLeft: -10,
   },
 });
