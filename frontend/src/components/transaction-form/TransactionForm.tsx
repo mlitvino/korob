@@ -141,7 +141,13 @@ export default function TransactionForm({ onSubmit }: Props) {
         />
       </PickerSheet>
 
-      <IconButton icon={'check'} onPress={handleSubmit} style={{ backgroundColor: textColor }} />
+      <IconButton
+        icon={'check'}
+        label={t('common.done')}
+        variant="wide"
+        onPress={handleSubmit}
+        style={{ backgroundColor: textColor }}
+      />
     </View>
   );
 }
