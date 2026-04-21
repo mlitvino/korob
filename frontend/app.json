@@ -1,28 +1,29 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "Korob",
+    "slug": "korob",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "korob",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mlitvino.korob",
+      "buildNumber": "1"
     },
     "android": {
+      "package": "com.mlitvino.korob",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./src/assets/images/android-icon-foreground.png",
         "backgroundImage": "./src/assets/images/android-icon-background.png",
-        "monochromeImage": "./src/assets/images/android-icon-monochrome.png",
-        "package": "com.yourcompany.yourappname",
-        "versionCode": 1
+        "monochromeImage": "./src/assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.mlitvino.frontend"
+      "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "single",
