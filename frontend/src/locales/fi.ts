@@ -14,6 +14,7 @@ const fi: LocaleResource = {
       enterAmount: 'Syötä summa',
       selectDate: 'Päivä',
       selectTime: 'Aika',
+      filterAll: 'Kaikki',
     },
     settings: {
       title: 'Asetukset',

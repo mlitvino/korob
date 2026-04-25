@@ -14,6 +14,7 @@ const en: LocaleResource = {
       enterAmount: 'Enter amount',
       selectDate: 'Date',
       selectTime: 'Time',
+      filterAll: 'All',
     },
     settings: {
       title: 'Settings',

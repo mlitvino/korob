@@ -12,6 +12,7 @@ export type LocaleResource = {
       enterAmount: string;
       selectDate: string;
       selectTime: string;
+      filterAll: string;
     };
     settings: {
       title: string;

@@ -6,7 +6,7 @@ import { Transaction } from '@/types/Transaction';
 import { useBalanceDispatch } from '@/contexts/BalanceContext';
 import { useTransactionDispatch } from '@/contexts/TranscationContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import TransactionForm from '@/components/transaction-form/TransactionForm';
+import TransactionForm from '@/features/transaction-form/components/TransactionForm';
 import HeaderLeft from '@/components/HeaderLeft';
 
 export default function TransactionModal() {
