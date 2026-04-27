@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   View,
   TextInput,
@@ -15,24 +15,38 @@ import IconButton from '@/components/IconButton';
 import { useTheme } from '@/contexts/ThemeContext';
 import PickerSheet from '@/features/transaction-form/components/PickerSheet';
 import {
+  getCategoriesByType,
+} from '@/features/transaction-form/utils/categories';
+import {
   formatDateInput,
   formatTimeInput,
   toDate,
 } from '@/features/transaction-form/utils/dateTimeHelpers';
 import { useCalendarStyles } from '@/features/transaction-form/hooks/useCalendarStyles';
+import type { TransactionCategory, TransactionType } from '@/types/Transaction';
 
 type Props = {
-  onSubmit: (amount: number, createdAt: Date) => void;
+  transactionType: TransactionType;
+  onSubmit: (amount: number, createdAt: Date, category: TransactionCategory) => void;
 };
 
-export default function TransactionForm({ onSubmit }: Props) {
+export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [amount, setAmount] = useState('');
   const [createdAt, setCreatedAt] = useState(() => new Date());
+  const categories = useMemo(() => getCategoriesByType(transactionType), [transactionType]);
+  const [category, setCategory] = useState<TransactionCategory>(categories[0]);
+  const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const theme = useTheme();
   const { t } = useTranslation();
   const calendarStyles = useCalendarStyles();
+
+  useEffect(() => {
+    if (!categories.includes(category)) {
+      setCategory(categories[0]);
+    }
+  }, [categories, category]);
 
   const handleDateValueChange = ({ date }: { date: DateType }) => {
     const selectedDate = toDate(date);
@@ -64,7 +78,7 @@ export default function TransactionForm({ onSubmit }: Props) {
     const value = parseFloat(amount);
 
     if (!isNaN(value) && value > 0) {
-      onSubmit(value, createdAt);
+      onSubmit(value, createdAt, category);
       setAmount('');
     }
   };
@@ -79,6 +93,19 @@ export default function TransactionForm({ onSubmit }: Props) {
         value={amount}
         onChangeText={setAmount}
       />
+
+      <Pressable
+        onPress={() => setShowCategoryPicker(true)}
+        style={[styles.pickerButton, { backgroundColor: theme.text }]}
+      >
+        <Text style={[styles.pickerLabel, { color: theme.contrastText }]}>
+          {t('transaction.selectCategory')}
+        </Text>
+        <Text style={[styles.pickerValue, { color: theme.contrastText }]}>
+          {t(`category.${category}`)}
+        </Text>
+      </Pressable>
+
       <View style={styles.dateTimeRow}>
         <Pressable
           onPress={() => setShowDatePicker(true)}
@@ -104,6 +131,37 @@ export default function TransactionForm({ onSubmit }: Props) {
           </Text>
         </Pressable>
       </View>
+
+      <PickerSheet
+        visible={showCategoryPicker}
+        title={t('transaction.selectCategory')}
+        doneLabel={t('common.done')}
+        onClose={() => setShowCategoryPicker(false)}
+        theme={theme}
+      >
+        <View style={styles.categoryList}>
+          {categories.map((item) => {
+            const isSelected = category === item;
+            return (
+              <Pressable
+                key={item}
+                style={[
+                  styles.categoryOption,
+                  { borderColor: theme.separator },
+                  isSelected
+                    ? [styles.categoryOptionActive, { backgroundColor: theme.elevated }]
+                    : null,
+                ]}
+                onPress={() => setCategory(item)}
+              >
+                <Text style={[styles.categoryOptionText, { color: theme.text }]}>
+                  {t(`category.${item}`)}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </PickerSheet>
 
       <PickerSheet
         visible={showDatePicker}
@@ -155,6 +213,25 @@ const styles = StyleSheet.create({
   form: {
     gap: 20,
     width: 300,
+  },
+  categoryList: {
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    gap: 8,
+  },
+  categoryOption: {
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  categoryOptionActive: {
+    borderWidth: 0,
+  },
+  categoryOptionText: {
+    fontSize: 15,
+    fontWeight: '600',
+    textTransform: 'capitalize',
   },
   input: {
     padding: 15,

@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from '@/types/Transaction';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -10,6 +11,7 @@ type TransactionItemProps = {
 
 export function TransactionItem({ transaction }: TransactionItemProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const formatCurrency = useCurrencyFormatter();
   const createdAt = new Date(transaction.createdAt);
   const valueColor = transaction.type === 'income' ? theme.income : theme.expense;
@@ -22,7 +24,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
           {createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </Text>
         <Text style={[styles.metaText, { color: theme.text }]}>
-          {transaction.type}
+          {t(`category.${transaction.category}`)}
         </Text>
       </View>
 

@@ -2,7 +2,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
-import { Transaction } from '@/types/Transaction';
+import { Transaction, TransactionCategory } from '@/types/Transaction';
 import { useBalanceDispatch } from '@/contexts/BalanceContext';
 import { useTransactionDispatch } from '@/contexts/TranscationContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -20,9 +20,10 @@ export default function TransactionModal() {
     throw new Error('Error in transaction-modal.tsx: type is invalid');
   }
 
-  const handleSubmit = (amount: number, createdAt: Date) => {
+  const handleSubmit = (amount: number, createdAt: Date, category: TransactionCategory) => {
     const transaction: Omit<Transaction, 'id'> = {
       type,
+      category,
       amount,
       createdAt,
     };
@@ -60,6 +61,7 @@ export default function TransactionModal() {
           }
         </Text>
         <TransactionForm
+          transactionType={type}
           onSubmit={handleSubmit}
         />
       </View>
