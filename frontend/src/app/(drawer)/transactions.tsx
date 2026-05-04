@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 
 import { TransactionItem } from '@/features/transaction-list/components/TransactionItem';
 import { TransactionDateSeparator } from '@/features/transaction-list/components/TransactionDateSeparator';
@@ -14,8 +15,15 @@ import {
 export default function Transactions() {
   const theme = useTheme();
   const transactions = useTransactions();
-  const [filter, setFilter] = useState<FilterType>('all');
+  const { filter: filterParam } = useLocalSearchParams<{ filter?: FilterType }>();
+  const [filter, setFilter] = useState<FilterType>(() => filterParam ?? 'all');
   const visibleTransactions = useFilteredTransactions(transactions, filter);
+
+  useEffect(() => {
+    if (filterParam) {
+      setFilter(filterParam);
+    }
+  }, [filterParam]);
 
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>

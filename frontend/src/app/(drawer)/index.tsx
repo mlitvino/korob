@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
@@ -22,13 +22,25 @@ export default function Index() {
     router.push('/transaction-modal?type=expense');
   };
 
+  const viewIncomeTransactions = () => {
+    router.push('/transactions?filter=income');
+  };
+
+  const viewExpenseTransactions = () => {
+    router.push('/transactions?filter=expense');
+  };
+
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
 
       <View style={[styles.totalsBox, { backgroundColor: theme.surface }]}>
-        <Total type={'income'} />
+        <Pressable onPress={viewIncomeTransactions} style={{ flex: 1 }}>
+          <Total type={'income'} />
+        </Pressable>
         <View style={[styles.verticalSeparator, { backgroundColor: theme.separator }]} />
-        <Total type={'expense'} />
+        <Pressable onPress={viewExpenseTransactions} style={{ flex: 1 }}>
+          <Total type={'expense'} />
+        </Pressable>
       </View>
 
       <View style={styles.content}>
@@ -70,6 +82,7 @@ const styles = StyleSheet.create({
   },
   totalsBox: {
     width: 360,
+    height: 130,
     borderRadius: 12,
     overflow: 'hidden',
     flexDirection: 'row',
