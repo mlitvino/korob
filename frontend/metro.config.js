@@ -8,6 +8,8 @@ module.exports = (async () => {
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
   };
 
+  config.resolver.sourceExts.push('sql');
+
   config.resolver = {
     ...config.resolver,
     assetExts: config.resolver.assetExts.filter(e => e !== 'svg'),
