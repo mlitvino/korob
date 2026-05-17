@@ -3,7 +3,8 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { SvgProps } from 'react-native-svg';
 
-import { changeLanguage, LanguageName } from '@/locales';
+import { type LanguageName } from '@/locales';
+import { useLanguage, useSetLanguage } from '@/contexts/SettingsContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import * as Flags from '@/components/flags';
 
@@ -21,8 +22,9 @@ const getLanguageOptions = (): LanguageOption[] => [
 export default function Language() {
   const router = useRouter();
   const theme = useTheme();
-  const { t, i18n } = useTranslation();
-  const curLang = i18n.language as LanguageName;
+  const { t } = useTranslation();
+  const curLang = useLanguage();
+  const setLanguage = useSetLanguage();
   const langOptions = getLanguageOptions();
 
   return (
@@ -46,7 +48,7 @@ export default function Language() {
               { backgroundColor: theme.surface, borderColor: theme.separator },
               pressed && styles.pressed,
             ]}
-            onPress={() => { void changeLanguage(option.value); }}
+              onPress={() => { setLanguage(option.value); }}
           >
             <View style={styles.rowLeft}>
               <Flag width={24} height={24} />
