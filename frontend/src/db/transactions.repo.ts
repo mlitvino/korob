@@ -1,11 +1,11 @@
 import { eq, desc } from 'drizzle-orm';
-import type { ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
 import type { Transaction } from '../types/Transaction';
 import {
   transactions,
   type SelectTransaction,
   type InsertTransaction,
 } from './schema';
+import { db } from './storage';
 
 const toDomain = (row: SelectTransaction): Transaction => ({
   id: row.id,
@@ -26,7 +26,7 @@ const toDbInsert = (input: Transaction): InsertTransaction => ({
 });
 
 export const TransactionsRepo = {
-  async list(db: ExpoSQLiteDatabase): Promise<Transaction[]> {
+  async list(): Promise<Transaction[]> {
     const rows = await db
       .select()
       .from(transactions)
@@ -34,7 +34,7 @@ export const TransactionsRepo = {
     return rows.map(toDomain);
   },
 
-  async getById(db: ExpoSQLiteDatabase, id: string): Promise<Transaction | null> {
+  async getById(id: string): Promise<Transaction | null> {
     const rows = await db
       .select()
       .from(transactions)
@@ -43,11 +43,15 @@ export const TransactionsRepo = {
     return rows[0] ? toDomain(rows[0]) : null;
   },
 
-  async insert(db: ExpoSQLiteDatabase, input: Transaction): Promise<void> {
+  async insert(input: Transaction): Promise<void> {
     await db.insert(transactions).values(toDbInsert(input));
   },
 
-  async deleteById(db: ExpoSQLiteDatabase, id: string): Promise<void> {
+  async deleteById(id: string): Promise<void> {
     await db.delete(transactions).where(eq(transactions.id, id));
+  },
+
+  async clear(): Promise<void> {
+    await db.delete(transactions);
   },
 };

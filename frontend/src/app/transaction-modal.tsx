@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text } from 'react-native';
 import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import uuid from 'react-native-uuid';
 
 import { Transaction, TransactionCategory } from '@/types/Transaction';
 import { useBalanceDispatch } from '@/contexts/BalanceContext';
@@ -21,7 +22,8 @@ export default function TransactionModal() {
   }
 
   const handleSubmit = (amount: number, createdAt: Date, category: TransactionCategory) => {
-    const transaction: Omit<Transaction, 'id'> = {
+    const transaction: Transaction = {
+      id: String(uuid.v4()),
       type,
       category,
       amount,
@@ -29,7 +31,7 @@ export default function TransactionModal() {
     };
 
     balanceDispatch({ type, amount });
-    transactionDispatch({ type: 'add',  transaction});
+    transactionDispatch({ type: 'add', transaction });
     router.back();
   };
 
