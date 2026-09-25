@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  ReactNode,
-} from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
 
 import { changeLanguage, getCurrentLanguage, type LanguageName } from '@/locales';
 import { loadJson, saveJson, STORAGE_KEYS } from '@/storage/persist';
@@ -17,7 +10,7 @@ type SettingsProviderProps = {
 };
 
 type SettingsDispatch = {
-  setCurrency: (currency: CurrencyCode) => void;
+  setCurrency: (currency: CurrencyCode) => void
   setLanguage: (language: LanguageName) => void;
 };
 

@@ -12,7 +12,7 @@ const loadFromStorage = (): Transaction[] => {
     if (!raw) {
       return [];
     }
-    const parsed = JSON.parse(raw) as Array<Omit<Transaction, 'createdAt'> & { createdAt: string }>;
+    const parsed = JSON.parse(raw) as (Omit<Transaction, 'createdAt'> & { createdAt: string })[];
     return parsed.map((item) => ({
       ...item,
       createdAt: new Date(item.createdAt),
@@ -44,7 +44,7 @@ let inMemoryTransactions: Transaction[] = loadFromStorage();
 export const TransactionsRepo = {
   async list(): Promise<Transaction[]> {
     return [...inMemoryTransactions].sort(
-      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
     );
   },
 

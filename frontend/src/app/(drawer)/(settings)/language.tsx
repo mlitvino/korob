@@ -48,7 +48,7 @@ export default function Language() {
               { backgroundColor: theme.surface, borderColor: theme.separator },
               pressed && styles.pressed,
             ]}
-              onPress={() => { setLanguage(option.value); }}
+            onPress={() => { setLanguage(option.value); }}
           >
             <View style={styles.rowLeft}>
               <Flag width={24} height={24} />

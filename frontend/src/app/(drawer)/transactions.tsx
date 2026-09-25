@@ -3,13 +3,14 @@ import { View, StyleSheet } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 
 import { TransactionItem } from '@/features/transaction-list/components/TransactionItem';
-import { TransactionDateSeparator } from '@/features/transaction-list/components/TransactionDateSeparator';
+import {
+  TransactionDateSeparator,
+} from '@/features/transaction-list/components/TransactionDateSeparator';
 import { TransactionFilterBar } from '@/features/transaction-list/components/TransactionFilterBar';
 import { useTransactions } from '@/contexts/TranscationContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
-  useFilteredTransactions,
-  type FilterType,
+  useFilteredTransactions, type FilterType,
 } from '@/features/transaction-list/hooks/useFilteredTransactions';
 
 export default function Transactions() {

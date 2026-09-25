@@ -66,7 +66,11 @@ export default function Index() {
             </Text>
           </View>
 
-          <IconButton icon="remove" onPress={addExpense} style={{ backgroundColor: theme.expense }} />
+          <IconButton
+            icon="remove"
+            onPress={addExpense}
+            style={{ backgroundColor: theme.expense }}
+          />
         </View>
       </View>
 

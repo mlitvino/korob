@@ -48,7 +48,7 @@ module.exports = [
       'quotes': ['warn', 'single', { avoidEscape: true }],
       'comma-dangle': ['warn', 'always-multiline'],
       'indent': ['warn', 2, { SwitchCase: 1 }],
-      'max-len': ['warn', { code: 100, ignoreUrls: true, ignoreStrings: true }],
+      'max-len': ['warn', { code: 100 }],
     },
   },
 ];
