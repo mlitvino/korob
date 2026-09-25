@@ -1,5 +1,3 @@
-import { Platform } from 'react-native';
-
 type StorageLike = {
   getItem: (key: string) => Promise<string | null>;
   setItem: (key: string, value: string) => Promise<void>;
@@ -8,26 +6,12 @@ type StorageLike = {
 
 let asyncStorage: StorageLike | null = null;
 
-const getWebStorage = (): StorageLike | null => {
-  if (typeof localStorage === 'undefined') {
-    return null;
-  }
-  return {
-    getItem: async (key) => localStorage.getItem(key),
-    setItem: async (key, value) => {
-      localStorage.setItem(key, value);
-    },
-    removeItem: async (key) => {
-      localStorage.removeItem(key);
-    },
-  };
-};
-
 const getAsyncStorage = (): StorageLike | null => {
   if (asyncStorage) {
     return asyncStorage;
   }
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const mod = require('@react-native-async-storage/async-storage');
     asyncStorage = (mod.default ?? mod) as StorageLike;
     return asyncStorage;
@@ -38,16 +22,6 @@ const getAsyncStorage = (): StorageLike | null => {
 };
 
 const getStorage = (): StorageLike => {
-  if (Platform.OS === 'web') {
-    const storage = getWebStorage();
-    if (!storage) {
-      const message = 'Web storage is not available. localStorage is undefined.';
-      console.error(message);
-      throw new Error(message);
-    }
-    return storage;
-  }
-
   const storage = getAsyncStorage();
   if (!storage) {
     const message = 'AsyncStorage is not available.'

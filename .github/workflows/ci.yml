@@ -42,3 +42,9 @@ jobs:
 
       - name: Run tests
         run: make test
+
+      - name: Lint
+        run: yarn Lint
+
+      - name: Check TypeScript
+        run: yarn tsc

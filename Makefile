@@ -11,7 +11,7 @@ start:
 down:
 	docker compose down
 
-restart: down dev
+restart: down start
 
 install:
 	cd frontend && yarn install
@@ -31,13 +31,15 @@ front:
 tunnel:
 	cd frontend && yarn start --tunnel
 
+preview:
+	cd frontend && eas build --profile preview --platform android
+
 # =========== Rebuild commands ===========
 
 build-%:
 	docker compose -f docker-compose.dev.yml up -d --build $*
 
 build-nginx:
-build-frontend:
 
 # =========== Utility commands ===========
 
@@ -48,7 +50,6 @@ log-%:
 	docker compose logs -f $*
 
 log-nginx:
-log-frontend:
 
 ps:
 	docker compose ps

@@ -3,23 +3,10 @@ include:
 
 services:
 
-  frontend:
-    build:
-      target: production
-    volumes:
-      - frontend_build:/usr/share/nginx/html
-
   # === Infrastructure ===
 
   nginx:
     ports:
       - "8080:8080"
-    depends_on:
-      frontend:
-        condition: service_completed_successfully
     volumes:
-      - frontend_build:/usr/share/nginx/html:ro
       - ./nginx/cert:/etc/nginx/cert:ro
-
-volumes:
-  frontend_build:

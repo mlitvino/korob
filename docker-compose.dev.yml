@@ -3,18 +3,6 @@ include:
 
 services:
 
-  frontend:
-    build:
-      target: development
-    volumes:
-      - ./frontend/package.json:/app/package.json:ro
-      - ./frontend/tsconfig.json:/app/tsconfig.json:ro
-      - ./frontend/app.json:/app/app.json:ro
-      - ./frontend/eslint.config.js:/app/eslint.config.js:ro
-      - ./frontend/src:/app/src:rw
-    ports:
-      - "8081:8081"
-
   # === Infrastructure ===
 
   nginx:

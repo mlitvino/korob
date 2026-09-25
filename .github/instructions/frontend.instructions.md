@@ -40,8 +40,8 @@ Use this file for frontend-specific behavior. For repository-wide context, start
 
 ## Commands
 
-- Root: `make test`, `make front`, `make build`
-- Frontend: `npm test`, `npm run lint`, `npm run tsc`
+- Root: `make test`, `make front`, `make tunnel`, `make preview`
+- Frontend: `yarn test`, `yarn lint`, `yarn tsc`
 
 ## Additional Context
 

@@ -1,24 +1,15 @@
 services:
 
-  frontend:
-    build: ./frontend
-    env_file:
-      - ./.env
-    networks:
-      - net
-
   # === Infrastructure ===
 
   nginx:
     build: ./nginx
     env_file:
       - ./.env
-    depends_on:
-      - frontend
     networks:
       - net
     healthcheck:
-      test: ["CMD-SHELL", "wget -O /dev/null ${FRONTEND_URL} || exit 1"]
+      test: ["CMD-SHELL", "wget -O /dev/null ${API_HEALTH_URL} || exit 1"]
       interval: 5s
       timeout: 2s
       start_period: 120s

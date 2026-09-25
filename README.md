@@ -6,10 +6,6 @@ A minimalistic mobile expense tracker with a focus on simplicity and ease of use
 
 Korob helps you track your expenses effortlessly with a clean, intuitive interface. Built with React Native and Expo, it offers a seamless experience across iOS and Android platforms.
 
-## Web
-
-Web version avaible at: https://valinor.ink:8080/
-
 ## Running the App
 
 ### Local
@@ -20,13 +16,12 @@ yarn install
 yarn start          # Start Expo dev server
 ```
 
-### Docker containers
+### On a device
 
 ```bash
-make build
+make front          # Expo dev server — scan the QR code with Expo Go (same Wi-Fi)
+make tunnel         # Same, but reachable from any network
 ```
-Check http://localhost:8080
-
 
 ## Roadmap
 
@@ -41,8 +36,9 @@ Check http://localhost:8080
 
 ## Tech Stack
 
-- **Frontend**: React Native (Expo) with TypeScript
-- **Nginx**: reverse proxy
+- **Frontend**: React Native (Expo) with TypeScript — iOS and Android
+- **Storage**: SQLite (expo-sqlite + Drizzle ORM) on device
+- **Nginx**: TLS reverse proxy for the planned backend API
 
 ## License
 
