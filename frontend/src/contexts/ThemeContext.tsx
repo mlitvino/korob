@@ -8,6 +8,7 @@ import React, {
 
 import { Themes, ThemeColor } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { loadJson, saveJson, STORAGE_KEYS } from '@/storage/persist';
 
 type ThemeProviderProps = {
   children: ReactNode,
@@ -19,13 +20,32 @@ type ThemeAction = { setTheme: (t: ThemeState) => void };
 const ThemeStateContext = createContext<ThemeState | undefined >(undefined);
 const ThemeDispatchContext = createContext<ThemeAction | undefined>(undefined);
 
+const isThemeName = (value: string | null): value is ThemeState =>
+  value !== null && value in Themes;
+
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const systemTheme = useColorScheme() ?? 'light';
   const [theme, setTheme] = useState<ThemeState>(systemTheme);
 
   useEffect(() => {
-    setTheme(systemTheme);
-  }, [systemTheme]);
+    let isActive = true;
+    const load = async () => {
+      const stored = await loadJson<ThemeState>(STORAGE_KEYS.theme);
+      if (isActive && isThemeName(stored)) {
+        setTheme(stored);
+      }
+    };
+
+    void load();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    void saveJson(STORAGE_KEYS.theme, theme);
+  }, [theme]);
 
   return (
     <ThemeStateContext.Provider value={ theme }>

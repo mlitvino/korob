@@ -17,14 +17,22 @@ export type ThemeColor = {
     pickerText: string;
 };
 
+export type ThemeMode = 'light' | 'dark';
+
+export type Theme = ThemeColor & {
+  mode: ThemeMode;
+};
+
 export type ThemeName =
   | 'dark'
   | 'light'
   | 'black'
   | 'black_yellow';
 
-export const Themes: Record<ThemeName, ThemeColor> = {
+export const Themes: Record<ThemeName, Theme> = {
   light:  {
+    mode: 'light',
+
     canvas:   '#c8c4cc',
     background: '#ffffff',
     surface:  '#c8c5d380',
@@ -43,6 +51,8 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     pickerText: '#111111',
   },
   black: {
+    mode: 'dark',
+
     canvas:   '#141314',
     background: '#0c0c0c',
     surface:  '#222125',
@@ -61,6 +71,8 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     pickerText: '#ffffff',
   },
   dark: {
+    mode: 'dark',
+
     canvas:   '#222025',
     background: '#2f2e33',
     surface:  '#262236',
@@ -79,6 +91,8 @@ export const Themes: Record<ThemeName, ThemeColor> = {
     pickerText: '#ffffff',
   },
   black_yellow: {
+    mode: 'dark',
+
     canvas:      '#070607',
     background:  '#000000',
     surface:     '#12100d',

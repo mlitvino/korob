@@ -1,10 +1,11 @@
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { setBackgroundColorAsync } from 'expo-system-ui';
+import { StatusBar } from 'expo-status-bar';
 
 import '@/locales';
 import { AppProviders } from '@/contexts/AppProviders';
-import { useThemeColor } from '@/contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function RootLayout() {
   return (
@@ -15,16 +16,19 @@ export default function RootLayout() {
 }
 
 function Inner() {
-  const canvas = useThemeColor('canvas');
+  const { canvas, mode } = useTheme();
 
   useEffect(() => {
     setBackgroundColorAsync(canvas).catch(console.error);
   }, [canvas]);
 
   return (
-    <Stack>
-      <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-      <Stack.Screen name="transaction-modal" options={{ presentation: 'modal' }} />
-    </Stack>
+    <>
+      <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />
+      <Stack>
+        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+        <Stack.Screen name="transaction-modal" options={{ presentation: 'modal' }} />
+      </Stack>
+    </>
   );
 }
