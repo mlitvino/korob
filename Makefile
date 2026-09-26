@@ -22,6 +22,9 @@ ci:
 test:
 	cd frontend && yarn test
 
+lint-compile:
+	cd frontend && yarn lint && yarn tsc
+
 build:
 	docker compose -f docker-compose.dev.yml up -d --build
 
