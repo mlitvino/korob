@@ -4,6 +4,7 @@ import React, {
   useContext,
   useEffect,
   useReducer,
+  useRef,
   ReactNode,
   Dispatch,
 } from 'react';
@@ -11,6 +12,7 @@ import React, {
 import type { Transaction } from '@/types/Transaction';
 import { TransactionsRepo } from '@/db/transactions.repo';
 import { initDb } from '@/db/storage';
+import { useBalanceDispatch } from '@/contexts/BalanceContext';
 
 type TransactionProviderProps = {
   children: ReactNode;
@@ -31,6 +33,10 @@ const TransactionDispatchContext =
 
 export function TransactionProvider({ children }: TransactionProviderProps) {
   const [transactions, dispatch] = useReducer(transactionReducer, initialState);
+  const balanceDispatch = useBalanceDispatch();
+  const transactionsRef = useRef(transactions);
+  transactionsRef.current = transactions;
+
   const transactionDispatch = useCallback((action: TransactionAction) => {
     if (action.type === 'add') {
       void TransactionsRepo.insert(action.transaction).catch((error) => {
@@ -38,18 +44,26 @@ export function TransactionProvider({ children }: TransactionProviderProps) {
       });
     }
     if (action.type === 'remove') {
+      const removed = transactionsRef.current.find((t) => t.id === action.id);
       void TransactionsRepo.deleteById(action.id).catch((error) => {
         console.warn('Failed to remove transaction', error);
       });
+      if (removed) {
+        balanceDispatch({
+          type: removed.type === 'income' ? 'expense' : 'income',
+          amount: removed.amount,
+        });
+      }
     }
     if (action.type === 'clear') {
       void TransactionsRepo.clear().catch((error) => {
         console.warn('Failed to clear transactions', error);
       });
+      balanceDispatch({ type: 'set', value: 0 });
     }
 
     dispatch(action);
-  }, []);
+  }, [balanceDispatch]);
 
   useEffect(() => {
     let isActive = true;

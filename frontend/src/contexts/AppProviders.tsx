@@ -13,11 +13,11 @@ export function AppProviders({ children }: AppProvidersProps) {
   return (
     <SettingsProvider>
       <ThemeProvider>
-        <TransactionProvider>
-          <BalanceProvider>
+        <BalanceProvider>
+          <TransactionProvider>
             {children}
-          </BalanceProvider>
-        </TransactionProvider>
+          </TransactionProvider>
+        </BalanceProvider>
       </ThemeProvider>
     </SettingsProvider>
   );
