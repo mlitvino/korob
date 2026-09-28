@@ -2,12 +2,16 @@ import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { setBackgroundColorAsync } from 'expo-system-ui';
 import { StatusBar } from 'expo-status-bar';
+import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
 import '@/locales';
+import { sqliteDb } from '@/db/storage';
 import { AppProviders } from '@/contexts/AppProviders';
 import { useTheme } from '@/contexts/ThemeContext';
 
 export default function RootLayout() {
+  useDrizzleStudio(sqliteDb);
+
   return (
     <AppProviders>
       <Inner />

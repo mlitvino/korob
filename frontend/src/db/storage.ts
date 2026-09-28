@@ -4,7 +4,7 @@ import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 import * as schema from './schema';
 import migrations from './migrations/migrations';
 
-const sqliteDb = SQLite.openDatabaseSync('korob.db');
+export const sqliteDb = SQLite.openDatabaseSync('korob.db');
 
 export const db = drizzle(sqliteDb, { schema });
 export type DbClient = typeof db;
