@@ -53,6 +53,15 @@ export default function Layout() {
           drawerLabel: t('nav.settings'),
         }}
       />
+      {__DEV__ && (
+        <Drawer.Screen
+          name={'debug'}
+          options={{
+            title: 'Debug',
+            drawerLabel: 'Debug',
+          }}
+        />
+      )}
     </Drawer>
   );
 }
