@@ -3,6 +3,7 @@ import React, {
   useContext,
   useEffect,
   useReducer,
+  useState,
   ReactNode,
   Dispatch,
 } from 'react';
@@ -24,13 +25,17 @@ const BalanceDispatchContext = createContext<Dispatch<BalanceAction> | undefined
 
 export function BalanceProvider({ children }: BalanceProviderProps) {
   const [balance, dispatch] = useReducer(balanceReducer, initialBalance);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     let isActive = true;
     const load = async () => {
       const storedBalance = await loadJson<number>(STORAGE_KEYS.balance);
-      if (isActive && typeof storedBalance === 'number') {
-        dispatch({ type: 'set', value: storedBalance });
+      if (isActive) {
+        if (typeof storedBalance === 'number') {
+          dispatch({ type: 'set', value: storedBalance });
+        }
+        setIsHydrated(true);
       }
     };
 
@@ -42,8 +47,11 @@ export function BalanceProvider({ children }: BalanceProviderProps) {
   }, []);
 
   useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
     void saveJson(STORAGE_KEYS.balance, balance);
-  }, [balance]);
+  }, [balance, isHydrated]);
 
   return (
     <BalanceContext value={balance}>

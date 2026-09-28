@@ -26,13 +26,17 @@ const isThemeName = (value: string | null): value is ThemeState =>
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const systemTheme = useColorScheme() ?? 'light';
   const [theme, setTheme] = useState<ThemeState>(systemTheme);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     let isActive = true;
     const load = async () => {
       const stored = await loadJson<ThemeState>(STORAGE_KEYS.theme);
-      if (isActive && isThemeName(stored)) {
-        setTheme(stored);
+      if (isActive) {
+        if (isThemeName(stored)) {
+          setTheme(stored);
+        }
+        setIsHydrated(true);
       }
     };
 
@@ -44,8 +48,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, []);
 
   useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
     void saveJson(STORAGE_KEYS.theme, theme);
-  }, [theme]);
+  }, [theme, isHydrated]);
 
   return (
     <ThemeStateContext.Provider value={ theme }>
