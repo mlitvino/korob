@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { useTranslation } from 'react-i18next';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import HeaderLeft from '@/components/HeaderLeft';
+
+const SWIPE_EDGE_WIDTH_RATIO = 0.2;
 
 function DrawerMenuButton() {
   const navigation = useNavigation<DrawerNavigationProp<Record<string, object>>>();
@@ -20,6 +22,7 @@ function DrawerMenuButton() {
 export default function Layout() {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { width } = useWindowDimensions();
 
   return (
     <Drawer
@@ -30,6 +33,7 @@ export default function Layout() {
         headerTitleStyle: { color: theme.text },
         headerShadowVisible: false,
         headerLeft: () => <DrawerMenuButton />,
+        swipeEdgeWidth: width * SWIPE_EDGE_WIDTH_RATIO,
       }}
     >
       <Drawer.Screen

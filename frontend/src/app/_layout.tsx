@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { setBackgroundColorAsync } from 'expo-system-ui';
 import { StatusBar } from 'expo-status-bar';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
@@ -13,9 +14,11 @@ export default function RootLayout() {
   useDrizzleStudio(sqliteDb);
 
   return (
-    <AppProviders>
-      <Inner />
-    </AppProviders>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AppProviders>
+        <Inner />
+      </AppProviders>
+    </GestureHandlerRootView>
   );
 }
 
