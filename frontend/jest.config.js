@@ -10,6 +10,12 @@ module.exports = {
       '@expo-google-fonts/.*|' +
       'react-navigation|' +
       '@react-navigation/.*|' +
+      'react-native-paper|' +
+      'react-native-paper-dates|' +
+      'color|' +
+      'color-string|' +
+      'color-name|' +
+      'color-convert|' +
       '@sentry/react-native|' +
       'native-base|' +
       'react-native-svg|' +

@@ -4,6 +4,7 @@ const fi: LocaleResource = {
   translation: {
     common: {
       done: 'Valmis',
+      cancel: 'Peruuta',
     },
     home: {
       balance: 'Saldo',

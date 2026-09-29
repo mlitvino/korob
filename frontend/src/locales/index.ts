@@ -1,10 +1,18 @@
 import { createInstance } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
+import {
+  registerTranslation,
+  en as pickerEn,
+  fi as pickerFi,
+} from 'react-native-paper-dates';
 
 import en from './en';
 import fi from './fi';
 import type { LocaleResource } from './LocaleResource';
+
+registerTranslation('en', pickerEn);
+registerTranslation('fi', pickerFi);
 
 export type Resources = {
   en: LocaleResource;

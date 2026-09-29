@@ -7,9 +7,7 @@ import {
   Text,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import DateTimePicker, {
-  DateType,
-} from 'react-native-ui-datepicker';
+import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 
 import IconButton from '@/components/IconButton';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -20,9 +18,7 @@ import {
 import {
   formatDateInput,
   formatTimeInput,
-  toDate,
 } from '@/features/transaction-form/utils/dateTimeHelpers';
-import { useCalendarStyles } from '@/features/transaction-form/hooks/useCalendarStyles';
 import type { TransactionCategory, TransactionType } from '@/types/Transaction';
 
 type Props = {
@@ -39,8 +35,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const theme = useTheme();
-  const { t } = useTranslation();
-  const calendarStyles = useCalendarStyles();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (!categories.includes(category)) {
@@ -48,29 +43,22 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
     }
   }, [categories, category]);
 
-  const handleDateValueChange = ({ date }: { date: DateType }) => {
-    const selectedDate = toDate(date);
-    if (!selectedDate) {
+  const handleDateConfirm = ({ date }: { date: Date | undefined }) => {
+    setShowDatePicker(false);
+    if (!date) {
       return;
     }
 
     const next = new Date(createdAt);
-    next.setFullYear(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      selectedDate.getDate(),
-    );
+    next.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
     setCreatedAt(next);
   };
 
-  const handleTimeValueChange = ({ date }: { date: DateType }) => {
-    const selectedTime = toDate(date);
-    if (!selectedTime) {
-      return;
-    }
+  const handleTimeConfirm = ({ hours, minutes }: { hours: number; minutes: number }) => {
+    setShowTimePicker(false);
 
     const next = new Date(createdAt);
-    next.setHours(selectedTime.getHours(), selectedTime.getMinutes(), 0, 0);
+    next.setHours(hours, minutes, 0, 0);
     setCreatedAt(next);
   };
 
@@ -163,40 +151,27 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         </View>
       </PickerSheet>
 
-      <PickerSheet
+      <DatePickerModal
+        mode="single"
+        locale={i18n.language}
         visible={showDatePicker}
-        title={t('transaction.selectDate')}
-        doneLabel={t('common.done')}
-        onClose={() => setShowDatePicker(false)}
-        theme={theme}
-      >
-        <DateTimePicker
-          mode="single"
-          date={createdAt}
-          onChange={handleDateValueChange}
-          styles={calendarStyles}
-        />
-      </PickerSheet>
+        date={createdAt}
+        onDismiss={() => setShowDatePicker(false)}
+        onConfirm={handleDateConfirm}
+      />
 
-      <PickerSheet
+      <TimePickerModal
+        locale={i18n.language}
         visible={showTimePicker}
-        title={t('transaction.selectTime')}
-        doneLabel={t('common.done')}
-        onClose={() => setShowTimePicker(false)}
-        theme={theme}
-      >
-        <DateTimePicker
-          mode="single"
-          date={createdAt}
-          timePicker
-          use12Hours={false}
-          initialView="time"
-          hideHeader
-          hideWeekdays
-          onChange={handleTimeValueChange}
-          styles={calendarStyles}
-        />
-      </PickerSheet>
+        hours={createdAt.getHours()}
+        minutes={createdAt.getMinutes()}
+        use24HourClock
+        label={t('transaction.selectTime')}
+        cancelLabel={t('common.cancel')}
+        confirmLabel={t('common.done')}
+        onDismiss={() => setShowTimePicker(false)}
+        onConfirm={handleTimeConfirm}
+      />
 
       <IconButton
         icon={'check'}

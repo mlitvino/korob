@@ -4,6 +4,7 @@ const en: LocaleResource = {
   translation: {
     common: {
       done: 'Done',
+      cancel: 'Cancel',
     },
     home: {
       balance: 'Balance',

@@ -2,6 +2,7 @@ export type LocaleResource = {
   translation: {
     common: {
       done: string;
+      cancel: string;
     };
     home: {
       balance: string;
