@@ -5,7 +5,6 @@ module.exports = [
   {
     ignores: [
       'dist/*',
-      'app-example/*',
     ],
   },
   {

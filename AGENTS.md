@@ -9,7 +9,6 @@ This is the shared starting point for AI coding agents working in this repositor
 - nginx is the TLS gateway for a planned backend API; until that exists it only serves `/health`.
 - Main app code is in [frontend/src](frontend/src).
 - Local persistence: SQLite via expo-sqlite + Drizzle in [frontend/src/db](frontend/src/db); settings and balance in AsyncStorage via [frontend/src/storage](frontend/src/storage).
-- Reference code in [frontend/app-example](frontend/app-example) is not production code.
 
 ## Quick Commands
 
@@ -30,7 +29,7 @@ This is the shared starting point for AI coding agents working in this repositor
 - Keep Expo Router structure under [frontend/src/app](frontend/src/app): root stack + drawer group + modal route.
 - Keep feature-local UI and logic under [frontend/src/features](frontend/src/features), grouped by page/flow concern.
 - Keep global state in context/reducer modules under [frontend/src/contexts](frontend/src/contexts).
-- Keep transaction domain model aligned with [frontend/src/types/Transaction.tsx](frontend/src/types/Transaction.tsx).
+- Keep transaction domain model aligned with [frontend/src/types/Transaction.ts](frontend/src/types/Transaction.ts).
 - Use theme and locale infrastructure from [frontend/src/constants/theme.ts](frontend/src/constants/theme.ts), [frontend/src/contexts/ThemeContext.tsx](frontend/src/contexts/ThemeContext.tsx), and [frontend/src/locales/index.ts](frontend/src/locales/index.ts).
 
 ## Conventions That Matter

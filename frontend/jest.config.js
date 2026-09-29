@@ -31,6 +31,5 @@ module.exports = {
     "!**/expo-env.d.ts",
     "!**/.expo/**",
     "!**/dist/**",
-    "!**/app-example/**",
   ],
 };
