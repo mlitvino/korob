@@ -17,6 +17,7 @@ type LanguageOption = {
 const getLanguageOptions = (): LanguageOption[] => [
   { flag: Flags.GbFlag, label: 'English', value: 'en' },
   { flag: Flags.FiFlag, label: 'Suomi', value: 'fi' },
+  { flag: Flags.RuFlag, label: 'Русский', value: 'ru' },
 ];
 
 export default function Language() {

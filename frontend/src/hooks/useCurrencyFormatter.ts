@@ -2,9 +2,13 @@ import { useTranslation } from 'react-i18next';
 
 import { useCurrency } from '@/contexts/SettingsContext';
 
-function resolveLocale(language: string) {
+export function resolveLocale(language: string) {
   if (language.startsWith('fi')) {
     return 'fi-FI';
+  }
+
+  if (language.startsWith('ru')) {
+    return 'ru-RU';
   }
 
   return 'en-US';

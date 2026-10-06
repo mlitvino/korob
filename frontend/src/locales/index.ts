@@ -5,23 +5,28 @@ import {
   registerTranslation,
   en as pickerEn,
   fi as pickerFi,
+  ru as pickerRu,
 } from 'react-native-paper-dates';
 
 import en from './en';
 import fi from './fi';
+import ru from './ru';
 import type { LocaleResource } from './LocaleResource';
 
 registerTranslation('en', pickerEn);
 registerTranslation('fi', pickerFi);
+registerTranslation('ru', pickerRu);
 
 export type Resources = {
   en: LocaleResource;
   fi: LocaleResource;
+  ru: LocaleResource;
 };
 
 export const resources: Resources = {
   en,
   fi,
+  ru,
 };
 
 export type LanguageName = keyof Resources;
