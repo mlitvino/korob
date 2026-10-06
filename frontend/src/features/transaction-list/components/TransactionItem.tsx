@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import type { Transaction } from '@/types/Transaction';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import {
+  formatTimeInput,
+  uses12HourClock,
+} from '@/features/transaction-form/utils/dateTimeHelpers';
 
 type TransactionItemProps = {
   transaction: Transaction;
@@ -11,7 +15,7 @@ type TransactionItemProps = {
 
 export function TransactionItem({ transaction }: TransactionItemProps) {
   const theme = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const formatCurrency = useCurrencyFormatter();
   const createdAt = new Date(transaction.createdAt);
   const valueColor = transaction.type === 'income' ? theme.income : theme.expense;
@@ -21,7 +25,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
     <View style={[styles.transactionItem, { backgroundColor: theme.canvas }]}>
       <View style={styles.metaRow}>
         <Text style={[styles.metaText, { color: theme.text }]}>
-          {createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          {formatTimeInput(createdAt, uses12HourClock(i18n.language))}
         </Text>
         <Text style={[styles.metaText, { color: theme.text }]}>
           {t(`category.${transaction.category}`)}

@@ -18,6 +18,7 @@ import {
 import {
   formatDateInput,
   formatTimeInput,
+  uses12HourClock,
 } from '@/features/transaction-form/utils/dateTimeHelpers';
 import type { TransactionCategory, TransactionType } from '@/types/Transaction';
 
@@ -36,6 +37,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const theme = useTheme();
   const { t, i18n } = useTranslation();
+  const use12Hours = uses12HourClock(i18n.language);
 
   useEffect(() => {
     if (!categories.includes(category)) {
@@ -115,7 +117,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
             {t('transaction.selectTime')}
           </Text>
           <Text style={[styles.pickerValue, { color: theme.contrastText }]}>
-            {formatTimeInput(createdAt)}
+            {formatTimeInput(createdAt, use12Hours)}
           </Text>
         </Pressable>
       </View>
@@ -165,7 +167,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         visible={showTimePicker}
         hours={createdAt.getHours()}
         minutes={createdAt.getMinutes()}
-        use24HourClock
+        use24HourClock={!use12Hours}
         label={t('transaction.selectTime')}
         cancelLabel={t('common.cancel')}
         confirmLabel={t('common.done')}
