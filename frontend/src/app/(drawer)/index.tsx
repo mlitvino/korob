@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
-import { useBalance } from '@/contexts/BalanceContext';
+import { useBalance } from '@/contexts/TranscationContext';
 import IconButton from '@/components/IconButton';
 import Total from '@/components/Total';
 import { useTheme } from '@/contexts/ThemeContext';

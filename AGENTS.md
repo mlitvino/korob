@@ -8,7 +8,7 @@ This is the shared starting point for AI coding agents working in this repositor
 - The app targets **iOS and Android only** — there is no web target. Do not add `.web.ts` overrides, `Platform.OS === 'web'` branches, or `react-native-web`.
 - nginx is the TLS gateway for a planned backend API; until that exists it only serves `/health`.
 - Main app code is in [frontend/src](frontend/src).
-- Local persistence: SQLite via expo-sqlite + Drizzle in [frontend/src/db](frontend/src/db); settings and balance in AsyncStorage via [frontend/src/storage](frontend/src/storage).
+- Local persistence: SQLite via expo-sqlite + Drizzle in [frontend/src/db](frontend/src/db); settings in AsyncStorage via [frontend/src/storage](frontend/src/storage).
 
 ## Quick Commands
 
@@ -36,7 +36,7 @@ This is the shared starting point for AI coding agents working in this repositor
 
 - TypeScript is strict; prefer `type` over `interface` for props and action unions.
 - Use typed route params and validate critical runtime params in modal flows.
-- For new transactions, update both transaction and balance reducers in the same submit path.
+- Balance is derived from transactions via `useBalance` in [frontend/src/contexts/TranscationContext.tsx](frontend/src/contexts/TranscationContext.tsx); never store it separately.
 - Prefer translated strings and theme tokens over hardcoded labels and colors.
 - Preserve provider layering in [frontend/src/contexts/AppProviders.tsx](frontend/src/contexts/AppProviders.tsx).
 

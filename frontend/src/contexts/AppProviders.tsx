@@ -3,7 +3,6 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { PaperProvider } from 'react-native-paper';
 
 import { usePaperTheme } from '@/hooks/usePaperTheme';
-import { BalanceProvider } from './BalanceContext';
 import { SettingsProvider } from './SettingsContext';
 import { TransactionProvider } from './TranscationContext';
 import { ThemeProvider } from './ThemeContext';
@@ -35,11 +34,9 @@ export function AppProviders({ children }: AppProvidersProps) {
     <SettingsProvider>
       <ThemeProvider>
         <PaperThemeProvider>
-          <BalanceProvider>
-            <TransactionProvider>
-              {children}
-            </TransactionProvider>
-          </BalanceProvider>
+          <TransactionProvider>
+            {children}
+          </TransactionProvider>
         </PaperThemeProvider>
       </ThemeProvider>
     </SettingsProvider>

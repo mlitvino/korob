@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
 
 import { Transaction, TransactionCategory } from '@/types/Transaction';
-import { useBalanceDispatch } from '@/contexts/BalanceContext';
 import { useTransactionDispatch } from '@/contexts/TranscationContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import TransactionForm from '@/features/transaction-form/components/TransactionForm';
@@ -12,7 +11,6 @@ import HeaderLeft from '@/components/HeaderLeft';
 
 export default function TransactionModal() {
   const { type } = useLocalSearchParams<{ type: 'income' | 'expense' }>();
-  const balanceDispatch = useBalanceDispatch();
   const transactionDispatch = useTransactionDispatch();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -30,7 +28,6 @@ export default function TransactionModal() {
       createdAt,
     };
 
-    balanceDispatch({ type, amount });
     transactionDispatch({ type: 'add', transaction });
     router.back();
   };

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, Button } from 'react-native';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react-native';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 
-import { BalanceProvider, useBalance, useBalanceDispatch } from '@/contexts/BalanceContext';
 import {
   TransactionProvider,
+  useBalance,
   useTransactionDispatch,
   useTransactions,
 } from '@/contexts/TranscationContext';
@@ -28,7 +28,6 @@ const expense: Transaction = {
 
 function Harness() {
   const balance = useBalance();
-  const balanceDispatch = useBalanceDispatch();
   const transactions = useTransactions();
   const transactionDispatch = useTransactionDispatch();
 
@@ -38,17 +37,11 @@ function Harness() {
       <Text testID="count">{transactions.length}</Text>
       <Button
         title="add-income"
-        onPress={() => {
-          balanceDispatch({ type: 'income', amount: income.amount });
-          transactionDispatch({ type: 'add', transaction: income });
-        }}
+        onPress={() => transactionDispatch({ type: 'add', transaction: income })}
       />
       <Button
         title="add-expense"
-        onPress={() => {
-          balanceDispatch({ type: 'expense', amount: expense.amount });
-          transactionDispatch({ type: 'add', transaction: expense });
-        }}
+        onPress={() => transactionDispatch({ type: 'add', transaction: expense })}
       />
       <Button
         title="remove-income"
@@ -64,18 +57,16 @@ function Harness() {
 
 function renderHarness() {
   return render(
-    <BalanceProvider>
-      <TransactionProvider>
-        <Harness />
-      </TransactionProvider>
-    </BalanceProvider>,
+    <TransactionProvider>
+      <Harness />
+    </TransactionProvider>,
   );
 }
 
-describe('TransactionProvider balance adjustments', () => {
-  it('reverses the balance when a transaction is removed', async () => {
+describe('TransactionProvider balance', () => {
+  it('derives the balance from added and removed transactions', () => {
     renderHarness();
-    await waitFor(() => expect(screen.getByTestId('balance')).toHaveTextContent('0'));
+    expect(screen.getByTestId('balance')).toHaveTextContent('0');
 
     fireEvent.press(screen.getByText('add-income'));
     expect(screen.getByTestId('balance')).toHaveTextContent('100');
@@ -86,9 +77,8 @@ describe('TransactionProvider balance adjustments', () => {
     expect(screen.getByTestId('count')).toHaveTextContent('0');
   });
 
-  it('resets the balance to zero when all transactions are cleared', async () => {
+  it('nets income against expenses and resets when cleared', () => {
     renderHarness();
-    await waitFor(() => expect(screen.getByTestId('balance')).toHaveTextContent('0'));
 
     fireEvent.press(screen.getByText('add-income'));
     fireEvent.press(screen.getByText('add-expense'));

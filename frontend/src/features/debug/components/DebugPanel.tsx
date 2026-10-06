@@ -1,13 +1,11 @@
 import { View, Text, Pressable, StyleSheet, Alert } from 'react-native';
 
 import { useTheme } from '@/contexts/ThemeContext';
-import { useBalanceDispatch } from '@/contexts/BalanceContext';
 import { useTransactionDispatch } from '@/contexts/TranscationContext';
 import { mockTransactions } from '@/features/debug/mockTransactions';
 
 export function DebugPanel() {
   const theme = useTheme();
-  const balanceDispatch = useBalanceDispatch();
   const transactionDispatch = useTransactionDispatch();
 
   const wipeAllData = () => {
@@ -17,7 +15,6 @@ export function DebugPanel() {
   const seedStartingData = () => {
     transactionDispatch({ type: 'clear' });
     mockTransactions.forEach((transaction) => {
-      balanceDispatch({ type: transaction.type, amount: transaction.amount });
       transactionDispatch({ type: 'add', transaction });
     });
   };

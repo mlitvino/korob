@@ -37,7 +37,6 @@ export const STORAGE_KEYS = {
   currency: 'settings.currency',
   language: 'settings.language',
   theme: 'settings.theme',
-  balance: 'balance.value',
 } as const;
 
 export const loadJson = async <T>(key: string): Promise<T | null> => {
