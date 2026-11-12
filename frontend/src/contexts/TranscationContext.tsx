@@ -5,8 +5,8 @@ import React, {
   useEffect,
   useMemo,
   useReducer,
+  useState,
   ReactNode,
-  Dispatch,
 } from 'react';
 
 import type { CurrencyCode } from '@/types/Currency';
@@ -26,29 +26,29 @@ type TransactionAction =
 
 type TransactionState = Transaction[];
 
+type TransactionDispatch = (action: TransactionAction) => Promise<void>;
+
 const initialState: TransactionState = [];
 const TransactionContext = createContext<TransactionState | undefined>(undefined);
-const TransactionDispatchContext =
-  createContext<Dispatch<TransactionAction> | undefined>(undefined);
+const TransactionDispatchContext = createContext<TransactionDispatch | undefined>(undefined);
+const TransactionLoadingContext = createContext<boolean | undefined>(undefined);
 
 export function TransactionProvider({ children }: TransactionProviderProps) {
   const [transactions, dispatch] = useReducer(transactionReducer, initialState);
 
-  const transactionDispatch = useCallback((action: TransactionAction) => {
-    if (action.type === 'add') {
-      void TransactionsRepo.insert(action.transaction).catch((error) => {
-        console.warn('Failed to persist transaction', error);
-      });
-    }
-    if (action.type === 'remove') {
-      void TransactionsRepo.deleteById(action.id).catch((error) => {
-        console.warn('Failed to remove transaction', error);
-      });
-    }
-    if (action.type === 'clear') {
-      void TransactionsRepo.clear().catch((error) => {
-        console.warn('Failed to clear transactions', error);
-      });
+  const [isLoading, setIsLoading] = useState(true);
+
+  const transactionDispatch = useCallback<TransactionDispatch>(async (action) => {
+    switch (action.type) {
+      case 'add':
+        await TransactionsRepo.insert(action.transaction);
+        break;
+      case 'remove':
+        await TransactionsRepo.deleteById(action.id);
+        break;
+      case 'clear':
+        await TransactionsRepo.clear();
+        break;
     }
 
     dispatch(action);
@@ -66,6 +66,10 @@ export function TransactionProvider({ children }: TransactionProviderProps) {
         }
       } catch (error) {
         console.warn('Failed to load transactions', error);
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
       }
     };
 
@@ -79,7 +83,9 @@ export function TransactionProvider({ children }: TransactionProviderProps) {
   return (
     <TransactionContext.Provider value={transactions}>
       <TransactionDispatchContext.Provider value={transactionDispatch}>
-        {children}
+        <TransactionLoadingContext.Provider value={isLoading}>
+          {children}
+        </TransactionLoadingContext.Provider>
       </TransactionDispatchContext.Provider>
     </TransactionContext.Provider>
   );
@@ -104,7 +110,15 @@ export function useBalance(currency: CurrencyCode): number {
     ), [transactions, currency]);
 }
 
-export function useTransactionDispatch(): Dispatch<TransactionAction> {
+export function useTransactionsLoading(): boolean {
+  const ctx = useContext(TransactionLoadingContext);
+  if (ctx === undefined) {
+    throw new Error('useTransactionsLoading must be used within a TransactionProvider');
+  }
+  return ctx;
+}
+
+export function useTransactionDispatch(): TransactionDispatch {
   const ctx = useContext(TransactionDispatchContext);
   if (ctx === undefined) {
     throw new Error('useTransactionDispatch must be used within a TransactionProvider');

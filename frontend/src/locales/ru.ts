@@ -5,6 +5,7 @@ const ru: LocaleResource = {
     common: {
       done: 'Готово',
       cancel: 'Отмена',
+      loading: 'Загрузка',
     },
     home: {
       balance: 'Баланс',
@@ -17,6 +18,7 @@ const ru: LocaleResource = {
       selectTime: 'Время',
       selectCategory: 'Категория',
       filterAll: 'Все',
+      saveFailed: 'Не удалось сохранить транзакцию',
     },
     category: {
       salary: 'Зарплата',

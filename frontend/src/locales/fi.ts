@@ -5,6 +5,7 @@ const fi: LocaleResource = {
     common: {
       done: 'Valmis',
       cancel: 'Peruuta',
+      loading: 'Ladataan',
     },
     home: {
       balance: 'Saldo',
@@ -17,6 +18,7 @@ const fi: LocaleResource = {
       selectTime: 'Aika',
       selectCategory: 'Kategoria',
       filterAll: 'Kaikki',
+      saveFailed: 'Tapahtuman tallennus epäonnistui',
     },
     category: {
       salary: 'Palkka',

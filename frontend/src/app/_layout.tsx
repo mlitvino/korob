@@ -9,6 +9,8 @@ import '@/locales';
 import { sqliteDb } from '@/db/storage';
 import { AppProviders } from '@/contexts/AppProviders';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useTransactionsLoading } from '@/contexts/TranscationContext';
+import LoadingOverlay from '@/components/LoadingOverlay';
 
 export default function RootLayout() {
   useDrizzleStudio(sqliteDb);
@@ -24,6 +26,7 @@ export default function RootLayout() {
 
 function Inner() {
   const { canvas, mode } = useTheme();
+  const isLoading = useTransactionsLoading();
 
   useEffect(() => {
     setBackgroundColorAsync(canvas).catch(console.error);
@@ -36,6 +39,7 @@ function Inner() {
         <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
         <Stack.Screen name="transaction-modal" options={{ presentation: 'modal' }} />
       </Stack>
+      {isLoading ? <LoadingOverlay /> : null}
     </>
   );
 }

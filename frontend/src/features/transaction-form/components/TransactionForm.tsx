@@ -25,11 +25,12 @@ import type { TransactionCategory, TransactionType } from '@/types/Transaction';
 
 type Props = {
   transactionType: TransactionType;
-  onSubmit: (amount: number, occurredAt: Date, category: TransactionCategory) => void;
+  onSubmit: (amount: number, occurredAt: Date, category: TransactionCategory) => Promise<void>;
 };
 
 export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [amount, setAmount] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [occurredAt, setOccurredAt] = useState(() => new Date());
   const categories = useMemo(() => getCategoriesByType(transactionType), [transactionType]);
   const [category, setCategory] = useState<TransactionCategory>(categories[0]);
@@ -65,12 +66,18 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
     setOccurredAt(next);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const value = parseAmount(amount);
 
-    if (value !== null) {
-      onSubmit(value, occurredAt, category);
-      setAmount('');
+    if (value === null || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await onSubmit(value, occurredAt, category);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -180,7 +187,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         icon={'check'}
         label={t('common.done')}
         variant="wide"
-        onPress={handleSubmit}
+        onPress={() => void handleSubmit()}
         style={{ backgroundColor: theme.text }}
       />
     </View>

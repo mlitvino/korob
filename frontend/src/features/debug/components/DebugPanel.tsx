@@ -8,15 +8,23 @@ export function DebugPanel() {
   const theme = useTheme();
   const transactionDispatch = useTransactionDispatch();
 
-  const wipeAllData = () => {
-    transactionDispatch({ type: 'clear' });
+  const wipeAllData = async () => {
+    try {
+      await transactionDispatch({ type: 'clear' });
+    } catch (error) {
+      Alert.alert('Wipe failed', String(error));
+    }
   };
 
-  const seedStartingData = () => {
-    transactionDispatch({ type: 'clear' });
-    mockTransactions.forEach((transaction) => {
-      transactionDispatch({ type: 'add', transaction });
-    });
+  const seedStartingData = async () => {
+    try {
+      await transactionDispatch({ type: 'clear' });
+      for (const transaction of mockTransactions) {
+        await transactionDispatch({ type: 'add', transaction });
+      }
+    } catch (error) {
+      Alert.alert('Seeding failed', String(error));
+    }
   };
 
   const confirm = (title: string, message: string, onConfirm: () => void) => {
@@ -33,7 +41,7 @@ export function DebugPanel() {
       onPress: () => confirm(
         'Wipe all data',
         'This deletes every transaction and resets the balance to 0. This cannot be undone.',
-        wipeAllData,
+        () => void wipeAllData(),
       ),
     },
     {
@@ -42,7 +50,7 @@ export function DebugPanel() {
       onPress: () => confirm(
         'Seed starting data',
         'This replaces all current data with a fixed set of sample transactions.',
-        seedStartingData,
+        () => void seedStartingData(),
       ),
     },
   ];

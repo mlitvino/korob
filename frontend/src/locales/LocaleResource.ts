@@ -3,6 +3,7 @@ export type LocaleResource = {
     common: {
       done: string;
       cancel: string;
+      loading: string;
     };
     home: {
       balance: string;
@@ -15,6 +16,7 @@ export type LocaleResource = {
       selectTime: string;
       selectCategory: string;
       filterAll: string;
+      saveFailed: string;
     };
     category: {
       salary: string;

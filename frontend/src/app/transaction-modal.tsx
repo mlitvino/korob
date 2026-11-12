@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -21,7 +21,11 @@ export default function TransactionModal() {
     throw new Error('Error in transaction-modal.tsx: type is invalid');
   }
 
-  const handleSubmit = (amount: number, occurredAt: Date, category: TransactionCategory) => {
+  const handleSubmit = async (
+    amount: number,
+    occurredAt: Date,
+    category: TransactionCategory,
+  ) => {
     const now = new Date();
     const transaction: Transaction = {
       id: String(uuid.v4()),
@@ -34,8 +38,13 @@ export default function TransactionModal() {
       updatedAt: now,
     };
 
-    transactionDispatch({ type: 'add', transaction });
-    router.back();
+    try {
+      await transactionDispatch({ type: 'add', transaction });
+      router.back();
+    } catch (error) {
+      console.warn('Failed to persist transaction', error);
+      Alert.alert(t('transaction.saveFailed'));
+    }
   };
 
   return (

@@ -5,6 +5,7 @@ const en: LocaleResource = {
     common: {
       done: 'Done',
       cancel: 'Cancel',
+      loading: 'Loading',
     },
     home: {
       balance: 'Balance',
@@ -17,6 +18,7 @@ const en: LocaleResource = {
       selectTime: 'Time',
       selectCategory: 'Category',
       filterAll: 'All',
+      saveFailed: 'Could not save the transaction',
     },
     category: {
       salary: 'Salary',
