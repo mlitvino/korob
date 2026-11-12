@@ -15,6 +15,13 @@
       "when": 1794516351514,
       "tag": "0001_add_updated_at",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1794516617241,
+      "tag": "0002_add_currency",
+      "breakpoints": true
     }
   ]
 }

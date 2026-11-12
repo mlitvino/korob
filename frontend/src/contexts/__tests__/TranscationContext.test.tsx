@@ -15,6 +15,7 @@ const income: Transaction = {
   type: 'income',
   category: 'salary',
   amount: 100,
+  currency: 'EUR',
   createdAt: new Date(),
   updatedAt: new Date(),
 };
@@ -24,12 +25,15 @@ const expense: Transaction = {
   type: 'expense',
   category: 'food',
   amount: 30,
+  currency: 'EUR',
   createdAt: new Date(),
   updatedAt: new Date(),
 };
 
+const usdIncome: Transaction = { ...income, id: 'income-usd', amount: 500, currency: 'USD' };
+
 function Harness() {
-  const balance = useBalance();
+  const balance = useBalance('EUR');
   const transactions = useTransactions();
   const transactionDispatch = useTransactionDispatch();
 
@@ -44,6 +48,10 @@ function Harness() {
       <Button
         title="add-expense"
         onPress={() => transactionDispatch({ type: 'add', transaction: expense })}
+      />
+      <Button
+        title="add-usd-income"
+        onPress={() => transactionDispatch({ type: 'add', transaction: usdIncome })}
       />
       <Button
         title="remove-income"
@@ -90,5 +98,14 @@ describe('TransactionProvider balance', () => {
     fireEvent.press(screen.getByText('clear'));
     expect(screen.getByTestId('balance')).toHaveTextContent('0');
     expect(screen.getByTestId('count')).toHaveTextContent('0');
+  });
+
+  it('only counts transactions in the requested currency', () => {
+    renderHarness();
+
+    fireEvent.press(screen.getByText('add-income'));
+    fireEvent.press(screen.getByText('add-usd-income'));
+    expect(screen.getByTestId('balance')).toHaveTextContent('100');
+    expect(screen.getByTestId('count')).toHaveTextContent('2');
   });
 });

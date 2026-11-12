@@ -9,6 +9,7 @@ import React, {
   Dispatch,
 } from 'react';
 
+import type { CurrencyCode } from '@/types/Currency';
 import type { Transaction } from '@/types/Transaction';
 import { TransactionsRepo } from '@/db/transactions.repo';
 import { initDb } from '@/db/storage';
@@ -92,13 +93,15 @@ export function useTransactions(): TransactionState {
   return ctx;
 }
 
-export function useBalance(): number {
+export function useBalance(currency: CurrencyCode): number {
   const transactions = useTransactions();
 
-  return useMemo(() => transactions.reduce(
-    (balance, t) => (t.type === 'income' ? balance + t.amount : balance - t.amount),
-    0,
-  ), [transactions]);
+  return useMemo(() => transactions
+    .filter((t) => t.currency === currency)
+    .reduce(
+      (balance, t) => (t.type === 'income' ? balance + t.amount : balance - t.amount),
+      0,
+    ), [transactions, currency]);
 }
 
 export function useTransactionDispatch(): Dispatch<TransactionAction> {

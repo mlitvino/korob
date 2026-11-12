@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { useCurrency } from '@/contexts/SettingsContext';
+import type { CurrencyCode } from '@/types/Currency';
 
 export function resolveLocale(language: string) {
   if (language.startsWith('fi')) {
@@ -16,13 +17,11 @@ export function resolveLocale(language: string) {
 
 export function useCurrencyFormatter() {
   const { i18n } = useTranslation();
-  const currency = useCurrency();
+  const defaultCurrency = useCurrency();
+  const locale = resolveLocale(i18n.language);
 
-  const formatter = new Intl.NumberFormat(resolveLocale(i18n.language), {
-    style: 'currency',
-    currency,
-    minimumFractionDigits: 2,
-  });
-
-  return (amount: number) => formatter.format(amount);
+  return (amount: number, currency: CurrencyCode = defaultCurrency) => new Intl.NumberFormat(
+    locale,
+    { style: 'currency', currency, minimumFractionDigits: 2 },
+  ).format(amount);
 }

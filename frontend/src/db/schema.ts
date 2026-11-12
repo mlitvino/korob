@@ -1,3 +1,4 @@
+import type { CurrencyCode } from '@/types/Currency';
 import { TransactionCategory, TransactionType } from '@/types/Transaction';
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
@@ -6,6 +7,7 @@ export const transactions = sqliteTable('transactions', {
   type: text('type').$type<TransactionType>().notNull(),
   category: text('category').$type<TransactionCategory>().notNull(),
   amount: integer('amount').notNull(),
+  currency: text('currency').$type<CurrencyCode>().notNull().default('EUR'),
   createdAt: integer('createdAt').notNull(),
   updatedAt: integer('updatedAt').notNull().default(0),
   description: text('description'),

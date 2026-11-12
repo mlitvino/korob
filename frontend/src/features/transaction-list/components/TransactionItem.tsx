@@ -33,7 +33,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
       </View>
 
       <Text style={[styles.valueText, { color: valueColor }]}>
-        {valuePrefix}{formatCurrency(transaction.amount)}
+        {valuePrefix}{formatCurrency(transaction.amount, transaction.currency)}
       </Text>
     </View>
   );

@@ -2,8 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState, ReactNo
 
 import { changeLanguage, getCurrentLanguage, type LanguageName } from '@/locales';
 import { loadJson, saveJson, STORAGE_KEYS } from '@/storage/persist';
-
-export type CurrencyCode = 'EUR' | 'USD';
+import type { CurrencyCode } from '@/types/Currency';
 
 type SettingsProviderProps = {
   children: ReactNode;

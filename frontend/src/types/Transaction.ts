@@ -1,3 +1,5 @@
+import type { CurrencyCode } from './Currency';
+
 export type TransactionType = 'income' | 'expense';
 
 export type TransactionCategory =
@@ -18,6 +20,7 @@ export type Transaction = {
   type: TransactionType;
   category: TransactionCategory;
   amount: number;
+  currency: CurrencyCode;
   createdAt: Date;
   updatedAt: Date;
   description?: string;

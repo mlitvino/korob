@@ -3,7 +3,8 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
 
-import { useCurrency, useSetCurrency, type CurrencyCode } from '@/contexts/SettingsContext';
+import { useCurrency, useSetCurrency } from '@/contexts/SettingsContext';
+import type { CurrencyCode } from '@/types/Currency';
 import { useTheme } from '@/contexts/ThemeContext';
 
 type CurrencyOption = {

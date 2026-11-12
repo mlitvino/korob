@@ -6,10 +6,12 @@ import { useBalance } from '@/contexts/TranscationContext';
 import IconButton from '@/components/IconButton';
 import Total from '@/components/Total';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 export default function Index() {
-  const balance = useBalance();
+  const currency = useCurrency();
+  const balance = useBalance(currency);
   const theme = useTheme();
   const formatCurrency = useCurrencyFormatter();
   const { t } = useTranslation();

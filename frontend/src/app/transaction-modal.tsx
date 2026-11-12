@@ -6,6 +6,7 @@ import uuid from 'react-native-uuid';
 import { Transaction, TransactionCategory } from '@/types/Transaction';
 import { useTransactionDispatch } from '@/contexts/TranscationContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCurrency } from '@/contexts/SettingsContext';
 import TransactionForm from '@/features/transaction-form/components/TransactionForm';
 import HeaderLeft from '@/components/HeaderLeft';
 
@@ -13,6 +14,7 @@ export default function TransactionModal() {
   const { type } = useLocalSearchParams<{ type: 'income' | 'expense' }>();
   const transactionDispatch = useTransactionDispatch();
   const theme = useTheme();
+  const currency = useCurrency();
   const { t } = useTranslation();
 
   if (type !== 'income' && type !== 'expense') {
@@ -25,6 +27,7 @@ export default function TransactionModal() {
       type,
       category,
       amount,
+      currency,
       createdAt,
       updatedAt: new Date(),
     };

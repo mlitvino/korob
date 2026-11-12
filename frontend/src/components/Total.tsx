@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { TransactionType } from '@/types/Transaction';
 import { useTransactions } from '@/contexts/TranscationContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 type TotalProps = {
@@ -15,9 +16,10 @@ export default function Total({ type }: TotalProps) {
   const theme = useTheme();
   const formatCurrency = useCurrencyFormatter();
   const transactions = useTransactions();
+  const currency = useCurrency();
 
   const total = transactions
-    .filter(t => t.type === type)
+    .filter(t => t.type === type && t.currency === currency)
     .reduce((sum, t) => sum + t.amount, 0);
 
   const header = type === 'income' ? t('total.income') : t('total.expense');
