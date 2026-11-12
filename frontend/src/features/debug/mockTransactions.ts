@@ -9,6 +9,7 @@ export const mockTransactions: Transaction[] = [
     category: 'salary',
     amount: 2500,
     createdAt: daysAgo(28),
+    updatedAt: daysAgo(28),
     description: 'Monthly salary',
   },
   {
@@ -17,6 +18,7 @@ export const mockTransactions: Transaction[] = [
     category: 'freelance',
     amount: 350,
     createdAt: daysAgo(20),
+    updatedAt: daysAgo(20),
     description: 'Freelance project',
   },
   {
@@ -25,6 +27,7 @@ export const mockTransactions: Transaction[] = [
     category: 'housing',
     amount: 900,
     createdAt: daysAgo(27),
+    updatedAt: daysAgo(27),
     description: 'Rent',
   },
   {
@@ -33,6 +36,7 @@ export const mockTransactions: Transaction[] = [
     category: 'food',
     amount: 65,
     createdAt: daysAgo(15),
+    updatedAt: daysAgo(15),
     description: 'Groceries',
   },
   {
@@ -41,6 +45,7 @@ export const mockTransactions: Transaction[] = [
     category: 'transport',
     amount: 40,
     createdAt: daysAgo(12),
+    updatedAt: daysAgo(12),
     description: 'Bus pass',
   },
   {
@@ -49,6 +54,7 @@ export const mockTransactions: Transaction[] = [
     category: 'entertainment',
     amount: 25,
     createdAt: daysAgo(8),
+    updatedAt: daysAgo(8),
     description: 'Cinema',
   },
   {
@@ -57,6 +63,7 @@ export const mockTransactions: Transaction[] = [
     category: 'shopping',
     amount: 120,
     createdAt: daysAgo(5),
+    updatedAt: daysAgo(5),
     description: 'New shoes',
   },
   {
@@ -65,6 +72,7 @@ export const mockTransactions: Transaction[] = [
     category: 'food',
     amount: 42,
     createdAt: daysAgo(2),
+    updatedAt: daysAgo(2),
     description: 'Restaurant',
   },
 ];

@@ -13,6 +13,7 @@ const toDomain = (row: SelectTransaction): Transaction => ({
   category: row.category,
   amount: row.amount,
   createdAt: new Date(row.createdAt),
+  updatedAt: new Date(row.updatedAt),
   description: row.description ?? undefined,
 });
 
@@ -22,6 +23,7 @@ const toDbInsert = (input: Transaction): InsertTransaction => ({
   category: input.category,
   amount: input.amount,
   createdAt: input.createdAt.getTime(),
+  updatedAt: input.updatedAt.getTime(),
   description: input.description ?? null,
 });
 

@@ -26,6 +26,7 @@ export default function TransactionModal() {
       category,
       amount,
       createdAt,
+      updatedAt: new Date(),
     };
 
     transactionDispatch({ type: 'add', transaction });

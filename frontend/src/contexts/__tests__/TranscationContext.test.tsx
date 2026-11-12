@@ -16,6 +16,7 @@ const income: Transaction = {
   category: 'salary',
   amount: 100,
   createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 const expense: Transaction = {
@@ -24,6 +25,7 @@ const expense: Transaction = {
   category: 'food',
   amount: 30,
   createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 function Harness() {

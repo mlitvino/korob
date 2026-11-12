@@ -19,5 +19,6 @@ export type Transaction = {
   category: TransactionCategory;
   amount: number;
   createdAt: Date;
+  updatedAt: Date;
   description?: string;
 };
