@@ -12,6 +12,7 @@ import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 import IconButton from '@/components/IconButton';
 import { useTheme } from '@/contexts/ThemeContext';
 import PickerSheet from '@/features/transaction-form/components/PickerSheet';
+import { parseAmount } from '@/features/transaction-form/utils/amount';
 import {
   getCategoriesByType,
 } from '@/features/transaction-form/utils/categories';
@@ -65,9 +66,9 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   };
 
   const handleSubmit = () => {
-    const value = parseFloat(amount);
+    const value = parseAmount(amount);
 
-    if (!isNaN(value) && value > 0) {
+    if (value !== null) {
       onSubmit(value, createdAt, category);
       setAmount('');
     }
@@ -79,7 +80,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         style={[styles.input, { backgroundColor: theme.text }]}
         placeholder={t('transaction.enterAmount')}
         placeholderTextColor="#999"
-        keyboardType="numeric"
+        keyboardType="decimal-pad"
         value={amount}
         onChangeText={setAmount}
       />
