@@ -21,15 +21,17 @@ export default function TransactionModal() {
     throw new Error('Error in transaction-modal.tsx: type is invalid');
   }
 
-  const handleSubmit = (amount: number, createdAt: Date, category: TransactionCategory) => {
+  const handleSubmit = (amount: number, occurredAt: Date, category: TransactionCategory) => {
+    const now = new Date();
     const transaction: Transaction = {
       id: String(uuid.v4()),
       type,
       category,
       amount,
       currency,
-      createdAt,
-      updatedAt: new Date(),
+      occurredAt,
+      createdAt: now,
+      updatedAt: now,
     };
 
     transactionDispatch({ type: 'add', transaction });

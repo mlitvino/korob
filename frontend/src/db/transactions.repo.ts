@@ -13,6 +13,7 @@ const toDomain = (row: SelectTransaction): Transaction => ({
   category: row.category,
   amount: row.amount,
   currency: row.currency,
+  occurredAt: new Date(row.occurredAt),
   createdAt: new Date(row.createdAt),
   updatedAt: new Date(row.updatedAt),
   description: row.description ?? undefined,
@@ -24,6 +25,7 @@ const toDbInsert = (input: Transaction): InsertTransaction => ({
   category: input.category,
   amount: input.amount,
   currency: input.currency,
+  occurredAt: input.occurredAt.getTime(),
   createdAt: input.createdAt.getTime(),
   updatedAt: input.updatedAt.getTime(),
   description: input.description ?? null,
@@ -34,7 +36,7 @@ export const TransactionsRepo = {
     const rows = await db
       .select()
       .from(transactions)
-      .orderBy(desc(transactions.createdAt));
+      .orderBy(desc(transactions.occurredAt));
     return rows.map(toDomain);
   },
 

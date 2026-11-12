@@ -22,6 +22,13 @@
       "when": 1794516617241,
       "tag": "0002_add_currency",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1794517076006,
+      "tag": "0003_add_occurred_at",
+      "breakpoints": true
     }
   ]
 }

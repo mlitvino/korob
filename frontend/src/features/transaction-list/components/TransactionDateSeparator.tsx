@@ -3,13 +3,13 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 
 type TransactionDateSeparatorProps = {
-  createdAt: Date;
+  occurredAt: Date;
 };
 
-export function TransactionDateSeparator({ createdAt }: TransactionDateSeparatorProps) {
+export function TransactionDateSeparator({ occurredAt }: TransactionDateSeparatorProps) {
   const theme = useTheme();
 
-  if (Number.isNaN(createdAt.getTime())) {
+  if (Number.isNaN(occurredAt.getTime())) {
     return null;
   }
 
@@ -17,7 +17,7 @@ export function TransactionDateSeparator({ createdAt }: TransactionDateSeparator
     <View style={styles.dateSeparatorWrap}>
       <View style={[styles.dateLine, { backgroundColor: theme.separator }]} />
       <Text style={[styles.dateSeparatorText, { color: theme.text }]}>
-        {createdAt.toLocaleDateString(undefined, {
+        {occurredAt.toLocaleDateString(undefined, {
           weekday: 'short',
           day: '2-digit',
           month: 'short',

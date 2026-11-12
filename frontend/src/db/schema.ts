@@ -8,6 +8,7 @@ export const transactions = sqliteTable('transactions', {
   category: text('category').$type<TransactionCategory>().notNull(),
   amount: integer('amount').notNull(),
   currency: text('currency').$type<CurrencyCode>().notNull().default('EUR'),
+  occurredAt: integer('occurredAt').notNull().default(0),
   createdAt: integer('createdAt').notNull(),
   updatedAt: integer('updatedAt').notNull().default(0),
   description: text('description'),

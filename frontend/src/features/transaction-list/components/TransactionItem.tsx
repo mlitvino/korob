@@ -17,7 +17,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const formatCurrency = useCurrencyFormatter();
-  const createdAt = new Date(transaction.createdAt);
+  const occurredAt = new Date(transaction.occurredAt);
   const valueColor = transaction.type === 'income' ? theme.income : theme.expense;
   const valuePrefix = transaction.type === 'income' ? '+' : '-';
 
@@ -25,7 +25,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
     <View style={[styles.transactionItem, { backgroundColor: theme.canvas }]}>
       <View style={styles.metaRow}>
         <Text style={[styles.metaText, { color: theme.text }]}>
-          {formatTimeInput(createdAt, uses12HourClock(i18n.language))}
+          {formatTimeInput(occurredAt, uses12HourClock(i18n.language))}
         </Text>
         <Text style={[styles.metaText, { color: theme.text }]}>
           {t(`category.${transaction.category}`)}

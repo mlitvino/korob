@@ -16,6 +16,7 @@ const income: Transaction = {
   category: 'salary',
   amount: 100,
   currency: 'EUR',
+  occurredAt: new Date(),
   createdAt: new Date(),
   updatedAt: new Date(),
 };
@@ -26,6 +27,7 @@ const expense: Transaction = {
   category: 'food',
   amount: 30,
   currency: 'EUR',
+  occurredAt: new Date(),
   createdAt: new Date(),
   updatedAt: new Date(),
 };

@@ -25,12 +25,12 @@ import type { TransactionCategory, TransactionType } from '@/types/Transaction';
 
 type Props = {
   transactionType: TransactionType;
-  onSubmit: (amount: number, createdAt: Date, category: TransactionCategory) => void;
+  onSubmit: (amount: number, occurredAt: Date, category: TransactionCategory) => void;
 };
 
 export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [amount, setAmount] = useState('');
-  const [createdAt, setCreatedAt] = useState(() => new Date());
+  const [occurredAt, setOccurredAt] = useState(() => new Date());
   const categories = useMemo(() => getCategoriesByType(transactionType), [transactionType]);
   const [category, setCategory] = useState<TransactionCategory>(categories[0]);
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
@@ -52,24 +52,24 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
       return;
     }
 
-    const next = new Date(createdAt);
+    const next = new Date(occurredAt);
     next.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
-    setCreatedAt(next);
+    setOccurredAt(next);
   };
 
   const handleTimeConfirm = ({ hours, minutes }: { hours: number; minutes: number }) => {
     setShowTimePicker(false);
 
-    const next = new Date(createdAt);
+    const next = new Date(occurredAt);
     next.setHours(hours, minutes, 0, 0);
-    setCreatedAt(next);
+    setOccurredAt(next);
   };
 
   const handleSubmit = () => {
     const value = parseAmount(amount);
 
     if (value !== null) {
-      onSubmit(value, createdAt, category);
+      onSubmit(value, occurredAt, category);
       setAmount('');
     }
   };
@@ -106,7 +106,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
             {t('transaction.selectDate')}
           </Text>
           <Text style={[styles.pickerValue, { color: theme.contrastText }]}>
-            {formatDateInput(createdAt)}
+            {formatDateInput(occurredAt)}
           </Text>
         </Pressable>
 
@@ -118,7 +118,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
             {t('transaction.selectTime')}
           </Text>
           <Text style={[styles.pickerValue, { color: theme.contrastText }]}>
-            {formatTimeInput(createdAt, use12Hours)}
+            {formatTimeInput(occurredAt, use12Hours)}
           </Text>
         </Pressable>
       </View>
@@ -158,7 +158,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         mode="single"
         locale={i18n.language}
         visible={showDatePicker}
-        date={createdAt}
+        date={occurredAt}
         onDismiss={() => setShowDatePicker(false)}
         onConfirm={handleDateConfirm}
       />
@@ -166,8 +166,8 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
       <TimePickerModal
         locale={i18n.language}
         visible={showTimePicker}
-        hours={createdAt.getHours()}
-        minutes={createdAt.getMinutes()}
+        hours={occurredAt.getHours()}
+        minutes={occurredAt.getMinutes()}
         use24HourClock={!use12Hours}
         label={t('transaction.selectTime')}
         cancelLabel={t('common.cancel')}

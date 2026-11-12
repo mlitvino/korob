@@ -6,7 +6,7 @@ export type FilterType = 'all' | TransactionType;
 
 export type VisibleTransaction = {
   transaction: Transaction;
-  createdAt: Date;
+  occurredAt: Date;
   showDateSeparator: boolean;
 };
 
@@ -19,19 +19,19 @@ export function useFilteredTransactions(transactions: Transaction[], filter: Fil
 
     const sortedTransactions = transactions
       .filter((transaction) => filter === 'all' || transaction.type === filter)
-      .sort((a, b) => getTimestamp(b.createdAt) - getTimestamp(a.createdAt));
+      .sort((a, b) => getTimestamp(b.occurredAt) - getTimestamp(a.occurredAt));
 
     let previousDateKey = '';
 
     return sortedTransactions.map((transaction) => {
-      const createdAt = new Date(transaction.createdAt);
-      const dateKey = createdAt.toDateString();
+      const occurredAt = new Date(transaction.occurredAt);
+      const dateKey = occurredAt.toDateString();
       const showDateSeparator = dateKey !== previousDateKey;
       previousDateKey = dateKey;
 
       return {
         transaction,
-        createdAt,
+        occurredAt,
         showDateSeparator,
       } satisfies VisibleTransaction;
     });

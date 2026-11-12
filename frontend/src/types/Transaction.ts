@@ -21,6 +21,7 @@ export type Transaction = {
   category: TransactionCategory;
   amount: number;
   currency: CurrencyCode;
+  occurredAt: Date;
   createdAt: Date;
   updatedAt: Date;
   description?: string;

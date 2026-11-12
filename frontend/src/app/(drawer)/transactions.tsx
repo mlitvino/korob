@@ -36,11 +36,11 @@ export default function Transactions() {
         showsVerticalScrollIndicator={false}
         data={visibleTransactions}
         keyExtractor={({ transaction }) => transaction.id}
-        renderItem={({ item: { transaction, createdAt, showDateSeparator } }: {
+        renderItem={({ item: { transaction, occurredAt, showDateSeparator } }: {
           item: VisibleTransaction;
         }) => (
           <View>
-            {showDateSeparator ? <TransactionDateSeparator createdAt={createdAt} /> : null}
+            {showDateSeparator ? <TransactionDateSeparator occurredAt={occurredAt} /> : null}
             <TransactionItem transaction={transaction} />
           </View>
         )}
