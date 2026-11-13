@@ -29,6 +29,13 @@
       "when": 1794517076006,
       "tag": "0003_add_occurred_at",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1794526150407,
+      "tag": "0004_add_categories",
+      "breakpoints": true
     }
   ]
 }

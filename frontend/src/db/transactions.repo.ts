@@ -6,6 +6,7 @@ import {
   type InsertTransaction,
 } from './schema';
 import { db } from './storage';
+import { builtinCategoryId } from './builtinCategories';
 
 const toDomain = (row: SelectTransaction): Transaction => ({
   id: row.id,
@@ -23,6 +24,7 @@ const toDbInsert = (input: Transaction): InsertTransaction => ({
   id: input.id,
   type: input.type,
   category: input.category,
+  categoryId: builtinCategoryId(input.type, input.category),
   amount: input.amount,
   currency: input.currency,
   occurredAt: input.occurredAt.getTime(),
