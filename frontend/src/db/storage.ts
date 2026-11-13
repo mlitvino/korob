@@ -9,6 +9,9 @@ export const sqliteDb = SQLite.openDatabaseSync('korob.db');
 export const db = drizzle(sqliteDb, { schema });
 export type DbClient = typeof db;
 
-export const initDb = async (): Promise<void> => {
-  await migrate(db, migrations);
+let migration: Promise<void> | null = null;
+
+export const initDb = (): Promise<void> => {
+  migration ??= migrate(db, migrations);
+  return migration;
 };

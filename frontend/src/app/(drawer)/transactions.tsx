@@ -7,7 +7,7 @@ import {
   TransactionDateSeparator,
 } from '@/features/transaction-list/components/TransactionDateSeparator';
 import { TransactionFilterBar } from '@/features/transaction-list/components/TransactionFilterBar';
-import { useTransactions } from '@/contexts/TranscationContext';
+import { useTransactions } from '@/queries/transactions';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
   useFilteredTransactions, type FilterType, type VisibleTransaction,

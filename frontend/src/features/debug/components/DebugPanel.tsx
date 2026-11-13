@@ -1,16 +1,17 @@
 import { View, Text, Pressable, StyleSheet, Alert } from 'react-native';
 
 import { useTheme } from '@/contexts/ThemeContext';
-import { useTransactionDispatch } from '@/contexts/TranscationContext';
+import { useAddTransaction, useClearTransactions } from '@/queries/transactions';
 import { mockTransactions } from '@/features/debug/mockTransactions';
 
 export function DebugPanel() {
   const theme = useTheme();
-  const transactionDispatch = useTransactionDispatch();
+  const addTransaction = useAddTransaction();
+  const clearTransactions = useClearTransactions();
 
   const wipeAllData = async () => {
     try {
-      await transactionDispatch({ type: 'clear' });
+      await clearTransactions.mutateAsync();
     } catch (error) {
       Alert.alert('Wipe failed', String(error));
     }
@@ -18,9 +19,9 @@ export function DebugPanel() {
 
   const seedStartingData = async () => {
     try {
-      await transactionDispatch({ type: 'clear' });
+      await clearTransactions.mutateAsync();
       for (const transaction of mockTransactions) {
-        await transactionDispatch({ type: 'add', transaction });
+        await addTransaction.mutateAsync(transaction);
       }
     } catch (error) {
       Alert.alert('Seeding failed', String(error));

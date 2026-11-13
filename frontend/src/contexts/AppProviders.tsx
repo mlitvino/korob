@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { PaperProvider } from 'react-native-paper';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import { usePaperTheme } from '@/hooks/usePaperTheme';
+import { queryClient } from '@/queries/queryClient';
 import { SettingsProvider } from './SettingsContext';
-import { TransactionProvider } from './TranscationContext';
 import { ThemeProvider } from './ThemeContext';
 
 type AppProvidersProps = {
@@ -34,9 +35,9 @@ export function AppProviders({ children }: AppProvidersProps) {
     <SettingsProvider>
       <ThemeProvider>
         <PaperThemeProvider>
-          <TransactionProvider>
+          <QueryClientProvider client={queryClient}>
             {children}
-          </TransactionProvider>
+          </QueryClientProvider>
         </PaperThemeProvider>
       </ThemeProvider>
     </SettingsProvider>

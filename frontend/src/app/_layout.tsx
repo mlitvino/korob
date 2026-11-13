@@ -9,7 +9,7 @@ import '@/locales';
 import { sqliteDb } from '@/db/storage';
 import { AppProviders } from '@/contexts/AppProviders';
 import { useTheme } from '@/contexts/ThemeContext';
-import { useTransactionsLoading } from '@/contexts/TranscationContext';
+import { useTransactionsLoading } from '@/queries/transactions';
 import LoadingOverlay from '@/components/LoadingOverlay';
 
 export default function RootLayout() {

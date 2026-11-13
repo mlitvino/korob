@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import type { TransactionType } from '@/types/Transaction';
-import { useTransactions } from '@/contexts/TranscationContext';
+import { useTransactions } from '@/queries/transactions';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';

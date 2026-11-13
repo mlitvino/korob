@@ -28,7 +28,8 @@ This is the shared starting point for AI coding agents working in this repositor
 
 - Keep Expo Router structure under [frontend/src/app](frontend/src/app): root stack + drawer group + modal route.
 - Keep feature-local UI and logic under [frontend/src/features](frontend/src/features), grouped by page/flow concern.
-- Keep global state in context/reducer modules under [frontend/src/contexts](frontend/src/contexts).
+- Keep app settings state (settings, theme) in context modules under [frontend/src/contexts](frontend/src/contexts).
+- Read and write database data only through TanStack Query hooks in [frontend/src/queries](frontend/src/queries). Every write is a mutation hook that invalidates the queries it affects; components never call repos directly.
 - Keep transaction domain model aligned with [frontend/src/types/Transaction.ts](frontend/src/types/Transaction.ts).
 - Use theme and locale infrastructure from [frontend/src/constants/theme.ts](frontend/src/constants/theme.ts), [frontend/src/contexts/ThemeContext.tsx](frontend/src/contexts/ThemeContext.tsx), and [frontend/src/locales/index.ts](frontend/src/locales/index.ts).
 
@@ -36,7 +37,7 @@ This is the shared starting point for AI coding agents working in this repositor
 
 - TypeScript is strict; prefer `type` over `interface` for props and action unions.
 - Use typed route params and validate critical runtime params in modal flows.
-- Balance is derived from transactions via `useBalance` in [frontend/src/contexts/TranscationContext.tsx](frontend/src/contexts/TranscationContext.tsx); never store it separately.
+- Balance is derived from transactions via `useBalance` in [frontend/src/queries/transactions.ts](frontend/src/queries/transactions.ts); never store it separately.
 - Prefer translated strings and theme tokens over hardcoded labels and colors.
 - Preserve provider layering in [frontend/src/contexts/AppProviders.tsx](frontend/src/contexts/AppProviders.tsx).
 

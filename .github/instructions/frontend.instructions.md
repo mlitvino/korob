@@ -21,12 +21,12 @@ Use this file for frontend-specific behavior. For repository-wide context, start
 ## Routing And Providers
 
 - Keep Expo Router structure intact: root stack in [frontend/src/app/_layout.tsx](../../frontend/src/app/_layout.tsx), drawer group in [frontend/src/app/(drawer)](../../frontend/src/app/_layout.tsx), modal flow in [frontend/src/app/transaction-modal.tsx](../../frontend/src/app/transaction-modal.tsx).
-- Preserve provider order in [frontend/src/contexts/AppProviders.tsx](../../frontend/src/contexts/AppProviders.tsx): `SettingsProvider` -> `ThemeProvider` -> `TransactionProvider` -> `BalanceProvider`.
+- Preserve provider order in [frontend/src/contexts/AppProviders.tsx](../../frontend/src/contexts/AppProviders.tsx): `SettingsProvider` -> `ThemeProvider` -> `PaperThemeProvider` -> `QueryClientProvider`.
 
 ## State, Theme, And Locale
 
-- Keep context APIs split between state and dispatch hooks in [frontend/src/contexts](../../frontend/src/contexts).
-- For transaction creation, update both transaction and balance reducers from the same submit flow.
+- Keep settings and theme context APIs split between state and setter hooks in [frontend/src/contexts](../../frontend/src/contexts).
+- Database data (transactions, categories) lives in TanStack Query hooks under [frontend/src/queries](../../frontend/src/queries). Writes go through mutation hooks that invalidate every query they affect (e.g. renaming a category invalidates categories and transactions).
 - Prefer theme tokens and localization keys over hardcoded colors and labels:
   - [frontend/src/constants/theme.ts](../../frontend/src/constants/theme.ts)
   - [frontend/src/contexts/ThemeContext.tsx](../../frontend/src/contexts/ThemeContext.tsx)
@@ -35,7 +35,7 @@ Use this file for frontend-specific behavior. For repository-wide context, start
 ## TypeScript And Tests
 
 - TypeScript strict mode is required; prefer `type` over `interface` for props and action unions.
-- Keep route params and reducer actions strongly typed.
+- Keep route params and mutation inputs strongly typed.
 - Follow `jest-expo` patterns from [frontend/src/components/__tests__](../../frontend/src/components/__tests__) and add/update tests for behavior changes.
 
 ## Commands

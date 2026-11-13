@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
 
 import { Transaction, TransactionCategory } from '@/types/Transaction';
-import { useTransactionDispatch } from '@/contexts/TranscationContext';
+import { useAddTransaction } from '@/queries/transactions';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrency } from '@/contexts/SettingsContext';
 import TransactionForm from '@/features/transaction-form/components/TransactionForm';
@@ -12,7 +12,7 @@ import HeaderLeft from '@/components/HeaderLeft';
 
 export default function TransactionModal() {
   const { type } = useLocalSearchParams<{ type: 'income' | 'expense' }>();
-  const transactionDispatch = useTransactionDispatch();
+  const addTransaction = useAddTransaction();
   const theme = useTheme();
   const currency = useCurrency();
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ export default function TransactionModal() {
     };
 
     try {
-      await transactionDispatch({ type: 'add', transaction });
+      await addTransaction.mutateAsync(transaction);
       router.back();
     } catch (error) {
       console.warn('Failed to persist transaction', error);
