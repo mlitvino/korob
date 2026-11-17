@@ -1,35 +1,38 @@
-import { useEffect, useMemo, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 
 import Button from '@/components/Button';
 import { FieldInput, FieldPicker } from '@/components/Field';
 import SettingsRow, { rowPosition } from '@/components/SettingsRow';
-import { spacing } from '@/constants/theme';
+import { opacity, spacing, typography } from '@/constants/theme';
+import { useTheme } from '@/contexts/ThemeContext';
 import PickerSheet from '@/features/transaction-form/components/PickerSheet';
 import { parseAmount } from '@/features/transaction-form/utils/amount';
-import {
-  getCategoriesByType,
-} from '@/features/transaction-form/utils/categories';
 import {
   formatDateInput,
   formatTimeInput,
   uses12HourClock,
 } from '@/features/transaction-form/utils/dateTimeHelpers';
-import type { TransactionCategory, TransactionType } from '@/types/Transaction';
+import { useCategoryName } from '@/hooks/useCategoryName';
+import { useActiveCategories } from '@/queries/categories';
+import type { TransactionType } from '@/types/Transaction';
 
 type Props = {
   transactionType: TransactionType;
-  onSubmit: (amount: number, occurredAt: Date, category: TransactionCategory) => Promise<void>;
+  onSubmit: (amount: number, occurredAt: Date, categoryId: string) => Promise<void>;
 };
 
 export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [amount, setAmount] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [occurredAt, setOccurredAt] = useState(() => new Date());
-  const categories = useMemo(() => getCategoriesByType(transactionType), [transactionType]);
-  const [category, setCategory] = useState<TransactionCategory>(categories[0]);
+  const categories = useActiveCategories(transactionType);
+  const [categoryId, setCategoryId] = useState<string | null>(null);
+  const selectedCategory = categories.find((c) => c.id === categoryId);
+  const nameOf = useCategoryName();
+  const theme = useTheme();
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -37,10 +40,10 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const use12Hours = uses12HourClock(i18n.language);
 
   useEffect(() => {
-    if (!categories.includes(category)) {
-      setCategory(categories[0]);
+    if (!categories.some((c) => c.id === categoryId)) {
+      setCategoryId(categories[0]?.id ?? null);
     }
-  }, [categories, category]);
+  }, [categories, categoryId]);
 
   const handleDateConfirm = ({ date }: { date: Date | undefined }) => {
     setShowDatePicker(false);
@@ -64,13 +67,13 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const handleSubmit = async () => {
     const value = parseAmount(amount);
 
-    if (value === null || isSubmitting) {
+    if (value === null || categoryId === null || isSubmitting) {
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await onSubmit(value, occurredAt, category);
+      await onSubmit(value, occurredAt, categoryId);
     } finally {
       setIsSubmitting(false);
     }
@@ -86,11 +89,22 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         onChangeText={setAmount}
       />
 
-      <FieldPicker
-        label={t('transaction.selectCategory')}
-        value={t(`category.${category}`)}
-        onPress={() => setShowCategoryPicker(true)}
-      />
+      <View style={styles.categoryField}>
+        <FieldPicker
+          label={t('transaction.selectCategory')}
+          value={selectedCategory ? nameOf(selectedCategory) : t('transaction.noCategories')}
+          onPress={() => {
+            if (categories.length > 0) {
+              setShowCategoryPicker(true);
+            }
+          }}
+        />
+        {categories.length === 0 ? (
+          <Text style={[typography.bodySm, { color: theme.text, opacity: opacity.secondary }]}>
+            {t('transaction.noCategoriesHint')}
+          </Text>
+        ) : null}
+      </View>
 
       <View style={styles.dateTimeRow}>
         <FieldPicker
@@ -116,12 +130,12 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         <View>
           {categories.map((item, index) => (
             <SettingsRow
-              key={item}
+              key={item.id}
               variant="option"
               position={rowPosition(index, categories.length)}
-              label={t(`category.${item}`)}
-              selected={category === item}
-              onPress={() => setCategory(item)}
+              label={nameOf(item)}
+              selected={categoryId === item.id}
+              onPress={() => setCategoryId(item.id)}
             />
           ))}
         </View>
@@ -152,7 +166,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
       <Button
         icon={'check'}
         label={t('common.done')}
-        disabled={isSubmitting}
+        disabled={isSubmitting || categoryId === null}
         onPress={() => void handleSubmit()}
       />
     </View>
@@ -164,6 +178,9 @@ const TIME_COLUMN_WIDTH = 136;
 const styles = StyleSheet.create({
   form: {
     gap: spacing.xl,
+  },
+  categoryField: {
+    gap: spacing.xs,
   },
   dateTimeRow: {
     flexDirection: 'row',

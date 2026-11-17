@@ -9,6 +9,7 @@ import '@/locales';
 import { sqliteDb } from '@/db/storage';
 import { AppProviders } from '@/contexts/AppProviders';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCategoriesLoading } from '@/queries/categories';
 import { useTransactionsLoading } from '@/queries/transactions';
 import LoadingOverlay from '@/components/LoadingOverlay';
 
@@ -26,7 +27,9 @@ export default function RootLayout() {
 
 function Inner() {
   const { canvas, mode } = useTheme();
-  const isLoading = useTransactionsLoading();
+  const transactionsLoading = useTransactionsLoading();
+  const categoriesLoading = useCategoriesLoading();
+  const isLoading = transactionsLoading || categoriesLoading;
 
   useEffect(() => {
     setBackgroundColorAsync(canvas).catch(console.error);

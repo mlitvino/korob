@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import type { Transaction } from '@/types/Transaction';
 import { opacity, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useCategoryName } from '@/hooks/useCategoryName';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useCategoryById } from '@/queries/categories';
 import {
   formatTimeInput,
   uses12HourClock,
@@ -16,7 +18,10 @@ type TransactionItemProps = {
 
 export function TransactionItem({ transaction }: TransactionItemProps) {
   const theme = useTheme();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
+  const categoryById = useCategoryById();
+  const nameOf = useCategoryName();
+  const category = categoryById(transaction.categoryId);
   const formatCurrency = useCurrencyFormatter();
   const occurredAt = new Date(transaction.occurredAt);
   const valueColor = transaction.type === 'income' ? theme.income : theme.expense;
@@ -29,7 +34,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
           {formatTimeInput(occurredAt, uses12HourClock(i18n.language))}
         </Text>
         <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
-          {t(`category.${transaction.category}`)}
+          {category ? nameOf(category) : ''}
         </Text>
       </View>
 

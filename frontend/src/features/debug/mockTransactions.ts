@@ -6,7 +6,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-salary',
     type: 'income',
-    category: 'salary',
+    categoryId: 'income-salary',
     amount: 2500,
     currency: 'EUR',
     occurredAt: daysAgo(28),
@@ -17,7 +17,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-freelance',
     type: 'income',
-    category: 'freelance',
+    categoryId: 'income-freelance',
     amount: 350,
     currency: 'EUR',
     occurredAt: daysAgo(20),
@@ -28,7 +28,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-housing',
     type: 'expense',
-    category: 'housing',
+    categoryId: 'expense-housing',
     amount: 900,
     currency: 'EUR',
     occurredAt: daysAgo(27),
@@ -39,7 +39,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-food-1',
     type: 'expense',
-    category: 'food',
+    categoryId: 'expense-food',
     amount: 65,
     currency: 'EUR',
     occurredAt: daysAgo(15),
@@ -50,7 +50,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-transport',
     type: 'expense',
-    category: 'transport',
+    categoryId: 'expense-transport',
     amount: 40,
     currency: 'EUR',
     occurredAt: daysAgo(12),
@@ -61,7 +61,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-entertainment',
     type: 'expense',
-    category: 'entertainment',
+    categoryId: 'expense-entertainment',
     amount: 25,
     currency: 'EUR',
     occurredAt: daysAgo(8),
@@ -72,7 +72,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-shopping',
     type: 'expense',
-    category: 'shopping',
+    categoryId: 'expense-shopping',
     amount: 120,
     currency: 'EUR',
     occurredAt: daysAgo(5),
@@ -83,7 +83,7 @@ export const mockTransactions: Transaction[] = [
   {
     id: 'seed-food-2',
     type: 'expense',
-    category: 'food',
+    categoryId: 'expense-food',
     amount: 42,
     currency: 'EUR',
     occurredAt: daysAgo(2),

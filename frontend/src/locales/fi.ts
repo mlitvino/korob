@@ -18,6 +18,8 @@ const fi: LocaleResource = {
       selectDate: 'Päivä',
       selectTime: 'Aika',
       selectCategory: 'Kategoria',
+      noCategories: 'Ei kategorioita',
+      noCategoriesHint: 'Lisää kategoria kohdassa Asetukset → Kategoriat.',
       filterAll: 'Kaikki',
       saveFailed: 'Tapahtuman tallennus epäonnistui',
     },

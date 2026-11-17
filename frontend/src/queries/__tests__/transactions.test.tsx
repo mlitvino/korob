@@ -34,10 +34,10 @@ afterEach(() => {
 const at = new Date(2026, 10, 1);
 const base = { occurredAt: at, createdAt: at, updatedAt: at, currency: 'EUR' } as const;
 const income: Transaction = {
-  ...base, id: 'income-1', type: 'income', category: 'salary', amount: 100,
+  ...base, id: 'income-1', type: 'income', categoryId: 'income-salary', amount: 100,
 };
 const expense: Transaction = {
-  ...base, id: 'expense-1', type: 'expense', category: 'food', amount: 30,
+  ...base, id: 'expense-1', type: 'expense', categoryId: 'expense-food', amount: 30,
 };
 const usdIncome: Transaction = { ...income, id: 'income-usd', amount: 500, currency: 'USD' };
 

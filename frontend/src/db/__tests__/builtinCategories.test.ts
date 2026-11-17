@@ -1,11 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
-import { builtinCategoryId } from '@/db/builtinCategories';
 import {
+  builtinCategoryId,
+  builtinKeyFromId,
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
-} from '@/features/transaction-form/utils/categories';
+} from '@/db/builtinCategories';
 
 const migration = fs.readFileSync(
   path.join(__dirname, '../migrations/0004_add_categories.sql'),
@@ -30,6 +31,13 @@ describe('built-in categories', () => {
     ].map((row) => ({ id: `${row.type}-${row.key}`, ...row }));
 
     expect(seededRows).toEqual(expected);
+  });
+
+  it('reads the built-in key back from an id', () => {
+    expect(builtinKeyFromId('expense-food')).toBe('food');
+    expect(builtinKeyFromId('income-other')).toBe('other');
+    expect(builtinKeyFromId('income-food')).toBeNull();
+    expect(builtinKeyFromId('3f2a6c1e-8b7d-4e5f-9a0b-1c2d3e4f5a6b')).toBeNull();
   });
 
 });

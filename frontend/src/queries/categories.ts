@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { CategoriesRepo } from '@/db/categories.repo';
@@ -10,12 +11,38 @@ export const categoriesKey = ['categories'] as const;
 
 const NO_CATEGORIES: Category[] = [];
 
-export function useCategories(): Category[] {
-  const { data } = useQuery({
+function useCategoriesQuery() {
+  return useQuery({
     queryKey: categoriesKey,
     queryFn: readAfterMigrations(() => CategoriesRepo.list()),
   });
-  return data ?? NO_CATEGORIES;
+}
+
+/** All categories, archived ones included, ordered by type then `sortOrder`. */
+export function useCategories(): Category[] {
+  return useCategoriesQuery().data ?? NO_CATEGORIES;
+}
+
+export function useCategoriesLoading(): boolean {
+  return useCategoriesQuery().isPending;
+}
+
+/** Categories that can be picked for a new transaction of `type`. */
+export function useActiveCategories(type: TransactionType): Category[] {
+  const categories = useCategories();
+  return useMemo(
+    () => categories.filter((c) => c.type === type && c.archivedAt === null),
+    [categories, type],
+  );
+}
+
+/** Lookup by id across all categories, so archived ones still resolve. */
+export function useCategoryById(): (id: string) => Category | undefined {
+  const categories = useCategories();
+  return useMemo(() => {
+    const byId = new Map(categories.map((c) => [c.id, c]));
+    return (id: string) => byId.get(id);
+  }, [categories]);
 }
 
 export function useCreateCategory() {

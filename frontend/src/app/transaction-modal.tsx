@@ -3,7 +3,7 @@ import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
 
-import { Transaction, TransactionCategory } from '@/types/Transaction';
+import type { Transaction } from '@/types/Transaction';
 import { useAddTransaction } from '@/queries/transactions';
 import { gutter, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -25,13 +25,13 @@ export default function TransactionModal() {
   const handleSubmit = async (
     amount: number,
     occurredAt: Date,
-    category: TransactionCategory,
+    categoryId: string,
   ) => {
     const now = new Date();
     const transaction: Transaction = {
       id: String(uuid.v4()),
       type,
-      category,
+      categoryId,
       amount,
       currency,
       occurredAt,

@@ -18,6 +18,8 @@ const ru: LocaleResource = {
       selectDate: 'Дата',
       selectTime: 'Время',
       selectCategory: 'Категория',
+      noCategories: 'Нет категорий',
+      noCategoriesHint: 'Добавьте категорию в разделе Настройки → Категории.',
       filterAll: 'Все',
       saveFailed: 'Не удалось сохранить транзакцию',
     },

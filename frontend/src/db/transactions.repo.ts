@@ -6,12 +6,12 @@ import {
   type InsertTransaction,
 } from './schema';
 import { db } from './storage';
-import { builtinCategoryId } from './builtinCategories';
+import { builtinCategoryId, builtinKeyFromId } from './builtinCategories';
 
 const toDomain = (row: SelectTransaction): Transaction => ({
   id: row.id,
   type: row.type,
-  category: row.category,
+  categoryId: row.categoryId ?? builtinCategoryId(row.type, 'other'),
   amount: row.amount,
   currency: row.currency,
   occurredAt: new Date(row.occurredAt),
@@ -23,8 +23,9 @@ const toDomain = (row: SelectTransaction): Transaction => ({
 const toDbInsert = (input: Transaction): InsertTransaction => ({
   id: input.id,
   type: input.type,
-  category: input.category,
-  categoryId: builtinCategoryId(input.type, input.category),
+  // Old required column, dropped by a later migration.
+  category: builtinKeyFromId(input.categoryId) ?? 'other',
+  categoryId: input.categoryId,
   amount: input.amount,
   currency: input.currency,
   occurredAt: input.occurredAt.getTime(),

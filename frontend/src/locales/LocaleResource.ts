@@ -16,6 +16,8 @@ export type LocaleResource = {
       selectDate: string;
       selectTime: string;
       selectCategory: string;
+      noCategories: string;
+      noCategoriesHint: string;
       filterAll: string;
       saveFailed: string;
     };

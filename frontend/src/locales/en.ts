@@ -18,6 +18,8 @@ const en: LocaleResource = {
       selectDate: 'Date',
       selectTime: 'Time',
       selectCategory: 'Category',
+      noCategories: 'No categories',
+      noCategoriesHint: 'Add one in Settings → Categories.',
       filterAll: 'All',
       saveFailed: 'Could not save the transaction',
     },

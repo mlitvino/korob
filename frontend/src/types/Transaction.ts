@@ -20,8 +20,8 @@ export type Transaction = {
   id: string;
   /** Decides the sign: income adds to the balance, expense subtracts. */
   type: TransactionType;
-  /** Built-in category key. Being replaced by `categoryId` (categories table). */
-  category: TransactionCategory;
+  /** Id of a row in the categories table; built-ins are `<type>-<key>`. */
+  categoryId: string;
   /** Always positive, in `currency` units; the sign comes from `type`. */
   amount: number;
   /** Currency the amount was entered in. Never converted. */
