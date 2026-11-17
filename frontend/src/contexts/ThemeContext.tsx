@@ -1,14 +1,9 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
 
 import { Themes, ThemeColor } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { loadJson, saveJson, STORAGE_KEYS } from '@/storage/persist';
+import { usePersistedState } from '@/hooks/usePersistedState';
+import { STORAGE_KEYS } from '@/storage/persist';
 
 type ThemeProviderProps = {
   children: ReactNode,
@@ -20,39 +15,16 @@ type ThemeAction = { setTheme: (t: ThemeState) => void };
 const ThemeStateContext = createContext<ThemeState | undefined >(undefined);
 const ThemeDispatchContext = createContext<ThemeAction | undefined>(undefined);
 
-const isThemeName = (value: string | null): value is ThemeState =>
-  value !== null && value in Themes;
+const isThemeName = (value: unknown): value is ThemeState =>
+  typeof value === 'string' && value in Themes;
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const systemTheme = useColorScheme() ?? 'light';
-  const [theme, setTheme] = useState<ThemeState>(systemTheme);
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    let isActive = true;
-    const load = async () => {
-      const stored = await loadJson<ThemeState>(STORAGE_KEYS.theme);
-      if (isActive) {
-        if (isThemeName(stored)) {
-          setTheme(stored);
-        }
-        setIsHydrated(true);
-      }
-    };
-
-    void load();
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isHydrated) {
-      return;
-    }
-    void saveJson(STORAGE_KEYS.theme, theme);
-  }, [theme, isHydrated]);
+  const [theme, setTheme] = usePersistedState<ThemeState>(
+    STORAGE_KEYS.theme,
+    systemTheme,
+    isThemeName,
+  );
 
   return (
     <ThemeStateContext.Provider value={ theme }>

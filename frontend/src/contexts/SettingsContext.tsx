@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, ReactNode } from 'react';
 
-import { changeLanguage, getCurrentLanguage, type LanguageName } from '@/locales';
-import { loadJson, saveJson, STORAGE_KEYS } from '@/storage/persist';
+import { usePersistedState } from '@/hooks/usePersistedState';
+import { changeLanguage, getCurrentLanguage, resources, type LanguageName } from '@/locales';
+import { STORAGE_KEYS } from '@/storage/persist';
 import type { CurrencyCode } from '@/types/Currency';
 
 type SettingsProviderProps = {
@@ -13,64 +14,47 @@ type SettingsDispatch = {
   setLanguage: (language: LanguageName) => void;
 };
 
+const CURRENCIES: readonly CurrencyCode[] = ['EUR', 'USD'];
 const initialCurrency: CurrencyCode = 'EUR';
+
+const isCurrency = (value: unknown): value is CurrencyCode =>
+  CURRENCIES.includes(value as CurrencyCode);
+
+const isLanguage = (value: unknown): value is LanguageName =>
+  typeof value === 'string' && value in resources;
+
+const initialLanguage = (): LanguageName => {
+  try {
+    return getCurrentLanguage();
+  } catch {
+    return 'en';
+  }
+};
+
 const SettingsCurrencyContext = createContext<CurrencyCode | undefined>(undefined);
 const SettingsLanguageContext = createContext<LanguageName | undefined>(undefined);
 const SettingsDispatchContext = createContext<SettingsDispatch | undefined>(undefined);
 
 export function SettingsProvider({ children }: SettingsProviderProps) {
-  const [currency, setCurrency] = useState<CurrencyCode>(initialCurrency);
-  const [language, setLanguageState] = useState<LanguageName>(() => {
-    try {
-      return getCurrentLanguage();
-    } catch {
-      return 'en';
-    }
-  });
+  const [currency, setCurrency] = usePersistedState(
+    STORAGE_KEYS.currency,
+    initialCurrency,
+    isCurrency,
+  );
+  const [language, setLanguage] = usePersistedState(
+    STORAGE_KEYS.language,
+    initialLanguage,
+    isLanguage,
+  );
 
   useEffect(() => {
-    let isActive = true;
-    const load = async () => {
-      const [storedCurrency, storedLanguage] = await Promise.all([
-        loadJson<CurrencyCode>(STORAGE_KEYS.currency),
-        loadJson<LanguageName>(STORAGE_KEYS.language),
-      ]);
-
-      if (!isActive) {
-        return;
-      }
-
-      if (storedCurrency) {
-        setCurrency(storedCurrency);
-      }
-      if (storedLanguage) {
-        setLanguageState(storedLanguage);
-        void changeLanguage(storedLanguage);
-      }
-    };
-
-    void load();
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    void saveJson(STORAGE_KEYS.currency, currency);
-  }, [currency]);
-
-  useEffect(() => {
-    void saveJson(STORAGE_KEYS.language, language);
     void changeLanguage(language);
   }, [language]);
 
-  const dispatchValue = useMemo<SettingsDispatch>(() => ({
-    setCurrency,
-    setLanguage: (nextLanguage) => {
-      setLanguageState(nextLanguage);
-    },
-  }), []);
+  const dispatchValue = useMemo<SettingsDispatch>(
+    () => ({ setCurrency, setLanguage }),
+    [setCurrency, setLanguage],
+  );
 
   return (
     <SettingsCurrencyContext.Provider value={currency}>
