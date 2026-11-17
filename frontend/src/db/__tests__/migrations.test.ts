@@ -101,3 +101,49 @@ describe('migration 0006 (drop old category column, add FK)', () => {
     expect(() => insert.run()).toThrow(/FOREIGN KEY/);
   });
 });
+
+describe('migration 0006 on a database whose built-in categories are missing', () => {
+  // A device that applied an early draft of 0004: categories table without the seeded built-ins.
+  const seedBrokenDevice = () => {
+    const { sqlite, migrate } = createTestDb({ until: '0005_amounts_to_cents' });
+    sqlite.exec(`
+      DELETE FROM categories;
+      INSERT INTO categories (id, type, name, sortOrder, archivedAt) VALUES
+        ('custom-active', 'income', 'Bonus', 0, NULL),
+        ('custom-archived', 'income', 'Old', 1, 5);
+      INSERT INTO transactions (id, type, category, categoryId, amount, createdAt) VALUES
+        ('food', 'expense', 'food', 'expense-food', 100, 1),
+        ('salary', 'income', 'salary', 'income-salary', 200, 2),
+        ('bonus', 'income', 'other', 'custom-active', 300, 3),
+        ('unknown', 'expense', 'food', 'gone-category', 400, 4),
+        ('unlinked', 'expense', 'health', NULL, 500, 5);
+    `);
+    migrate();
+    return sqlite;
+  };
+
+  it('restores the built-ins and keeps custom categories', () => {
+    const sqlite = seedBrokenDevice();
+    const categories = sqlite.prepare(
+      'SELECT id, archivedAt FROM categories ORDER BY id',
+    ).all() as { id: string; archivedAt: number | null }[];
+
+    expect(categories).toHaveLength(14);
+    expect(categories).toContainEqual({ id: 'expense-food', archivedAt: null });
+    expect(categories).toContainEqual({ id: 'custom-active', archivedAt: null });
+    expect(categories).toContainEqual({ id: 'custom-archived', archivedAt: 5 });
+  });
+
+  it('keeps every transaction, pointing unknown categories to "other"', () => {
+    const sqlite = seedBrokenDevice();
+    expect(sqlite.prepare('SELECT id, categoryId, amount FROM transactions ORDER BY id').all())
+      .toEqual([
+        { id: 'bonus', categoryId: 'custom-active', amount: 300 },
+        { id: 'food', categoryId: 'expense-food', amount: 100 },
+        { id: 'salary', categoryId: 'income-salary', amount: 200 },
+        { id: 'unknown', categoryId: 'expense-other', amount: 400 },
+        { id: 'unlinked', categoryId: 'expense-health', amount: 500 },
+      ]);
+    expect(sqlite.prepare('PRAGMA foreign_key_check').all()).toEqual([]);
+  });
+});

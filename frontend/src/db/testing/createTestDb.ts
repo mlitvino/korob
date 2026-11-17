@@ -55,7 +55,10 @@ export function createTestDb({ until }: { until?: string } = {}) {
   const migrate = (stopAfter?: string) => {
     for (const entry of journal.entries.slice(applied)) {
       // `--> statement-breakpoint` is an SQL comment, so whole files can run as-is.
+      // Inside a transaction like Drizzle's migrator, where `PRAGMA foreign_keys` has no effect.
+      sqlite.exec('BEGIN');
       sqlite.exec(fs.readFileSync(path.join(MIGRATIONS_DIR, `${entry.tag}.sql`), 'utf8'));
+      sqlite.exec('COMMIT');
       applied += 1;
       if (entry.tag === stopAfter) {
         break;
