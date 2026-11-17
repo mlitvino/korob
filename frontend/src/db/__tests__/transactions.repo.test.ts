@@ -1,3 +1,4 @@
+import { CategoriesRepo } from '@/db/categories.repo';
 import { createTestDb, type TestDb } from '@/db/testing/createTestDb';
 import { TransactionsRepo } from '@/db/transactions.repo';
 import type { Transaction } from '@/types/Transaction';
@@ -26,31 +27,18 @@ const transaction = (id: string, categoryId: string): Transaction => ({
   updatedAt: at,
 });
 
-const storedCategory = (id: string) => mockTestDb.sqlite
-  .prepare('SELECT category, categoryId FROM transactions WHERE id = ?')
-  .get(id);
-
 describe('TransactionsRepo', () => {
-  it('stores a built-in category id and its key', async () => {
+  it('round-trips built-in and custom category ids', async () => {
+    const pets = await CategoriesRepo.create('expense', 'Pets');
     await TransactionsRepo.insert(transaction('t1', 'expense-food'));
+    await TransactionsRepo.insert(transaction('t2', pets.id));
 
-    expect(storedCategory('t1')).toEqual({ category: 'food', categoryId: 'expense-food' });
     expect((await TransactionsRepo.getById('t1'))?.categoryId).toBe('expense-food');
+    expect((await TransactionsRepo.getById('t2'))?.categoryId).toBe(pets.id);
   });
 
-  it('stores a custom category id with "other" in the old column', async () => {
-    await TransactionsRepo.insert(transaction('t2', 'custom-uuid'));
-
-    expect(storedCategory('t2')).toEqual({ category: 'other', categoryId: 'custom-uuid' });
-    expect((await TransactionsRepo.getById('t2'))?.categoryId).toBe('custom-uuid');
-  });
-
-  it('reads rows without a category id as "other" of their type', async () => {
-    mockTestDb.sqlite.prepare(
-      `INSERT INTO transactions (id, type, category, amount, createdAt)
-       VALUES ('legacy', 'income', 'food', 5, 1)`,
-    ).run();
-
-    expect((await TransactionsRepo.getById('legacy'))?.categoryId).toBe('income-other');
+  it('refuses a category id that does not exist', async () => {
+    await expect(TransactionsRepo.insert(transaction('t3', 'no-such-category'))).rejects.toThrow();
+    expect(await TransactionsRepo.getById('t3')).toBeNull();
   });
 });

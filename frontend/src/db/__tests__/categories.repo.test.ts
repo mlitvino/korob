@@ -15,8 +15,8 @@ beforeEach(() => {
 
 const addTransaction = (id: string, categoryId: string) => {
   mockTestDb.sqlite.prepare(
-    `INSERT INTO transactions (id, type, category, categoryId, amount, createdAt, updatedAt)
-     VALUES (?, 'expense', 'food', ?, 1, 1, 1)`,
+    `INSERT INTO transactions (id, type, categoryId, amount, createdAt, updatedAt)
+     VALUES (?, 'expense', ?, 1, 1, 1)`,
   ).run(id, categoryId);
 };
 

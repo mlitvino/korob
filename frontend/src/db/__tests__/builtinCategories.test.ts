@@ -3,7 +3,6 @@ import path from 'path';
 
 import {
   builtinCategoryId,
-  builtinKeyFromId,
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
 } from '@/db/builtinCategories';
@@ -31,13 +30,6 @@ describe('built-in categories', () => {
     ].map((row) => ({ id: `${row.type}-${row.key}`, ...row }));
 
     expect(seededRows).toEqual(expected);
-  });
-
-  it('reads the built-in key back from an id', () => {
-    expect(builtinKeyFromId('expense-food')).toBe('food');
-    expect(builtinKeyFromId('income-other')).toBe('other');
-    expect(builtinKeyFromId('income-food')).toBeNull();
-    expect(builtinKeyFromId('3f2a6c1e-8b7d-4e5f-9a0b-1c2d3e4f5a6b')).toBeNull();
   });
 
 });

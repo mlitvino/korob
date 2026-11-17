@@ -13,7 +13,7 @@ describe('migration 0004_add_categories', () => {
     insert.run('income-other', 'income', 'other');
     insert.run('mismatched', 'expense', 'salary');
 
-    migrate();
+    migrate('0004_add_categories');
 
     const rows = sqlite.prepare('SELECT id, categoryId FROM transactions ORDER BY id').all();
     expect(rows).toEqual([
@@ -48,7 +48,7 @@ describe('migration 0005_amounts_to_cents', () => {
     insert.run('three-decimals', 12.345);
     insert.run('float-noise', 0.1 + 0.2);
 
-    migrate();
+    migrate('0005_amounts_to_cents');
 
     const rows = sqlite.prepare(
       'SELECT id, amount, typeof(amount) AS kind FROM transactions ORDER BY id',
@@ -60,5 +60,44 @@ describe('migration 0005_amounts_to_cents', () => {
       { id: 'three-decimals', amount: 1235, kind: 'integer' },
       { id: 'whole', amount: 700, kind: 'integer' },
     ]);
+  });
+});
+
+describe('migration 0006 (drop old category column, add FK)', () => {
+  const seed = () => {
+    const { sqlite, migrate } = createTestDb({ until: '0005_amounts_to_cents' });
+    sqlite.prepare(
+      `INSERT INTO transactions
+         (id, type, category, categoryId, amount, currency,
+          occurredAt, createdAt, updatedAt, description)
+       VALUES
+         ('linked', 'expense', 'food', 'expense-food', 1250, 'USD', 10, 20, 30, 'lunch'),
+         ('unlinked', 'income', 'food', NULL, 700, 'EUR', 1, 2, 3, NULL)`,
+    ).run();
+    migrate();
+    return sqlite;
+  };
+
+  it('moves rows without a category to "other" of their type and keeps every value', () => {
+    const sqlite = seed();
+    expect(sqlite.prepare('SELECT * FROM transactions ORDER BY id').all()).toEqual([
+      {
+        id: 'linked', type: 'expense', categoryId: 'expense-food', amount: 1250, currency: 'USD',
+        occurredAt: 10, createdAt: 20, updatedAt: 30, description: 'lunch',
+      },
+      {
+        id: 'unlinked', type: 'income', categoryId: 'income-other', amount: 700, currency: 'EUR',
+        occurredAt: 1, createdAt: 2, updatedAt: 3, description: null,
+      },
+    ]);
+  });
+
+  it('rejects transactions that point to a missing category', () => {
+    const sqlite = seed();
+    const insert = sqlite.prepare(
+      `INSERT INTO transactions (id, type, categoryId, amount, createdAt)
+       VALUES ('bad', 'expense', 'no-such-category', 1, 1)`,
+    );
+    expect(() => insert.run()).toThrow(/FOREIGN KEY/);
   });
 });

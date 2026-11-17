@@ -1,5 +1,5 @@
 import type { CurrencyCode } from '@/types/Currency';
-import { TransactionCategory, TransactionType } from '@/types/Transaction';
+import type { TransactionCategory, TransactionType } from '@/types/Transaction';
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
 export const categories = sqliteTable('categories', {
@@ -14,8 +14,7 @@ export const categories = sqliteTable('categories', {
 export const transactions = sqliteTable('transactions', {
   id: text('id').primaryKey(),
   type: text('type').$type<TransactionType>().notNull(),
-  category: text('category').$type<TransactionCategory>().notNull(),
-  categoryId: text('categoryId'),
+  categoryId: text('categoryId').notNull().references(() => categories.id),
   /** Whole cents (since migration 0005). */
   amount: integer('amount').notNull(),
   currency: text('currency').$type<CurrencyCode>().notNull().default('EUR'),

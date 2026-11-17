@@ -48,6 +48,8 @@ function toExpoClient(sqlite: DatabaseSync) {
 // `until` stops after that migration tag; call `migrate()` later to apply the rest.
 export function createTestDb({ until }: { until?: string } = {}) {
   const sqlite = new DatabaseSync(':memory:');
+  // Same as the app (db/storage.ts): enforce foreign keys from the start.
+  sqlite.exec('PRAGMA foreign_keys = ON');
   let applied = 0;
 
   const migrate = (stopAfter?: string) => {

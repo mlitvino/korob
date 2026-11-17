@@ -5,6 +5,7 @@ import * as schema from './schema';
 import migrations from './migrations/migrations';
 
 export const sqliteDb = SQLite.openDatabaseSync('korob.db');
+sqliteDb.execSync('PRAGMA foreign_keys = ON;');
 
 export const db = drizzle(sqliteDb, { schema });
 export type DbClient = typeof db;
