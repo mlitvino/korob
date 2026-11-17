@@ -1,6 +1,7 @@
 import { Pressable, Text, View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { opacity, radius, spacing, touchTarget, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import type { FilterType } from '@/features/transaction-list/hooks/useFilteredTransactions';
 
@@ -9,79 +10,66 @@ type TransactionFilterBarProps = {
   onFilterChange: (nextFilter: FilterType) => void;
 };
 
+type FilterLabelKey = 'transaction.filterAll' | 'total.income' | 'total.expense';
+
+const FILTERS: { value: FilterType; labelKey: FilterLabelKey }[] = [
+  { value: 'all', labelKey: 'transaction.filterAll' },
+  { value: 'income', labelKey: 'total.income' },
+  { value: 'expense', labelKey: 'total.expense' },
+];
+
 export function TransactionFilterBar({ filter, onFilterChange }: TransactionFilterBarProps) {
   const theme = useTheme();
   const { t } = useTranslation();
 
   return (
     <View style={styles.filterRow}>
-      <Pressable
-        style={[
-          styles.filterButton,
-          { borderColor: theme.separator },
-          filter === 'all' && { backgroundColor: theme.elevated },
-        ]}
-        onPress={() => onFilterChange('all')}
-      >
-        <Text style={[styles.filterText, { color: theme.text }]}>{t('transaction.filterAll')}</Text>
-      </Pressable>
+      {FILTERS.map(({ value, labelKey }) => {
+        const isSelected = filter === value;
+        const fill = value === 'all' ? theme.elevated : theme[value];
+        const textColor = isSelected && value !== 'all' ? theme.contrastText : theme.text;
 
-      <Pressable
-        style={[
-          styles.filterButton,
-          { borderColor: theme.separator },
-          filter === 'income' && { backgroundColor: theme.income },
-        ]}
-        onPress={() => onFilterChange('income')}
-      >
-        <Text
-          style={[
-            styles.filterText,
-            { color: filter === 'income' ? theme.contrastText : theme.text },
-          ]}
-        >
-          {t('total.income')}
-        </Text>
-      </Pressable>
-
-      <Pressable
-        style={[
-          styles.filterButton,
-          { borderColor: theme.separator },
-          filter === 'expense' && { backgroundColor: theme.expense },
-        ]}
-        onPress={() => onFilterChange('expense')}
-      >
-        <Text
-          style={[
-            styles.filterText,
-            { color: filter === 'expense' ? theme.contrastText : theme.text },
-          ]}
-        >
-          {t('total.expense')}
-        </Text>
-      </Pressable>
+        return (
+          <Pressable
+            key={value}
+            accessibilityRole="button"
+            accessibilityState={{ selected: isSelected }}
+            style={({ pressed }) => [
+              styles.filterButton,
+              {
+                borderColor: isSelected ? fill : theme.separator,
+                backgroundColor: isSelected ? fill : 'transparent',
+                opacity: pressed ? opacity.pressed : 1,
+              },
+            ]}
+            onPress={() => onFilterChange(value)}
+          >
+            <Text style={[typography.body, styles.filterText, { color: textColor }]}>
+              {t(labelKey)}
+            </Text>
+          </Pressable>
+        );
+      })}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   filterRow: {
-    width: '100%',
     flexDirection: 'row',
-    gap: 8,
-    marginBottom: 12,
+    gap: spacing.sm,
+    marginBottom: spacing.md,
   },
   filterButton: {
     flex: 1,
+    minHeight: touchTarget,
+    paddingHorizontal: spacing.sm,
     borderWidth: 1,
-    borderRadius: 10,
-    paddingVertical: 10,
+    borderRadius: radius.sm,
     alignItems: 'center',
     justifyContent: 'center',
   },
   filterText: {
-    fontSize: 15,
     fontWeight: '600',
   },
 });

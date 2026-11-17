@@ -3,8 +3,9 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { useBalance } from '@/queries/transactions';
-import IconButton from '@/components/IconButton';
+import CircleButton from '@/components/CircleButton';
 import Total from '@/components/Total';
+import { gutter, opacity, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
@@ -35,23 +36,36 @@ export default function Index() {
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
 
-      <View style={[styles.totalsBox, { backgroundColor: theme.surface }]}>
-        <Pressable onPress={viewIncomeTransactions} style={{ flex: 1 }}>
+      <View style={[styles.totalsCard, { backgroundColor: theme.surface }]}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={viewIncomeTransactions}
+          style={({ pressed }) => [styles.totalColumn, pressed && styles.pressed]}
+        >
           <Total type={'income'} />
         </Pressable>
         <View style={[styles.verticalSeparator, { backgroundColor: theme.separator }]} />
-        <Pressable onPress={viewExpenseTransactions} style={{ flex: 1 }}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={viewExpenseTransactions}
+          style={({ pressed }) => [styles.totalColumn, pressed && styles.pressed]}
+        >
           <Total type={'expense'} />
         </Pressable>
       </View>
 
       <View style={styles.content}>
-        <View style={[styles.buttonGroupContainer, { backgroundColor: theme.surface }]}>
-          <IconButton icon="add" onPress={addIncome} style={{ backgroundColor: theme.income }} />
+        <View style={[styles.balancePanel, { backgroundColor: theme.surface }]}>
+          <CircleButton
+            kind="income"
+            size="md"
+            accessibilityLabel={t('transaction.addIncome')}
+            onPress={addIncome}
+          />
 
-          <View style={[styles.balanceGroupContainer, { backgroundColor: theme.inset }]} >
+          <View style={[styles.balanceBlock, { backgroundColor: theme.inset }]}>
             <Text
-              style={[styles.balanceTitle, { color: theme.text }]}
+              style={[typography.body, styles.centered, { color: theme.text }]}
               numberOfLines={1}
               adjustsFontSizeToFit
               minimumFontScale={0.5}
@@ -59,7 +73,7 @@ export default function Index() {
               {t('home.balance')}:
             </Text>
             <Text
-              style={[styles.balance, { color: theme.text }]}
+              style={[typography.display, styles.centered, { color: theme.text }]}
               numberOfLines={1}
               adjustsFontSizeToFit
               minimumFontScale={0.5}
@@ -68,10 +82,11 @@ export default function Index() {
             </Text>
           </View>
 
-          <IconButton
-            icon="remove"
+          <CircleButton
+            kind="expense"
+            size="md"
+            accessibilityLabel={t('transaction.addExpense')}
             onPress={addExpense}
-            style={{ backgroundColor: theme.expense }}
           />
         </View>
       </View>
@@ -83,54 +98,45 @@ export default function Index() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    paddingTop: spacing.xxxxl,
+    paddingHorizontal: gutter,
+    paddingBottom: gutter,
   },
-  totalsBox: {
-    width: 360,
-    height: 130,
-    borderRadius: 12,
+  totalsCard: {
+    borderRadius: radius.md,
     overflow: 'hidden',
     flexDirection: 'row',
-    marginBottom: 20,
-    marginTop: 60,
-    justifyContent: 'flex-start',
-    zIndex: 100,
+  },
+  totalColumn: {
+    flex: 1,
+    minWidth: 0,
+  },
+  pressed: {
+    opacity: opacity.pressed,
+  },
+  verticalSeparator: {
+    width: StyleSheet.hairlineWidth,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
   },
-  verticalSeparator: {
-    width: 1,
-  },
-  buttonGroupContainer: {
+  balancePanel: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    width: 400,
-    height: 150,
-    padding: 20,
-    borderRadius: 12,
-    gap: 10,
+    padding: spacing.lg,
+    borderRadius: radius.md,
+    gap: spacing.md,
   },
-  balanceGroupContainer: {
-    width: 150,
-    height: 100,
+  balanceBlock: {
+    flex: 1,
+    minWidth: 0,
     alignItems: 'center',
-    padding: 15,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    borderRadius: radius.sm,
   },
-  balanceTitle: {
-    fontSize: 16,
-    flexShrink: 1,
-    textAlign: 'center',
-  },
-  balance: {
-    fontSize: 30,
-    flexShrink: 1,
+  centered: {
     textAlign: 'center',
   },
 });
-

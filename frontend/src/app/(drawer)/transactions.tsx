@@ -8,6 +8,7 @@ import {
 } from '@/features/transaction-list/components/TransactionDateSeparator';
 import { TransactionFilterBar } from '@/features/transaction-list/components/TransactionFilterBar';
 import { useTransactions } from '@/queries/transactions';
+import { gutter, spacing } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
   useFilteredTransactions, type FilterType, type VisibleTransaction,
@@ -39,7 +40,7 @@ export default function Transactions() {
         renderItem={({ item: { transaction, occurredAt, showDateSeparator } }: {
           item: VisibleTransaction;
         }) => (
-          <View>
+          <View style={styles.listItem}>
             {showDateSeparator ? <TransactionDateSeparator occurredAt={occurredAt} /> : null}
             <TransactionItem transaction={transaction} />
           </View>
@@ -52,15 +53,18 @@ export default function Transactions() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingHorizontal: 12,
+    paddingTop: spacing.lg,
+    paddingHorizontal: gutter,
   },
   transactionList: {
-    width: '100%',
     alignSelf: 'stretch',
   },
   transactionListContent: {
     flexGrow: 1,
+    gap: spacing.sm,
+    paddingBottom: spacing.lg,
+  },
+  listItem: {
+    gap: spacing.sm,
   },
 });

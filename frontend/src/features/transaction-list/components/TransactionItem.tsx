@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import type { Transaction } from '@/types/Transaction';
+import { opacity, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import {
@@ -19,20 +20,20 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
   const formatCurrency = useCurrencyFormatter();
   const occurredAt = new Date(transaction.occurredAt);
   const valueColor = transaction.type === 'income' ? theme.income : theme.expense;
-  const valuePrefix = transaction.type === 'income' ? '+' : '-';
+  const valuePrefix = transaction.type === 'income' ? '+' : '\u2212';
 
   return (
     <View style={[styles.transactionItem, { backgroundColor: theme.canvas }]}>
       <View style={styles.metaRow}>
-        <Text style={[styles.metaText, { color: theme.text }]}>
+        <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
           {formatTimeInput(occurredAt, uses12HourClock(i18n.language))}
         </Text>
-        <Text style={[styles.metaText, { color: theme.text }]}>
+        <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
           {t(`category.${transaction.category}`)}
         </Text>
       </View>
 
-      <Text style={[styles.valueText, { color: valueColor }]}>
+      <Text style={[typography.title, styles.valueText, { color: valueColor }]}>
         {valuePrefix}{formatCurrency(transaction.amount, transaction.currency)}
       </Text>
     </View>
@@ -41,24 +42,22 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
 
 const styles = StyleSheet.create({
   transactionItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-    marginVertical: 5,
-    borderRadius: 10,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+    gap: spacing.xs,
   },
   metaRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 6,
+    gap: spacing.sm,
   },
   metaText: {
-    fontSize: 13,
     textTransform: 'capitalize',
-    opacity: 0.85,
+    opacity: opacity.secondary,
   },
   valueText: {
-    fontSize: 20,
     fontWeight: '700',
   },
 });

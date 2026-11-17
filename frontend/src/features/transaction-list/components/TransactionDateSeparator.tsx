@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 
+import { opacity, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 
 type TransactionDateSeparatorProps = {
@@ -16,7 +17,7 @@ export function TransactionDateSeparator({ occurredAt }: TransactionDateSeparato
   return (
     <View style={styles.dateSeparatorWrap}>
       <View style={[styles.dateLine, { backgroundColor: theme.separator }]} />
-      <Text style={[styles.dateSeparatorText, { color: theme.text }]}>
+      <Text style={[typography.caption, styles.dateSeparatorText, { color: theme.text }]}>
         {occurredAt.toLocaleDateString(undefined, {
           weekday: 'short',
           day: '2-digit',
@@ -30,21 +31,19 @@ export function TransactionDateSeparator({ occurredAt }: TransactionDateSeparato
 
 const styles = StyleSheet.create({
   dateSeparatorWrap: {
-    width: '100%',
+    minHeight: spacing.xxl,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginTop: 8,
-    marginBottom: 4,
+    gap: spacing.sm,
+    marginTop: spacing.sm,
   },
   dateLine: {
     flex: 1,
-    height: 1,
+    height: StyleSheet.hairlineWidth,
   },
   dateSeparatorText: {
-    fontSize: 12,
     fontWeight: '600',
-    opacity: 0.8,
+    opacity: opacity.secondary,
     textTransform: 'uppercase',
   },
 });

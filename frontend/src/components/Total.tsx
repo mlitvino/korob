@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { TransactionType } from '@/types/Transaction';
 import { useTransactions } from '@/queries/transactions';
+import { spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
@@ -25,44 +26,41 @@ export default function Total({ type }: TotalProps) {
   const header = type === 'income' ? t('total.income') : t('total.expense');
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={[styles.header, { borderBottomColor: theme.separator}]}>
-        <Text style={[styles.headerText, { color: theme.text }]}>{header}</Text>
+        <Text style={[typography.title, styles.headerText, { color: theme.text }]}>{header}</Text>
       </View>
       <View style={styles.body}>
-        <Text style={[styles.categoryText, { color: theme.text }]}>
+        <Text style={[typography.body, { color: theme.text }]}>
           {t('total.allTime')}
         </Text>
-        <Text style={[styles.totalText, { color: theme.text }]}>{formatCurrency(total)}</Text>
+        <Text
+          style={[typography.headline, styles.totalText, { color: theme.text }]}
+          numberOfLines={1}
+        >
+          {formatCurrency(total)}
+        </Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
-    padding: 15,
-    borderBottomWidth: 1,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   headerText: {
-    fontSize: 18,
-    fontWeight: '600',
     textTransform: 'capitalize',
   },
   body: {
-    padding: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  categoryText: {
-    fontSize: 16,
+    paddingTop: spacing.md,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
+    gap: spacing.xs,
   },
   totalText: {
-    fontSize: 24,
     fontWeight: '600',
   },
 });
