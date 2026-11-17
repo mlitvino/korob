@@ -21,6 +21,11 @@ const ru: LocaleResource = {
       noCategories: 'Нет категорий',
       noCategoriesHint: 'Добавьте категорию в разделе Настройки → Категории.',
       filterAll: 'Все',
+      delete: 'Удалить',
+      deleteTitle: 'Удалить операцию?',
+      deleteMessage: 'Это действие нельзя отменить.',
+      deleteHint: 'Нажмите и удерживайте, чтобы удалить',
+      deleteFailed: 'Не удалось удалить операцию',
       saveFailed: 'Не удалось сохранить транзакцию',
     },
     category: {

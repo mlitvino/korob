@@ -44,6 +44,14 @@ export function useAddTransaction() {
   });
 }
 
+export function useDeleteTransaction() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => TransactionsRepo.deleteById(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: transactionsKey }),
+  });
+}
+
 export function useClearTransactions() {
   const queryClient = useQueryClient();
   return useMutation({

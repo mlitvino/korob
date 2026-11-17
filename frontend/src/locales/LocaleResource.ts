@@ -19,6 +19,11 @@ export type LocaleResource = {
       noCategories: string;
       noCategoriesHint: string;
       filterAll: string;
+      delete: string;
+      deleteTitle: string;
+      deleteMessage: string;
+      deleteHint: string;
+      deleteFailed: string;
       saveFailed: string;
     };
     category: {

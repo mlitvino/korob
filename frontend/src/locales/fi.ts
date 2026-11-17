@@ -21,6 +21,11 @@ const fi: LocaleResource = {
       noCategories: 'Ei kategorioita',
       noCategoriesHint: 'Lisää kategoria kohdassa Asetukset → Kategoriat.',
       filterAll: 'Kaikki',
+      delete: 'Poista',
+      deleteTitle: 'Poistetaanko tapahtuma?',
+      deleteMessage: 'Tätä ei voi perua.',
+      deleteHint: 'Poista painamalla pitkään',
+      deleteFailed: 'Tapahtuman poisto epäonnistui',
       saveFailed: 'Tapahtuman tallennus epäonnistui',
     },
     category: {

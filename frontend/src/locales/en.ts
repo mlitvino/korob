@@ -21,6 +21,11 @@ const en: LocaleResource = {
       noCategories: 'No categories',
       noCategoriesHint: 'Add one in Settings → Categories.',
       filterAll: 'All',
+      delete: 'Delete',
+      deleteTitle: 'Delete transaction?',
+      deleteMessage: 'This can’t be undone.',
+      deleteHint: 'Long press to delete',
+      deleteFailed: 'Could not delete the transaction',
       saveFailed: 'Could not save the transaction',
     },
     category: {
