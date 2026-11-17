@@ -14,6 +14,7 @@ const ru: LocaleResource = {
       addIncome: 'Добавить доход',
       addExpense: 'Добавить расход',
       enterAmount: 'Введите сумму',
+      amount: 'Сумма',
       selectDate: 'Дата',
       selectTime: 'Время',
       selectCategory: 'Категория',
@@ -53,6 +54,8 @@ const ru: LocaleResource = {
     },
     nav: {
       home: 'Главная',
+      openMenu: 'Открыть меню',
+      back: 'Назад',
       transactions: 'Транзакции',
       settings: 'Настройки',
     },

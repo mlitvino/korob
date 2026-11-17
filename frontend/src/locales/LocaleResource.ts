@@ -12,6 +12,7 @@ export type LocaleResource = {
       addIncome: string;
       addExpense: string;
       enterAmount: string;
+      amount: string;
       selectDate: string;
       selectTime: string;
       selectCategory: string;
@@ -51,6 +52,8 @@ export type LocaleResource = {
     };
     nav: {
       home: string;
+      openMenu: string;
+      back: string;
       transactions: string;
       settings: string;
     };

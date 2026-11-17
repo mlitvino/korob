@@ -14,6 +14,7 @@ const fi: LocaleResource = {
       addIncome: 'Lisää tulo',
       addExpense: 'Lisää meno',
       enterAmount: 'Syötä summa',
+      amount: 'Summa',
       selectDate: 'Päivä',
       selectTime: 'Aika',
       selectCategory: 'Kategoria',
@@ -53,6 +54,8 @@ const fi: LocaleResource = {
     },
     nav: {
       home: 'Koti',
+      openMenu: 'Avaa valikko',
+      back: 'Takaisin',
       transactions: 'Tapahtumat',
       settings: 'Asetukset',
     },

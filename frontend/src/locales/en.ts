@@ -14,6 +14,7 @@ const en: LocaleResource = {
       addIncome: 'Add income',
       addExpense: 'Add expense',
       enterAmount: 'Enter amount',
+      amount: 'Amount',
       selectDate: 'Date',
       selectTime: 'Time',
       selectCategory: 'Category',
@@ -53,6 +54,8 @@ const en: LocaleResource = {
     },
     nav: {
       home: 'Home',
+      openMenu: 'Open menu',
+      back: 'Back',
       transactions: 'Transactions',
       settings: 'Settings',
     },
