@@ -25,6 +25,12 @@ test:
 lint-compile:
 	cd frontend && yarn lint && yarn tsc
 
+# Fails when schema.ts changed without a generated migration.
+migrations-check:
+	cd frontend && yarn -s migration:generate
+	@cd frontend && git status --porcelain src/db/migrations | (! grep .) \
+		|| (echo "Schema changed without a migration: run 'yarn migration:generate' and commit it." && exit 1)
+
 build:
 	docker compose -f docker-compose.dev.yml up -d --build
 
