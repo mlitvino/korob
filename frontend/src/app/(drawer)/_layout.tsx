@@ -1,23 +1,13 @@
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { useTranslation } from 'react-i18next';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { useNavigation } from '@react-navigation/native';
 
+import { radius, spacing, touchTarget, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
-import HeaderLeft from '@/components/HeaderLeft';
+import DrawerMenuButton from '@/components/DrawerMenuButton';
 
 const SWIPE_EDGE_WIDTH_RATIO = 0.2;
-
-function DrawerMenuButton() {
-  const navigation = useNavigation<DrawerNavigationProp<Record<string, object>>>();
-  return (
-    <HeaderLeft
-      icon={'menu'}
-      onPress={() => navigation.toggleDrawer()}
-    />
-  );
-}
+const DRAWER_WIDTH = 280;
 
 export default function Layout() {
   const theme = useTheme();
@@ -27,10 +17,16 @@ export default function Layout() {
   return (
     <Drawer
       screenOptions={{
-        drawerStyle: [styles.container, { backgroundColor: theme.canvas }],
-        drawerLabelStyle: { color: theme.text },
+        drawerStyle: { width: DRAWER_WIDTH, backgroundColor: theme.canvas },
+        drawerContentStyle: { paddingHorizontal: spacing.md },
+        drawerItemStyle: { minHeight: touchTarget, borderRadius: radius.full },
+        drawerLabelStyle: { ...typography.body, fontWeight: '600' },
+        drawerActiveBackgroundColor: theme.inset,
+        drawerActiveTintColor: theme.text,
+        drawerInactiveTintColor: theme.text,
         headerStyle: { backgroundColor: theme.elevated },
-        headerTitleStyle: { color: theme.text },
+        headerTitleStyle: { ...typography.title, color: theme.text },
+        headerTintColor: theme.text,
         headerShadowVisible: false,
         headerLeft: () => <DrawerMenuButton />,
         swipeEdgeWidth: width * SWIPE_EDGE_WIDTH_RATIO,
@@ -55,6 +51,7 @@ export default function Layout() {
         options={{
           title: t('nav.settings'),
           drawerLabel: t('nav.settings'),
+          headerShown: false,
         }}
       />
       <Drawer.Screen
@@ -62,15 +59,11 @@ export default function Layout() {
         options={{
           title: 'Debug',
           drawerLabel: 'Debug',
-          drawerItemStyle: __DEV__ ? undefined : { display: 'none' },
+          drawerItemStyle: __DEV__
+            ? { minHeight: touchTarget, borderRadius: radius.full }
+            : { display: 'none' },
         }}
       />
     </Drawer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: 250,
-  },
-});

@@ -5,6 +5,7 @@ import uuid from 'react-native-uuid';
 
 import { Transaction, TransactionCategory } from '@/types/Transaction';
 import { useAddTransaction } from '@/queries/transactions';
+import { gutter, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrency } from '@/contexts/SettingsContext';
 import TransactionForm from '@/features/transaction-form/components/TransactionForm';
@@ -54,21 +55,21 @@ export default function TransactionModal() {
           ? t('transaction.addIncome')
           : t('transaction.addExpense'),
         headerStyle: { backgroundColor: theme.elevated },
-        headerTitleStyle: { color: theme.text },
+        headerTitleStyle: { ...typography.title, color: theme.text },
+        headerTintColor: theme.text,
         headerShadowVisible: false,
         headerLeft: () => (
-          <View style={styles.headerLeftOffset}>
-            <HeaderLeft
-              icon={'keyboard-arrow-left'}
-              onPress={() => router.push('/(drawer)')}
-              style={{ marginLeft: 0 }}
-            />
-          </View>
+          <HeaderLeft
+            icon={'arrow-back'}
+            accessibilityLabel={t('nav.back')}
+            onPress={() => router.push('/(drawer)')}
+            style={styles.headerLeft}
+          />
         ),
       }}/>
 
       <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text style={[styles.title, { color: theme.text }]}>
+        <Text style={[typography.headline, styles.title, { color: theme.text }]}>
           {type === 'income'
             ? t('total.income')
             : t('total.expense')
@@ -87,15 +88,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    paddingVertical: spacing.xxl,
+    paddingHorizontal: gutter,
+    gap: spacing.xl,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
-    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  headerLeftOffset: {
-    marginLeft: -10,
+  headerLeft: {
+    marginLeft: -spacing.md,
   },
 });
