@@ -1,47 +1,64 @@
 import { ReactNode } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ThemeColor } from '@/constants/theme';
+import Button from '@/components/Button';
+import { opacity, radius, spacing, typography } from '@/constants/theme';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type Props = {
   visible: boolean;
   title: string;
   doneLabel: string;
   onClose: () => void;
-  theme: ThemeColor;
   children: ReactNode;
 };
+
+const SCRIM = '#00000080';
+const HANDLE = { width: 32, height: 4 };
 
 export default function PickerSheet({
   visible,
   title,
   doneLabel,
   onClose,
-  theme,
   children,
 }: Props) {
+  const theme = useTheme();
+  const insets = useSafeAreaInsets();
+
   return (
     <Modal
       visible={visible}
       transparent
-      animationType="fade"
+      animationType="slide"
       onRequestClose={onClose}
+      statusBarTranslucent
+      navigationBarTranslucent
     >
-      <View style={styles.backdrop}>
+      <View style={styles.root}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={doneLabel}
+          style={[StyleSheet.absoluteFill, { backgroundColor: SCRIM }]}
+          onPress={onClose}
+        />
         <View
+          accessibilityViewIsModal
           style={[
-            styles.card,
-            { backgroundColor: theme.canvas, borderColor: theme.separator },
+            styles.sheet,
+            { backgroundColor: theme.canvas, paddingBottom: spacing.lg + insets.bottom },
           ]}
         >
-          <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
-          {children}
-          <Pressable
-            style={[styles.button, { backgroundColor: theme.elevated }]}
-            onPress={onClose}
+          <View style={[styles.handle, { backgroundColor: theme.text }]} />
+          <Text
+            accessibilityRole="header"
+            style={[typography.title, styles.title, { color: theme.text }]}
           >
-            <Text style={[styles.buttonText, { color: theme.text }]}>{doneLabel}</Text>
-          </Pressable>
+            {title}
+          </Text>
+          {children}
+          <Button label={doneLabel} onPress={onClose} style={styles.done} />
         </View>
       </View>
     </Modal>
@@ -49,31 +66,27 @@ export default function PickerSheet({
 }
 
 const styles = StyleSheet.create({
-  backdrop: {
+  root: {
     flex: 1,
-    backgroundColor: '#00000066',
-    justifyContent: 'center',
-    padding: 16,
+    justifyContent: 'flex-end',
   },
-  card: {
-    borderRadius: 14,
-    borderWidth: 1,
-    overflow: 'hidden',
+  sheet: {
+    paddingTop: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    borderTopLeftRadius: radius.lg,
+    borderTopRightRadius: radius.lg,
+  },
+  handle: {
+    ...HANDLE,
+    alignSelf: 'center',
+    borderRadius: radius.full,
+    opacity: opacity.disabled,
   },
   title: {
-    fontSize: 17,
     fontWeight: '700',
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingVertical: spacing.md,
   },
-  button: {
-    margin: 12,
-    borderRadius: 10,
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 15,
-    fontWeight: '600',
+  done: {
+    marginTop: spacing.lg,
   },
 });

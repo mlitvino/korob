@@ -1,16 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Pressable,
-  Text,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 
-import IconButton from '@/components/IconButton';
-import { useTheme } from '@/contexts/ThemeContext';
+import Button from '@/components/Button';
+import { FieldInput, FieldPicker } from '@/components/Field';
+import SettingsRow, { rowPosition } from '@/components/SettingsRow';
+import { spacing } from '@/constants/theme';
 import PickerSheet from '@/features/transaction-form/components/PickerSheet';
 import { parseAmount } from '@/features/transaction-form/utils/amount';
 import {
@@ -37,7 +33,6 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const theme = useTheme();
   const { t, i18n } = useTranslation();
   const use12Hours = uses12HourClock(i18n.language);
 
@@ -83,51 +78,33 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
 
   return (
     <View style={styles.form}>
-      <TextInput
-        style={[styles.input, { backgroundColor: theme.text }]}
+      <FieldInput
+        label={t('transaction.amount')}
         placeholder={t('transaction.enterAmount')}
-        placeholderTextColor="#999"
         keyboardType="decimal-pad"
         value={amount}
         onChangeText={setAmount}
       />
 
-      <Pressable
+      <FieldPicker
+        label={t('transaction.selectCategory')}
+        value={t(`category.${category}`)}
         onPress={() => setShowCategoryPicker(true)}
-        style={[styles.pickerButton, { backgroundColor: theme.text }]}
-      >
-        <Text style={[styles.pickerLabel, { color: theme.contrastText }]}>
-          {t('transaction.selectCategory')}
-        </Text>
-        <Text style={[styles.pickerValue, { color: theme.contrastText }]}>
-          {t(`category.${category}`)}
-        </Text>
-      </Pressable>
+      />
 
       <View style={styles.dateTimeRow}>
-        <Pressable
+        <FieldPicker
+          label={t('transaction.selectDate')}
+          value={formatDateInput(occurredAt)}
           onPress={() => setShowDatePicker(true)}
-          style={[styles.pickerButton, styles.dateInput, { backgroundColor: theme.text }]}
-        >
-          <Text style={[styles.pickerLabel, { color: theme.contrastText }]}>
-            {t('transaction.selectDate')}
-          </Text>
-          <Text style={[styles.pickerValue, { color: theme.contrastText }]}>
-            {formatDateInput(occurredAt)}
-          </Text>
-        </Pressable>
-
-        <Pressable
+          style={styles.dateInput}
+        />
+        <FieldPicker
+          label={t('transaction.selectTime')}
+          value={formatTimeInput(occurredAt, use12Hours)}
           onPress={() => setShowTimePicker(true)}
-          style={[styles.pickerButton, styles.timeInput, { backgroundColor: theme.text }]}
-        >
-          <Text style={[styles.pickerLabel, { color: theme.contrastText }]}>
-            {t('transaction.selectTime')}
-          </Text>
-          <Text style={[styles.pickerValue, { color: theme.contrastText }]}>
-            {formatTimeInput(occurredAt, use12Hours)}
-          </Text>
-        </Pressable>
+          style={styles.timeInput}
+        />
       </View>
 
       <PickerSheet
@@ -135,29 +112,18 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         title={t('transaction.selectCategory')}
         doneLabel={t('common.done')}
         onClose={() => setShowCategoryPicker(false)}
-        theme={theme}
       >
-        <View style={styles.categoryList}>
-          {categories.map((item) => {
-            const isSelected = category === item;
-            return (
-              <Pressable
-                key={item}
-                style={[
-                  styles.categoryOption,
-                  { borderColor: theme.separator },
-                  isSelected
-                    ? [styles.categoryOptionActive, { backgroundColor: theme.elevated }]
-                    : null,
-                ]}
-                onPress={() => setCategory(item)}
-              >
-                <Text style={[styles.categoryOptionText, { color: theme.text }]}>
-                  {t(`category.${item}`)}
-                </Text>
-              </Pressable>
-            );
-          })}
+        <View>
+          {categories.map((item, index) => (
+            <SettingsRow
+              key={item}
+              variant="option"
+              position={rowPosition(index, categories.length)}
+              label={t(`category.${item}`)}
+              selected={category === item}
+              onPress={() => setCategory(item)}
+            />
+          ))}
         </View>
       </PickerSheet>
 
@@ -183,68 +149,31 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         onConfirm={handleTimeConfirm}
       />
 
-      <IconButton
+      <Button
         icon={'check'}
         label={t('common.done')}
-        variant="wide"
+        disabled={isSubmitting}
         onPress={() => void handleSubmit()}
-        style={{ backgroundColor: theme.text }}
       />
     </View>
   );
 }
 
+const TIME_COLUMN_WIDTH = 136;
+
 const styles = StyleSheet.create({
   form: {
-    gap: 20,
-    width: 300,
-  },
-  categoryList: {
-    paddingHorizontal: 12,
-    paddingTop: 12,
-    gap: 8,
-  },
-  categoryOption: {
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-  },
-  categoryOptionActive: {
-    borderWidth: 0,
-  },
-  categoryOptionText: {
-    fontSize: 15,
-    fontWeight: '600',
-    textTransform: 'capitalize',
-  },
-  input: {
-    padding: 15,
-    borderRadius: 8,
-    fontSize: 18,
+    gap: spacing.xl,
   },
   dateTimeRow: {
     flexDirection: 'row',
-    gap: 10,
+    gap: spacing.sm,
   },
   dateInput: {
     flex: 1,
+    minWidth: 0,
   },
   timeInput: {
-    width: 130,
-  },
-  pickerButton: {
-    padding: 15,
-    borderRadius: 8,
-    justifyContent: 'center',
-  },
-  pickerLabel: {
-    fontSize: 12,
-    opacity: 0.75,
-    marginBottom: 4,
-  },
-  pickerValue: {
-    fontSize: 16,
-    fontWeight: '600',
+    width: TIME_COLUMN_WIDTH,
   },
 });
