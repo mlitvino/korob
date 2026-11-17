@@ -21,7 +21,7 @@ import type { TransactionType } from '@/types/Transaction';
 
 type Props = {
   transactionType: TransactionType;
-  onSubmit: (amount: number, occurredAt: Date, categoryId: string) => Promise<void>;
+  onSubmit: (amountCents: number, occurredAt: Date, categoryId: string) => Promise<void>;
 };
 
 export default function TransactionForm({ transactionType, onSubmit }: Props) {

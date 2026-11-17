@@ -21,7 +21,7 @@ export default function Total({ type }: TotalProps) {
 
   const total = transactions
     .filter(t => t.type === type && t.currency === currency)
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + t.amountCents, 0);
 
   const header = type === 'income' ? t('total.income') : t('total.expense');
 

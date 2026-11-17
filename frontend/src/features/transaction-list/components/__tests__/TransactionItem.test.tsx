@@ -26,7 +26,7 @@ const transaction = (categoryId: string): Transaction => ({
   id: 't1',
   type: 'expense',
   categoryId,
-  amount: 12,
+  amountCents: 1200,
   currency: 'EUR',
   occurredAt: at,
   createdAt: at,

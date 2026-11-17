@@ -22,8 +22,8 @@ export type Transaction = {
   type: TransactionType;
   /** Id of a row in the categories table; built-ins are `<type>-<key>`. */
   categoryId: string;
-  /** Always positive, in `currency` units; the sign comes from `type`. */
-  amount: number;
+  /** Always positive, in whole cents of `currency`; the sign comes from `type`. */
+  amountCents: number;
   /** Currency the amount was entered in. Never converted. */
   currency: CurrencyCode;
   /** When the money moved; picked by the user. */

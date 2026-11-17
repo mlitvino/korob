@@ -72,7 +72,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
       </View>
 
       <Text style={[typography.title, styles.valueText, { color: valueColor }]}>
-        {valuePrefix}{formatCurrency(transaction.amount, transaction.currency)}
+        {valuePrefix}{formatCurrency(transaction.amountCents, transaction.currency)}
       </Text>
     </Pressable>
   );

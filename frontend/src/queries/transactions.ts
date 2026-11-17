@@ -31,7 +31,7 @@ export function useBalance(currency: CurrencyCode): number {
   return useMemo(() => transactions
     .filter((t) => t.currency === currency)
     .reduce(
-      (balance, t) => (t.type === 'income' ? balance + t.amount : balance - t.amount),
+      (balance, t) => (t.type === 'income' ? balance + t.amountCents : balance - t.amountCents),
       0,
     ), [transactions, currency]);
 }

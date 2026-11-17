@@ -12,7 +12,7 @@ const toDomain = (row: SelectTransaction): Transaction => ({
   id: row.id,
   type: row.type,
   categoryId: row.categoryId ?? builtinCategoryId(row.type, 'other'),
-  amount: row.amount,
+  amountCents: row.amount,
   currency: row.currency,
   occurredAt: new Date(row.occurredAt),
   createdAt: new Date(row.createdAt),
@@ -26,7 +26,7 @@ const toDbInsert = (input: Transaction): InsertTransaction => ({
   // Old required column, dropped by a later migration.
   category: builtinKeyFromId(input.categoryId) ?? 'other',
   categoryId: input.categoryId,
-  amount: input.amount,
+  amount: input.amountCents,
   currency: input.currency,
   occurredAt: input.occurredAt.getTime(),
   createdAt: input.createdAt.getTime(),

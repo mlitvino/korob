@@ -16,6 +16,7 @@ export const transactions = sqliteTable('transactions', {
   type: text('type').$type<TransactionType>().notNull(),
   category: text('category').$type<TransactionCategory>().notNull(),
   categoryId: text('categoryId'),
+  /** Whole cents (since migration 0005). */
   amount: integer('amount').notNull(),
   currency: text('currency').$type<CurrencyCode>().notNull().default('EUR'),
   occurredAt: integer('occurredAt').notNull().default(0),

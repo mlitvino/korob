@@ -23,7 +23,7 @@ export default function TransactionModal() {
   }
 
   const handleSubmit = async (
-    amount: number,
+    amountCents: number,
     occurredAt: Date,
     categoryId: string,
   ) => {
@@ -32,7 +32,7 @@ export default function TransactionModal() {
       id: String(uuid.v4()),
       type,
       categoryId,
-      amount,
+      amountCents,
       currency,
       occurredAt,
       createdAt: now,

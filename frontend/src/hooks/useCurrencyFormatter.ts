@@ -15,13 +15,20 @@ export function resolveLocale(language: string) {
   return 'en-US';
 }
 
+/** Formats whole cents as money, e.g. 1250 EUR in `en-US` → `€12.50`. */
+export function formatCents(cents: number, currency: CurrencyCode, locale: string) {
+  return new Intl.NumberFormat(
+    locale,
+    { style: 'currency', currency, minimumFractionDigits: 2 },
+  ).format(cents / 100);
+}
+
+/** Returns a formatter for amounts in cents, in the app language and selected currency. */
 export function useCurrencyFormatter() {
   const { i18n } = useTranslation();
   const defaultCurrency = useCurrency();
   const locale = resolveLocale(i18n.language);
 
-  return (amount: number, currency: CurrencyCode = defaultCurrency) => new Intl.NumberFormat(
-    locale,
-    { style: 'currency', currency, minimumFractionDigits: 2 },
-  ).format(amount);
+  return (cents: number, currency: CurrencyCode = defaultCurrency) =>
+    formatCents(cents, currency, locale);
 }

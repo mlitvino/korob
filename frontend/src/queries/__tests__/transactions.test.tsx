@@ -34,12 +34,12 @@ afterEach(() => {
 const at = new Date(2026, 10, 1);
 const base = { occurredAt: at, createdAt: at, updatedAt: at, currency: 'EUR' } as const;
 const income: Transaction = {
-  ...base, id: 'income-1', type: 'income', categoryId: 'income-salary', amount: 100,
+  ...base, id: 'income-1', type: 'income', categoryId: 'income-salary', amountCents: 10000,
 };
 const expense: Transaction = {
-  ...base, id: 'expense-1', type: 'expense', categoryId: 'expense-food', amount: 30,
+  ...base, id: 'expense-1', type: 'expense', categoryId: 'expense-food', amountCents: 3000,
 };
-const usdIncome: Transaction = { ...income, id: 'income-usd', amount: 500, currency: 'USD' };
+const usdIncome: Transaction = { ...income, id: 'income-usd', amountCents: 50000, currency: 'USD' };
 
 function useTransactionsApi() {
   return {
@@ -68,7 +68,7 @@ describe('transaction queries', () => {
     const { result } = await renderLoaded();
 
     expect(result.current.transactions).toEqual([income]);
-    expect(result.current.balance).toBe(100);
+    expect(result.current.balance).toBe(10000);
   });
 
   it('shows an added transaction once it is saved and nets the balance', async () => {
@@ -79,7 +79,7 @@ describe('transaction queries', () => {
 
     await act(() => result.current.add.mutateAsync(expense));
     expect(result.current.transactions).toHaveLength(2);
-    expect(result.current.balance).toBe(70);
+    expect(result.current.balance).toBe(7000);
   });
 
   it('only counts transactions in the requested currency', async () => {
@@ -89,7 +89,7 @@ describe('transaction queries', () => {
     await act(() => result.current.add.mutateAsync(usdIncome));
 
     expect(result.current.transactions).toHaveLength(2);
-    expect(result.current.balance).toBe(100);
+    expect(result.current.balance).toBe(10000);
   });
 
   it('does not show a transaction that failed to save', async () => {
