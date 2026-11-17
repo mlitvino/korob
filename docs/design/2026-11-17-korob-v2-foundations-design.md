@@ -102,3 +102,4 @@ v2 now lives in code; code is the source of truth from here on.
 - Category sheet: RN `Modal` sliding from the bottom (no new dependency; `@expo/ui` BottomSheet's universal layer needs SDK 56).
 - Settings sub-pages use the settings stack's own header with the native back arrow.
 - Not ported: `+not-found.tsx`, `LoadingOverlay`, `features/debug` still use literal sizes.
+- Settings → Categories (added later) has no canvas board: it is composed only from `SettingsRow`, `Button`, `FieldInput` and `Sheet`.
