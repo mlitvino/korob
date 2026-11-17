@@ -26,6 +26,12 @@ export default function SettingsIndex() {
         onPress={() => router.push('/(drawer)/(settings)/currency')}
       />
       <SettingsRow
+        variant="nav"
+        position="middle"
+        label={t('settings.categories')}
+        onPress={() => router.push('/(drawer)/(settings)/categories')}
+      />
+      <SettingsRow
         variant="value"
         position="middle"
         label={t('settings.appearance')}

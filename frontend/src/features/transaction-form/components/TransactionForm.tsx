@@ -6,9 +6,9 @@ import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 import Button from '@/components/Button';
 import { FieldInput, FieldPicker } from '@/components/Field';
 import SettingsRow, { rowPosition } from '@/components/SettingsRow';
+import Sheet from '@/components/Sheet';
 import { opacity, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
-import PickerSheet from '@/features/transaction-form/components/PickerSheet';
 import { parseAmount } from '@/features/transaction-form/utils/amount';
 import {
   formatDateInput,
@@ -121,10 +121,10 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         />
       </View>
 
-      <PickerSheet
+      <Sheet
         visible={showCategoryPicker}
         title={t('transaction.selectCategory')}
-        doneLabel={t('common.done')}
+        closeLabel={t('common.done')}
         onClose={() => setShowCategoryPicker(false)}
       >
         <View>
@@ -139,7 +139,8 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
             />
           ))}
         </View>
-      </PickerSheet>
+        <Button label={t('common.done')} onPress={() => setShowCategoryPicker(false)} />
+      </Sheet>
 
       <DatePickerModal
         mode="single"

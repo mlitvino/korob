@@ -38,9 +38,23 @@ const ru: LocaleResource = {
     },
     settings: {
       title: 'Настройки',
+      categories: 'Категории',
       appearance: 'Оформление',
       currency: 'Валюта',
       language: 'Язык',
+    },
+    categories: {
+      add: 'Добавить категорию',
+      newTitle: 'Новая категория',
+      editTitle: 'Изменить категорию',
+      name: 'Название',
+      save: 'Сохранить',
+      archive: 'В архив',
+      archiveTitle: 'Убрать «{{name}}» в архив?',
+      archiveMessage: 'Она исчезнет из списка категорий. Операции сохранят её название.',
+      errorEmpty: 'Введите название',
+      errorDuplicate: 'Категория с таким названием уже есть',
+      saveFailed: 'Не удалось сохранить категорию',
     },
     currency: {
       title: 'Валюта',

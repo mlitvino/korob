@@ -36,9 +36,23 @@ export type LocaleResource = {
     };
     settings: {
       title: string;
+      categories: string;
       appearance: string;
       currency: string;
       language: string;
+    };
+    categories: {
+      add: string;
+      newTitle: string;
+      editTitle: string;
+      name: string;
+      save: string;
+      archive: string;
+      archiveTitle: string;
+      archiveMessage: string;
+      errorEmpty: string;
+      errorDuplicate: string;
+      saveFailed: string;
     };
     currency: {
       title: string;

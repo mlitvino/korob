@@ -38,9 +38,23 @@ const fi: LocaleResource = {
     },
     settings: {
       title: 'Asetukset',
+      categories: 'Kategoriat',
       appearance: 'Ulkoasu',
       currency: 'Valuutta',
       language: 'Kieli',
+    },
+    categories: {
+      add: 'Lisää kategoria',
+      newTitle: 'Uusi kategoria',
+      editTitle: 'Muokkaa kategoriaa',
+      name: 'Nimi',
+      save: 'Tallenna',
+      archive: 'Arkistoi',
+      archiveTitle: 'Arkistoidaanko ”{{name}}”?',
+      archiveMessage: 'Se poistuu kategorialuettelosta. Tapahtumat säilyttävät nimen.',
+      errorEmpty: 'Anna nimi',
+      errorDuplicate: 'Samanniminen kategoria on jo olemassa',
+      saveFailed: 'Kategorian tallennus epäonnistui',
     },
     currency: {
       title: 'Valuutta',

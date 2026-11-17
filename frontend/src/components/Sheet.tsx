@@ -2,14 +2,14 @@ import { ReactNode } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Button from '@/components/Button';
 import { opacity, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 
 type Props = {
   visible: boolean;
   title: string;
-  doneLabel: string;
+  /** Screen-reader label for the scrim that closes the sheet. */
+  closeLabel: string;
   onClose: () => void;
   children: ReactNode;
 };
@@ -17,13 +17,8 @@ type Props = {
 const SCRIM = '#00000080';
 const HANDLE = { width: 32, height: 4 };
 
-export default function PickerSheet({
-  visible,
-  title,
-  doneLabel,
-  onClose,
-  children,
-}: Props) {
+/** Bottom sheet: slides up over a scrim; tapping the scrim or Back closes it. */
+export default function Sheet({ visible, title, closeLabel, onClose, children }: Props) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
 
@@ -39,7 +34,7 @@ export default function PickerSheet({
       <View style={styles.root}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={doneLabel}
+          accessibilityLabel={closeLabel}
           style={[StyleSheet.absoluteFill, { backgroundColor: SCRIM }]}
           onPress={onClose}
         />
@@ -57,8 +52,7 @@ export default function PickerSheet({
           >
             {title}
           </Text>
-          {children}
-          <Button label={doneLabel} onPress={onClose} style={styles.done} />
+          <View style={styles.body}>{children}</View>
         </View>
       </View>
     </Modal>
@@ -86,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     paddingVertical: spacing.md,
   },
-  done: {
-    marginTop: spacing.lg,
+  body: {
+    gap: spacing.lg,
   },
 });

@@ -1,8 +1,8 @@
-import { Text } from 'react-native';
+import { Modal, Text } from 'react-native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import PickerSheet from '@/features/transaction-form/components/PickerSheet';
+import Sheet from '@/components/Sheet';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const NO_INSETS = {
@@ -10,20 +10,22 @@ const NO_INSETS = {
   insets: { top: 0, left: 0, right: 0, bottom: 0 },
 };
 
-describe('PickerSheet', () => {
-  it('closes from the Done button', () => {
+describe('Sheet', () => {
+  it('shows its content and closes on system Back', () => {
     const onClose = jest.fn();
     render(
       <ThemeProvider>
         <SafeAreaProvider initialMetrics={NO_INSETS}>
-          <PickerSheet visible title="Category" doneLabel="Done" onClose={onClose}>
+          <Sheet visible title="Category" closeLabel="Close" onClose={onClose}>
             <Text>Food</Text>
-          </PickerSheet>
+          </Sheet>
         </SafeAreaProvider>
       </ThemeProvider>,
     );
 
-    fireEvent.press(screen.getByText('Done'));
+    expect(screen.getByText('Food')).toBeOnTheScreen();
+    // The scrim is hidden from screen readers by the modal panel; Back is how they close it.
+    fireEvent(screen.UNSAFE_getByType(Modal), 'requestClose');
     expect(onClose).toHaveBeenCalled();
   });
 });

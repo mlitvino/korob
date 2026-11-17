@@ -31,15 +31,24 @@ const boxStyle = (theme: Theme, focused: boolean): ViewStyle => ({
 
 type FieldInputProps = Omit<TextInputProps, 'style'> & {
   label: string;
+  /** Validation message shown under the field. */
+  error?: string | null;
   style?: StyleProp<ViewStyle>;
 };
 
-export function FieldInput({ label, style, onFocus, onBlur, ...inputProps }: FieldInputProps) {
+export function FieldInput({
+  label,
+  error,
+  style,
+  onFocus,
+  onBlur,
+  ...inputProps
+}: FieldInputProps) {
   const theme = useTheme();
   const [focused, setFocused] = useState(false);
 
-  return (
-    <View style={[boxStyle(theme, focused), { paddingRight: spacing.lg }, style]}>
+  const field = (
+    <View style={[boxStyle(theme, focused), { paddingRight: spacing.lg }, error ? null : style]}>
       <Text style={[typography.caption, { color: theme.text, opacity: opacity.secondary }]}>
         {label}
       </Text>
@@ -53,6 +62,22 @@ export function FieldInput({ label, style, onFocus, onBlur, ...inputProps }: Fie
         style={[typography.title, { fontWeight: '400', color: theme.text, padding: 0 }]}
         {...inputProps}
       />
+    </View>
+  );
+
+  if (!error) {
+    return field;
+  }
+
+  return (
+    <View style={[{ gap: spacing.xs }, style]}>
+      {field}
+      <Text
+        accessibilityLiveRegion="polite"
+        style={[typography.bodySm, { color: theme.expense }]}
+      >
+        {error}
+      </Text>
     </View>
   );
 }

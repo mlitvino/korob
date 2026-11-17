@@ -24,6 +24,7 @@ export default function Layout() {
         name="index"
         options={{ title: t('settings.title'), headerLeft: () => <DrawerMenuButton /> }}
       />
+      <Stack.Screen name="categories" options={{ title: t('settings.categories') }} />
       <Stack.Screen name="appearance" options={{ title: t('appearance.title') }} />
       <Stack.Screen name="currency" options={{ title: t('currency.title') }} />
       <Stack.Screen name="language" options={{ title: t('settings.language') }} />

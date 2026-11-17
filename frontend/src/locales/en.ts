@@ -38,9 +38,23 @@ const en: LocaleResource = {
     },
     settings: {
       title: 'Settings',
+      categories: 'Categories',
       appearance: 'Appearance',
       currency: 'Currency',
       language: 'Language',
+    },
+    categories: {
+      add: 'Add category',
+      newTitle: 'New category',
+      editTitle: 'Edit category',
+      name: 'Name',
+      save: 'Save',
+      archive: 'Archive',
+      archiveTitle: 'Archive “{{name}}”?',
+      archiveMessage: 'It disappears from the category list. Transactions keep its name.',
+      errorEmpty: 'Enter a name',
+      errorDuplicate: 'A category with this name already exists',
+      saveFailed: 'Could not save the category',
     },
     currency: {
       title: 'Currency',
