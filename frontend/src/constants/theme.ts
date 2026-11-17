@@ -1,3 +1,5 @@
+import type { TextStyle } from 'react-native';
+
 export type ThemeColor = {
     canvas: string;
     background: string;
@@ -13,7 +15,9 @@ export type ThemeColor = {
     income: string;
     expense: string;
 
-    pickerAccent: string;
+    /** App accent: primary buttons, selection checks, focus ring. */
+    accent: string;
+    /** Text color for react-native-paper date/time pickers. */
     pickerText: string;
 };
 
@@ -44,10 +48,10 @@ export const Themes: Record<ThemeName, Theme> = {
 
     separator: '#020000',
 
-    income:   '#4caf82',
-    expense:  '#e05c5c',
+    income:   '#1f6e4a',
+    expense:  '#b83b3b',
 
-    pickerAccent: '#413d46',
+    accent: '#413d46',
     pickerText: '#111111',
   },
   black: {
@@ -67,7 +71,7 @@ export const Themes: Record<ThemeName, Theme> = {
     income:   '#449e75',
     expense:  '#e05c5c',
 
-    pickerAccent: '#76d9b3',
+    accent: '#76d9b3',
     pickerText: '#ffffff',
   },
   dark: {
@@ -84,10 +88,10 @@ export const Themes: Record<ThemeName, Theme> = {
 
     separator: '#ffffff1a',
 
-    income:   '#fff',
-    expense:  '#fff',
+    income:   '#5cc595',
+    expense:  '#f27a7a',
 
-    pickerAccent: '#8ec5ff',
+    accent: '#8ec5ff',
     pickerText: '#ffffff',
   },
   black_yellow: {
@@ -107,7 +111,47 @@ export const Themes: Record<ThemeName, Theme> = {
     income:      '#ffd600',
     expense:     '#ff9800',
 
-    pickerAccent: '#ffd600',
+    accent: '#fff7a8',
     pickerText: '#fff7a8',
   },
 };
+
+export const spacing = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 24,
+  xxxl: 32,
+  xxxxl: 48,
+} as const;
+
+/** Horizontal screen padding. */
+export const gutter = spacing.lg;
+
+export const radius = {
+  sm: 8,
+  md: 12,
+  lg: 16,
+  full: 9999,
+} as const;
+
+export const typography = {
+  display: { fontSize: 30, lineHeight: 36, fontWeight: '400' },
+  headline: { fontSize: 24, lineHeight: 32, fontWeight: '700' },
+  title: { fontSize: 20, lineHeight: 28, fontWeight: '600' },
+  body: { fontSize: 16, lineHeight: 24, fontWeight: '400' },
+  bodySm: { fontSize: 14, lineHeight: 20, fontWeight: '400' },
+  caption: { fontSize: 12, lineHeight: 16, fontWeight: '400' },
+} as const satisfies Record<string, TextStyle>;
+
+export const opacity = {
+  /** Dimmed text (labels, meta, values). */
+  secondary: 0.7,
+  pressed: 0.7,
+  disabled: 0.4,
+} as const;
+
+/** Minimum touch target. */
+export const touchTarget = 48;
