@@ -1,50 +1,52 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
+  workflow_call:
 
 permissions:
   contents: read
 
 jobs:
-  test:
+  frontend:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: frontend
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
-          node-version-file: 'frontend/.nvmrc'
-          cache: 'yarn'
+          node-version-file: frontend/.nvmrc
+          cache: yarn
           cache-dependency-path: frontend/yarn.lock
 
-      - name: Set up Docker Compose
-        uses: docker/setup-compose-action@v2
-        with:
-          version: v5.0.0
-
-      - name: Prepare env file
-        run: cp .env.example .env
-
       - name: Install dependencies
-        run: make ci
+        run: yarn install --frozen-lockfile
 
       - name: Check migrations match the schema
-        run: make migrations-check
-
-      - name: Build docker containers
-        run: make build
+        run: make -C .. migrations-check
 
       - name: Run tests
-        run: make test
+        run: yarn test
 
       - name: Lint and type-check
-        run: make lint-compile
+        run: yarn lint && yarn tsc
+
+  proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build and start the stack
+        run: make up
+
+      - name: Check /health
+        run: curl -fsS http://127.0.0.1:8080/health
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs

@@ -1,0 +1,18 @@
+name: korob
+
+services:
+  proxy:
+    image: ghcr.io/mlitvino/korob-proxy:${TAG:?TAG is not set}
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      edge_korob:
+        aliases: [korob-proxy]
+
+networks:
+  edge_korob:
+    external: true

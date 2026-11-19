@@ -1,0 +1,22 @@
+# App-level proxy for api.korob.mlitvino.dev. The edge Caddy terminates TLS and forwards here.
+{
+	auto_https off
+	admin off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:8080 {
+	encode zstd gzip
+
+	handle /health {
+		header Content-Type application/json
+		respond `{"status":"ok","version":"{$VERSION:dev}"}` 200
+	}
+
+	# When the backend exists: handle { reverse_proxy api:3000 }
+	handle {
+		respond 404
+	}
+}

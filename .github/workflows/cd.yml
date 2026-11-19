@@ -1,0 +1,74 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  image:
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: docker/setup-buildx-action@v4
+
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v7
+        with:
+          context: proxy
+          push: true
+          build-args: VERSION=${{ github.sha }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/korob-proxy:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/korob-proxy:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    needs: image
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: mlitvino/vps-deploy@v1
+        with:
+          app: korob
+          image: ghcr.io/${{ github.repository_owner }}/korob-proxy
+          host: ${{ secrets.VPS_HOST }}
+          user: ${{ secrets.VPS_USER }}
+          ssh-key: ${{ secrets.VPS_SSH_KEY }}
+          known-hosts: ${{ secrets.VPS_KNOWN_HOSTS }}
+          ghcr-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check the public endpoint
+        run: |
+          for _ in 1 2 3 4 5; do
+            body=$(curl -fsS https://api.korob.mlitvino.dev/health) && break
+            sleep 5
+          done
+          echo "$body"
+          echo "$body" | grep -q '"version":"${{ github.sha }}"'
