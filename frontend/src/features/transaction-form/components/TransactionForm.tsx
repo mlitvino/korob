@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 
 import Button from '@/components/Button';
 import { FieldInput, FieldPicker } from '@/components/Field';
-import SettingsRow, { rowPosition } from '@/components/SettingsRow';
 import Sheet from '@/components/Sheet';
-import { opacity, spacing, typography } from '@/constants/theme';
-import { useTheme } from '@/contexts/ThemeContext';
+import { spacing } from '@/constants/theme';
+import CategoryChipList from '@/features/categories/CategoryChipList';
+import { useCategoryEditor } from '@/features/categories/useCategoryEditor';
 import { parseAmount } from '@/features/transaction-form/utils/amount';
 import {
   formatDateInput,
@@ -32,12 +32,13 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [categoryId, setCategoryId] = useState<string | null>(null);
   const selectedCategory = categories.find((c) => c.id === categoryId);
   const nameOf = useCategoryName();
-  const theme = useTheme();
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const { t, i18n } = useTranslation();
   const use12Hours = uses12HourClock(i18n.language);
+  const { height: windowHeight } = useWindowDimensions();
+  const editor = useCategoryEditor({ onCreated: (category) => setCategoryId(category.id) });
 
   useEffect(() => {
     if (!categories.some((c) => c.id === categoryId)) {
@@ -89,22 +90,11 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         onChangeText={setAmount}
       />
 
-      <View style={styles.categoryField}>
-        <FieldPicker
-          label={t('transaction.selectCategory')}
-          value={selectedCategory ? nameOf(selectedCategory) : t('transaction.noCategories')}
-          onPress={() => {
-            if (categories.length > 0) {
-              setShowCategoryPicker(true);
-            }
-          }}
-        />
-        {categories.length === 0 ? (
-          <Text style={[typography.bodySm, { color: theme.text, opacity: opacity.secondary }]}>
-            {t('transaction.noCategoriesHint')}
-          </Text>
-        ) : null}
-      </View>
+      <FieldPicker
+        label={t('transaction.selectCategory')}
+        value={selectedCategory ? nameOf(selectedCategory) : t('transaction.noCategories')}
+        onPress={() => setShowCategoryPicker(true)}
+      />
 
       <View style={styles.dateTimeRow}>
         <FieldPicker
@@ -127,20 +117,24 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         closeLabel={t('common.done')}
         onClose={() => setShowCategoryPicker(false)}
       >
-        <View>
-          {categories.map((item, index) => (
-            <SettingsRow
-              key={item.id}
-              variant="option"
-              position={rowPosition(index, categories.length)}
-              label={nameOf(item)}
-              selected={categoryId === item.id}
-              onPress={() => setCategoryId(item.id)}
-            />
-          ))}
-        </View>
+        <ScrollView
+          style={{ maxHeight: windowHeight * PICKER_MAX_HEIGHT }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <CategoryChipList
+            type={transactionType}
+            selectedId={categoryId}
+            onPress={(category) => setCategoryId(category.id)}
+            onRemove={editor.confirmArchive}
+            onAdd={() => {
+              setShowCategoryPicker(false);
+              editor.openAdd(transactionType);
+            }}
+          />
+        </ScrollView>
         <Button label={t('common.done')} onPress={() => setShowCategoryPicker(false)} />
       </Sheet>
+      {editor.sheet}
 
       <DatePickerModal
         mode="single"
@@ -175,13 +169,12 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
 }
 
 const TIME_COLUMN_WIDTH = 136;
+/** Share of the screen the category chips may fill before they scroll. */
+const PICKER_MAX_HEIGHT = 0.5;
 
 const styles = StyleSheet.create({
   form: {
     gap: spacing.xl,
-  },
-  categoryField: {
-    gap: spacing.xs,
   },
   dateTimeRow: {
     flexDirection: 'row',

@@ -76,4 +76,16 @@ describe('Categories settings', () => {
     await waitFor(() => expect(food.get()).not.toEqual({ archivedAt: null }));
     await waitFor(() => expect(expenseGroup().queryByText('Food')).toBeNull());
   });
+
+  it('archives from the chip × after confirmation', async () => {
+    jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
+      buttons?.find((button) => button.style === 'destructive')?.onPress?.();
+    });
+    renderWithApp(<Categories />);
+    await waitFor(() => expect(expenseGroup().getByText('Food')).toBeOnTheScreen());
+
+    fireEvent.press(expenseGroup().getByRole('button', { name: 'Archive Food' }));
+
+    await waitFor(() => expect(expenseGroup().queryByText('Food')).toBeNull());
+  });
 });

@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { fireEvent, screen, waitFor } from '@testing-library/react-native';
 
 import { CategoriesRepo } from '@/db/categories.repo';
@@ -16,6 +17,10 @@ jest.mock('@/db/storage', () => ({
 
 beforeEach(() => {
   mockTestDb = createTestDb();
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
 });
 
 const EXPENSE_IDS = [
@@ -68,5 +73,61 @@ describe('TransactionForm categories', () => {
     await waitFor(() => expect(client.isFetching()).toBe(0));
     expect(screen.getByText('No categories')).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: 'Done' })).toBeDisabled();
+  });
+
+  it('adds a category from the picker and selects it', async () => {
+    renderWithApp(<TransactionForm transactionType="expense" onSubmit={jest.fn()} />);
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.press(screen.getByRole('button', { name: 'Category: Food' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Add category' }));
+    fireEvent.changeText(screen.getByLabelText('Name'), 'Pets');
+    fireEvent.press(screen.getByText('Save'));
+
+    await waitFor(() => expect(
+      screen.getByRole('button', { name: 'Category: Pets' }),
+    ).toBeOnTheScreen());
+  });
+
+  it('still offers the add chip when no category is left', async () => {
+    for (const id of EXPENSE_IDS) {
+      await CategoriesRepo.archive(id);
+    }
+
+    const { client } = renderWithApp(
+      <TransactionForm transactionType="expense" onSubmit={jest.fn()} />,
+    );
+
+    await waitFor(() => expect(client.isFetching()).toBe(0));
+    fireEvent.press(screen.getByRole('button', { name: 'Category: No categories' }));
+    expect(screen.getByRole('button', { name: 'Add category' })).toBeOnTheScreen();
+  });
+
+  it('archives from the picker and moves off the archived selection', async () => {
+    jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
+      buttons?.find((button) => button.style === 'destructive')?.onPress?.();
+    });
+    renderWithApp(<TransactionForm transactionType="expense" onSubmit={jest.fn()} />);
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.press(screen.getByRole('button', { name: 'Category: Food' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Archive Food' }));
+
+    await waitFor(() => expect(
+      screen.getByRole('button', { name: 'Category: Transport' }),
+    ).toBeOnTheScreen());
+    expect(screen.queryByRole('button', { name: 'Archive Food' })).toBeNull();
+  });
+
+  it('keeps a category when the archive is cancelled', async () => {
+    jest.spyOn(Alert, 'alert').mockImplementation(() => {});
+    renderWithApp(<TransactionForm transactionType="expense" onSubmit={jest.fn()} />);
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.press(screen.getByRole('button', { name: 'Category: Food' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Archive Food' }));
+
+    expect(Alert.alert).toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: 'Category: Food' })).toBeOnTheScreen();
   });
 });

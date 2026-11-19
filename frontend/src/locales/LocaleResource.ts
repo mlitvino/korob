@@ -17,7 +17,6 @@ export type LocaleResource = {
       selectTime: string;
       selectCategory: string;
       noCategories: string;
-      noCategoriesHint: string;
       filterAll: string;
       delete: string;
       deleteTitle: string;
@@ -53,6 +52,7 @@ export type LocaleResource = {
       name: string;
       save: string;
       archive: string;
+      archiveLabel: string;
       archiveTitle: string;
       archiveMessage: string;
       errorEmpty: string;
