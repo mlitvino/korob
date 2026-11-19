@@ -58,16 +58,11 @@ describe('Button', () => {
 });
 
 describe('CircleButton', () => {
-  it.each([
-    ['lg', 80],
-    ['md', 64],
-  ] as const)('renders size %s as a %ipx circle', async (size, px) => {
-    await renderThemed(
-      <CircleButton kind="expense" size={size} accessibilityLabel="Add expense" />,
-    );
+  it('renders a 64px circle in the kind color', async () => {
+    await renderThemed(<CircleButton kind="expense" accessibilityLabel="Add expense" />);
 
     const button = screen.getByRole('button', { name: 'Add expense' });
-    expect(styleOf(button)).toMatchObject({ width: px, height: px });
+    expect(styleOf(button)).toMatchObject({ width: 64, height: 64 });
     expect(styleOf(button).backgroundColor).toBe(theme.expense);
   });
 });

@@ -5,33 +5,26 @@ import { opacity, radius } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import type { TransactionType } from '@/types/Transaction';
 
-type Size = 'lg' | 'md';
-
 type Props = {
   /** income: + on the income color; expense: − on the expense color. */
   kind: TransactionType;
-  size?: Size;
   accessibilityLabel: string;
   onPress?: () => void;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-const SIZES: Record<Size, { box: number; icon: number }> = {
-  lg: { box: 80, icon: 40 },
-  md: { box: 64, icon: 32 },
-};
+const BOX = 64;
+const ICON = 32;
 
 export default function CircleButton({
   kind,
-  size = 'lg',
   accessibilityLabel,
   onPress,
   disabled = false,
   style,
 }: Props) {
   const theme = useTheme();
-  const { box, icon } = SIZES[size];
 
   return (
     <Pressable
@@ -42,8 +35,8 @@ export default function CircleButton({
       onPress={onPress}
       style={({ pressed }) => [
         {
-          width: box,
-          height: box,
+          width: BOX,
+          height: BOX,
           borderRadius: radius.full,
           alignItems: 'center',
           justifyContent: 'center',
@@ -55,7 +48,7 @@ export default function CircleButton({
     >
       <MaterialIcons
         name={kind === 'income' ? 'add' : 'remove'}
-        size={icon}
+        size={ICON}
         color={theme.contrastText}
       />
     </Pressable>

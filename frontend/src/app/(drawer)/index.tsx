@@ -58,7 +58,6 @@ export default function Index() {
         <View style={[styles.balancePanel, { backgroundColor: theme.surface }]}>
           <CircleButton
             kind="income"
-            size="md"
             accessibilityLabel={t('transaction.addIncome')}
             onPress={addIncome}
           />
@@ -84,7 +83,6 @@ export default function Index() {
 
           <CircleButton
             kind="expense"
-            size="md"
             accessibilityLabel={t('transaction.addExpense')}
             onPress={addExpense}
           />

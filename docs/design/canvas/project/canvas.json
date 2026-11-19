@@ -55,10 +55,10 @@
       "y": 0
     },
     "CircleButton.dc.html": {
-      "h": 80,
+      "h": 64,
       "page": "components",
       "title": "CircleButton",
-      "w": 80,
+      "w": 64,
       "x": 0,
       "y": 3080
     },
@@ -296,7 +296,7 @@
     },
     "specBalancePanel": {
       "page": "components",
-      "text": "BalancePanel\nProps: balance (cents) · lang · incomeHref · expenseHref\nUses: CircleButton md × 2\nTokens: surface, inset, text, radius-md / sm, type-body / display\nCode: app/(drawer)/index.tsx\nContract: docs/design/components.json",
+      "text": "BalancePanel\nProps: balance (cents) · lang · incomeHref · expenseHref\nUses: CircleButton × 2\nTokens: surface, inset, text, radius-md / sm, type-body / display\nCode: app/(drawer)/index.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 2184,
       "y": 3232
@@ -310,10 +310,10 @@
     },
     "specCircleButton": {
       "page": "components",
-      "text": "CircleButton\nkind income | expense\nsize md 64 | lg 80\nstate · href\nTokens: income / expense, contrast-text\nCode: components/CircleButton.tsx\nContract: docs/design/components.json",
+      "text": "CircleButton\nkind income | expense\n64 · icon 32\nstate · href (canvas)\nTokens: income / expense, contrast-text\nCode: components/CircleButton.tsx\nContract: docs/design/components.json",
       "w": 140,
       "x": 0,
-      "y": 3200
+      "y": 3184
     },
     "specDrawerItem": {
       "page": "components",

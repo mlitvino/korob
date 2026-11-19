@@ -28,15 +28,14 @@ body{margin:0}
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["income","expense"],"default":"income"},"size":{"editor":"enum","options":["md","lg"],"default":"lg"},"state":{"editor":"enum","options":["default","pressed","disabled"],"default":"default"},"href":{"editor":null,"default":""},"$preview":{"width":80,"height":80}}'>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["income","expense"],"default":"income"},"state":{"editor":"enum","options":["default","pressed","disabled"],"default":"default"},"href":{"editor":null,"default":""},"$preview":{"width":64,"height":64}}'>
 var STATE = { default: '', pressed: 'is-pressed', disabled: 'is-disabled' };
 class Component extends DCLogic {
   renderVals() {
     var kind = this.props.kind === 'expense' ? 'expense' : 'income';
-    var lg = (this.props.size ?? 'lg') === 'lg';
     return {
       bg: 'var(--' + kind + ')',
-      size: lg ? 80 : 64, icon: lg ? 40 : 32,
+      size: 64, icon: 32,
       stateClass: STATE[this.props.state] || '',
       href: this.props.href || '', hasHref: !!this.props.href,
       isIncome: kind === 'income', isExpense: kind === 'expense',

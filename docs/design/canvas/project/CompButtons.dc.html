@@ -19,7 +19,7 @@ body{margin:0}
     <h1 style="margin: 0; flex: none; font-size: 28px; font-weight: 700">Buttons &amp; filters</h1>
     <ul style="margin: 0; padding: 0 0 0 18px; font-size: 13px; line-height: 20px; color: #c4c4c8">
       <li>Done: primary Button on the app accent (<code>accent</code>), full width; form Done and sheet Done are one component.</li>
-      <li>Circle buttons: lg 80 / icon 40; md 64 / icon 32 for the Home balance panel so it fits 360 dp. Income and expense have distinct colors in every theme.</li>
+      <li>Circle buttons: one size, 64 / icon 32, so the Home balance panel fits 360 dp. Income and expense have distinct colors in every theme.</li>
       <li>Filter chips: 48 min height, body 16/600, radius 8.</li>
       <li>Every tappable element has a pressed state (<code>is-pressed</code>, 70%) and, where it applies, disabled (<code>is-disabled</code>, 40%).</li>
     </ul>
@@ -30,12 +30,12 @@ body{margin:0}
         <span class="is-secondary" style="font-size: 14px; font-weight: 600">{{t.name}}</span>
 
         <div style="display: flex; flex-direction: column; gap: 8px">
-          <span class="is-secondary" style="font-size: 12px">CircleButton — lg default, lg pressed, md</span>
+          <span class="is-secondary" style="font-size: 12px">CircleButton — income / expense / pressed / disabled</span>
           <div style="display: flex; align-items: center; gap: 12px">
-            <dc-import name="CircleButton" kind="income" size="lg" hint-size="80px,80px"></dc-import>
-            <dc-import name="CircleButton" kind="expense" size="lg" hint-size="80px,80px"></dc-import>
-            <dc-import name="CircleButton" kind="income" size="lg" state="pressed" hint-size="80px,80px"></dc-import>
-            <dc-import name="CircleButton" kind="expense" size="md" hint-size="64px,64px"></dc-import>
+            <dc-import name="CircleButton" kind="income" hint-size="64px,64px"></dc-import>
+            <dc-import name="CircleButton" kind="expense" hint-size="64px,64px"></dc-import>
+            <dc-import name="CircleButton" kind="income" state="pressed" hint-size="64px,64px"></dc-import>
+            <dc-import name="CircleButton" kind="expense" state="disabled" hint-size="64px,64px"></dc-import>
           </div>
         </div>
 

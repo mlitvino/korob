@@ -9,7 +9,7 @@
     },
     "CircleButton": {
       "code": ["frontend/src/components/CircleButton.tsx"],
-      "shared": ["kind", "size"],
+      "shared": ["kind"],
       "canvasOnly": ["state", "href"],
       "codeOnly": ["accessibilityLabel", "onPress", "disabled", "style"]
     },
