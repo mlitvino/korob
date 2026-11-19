@@ -2,7 +2,7 @@ import { useWindowDimensions } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { useTranslation } from 'react-i18next';
 
-import { radius, spacing, touchTarget, typography } from '@/constants/theme';
+import { radius, touchTarget, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import DrawerMenuButton from '@/components/DrawerMenuButton';
 
@@ -18,7 +18,6 @@ export default function Layout() {
     <Drawer
       screenOptions={{
         drawerStyle: { width: DRAWER_WIDTH, backgroundColor: theme.canvas },
-        drawerContentStyle: { paddingHorizontal: spacing.md },
         drawerItemStyle: { minHeight: touchTarget, borderRadius: radius.full },
         drawerLabelStyle: { ...typography.body, fontWeight: '600' },
         drawerActiveBackgroundColor: theme.inset,
