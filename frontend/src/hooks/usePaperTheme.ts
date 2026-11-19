@@ -13,8 +13,8 @@ export function usePaperTheme(): MD3Theme {
       ...base,
       colors: {
         ...base.colors,
-        primary: theme.accent,
-        onPrimary: theme.contrastText,
+        primary: theme.actionPrimary,
+        onPrimary: theme.onActionPrimary,
         primaryContainer: theme.inset,
         onPrimaryContainer: theme.pickerText,
         tertiaryContainer: theme.inset,

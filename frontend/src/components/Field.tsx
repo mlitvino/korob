@@ -24,11 +24,12 @@ const boxStyle = (theme: Theme, focused: boolean): ViewStyle => ({
   paddingLeft: spacing.lg,
   borderRadius: radius.sm,
   borderWidth: BORDER_WIDTH,
-  borderColor: focused ? theme.accent : 'transparent',
+  borderColor: focused ? theme.focus : 'transparent',
   backgroundColor: theme.inset,
   justifyContent: 'center',
 });
 
+/** TextInput props (placeholder, value, onChangeText, …) plus a label and an error. */
 type FieldInputProps = Omit<TextInputProps, 'style'> & {
   label: string;
   /** Validation message shown under the field. */
@@ -55,8 +56,8 @@ export function FieldInput({
       <TextInput
         accessibilityLabel={label}
         placeholderTextColor={`${theme.text}${SECONDARY_ALPHA_HEX}`}
-        selectionColor={theme.accent}
-        cursorColor={theme.accent}
+        selectionColor={theme.focus}
+        cursorColor={theme.focus}
         onFocus={(e) => { setFocused(true); onFocus?.(e); }}
         onBlur={(e) => { setFocused(false); onBlur?.(e); }}
         style={[typography.title, { fontWeight: '400', color: theme.text, padding: 0 }]}

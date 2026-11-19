@@ -11,6 +11,7 @@ type Props = {
   label: string;
   variant?: Variant;
   size?: Size;
+  /** MaterialIcons name shown before the label; omit for none. */
   icon?: keyof typeof MaterialIcons.glyphMap;
   onPress?: () => void;
   disabled?: boolean;
@@ -30,7 +31,7 @@ export default function Button({
 }: Props) {
   const theme = useTheme();
   const isPrimary = variant === 'primary';
-  const fg = isPrimary ? theme.contrastText : theme.text;
+  const fg = isPrimary ? theme.onActionPrimary : theme.onActionSecondary;
 
   return (
     <Pressable
@@ -48,7 +49,7 @@ export default function Button({
           alignItems: 'center',
           justifyContent: 'center',
           gap: spacing.sm,
-          backgroundColor: isPrimary ? theme.accent : theme.elevated,
+          backgroundColor: isPrimary ? theme.actionPrimary : theme.actionSecondary,
           opacity: disabled ? opacity.disabled : pressed ? opacity.pressed : 1,
         },
         style,

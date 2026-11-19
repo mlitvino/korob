@@ -23,7 +23,23 @@ export type ThemeColor = {
 
 export type ThemeMode = 'light' | 'dark';
 
-export type Theme = ThemeColor & {
+/** Semantic roles → the palette token each one uses. */
+export const roleSources = {
+  actionPrimary: 'accent',
+  onActionPrimary: 'contrastText',
+  actionSecondary: 'elevated',
+  onActionSecondary: 'text',
+  selection: 'accent',
+  focus: 'accent',
+} as const satisfies Record<string, keyof ThemeColor>;
+
+export type ThemeRole = keyof typeof roleSources;
+
+export type ThemeRoles = Record<ThemeRole, string>;
+
+type Palette = ThemeColor & { mode: ThemeMode };
+
+export type Theme = ThemeColor & ThemeRoles & {
   mode: ThemeMode;
 };
 
@@ -33,7 +49,7 @@ export type ThemeName =
   | 'black'
   | 'black_yellow';
 
-export const Themes: Record<ThemeName, Theme> = {
+const palettes: Record<ThemeName, Palette> = {
   light:  {
     mode: 'light',
 
@@ -115,6 +131,17 @@ export const Themes: Record<ThemeName, Theme> = {
     pickerText: '#fff7a8',
   },
 };
+
+function withRoles(palette: Palette): Theme {
+  const roles = Object.fromEntries(
+    Object.entries(roleSources).map(([role, source]) => [role, palette[source]]),
+  ) as ThemeRoles;
+  return { ...palette, ...roles };
+}
+
+export const Themes = Object.fromEntries(
+  Object.entries(palettes).map(([name, palette]) => [name, withRoles(palette)]),
+) as Record<ThemeName, Theme>;
 
 export const spacing = {
   xs: 4,

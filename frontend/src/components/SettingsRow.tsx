@@ -93,7 +93,7 @@ export default function SettingsRow({
               testID="settings-row-check"
               name="check"
               size={24}
-              color={theme.accent}
+              color={theme.selection}
               style={styles.check}
             />
           ) : null

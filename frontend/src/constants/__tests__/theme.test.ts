@@ -1,4 +1,4 @@
-import { Themes, ThemeName } from '@/constants/theme';
+import { roleSources, Themes, ThemeName, type ThemeRole } from '@/constants/theme';
 
 const themeNames = Object.keys(Themes) as ThemeName[];
 
@@ -73,6 +73,13 @@ describe('Themes', () => {
     expect(contrast(t.contrastText, t.accent)).toBeGreaterThanOrEqual(4.5);
     expect(contrast(t.contrastText, t.income)).toBeGreaterThanOrEqual(3);
     expect(contrast(t.contrastText, t.expense)).toBeGreaterThanOrEqual(3);
+  });
+
+  it.each(themeNames)('%s resolves every semantic role to its palette token', (name) => {
+    const t = Themes[name];
+    for (const [role, source] of Object.entries(roleSources)) {
+      expect(t[role as ThemeRole]).toBe(t[source]);
+    }
   });
 
   it.each(themeNames)('%s keeps income, expense and accent distinct', (name) => {
