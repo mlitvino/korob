@@ -32,6 +32,7 @@ var TITLE = { en: 'Home', fi: 'Koti', ru: 'Главная' };
 // Seed data from frontend/src/features/debug/mockTransactions.ts: [days ago, type, category, cents].
 var SEED = [[2, 'expense', 'food', 4200], [5, 'expense', 'shopping', 12000], [8, 'expense', 'entertainment', 2500], [12, 'expense', 'transport', 4000], [15, 'expense', 'food', 6500], [20, 'income', 'freelance', 35000], [27, 'expense', 'housing', 90000], [28, 'income', 'salary', 250000]];
 class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
   componentDidMount() {
     // Canvas preview: follow the Global theme board (shared per-app storage).
     var self = this, read = function () {
@@ -50,6 +51,7 @@ class Component extends DCLogic {
     if (this.bc) this.bc.close();
   }
   globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
   renderVals() {
     var p = this.props;
     var lang = TITLE[p.lang] ? p.lang : 'en';

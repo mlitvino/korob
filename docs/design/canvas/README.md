@@ -20,8 +20,9 @@ https://claude.ai/artifact/YB7ayG42JFkvwBC7W9wys9 (private; share from its Share
 
 ```bash
 cd frontend
-yarn test:design      # tokens.css matches theme.ts; canvas ↔ code contracts hold
+yarn test:design      # tokens.css matches theme.ts; contracts hold; shared blocks identical
 yarn design:tokens    # rewrite project/tokens.css from theme.ts
+yarn design:screens   # rewrite the shared script blocks in every board from blocks/
 ```
 
 `make test-design` runs the same checks from the repo root.
@@ -33,6 +34,19 @@ yarn design:tokens    # rewrite project/tokens.css from theme.ts
 2. Edit here (or change `theme.ts` and run `yarn design:tokens`).
 3. Publish from here (Claude: Artifact publish with `root` = this folder). A publish over a newer
    browser edit is refused; pull again and redo the change.
+
+## Shared script blocks
+
+A board cannot import a script, so code that every screen needs is kept once in `blocks/` and copied
+into each board between marker comments (`// <generated:NAME>` … `// </generated:NAME>`).
+
+- `blocks/global-theme.block`: follow the Global theme (all interactive screens; `AddIncome` and
+  `GlobalTheme` are exempt).
+- `blocks/category-names.block`: category names in en / fi / ru (`Categories`, `CategorySheet`).
+
+Edit the file in `blocks/`, then run `yarn design:screens`. A new screen gets the markers with its
+script; `yarn test:design` names any board whose block differs or that is missing one. After pulling
+from the canvas, read the diff before generating: it overwrites edits made inside a marked region.
 
 ## Canvas-only preview features
 

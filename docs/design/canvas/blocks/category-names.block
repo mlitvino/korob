@@ -1,0 +1,5 @@
+var CAT = {
+  en: { salary: 'Salary', freelance: 'Freelance', gift: 'Gift', investment: 'Investment', food: 'Food', transport: 'Transport', housing: 'Housing', entertainment: 'Entertainment', shopping: 'Shopping', health: 'Health', other: 'Other' },
+  fi: { salary: 'Palkka', freelance: 'Freelance', gift: 'Lahja', investment: 'Sijoitus', food: 'Ruoka', transport: 'Liikenne', housing: 'Asuminen', entertainment: 'Viihde', shopping: 'Ostokset', health: 'Terveys', other: 'Muu' },
+  ru: { salary: 'Зарплата', freelance: 'Фриланс', gift: 'Подарок', investment: 'Инвестиции', food: 'Еда', transport: 'Транспорт', housing: 'Жильё', entertainment: 'Развлечения', shopping: 'Покупки', health: 'Здоровье', other: 'Другое' }
+};

@@ -27,6 +27,7 @@ body{margin:0}
 <script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["global","dark","light","black","black_yellow"],"default":"global"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"categories":{"editor":"enum","options":["some","none"],"default":"some"},"$preview":{"width":412,"height":892}}'>
 var THEMES = ['dark', 'light', 'black', 'black_yellow'];
 class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
   componentDidMount() {
     // Canvas preview: follow the Global theme board (shared per-app storage).
     var self = this, read = function () {
@@ -45,6 +46,7 @@ class Component extends DCLogic {
     if (this.bc) this.bc.close();
   }
   globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
   renderVals() {
     var p = this.props;
     return {

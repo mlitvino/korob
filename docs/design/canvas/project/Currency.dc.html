@@ -29,6 +29,7 @@ var STR = {
   ru: { title: 'Валюта', eur: 'Евро (EUR)', usd: 'Доллар США (USD)' }
 };
 class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
   componentDidMount() {
     // Canvas preview: follow the Global theme board (shared per-app storage).
     var self = this, read = function () {
@@ -47,6 +48,7 @@ class Component extends DCLogic {
     if (this.bc) this.bc.close();
   }
   globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
   renderVals() {
     var p = this.props;
     return {

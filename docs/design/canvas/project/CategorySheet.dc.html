@@ -37,11 +37,13 @@ var KEYS = {
   expense: ['food', 'transport', 'housing', 'entertainment', 'shopping', 'health', 'other'],
   income: ['salary', 'freelance', 'gift', 'investment', 'other']
 };
+// <generated:category-names> edit docs/design/canvas/blocks/category-names.block, then yarn design:screens
 var CAT = {
   en: { salary: 'Salary', freelance: 'Freelance', gift: 'Gift', investment: 'Investment', food: 'Food', transport: 'Transport', housing: 'Housing', entertainment: 'Entertainment', shopping: 'Shopping', health: 'Health', other: 'Other' },
   fi: { salary: 'Palkka', freelance: 'Freelance', gift: 'Lahja', investment: 'Sijoitus', food: 'Ruoka', transport: 'Liikenne', housing: 'Asuminen', entertainment: 'Viihde', shopping: 'Ostokset', health: 'Terveys', other: 'Muu' },
   ru: { salary: 'Зарплата', freelance: 'Фриланс', gift: 'Подарок', investment: 'Инвестиции', food: 'Еда', transport: 'Транспорт', housing: 'Жильё', entertainment: 'Развлечения', shopping: 'Покупки', health: 'Здоровье', other: 'Другое' }
 };
+// </generated:category-names>
 var STR = { en: ['Category', 'Done'], fi: ['Kategoria', 'Valmis'], ru: ['Категория', 'Готово'] };
 class Component extends DCLogic {
   renderVals() {

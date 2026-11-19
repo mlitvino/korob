@@ -44,6 +44,7 @@ function time(d, lang) {
   return lang === 'en' ? pad(h % 12 || 12) + ':' + m + ' ' + (h < 12 ? 'AM' : 'PM') : pad(h) + ':' + m;
 }
 class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
   componentDidMount() {
     // Canvas preview: follow the Global theme board (shared per-app storage).
     var self = this, read = function () {
@@ -62,6 +63,7 @@ class Component extends DCLogic {
     if (this.bc) this.bc.close();
   }
   globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
   renderVals() {
     var p = this.props;
     var lang = TITLE[p.lang] ? p.lang : 'en';

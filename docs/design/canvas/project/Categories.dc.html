@@ -53,17 +53,20 @@ var KEYS = {
   expense: ['food', 'transport', 'housing', 'entertainment', 'shopping', 'health', 'other']
 };
 // Sample names duplicated from CategorySheet on purpose (no shared scripts between boards).
+// <generated:category-names> edit docs/design/canvas/blocks/category-names.block, then yarn design:screens
 var CAT = {
   en: { salary: 'Salary', freelance: 'Freelance', gift: 'Gift', investment: 'Investment', food: 'Food', transport: 'Transport', housing: 'Housing', entertainment: 'Entertainment', shopping: 'Shopping', health: 'Health', other: 'Other' },
   fi: { salary: 'Palkka', freelance: 'Freelance', gift: 'Lahja', investment: 'Sijoitus', food: 'Ruoka', transport: 'Liikenne', housing: 'Asuminen', entertainment: 'Viihde', shopping: 'Ostokset', health: 'Terveys', other: 'Muu' },
   ru: { salary: 'Зарплата', freelance: 'Фриланс', gift: 'Подарок', investment: 'Инвестиции', food: 'Еда', transport: 'Транспорт', housing: 'Жильё', entertainment: 'Развлечения', shopping: 'Покупки', health: 'Здоровье', other: 'Другое' }
 };
+// </generated:category-names>
 var STR = {
   en: { title: 'Categories', income: 'Income', expense: 'Expense' },
   fi: { title: 'Kategoriat', income: 'Tulot', expense: 'Menot' },
   ru: { title: 'Категории', income: 'Доходы', expense: 'Расходы' }
 };
 class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
   componentDidMount() {
     // Canvas preview: follow the Global theme board (shared per-app storage).
     var self = this, read = function () {
@@ -82,6 +85,7 @@ class Component extends DCLogic {
     if (this.bc) this.bc.close();
   }
   globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
   renderVals() {
     var p = this.props;
     var lang = STR[p.lang] ? p.lang : 'en';
