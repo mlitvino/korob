@@ -354,7 +354,7 @@
     },
     "specDrawerItem": {
       "page": "components",
-      "text": "DrawerItem\nProps: active · state default | pressed · label · href\nTokens: inset (active), text, radius-full, type-body, touch-target\nStates: is-pressed\nCode: app/(drawer)/_layout.tsx (drawer items)\nContract: docs/design/components.json",
+      "text": "DrawerItem\nProps: active · state default | pressed · label · href\nTokens: inset (active), text, radius-full, type-body, touch-target\nStates: is-pressed\nLayout: pill starts 12 from the drawer edge; the library already pads the content by 12, so the app adds none\nCode: app/(drawer)/_layout.tsx (drawer items)\nContract: docs/design/components.json",
       "w": 320,
       "x": 1416,
       "y": 3168
@@ -382,7 +382,7 @@
     },
     "specTransactionItem": {
       "page": "components",
-      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
+      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nGesture: long press → Delete transaction? Cancel / Delete (native dialog, not drawn)\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 3000,
       "y": 3200
