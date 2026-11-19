@@ -33,3 +33,9 @@ yarn design:tokens    # rewrite project/tokens.css from theme.ts
 2. Edit here (or change `theme.ts` and run `yarn design:tokens`).
 3. Publish from here (Claude: Artifact publish with `root` = this folder). A publish over a newer
    browser edit is refused; pull again and redo the change.
+
+## Canvas-only preview features
+
+- **Global theme** (board `GlobalTheme`, Screens page): screens whose Theme tweak is `global` follow it.
+  It is stored in the viewing app's local storage (shared by all boards, survives restarts), not in the
+  design files, so other people and other devices start from the default. Not part of the app.

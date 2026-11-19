@@ -23,7 +23,7 @@ body{margin:0}
   </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;,&quot;black&quot;,&quot;black_yellow&quot;],&quot;default&quot;:&quot;dark&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fi&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;},&quot;width&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;412&quot;,&quot;360&quot;],&quot;default&quot;:&quot;412&quot;},&quot;fontScale&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;1.3&quot;],&quot;default&quot;:&quot;1&quot;},&quot;$preview&quot;:{&quot;width&quot;:412,&quot;height&quot;:892}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;global&quot;,&quot;dark&quot;,&quot;light&quot;,&quot;black&quot;,&quot;black_yellow&quot;],&quot;default&quot;:&quot;global&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fi&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;},&quot;width&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;412&quot;,&quot;360&quot;],&quot;default&quot;:&quot;412&quot;},&quot;fontScale&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;1.3&quot;],&quot;default&quot;:&quot;1&quot;},&quot;$preview&quot;:{&quot;width&quot;:412,&quot;height&quot;:892}}">
 var STR = {
   en: { title: 'Settings', currency: 'Currency', appearance: 'Appearance', language: 'Language', dark: 'Dark', light: 'Light', black: 'Black', black_yellow: 'Black Yellow' },
   fi: { title: 'Asetukset', currency: 'Valuutta', appearance: 'Ulkoasu', language: 'Kieli', dark: 'Tumma', light: 'Vaalea', black: 'Musta', black_yellow: 'Musta-keltainen' },
@@ -31,10 +31,28 @@ var STR = {
 };
 var LANG_NAME = { en: 'English', fi: 'Suomi', ru: 'Русский' };
 class Component extends DCLogic {
+  componentDidMount() {
+    // Canvas preview: follow the Global theme board (shared per-app storage).
+    var self = this, read = function () {
+      var v = null;
+      try { v = localStorage.getItem('korob-canvas-global-theme'); } catch (e) { v = null; }
+      return ['dark', 'light', 'black', 'black_yellow'].indexOf(v) >= 0 ? v : 'dark';
+    };
+    this.onGlobal = function () { self.setState({ globalTheme: read() }); };
+    this.onStorage = function (e) { if (e.key === 'korob-canvas-global-theme') self.onGlobal(); };
+    window.addEventListener('storage', this.onStorage);
+    try { this.bc = new BroadcastChannel('korob-canvas-global-theme'); this.bc.onmessage = this.onGlobal; } catch (e) { this.bc = null; }
+    this.onGlobal();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.onStorage);
+    if (this.bc) this.bc.close();
+  }
+  globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
   renderVals() {
     var p = this.props;
     var lang = STR[p.lang] ? p.lang : 'en';
-    var theme = ['dark', 'light', 'black', 'black_yellow'].indexOf(p.theme) >= 0 ? p.theme : 'dark';
+    var theme = ['dark', 'light', 'black', 'black_yellow'].indexOf(p.theme) >= 0 ? p.theme : this.globalTheme();
     return {
       theme: theme, s: STR[lang], themeName: STR[lang][theme], langName: LANG_NAME[lang],
       width: p.width === '360' ? 360 : 412,

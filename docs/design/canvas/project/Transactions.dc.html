@@ -27,7 +27,7 @@ body{margin:0}
   </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light","black","black_yellow"],"default":"dark"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["global","dark","light","black","black_yellow"],"default":"global"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
 var THEMES = ['dark', 'light', 'black', 'black_yellow'];
 var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
 var TITLE = { en: 'Transactions', fi: 'Tapahtumat', ru: 'Транзакции' };
@@ -44,12 +44,30 @@ function time(d, lang) {
   return lang === 'en' ? pad(h % 12 || 12) + ':' + m + ' ' + (h < 12 ? 'AM' : 'PM') : pad(h) + ':' + m;
 }
 class Component extends DCLogic {
+  componentDidMount() {
+    // Canvas preview: follow the Global theme board (shared per-app storage).
+    var self = this, read = function () {
+      var v = null;
+      try { v = localStorage.getItem('korob-canvas-global-theme'); } catch (e) { v = null; }
+      return ['dark', 'light', 'black', 'black_yellow'].indexOf(v) >= 0 ? v : 'dark';
+    };
+    this.onGlobal = function () { self.setState({ globalTheme: read() }); };
+    this.onStorage = function (e) { if (e.key === 'korob-canvas-global-theme') self.onGlobal(); };
+    window.addEventListener('storage', this.onStorage);
+    try { this.bc = new BroadcastChannel('korob-canvas-global-theme'); this.bc.onmessage = this.onGlobal; } catch (e) { this.bc = null; }
+    this.onGlobal();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.onStorage);
+    if (this.bc) this.bc.close();
+  }
+  globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
   renderVals() {
     var p = this.props;
     var lang = TITLE[p.lang] ? p.lang : 'en';
     var money = new Intl.NumberFormat(LOCALE[lang], { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
     return {
-      theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : 'dark',
+      theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : this.globalTheme(),
       lang: lang, title: TITLE[lang],
       width: p.width === '360' ? 360 : 412,
       fontScale: p.fontScale === '1.3' ? '1.3' : '1',

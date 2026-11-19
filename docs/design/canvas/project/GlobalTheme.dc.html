@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Global theme</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 412px; min-height: 420px; box-sizing: border-box; padding: 24px; display: flex; flex-direction: column; gap: 16px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+  <h1 style="margin: 0; font-size: 22px; font-weight: 700">Global theme</h1>
+  <p style="margin: 0; font-size: 13px; line-height: 19px; color: #a1a1aa">Screens whose Theme tweak is <strong style="color: #ececee">Global</strong> follow this choice. Canvas preview only: saved in this app on this computer, not in the design.</p>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+    <sc-for list="{{options}}" as="o" hint-placeholder-count="4">
+      <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="{{o.css}}">
+        <span data-theme="{{o.id}}" style="width: 28px; height: 28px; flex: none; border-radius: 8px; border: 1px solid #4a4a50; background: var(--background); display: flex; align-items: center; justify-content: center">
+          <span style="width: 12px; height: 12px; border-radius: 9999px; background: var(--accent)"></span>
+        </span>
+        <span>{{o.name}}</span>
+      </button>
+    </sc-for>
+  </div>
+  <p style="margin: 0; font-size: 12px; color: #a1a1aa">Current: <strong style="color: #ececee">{{currentName}}</strong>. Click in Play mode.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":412,"height":420}}'>
+var GLOBAL_KEY = 'korob-canvas-global-theme';
+var OPTIONS = [['dark', 'Dark'], ['light', 'Light'], ['black', 'Black'], ['black_yellow', 'Black Yellow']];
+class Component extends DCLogic {
+  componentDidMount() {
+    var current = 'dark';
+    try { current = localStorage.getItem(GLOBAL_KEY) || 'dark'; } catch (e) { current = 'dark'; }
+    try { this.bc = new BroadcastChannel(GLOBAL_KEY); } catch (e) { this.bc = null; }
+    this.setState({ current: current });
+  }
+  componentWillUnmount() { if (this.bc) this.bc.close(); }
+  renderVals() {
+    var self = this, current = (this.state && this.state.current) || 'dark';
+    var base = 'min-height: 48px; padding: 0 12px; border-radius: 10px; display: flex; align-items: center; gap: 10px; font: 600 15px Roboto, system-ui, sans-serif; color: #ececee; cursor: pointer; ';
+    return {
+      currentName: (OPTIONS.filter(function (o) { return o[0] === current; })[0] || OPTIONS[0])[1],
+      options: OPTIONS.map(function (o) {
+        var on = o[0] === current;
+        return {
+          id: o[0], name: o[1], pressed: on ? 'true' : 'false',
+          css: base + (on ? 'background: #2c2b30; border: 2px solid #8ec5ff;' : 'background: transparent; border: 1px solid #3a3a40;'),
+          pick: function () {
+            try { localStorage.setItem(GLOBAL_KEY, o[0]); } catch (e) { /* storage unavailable */ }
+            if (self.bc) self.bc.postMessage(o[0]);
+            self.setState({ current: o[0] });
+          }
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
