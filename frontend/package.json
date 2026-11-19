@@ -10,7 +10,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watchAll",
-    "tsc": "npx tsc --project tsconfig.json --noEmit",
+    "tsc": "tsc --noEmit",
     "migration:generate": "drizzle-kit generate --config ./src/db/drizzle.config.ts"
   },
   "dependencies": {
@@ -46,8 +46,7 @@
     "react-native-svg": "15.12.1",
     "react-native-svg-transformer": "^1.5.3",
     "react-native-uuid": "^2.0.3",
-    "react-native-worklets": "0.5.1",
-    "typescript-eslint": "^8.56.1"
+    "react-native-worklets": "0.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

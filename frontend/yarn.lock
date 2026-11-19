@@ -2728,7 +2728,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@8.56.1", "@typescript-eslint/eslint-plugin@^8.18.2", "@typescript-eslint/eslint-plugin@^8.56.1":
+"@typescript-eslint/eslint-plugin@^8.18.2", "@typescript-eslint/eslint-plugin@^8.56.1":
   version "8.56.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.56.1.tgz"
   integrity sha512-Jz9ZztpB37dNC+HU2HI28Bs9QXpzCz+y/twHOwhyrIRdbuVDxSytJNDl6z/aAKlaRIwC7y8wJdkBv7FxYGgi0A==
@@ -2742,7 +2742,7 @@
     natural-compare "^1.4.0"
     ts-api-utils "^2.4.0"
 
-"@typescript-eslint/parser@8.56.1", "@typescript-eslint/parser@^8.18.2", "@typescript-eslint/parser@^8.56.1":
+"@typescript-eslint/parser@^8.18.2", "@typescript-eslint/parser@^8.56.1":
   version "8.56.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.56.1.tgz"
   integrity sha512-klQbnPAAiGYFyI02+znpBRLyjL4/BrBd0nyWkdC0s/6xFLkXYQ8OoRrSkqacS1ddVxf/LDyODIKbQ5TgKAf/Fg==
@@ -8763,16 +8763,6 @@ typed-array-length@^1.0.7:
     is-typed-array "^1.1.13"
     possible-typed-array-names "^1.0.0"
     reflect.getprototypeof "^1.0.6"
-
-typescript-eslint@^8.56.1:
-  version "8.56.1"
-  resolved "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.56.1.tgz"
-  integrity sha512-U4lM6pjmBX7J5wk4szltF7I1cGBHXZopnAXCMXb3+fZ3B/0Z3hq3wS/CCUB2NZBNAExK92mCU2tEohWuwVMsDQ==
-  dependencies:
-    "@typescript-eslint/eslint-plugin" "8.56.1"
-    "@typescript-eslint/parser" "8.56.1"
-    "@typescript-eslint/typescript-estree" "8.56.1"
-    "@typescript-eslint/utils" "8.56.1"
 
 typescript@^5.9.3:
   version "5.9.3"
