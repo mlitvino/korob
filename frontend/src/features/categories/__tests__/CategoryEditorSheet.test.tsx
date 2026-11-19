@@ -35,7 +35,7 @@ describe('CategoryEditorSheet', () => {
   it('hides Archive when adding', () => {
     renderSheet({ mode: 'add', name: '' });
     expect(screen.getByText('New category')).toBeOnTheScreen();
-    expect(screen.queryByText('Archive')).toBeNull();
+    expect(screen.queryByText('Archive')).not.toBeOnTheScreen();
   });
 
   it('shows the validation message under the field', () => {

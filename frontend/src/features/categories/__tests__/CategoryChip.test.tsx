@@ -62,6 +62,6 @@ describe('CategoryChip', () => {
   it('is a plain button, not a radio, unless it picks one', async () => {
     await renderThemed(<CategoryChip label="Food" onPress={jest.fn()} />);
     expect(screen.getByRole('button', { name: 'Food' })).toBeOnTheScreen();
-    expect(screen.queryByRole('radio')).toBeNull();
+    expect(screen.queryByRole('radio')).not.toBeOnTheScreen();
   });
 });

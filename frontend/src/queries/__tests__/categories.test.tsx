@@ -66,7 +66,10 @@ describe('category queries', () => {
     const pets = await act(() =>
       result.current.create.mutateAsync({ type: 'expense', name: 'Pets' }));
 
-    expect(byId(result.current.categories, pets.id)).toMatchObject({ name: 'Pets' });
+    // React receives the refreshed query data on a later tick than the mutation promise.
+    await waitFor(() => {
+      expect(byId(result.current.categories, pets.id)).toMatchObject({ name: 'Pets' });
+    });
   });
 
   it('re-reads transactions as well as categories after a rename', async () => {
@@ -76,8 +79,10 @@ describe('category queries', () => {
     const groceries = await act(() =>
       result.current.rename.mutateAsync({ id: 'expense-food', name: 'Groceries' }));
 
-    expect(byId(result.current.categories, groceries.id)).toMatchObject({ name: 'Groceries' });
-    expect(byId(result.current.categories, 'expense-food')?.archivedAt).toBeInstanceOf(Date);
+    await waitFor(() => {
+      expect(byId(result.current.categories, groceries.id)).toMatchObject({ name: 'Groceries' });
+      expect(byId(result.current.categories, 'expense-food')?.archivedAt).toBeInstanceOf(Date);
+    });
     expect(listTransactions).toHaveBeenCalledTimes(1);
   });
 
@@ -86,6 +91,8 @@ describe('category queries', () => {
 
     await act(() => result.current.archive.mutateAsync('expense-food'));
 
-    expect(byId(result.current.categories, 'expense-food')?.archivedAt).toBeInstanceOf(Date);
+    await waitFor(() => {
+      expect(byId(result.current.categories, 'expense-food')?.archivedAt).toBeInstanceOf(Date);
+    });
   });
 });

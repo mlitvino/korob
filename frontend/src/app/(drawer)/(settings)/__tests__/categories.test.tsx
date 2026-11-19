@@ -56,7 +56,7 @@ describe('Categories settings', () => {
     fireEvent.press(screen.getByText('Save'));
 
     await waitFor(() => expect(expenseGroup().getByText('Groceries')).toBeOnTheScreen());
-    expect(expenseGroup().queryByText('Food')).toBeNull();
+    expect(expenseGroup().queryByText('Food')).not.toBeOnTheScreen();
   });
 
   it('archives a category after confirmation', async () => {
@@ -74,7 +74,7 @@ describe('Categories settings', () => {
       "SELECT archivedAt FROM categories WHERE id = 'expense-food'",
     );
     await waitFor(() => expect(food.get()).not.toEqual({ archivedAt: null }));
-    await waitFor(() => expect(expenseGroup().queryByText('Food')).toBeNull());
+    await waitFor(() => expect(expenseGroup().queryByText('Food')).not.toBeOnTheScreen());
   });
 
   it('archives from the chip × after confirmation', async () => {
@@ -84,8 +84,8 @@ describe('Categories settings', () => {
     renderWithApp(<Categories />);
     await waitFor(() => expect(expenseGroup().getByText('Food')).toBeOnTheScreen());
 
-    fireEvent.press(expenseGroup().getByRole('button', { name: 'Archive Food' }));
+    fireEvent.press(expenseGroup().getByLabelText('Archive Food'));
 
-    await waitFor(() => expect(expenseGroup().queryByText('Food')).toBeNull());
+    await waitFor(() => expect(expenseGroup().queryByText('Food')).not.toBeOnTheScreen());
   });
 });

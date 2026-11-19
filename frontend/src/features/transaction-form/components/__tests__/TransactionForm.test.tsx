@@ -40,8 +40,8 @@ describe('TransactionForm categories', () => {
 
     expect(screen.getByRole('radio', { name: /Pets/ })).toBeOnTheScreen();
     expect(screen.getByRole('radio', { name: /Transport/ })).toBeOnTheScreen();
-    expect(screen.queryByRole('radio', { name: /Health/ })).toBeNull();
-    expect(screen.queryByRole('radio', { name: /Salary/ })).toBeNull();
+    expect(screen.queryByRole('radio', { name: /Health/ })).not.toBeOnTheScreen();
+    expect(screen.queryByRole('radio', { name: /Salary/ })).not.toBeOnTheScreen();
   });
 
   it('submits the chosen category id', async () => {
@@ -116,7 +116,7 @@ describe('TransactionForm categories', () => {
     await waitFor(() => expect(
       screen.getByRole('button', { name: 'Category: Transport' }),
     ).toBeOnTheScreen());
-    expect(screen.queryByRole('button', { name: 'Archive Food' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Archive Food' })).not.toBeOnTheScreen();
   });
 
   it('keeps a category when the archive is cancelled', async () => {

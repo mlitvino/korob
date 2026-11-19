@@ -48,6 +48,7 @@ This is the shared starting point for AI coding agents working in this repositor
 
 - Use `jest-expo` patterns already used under [frontend/src/components/__tests__](frontend/src/components/__tests__).
 - Add or update tests for behavioral changes; avoid shipping logic changes without coverage.
+- Assert that something is gone with `expect(queryBy…(…)).not.toBeOnTheScreen()`, never `.toBeNull()` on an element: a failing `toBeNull()` pretty-prints the whole React instance (~0.8 s), which blocks the event loop inside `waitFor` and makes tests flaky. After a mutation, wait for the result with `waitFor`; React gets refreshed query data a tick after the mutation promise resolves.
 
 ## Design Canvas
 

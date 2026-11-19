@@ -74,11 +74,12 @@ describe('transaction queries', () => {
   it('shows an added transaction once it is saved and nets the balance', async () => {
     const { result } = await renderLoaded();
 
+    // React receives the refreshed query data on a later tick than the mutation promise.
     await act(() => result.current.add.mutateAsync(income));
-    expect(result.current.transactions).toHaveLength(1);
+    await waitFor(() => expect(result.current.transactions).toHaveLength(1));
 
     await act(() => result.current.add.mutateAsync(expense));
-    expect(result.current.transactions).toHaveLength(2);
+    await waitFor(() => expect(result.current.transactions).toHaveLength(2));
     expect(result.current.balance).toBe(7000);
   });
 
@@ -88,7 +89,7 @@ describe('transaction queries', () => {
     await act(() => result.current.add.mutateAsync(income));
     await act(() => result.current.add.mutateAsync(usdIncome));
 
-    expect(result.current.transactions).toHaveLength(2);
+    await waitFor(() => expect(result.current.transactions).toHaveLength(2));
     expect(result.current.balance).toBe(10000);
   });
 
@@ -119,7 +120,7 @@ describe('transaction queries', () => {
 
     await act(() => result.current.clear.mutateAsync());
 
-    expect(result.current.transactions).toEqual([]);
+    await waitFor(() => expect(result.current.transactions).toEqual([]));
     expect(result.current.balance).toBe(0);
   });
 });
