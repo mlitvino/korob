@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fields, settings rows and sheet</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1784px; min-height: 1660px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+  <div style="display: flex; gap: 48px; align-items: flex-start">
+    <h1 style="margin: 0; flex: none; font-size: 28px; font-weight: 700">Fields, settings rows &amp; sheet</h1>
+    <ul style="margin: 0; padding: 0 0 0 18px; font-size: 13px; line-height: 20px; color: #c4c4c8">
+      <li>Fields: <code>inset</code> fill, <code>text</code> color; every field has a caption label; focus ring in accent (<code>is-focused</code>); amount in title 20; full width; pickers show a ▾.</li>
+      <li>Settings: one grouped SettingsRow with nav / value / option variants, 56 high, inset hairlines, group radius 12.</li>
+      <li>Selection checkmark in accent. Sheet: radius 16 (top only), drag handle, title 20/700; options and Done reuse SettingsRow and Button.</li>
+    </ul>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="4">
+      <div data-theme="{{t.id}}" style="box-sizing: border-box; border-radius: 16px; border: 1px solid #3a3a40; padding: 16px; display: flex; flex-direction: column; gap: 20px; background: var(--background); color: var(--text)">
+        <span class="is-secondary" style="font-size: 14px; font-weight: 600">{{t.name}}</span>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">FieldInput — empty / focused</span>
+          <dc-import name="FieldInput" label="Amount" placeholder="Enter amount" hint-size="100%,64px"></dc-import>
+          <dc-import name="FieldInput" state="focused" label="Amount" placeholder="Enter amount" hint-size="100%,64px"></dc-import>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">FieldPicker — category; date + time</span>
+          <dc-import name="FieldPicker" label="Category" value="Food" hint-size="100%,64px"></dc-import>
+          <div style="display: flex; gap: 8px">
+            <div style="flex: 1; min-width: 0">
+              <dc-import name="FieldPicker" label="Date" value="2026-11-17" hint-size="100%,64px"></dc-import>
+            </div>
+            <div style="width: 136px; flex: none">
+              <dc-import name="FieldPicker" label="Time" value="02:15 PM" hint-size="100%,64px"></dc-import>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">SettingsRow value — Settings screen group</span>
+          <div style="display: flex; flex-direction: column">
+            <dc-import name="SettingsRow" variant="value" position="first" label="Currency" value="EUR" hint-size="100%,56px"></dc-import>
+            <dc-import name="SettingsRow" variant="value" position="middle" label="Appearance" value="{{t.name}}" hint-size="100%,56px"></dc-import>
+            <dc-import name="SettingsRow" variant="value" position="last" label="Language" value="English" hint-size="100%,56px"></dc-import>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">SettingsRow option — selected / not / pressed</span>
+          <div style="display: flex; flex-direction: column">
+            <dc-import name="SettingsRow" variant="option" position="first" selected="{{ true }}" label="Euro (EUR)" hint-size="100%,56px"></dc-import>
+            <dc-import name="SettingsRow" variant="option" position="middle" label="US Dollar (USD)" hint-size="100%,56px"></dc-import>
+            <dc-import name="SettingsRow" variant="option" position="last" state="pressed" label="Swedish Krona (SEK)" hint-size="100%,56px"></dc-import>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">CategorySheet</span>
+          <div style="padding-top: 16px; border-radius: 12px; overflow: hidden; background: #00000066">
+            <dc-import name="CategorySheet" selected="Food" hint-size="100%,544px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1784,"height":1660}}'>
+var THEMES = [
+  { id: 'light', name: 'Light' },
+  { id: 'dark', name: 'Dark' },
+  { id: 'black', name: 'Black' },
+  { id: 'black_yellow', name: 'Black Yellow' }
+];
+class Component extends DCLogic {
+  renderVals() {
+    return { themes: THEMES };
+  }
+}
+</script>
+</body>
+</html>

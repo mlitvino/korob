@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Balance panel</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<section aria-label="{{label}}" style="width: 100%; box-sizing: border-box; padding: 16px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 12px; font-family: Roboto, system-ui, sans-serif; background: var(--surface); color: var(--text)">
+  <dc-import name="CircleButton" kind="income" size="md" href="{{incomeHref}}" hint-size="64px,64px"></dc-import>
+  <div style="flex: 1; min-width: 0; box-sizing: border-box; padding: 8px 12px; border-radius: var(--radius-sm); display: flex; flex-direction: column; align-items: center; background: var(--inset)">
+    <span style="font-size: var(--type-body-size); line-height: var(--type-body-line)">{{label}}:</span>
+    <span style="font-size: var(--type-display-size); line-height: var(--type-display-line); font-weight: 400; white-space: nowrap">{{amount}}</span>
+  </div>
+  <dc-import name="CircleButton" kind="expense" size="md" href="{{expenseHref}}" hint-size="64px,64px"></dc-import>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"balance":{"editor":null,"default":165800},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"incomeHref":{"editor":null,"default":""},"expenseHref":{"editor":null,"default":""},"$preview":{"width":328,"height":112}}'>
+var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
+var LABEL = { en: 'Balance', fi: 'Saldo', ru: 'Баланс' };
+class Component extends DCLogic {
+  renderVals() {
+    var lang = LABEL[this.props.lang] ? this.props.lang : 'en';
+    return {
+      label: LABEL[lang],
+      amount: new Intl.NumberFormat(LOCALE[lang], { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 }).format((this.props.balance ?? 165800) / 100),
+      incomeHref: this.props.incomeHref || '',
+      expenseHref: this.props.expenseHref || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

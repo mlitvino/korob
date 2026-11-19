@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Transaction filter bar</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div role="group" aria-label="Filter transactions" style="width: 100%; display: flex; gap: 8px">
+  <sc-for list="{{chips}}" as="chip" hint-placeholder-count="3">
+    <button type="button" aria-pressed="{{chip.pressed}}" style="flex: 1; min-height: var(--touch-target); padding: 0 8px; border-radius: var(--radius-sm); font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-size); line-height: var(--type-body-line); font-weight: 600; border: 1px solid {{chip.border}}; background: {{chip.bg}}; color: {{chip.fg}}">{{chip.label}}</button>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"filter":{"editor":"enum","options":["all","income","expense"],"default":"all"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":48}}'>
+var STR = {
+  en: ['All', 'Income', 'Expense'],
+  fi: ['Kaikki', 'Tulot', 'Menot'],
+  ru: ['Все', 'Доходы', 'Расходы']
+};
+class Component extends DCLogic {
+  renderVals() {
+    var sel = this.props.filter ?? 'all';
+    var s = STR[this.props.lang] || STR.en;
+    var CHIPS = [['all', s[0]], ['income', s[1]], ['expense', s[2]]];
+    return {
+      chips: CHIPS.map(function (ch) {
+        var on = ch[0] === sel;
+        var fill = ch[0] === 'all' ? 'var(--elevated)' : 'var(--' + ch[0] + ')';
+        return {
+          label: ch[1],
+          pressed: on ? 'true' : 'false',
+          border: on ? fill : 'var(--separator)',
+          bg: on ? fill : 'transparent',
+          fg: on && ch[0] !== 'all' ? 'var(--contrast-text)' : 'var(--text)'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

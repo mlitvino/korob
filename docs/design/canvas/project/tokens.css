@@ -1,0 +1,138 @@
+/* Generated from frontend/src/constants/theme.ts by `yarn design:tokens`.
+   Do not edit by hand. Colors live on [data-theme]; :root defaults to dark. */
+
+:root,
+[data-theme="dark"] {
+  --canvas: #222025;
+  --background: #2f2e33;
+  --surface: #262236;
+  --inset: #3a3257;
+  --elevated: #413d46;
+  --text: #ffffff;
+  --contrast-text: #000;
+  --separator: #ffffff1a;
+  --income: #5cc595;
+  --expense: #f27a7a;
+  --accent: #8ec5ff;
+  --picker-text: #ffffff;
+}
+
+[data-theme="light"] {
+  --canvas: #c8c4cc;
+  --background: #ffffff;
+  --surface: #c8c5d380;
+  --inset: #b8c8cf;
+  --elevated: #c8c4cc;
+  --text: #000000;
+  --contrast-text: #ffffff;
+  --separator: #020000;
+  --income: #1f6e4a;
+  --expense: #b83b3b;
+  --accent: #413d46;
+  --picker-text: #111111;
+}
+
+[data-theme="black"] {
+  --canvas: #141314;
+  --background: #0c0c0c;
+  --surface: #222125;
+  --inset: #413d4e;
+  --elevated: #2a292c;
+  --text: #ffffff;
+  --contrast-text: #000;
+  --separator: #ffffff1a;
+  --income: #449e75;
+  --expense: #e05c5c;
+  --accent: #76d9b3;
+  --picker-text: #ffffff;
+}
+
+[data-theme="black_yellow"] {
+  --canvas: #070607;
+  --background: #000000;
+  --surface: #12100d;
+  --inset: #241f13;
+  --elevated: #342b18;
+  --text: #fff7a8;
+  --contrast-text: #000000;
+  --separator: #fff7a81a;
+  --income: #ffd600;
+  --expense: #ff9800;
+  --accent: #fff7a8;
+  --picker-text: #fff7a8;
+}
+
+/* Semantic roles (roleSources in theme.ts), set on every themed element. */
+:root,
+[data-theme] {
+  --action-primary: var(--accent);
+  --on-action-primary: var(--contrast-text);
+  --action-secondary: var(--elevated);
+  --on-action-secondary: var(--text);
+  --selection: var(--accent);
+  --focus: var(--accent);
+}
+
+:root {
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-xxl: 24px;
+  --spacing-xxxl: 32px;
+  --spacing-xxxxl: 48px;
+  --gutter: 16px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --type-display-size: 30px;
+  --type-display-line: 36px;
+  --type-display-weight: 400;
+  --type-headline-size: 24px;
+  --type-headline-line: 32px;
+  --type-headline-weight: 700;
+  --type-title-size: 20px;
+  --type-title-line: 28px;
+  --type-title-weight: 600;
+  --type-body-size: 16px;
+  --type-body-line: 24px;
+  --type-body-weight: 400;
+  --type-body-sm-size: 14px;
+  --type-body-sm-line: 20px;
+  --type-body-sm-weight: 400;
+  --type-caption-size: 12px;
+  --type-caption-line: 16px;
+  --type-caption-weight: 400;
+
+  --opacity-secondary: 0.7;
+  --opacity-pressed: 0.7;
+  --opacity-disabled: 0.4;
+
+  --touch-target: 48px;
+}
+
+/* Android font scale 1.3 (canvas stress test), rounded. */
+[data-font-scale="1.3"] {
+  --type-display-size: 39px;
+  --type-display-line: 47px;
+  --type-headline-size: 31px;
+  --type-headline-line: 42px;
+  --type-title-size: 26px;
+  --type-title-line: 36px;
+  --type-body-size: 21px;
+  --type-body-line: 31px;
+  --type-body-sm-size: 18px;
+  --type-body-sm-line: 26px;
+  --type-caption-size: 16px;
+  --type-caption-line: 21px;
+}
+
+/* State rules, shared by every component. */
+.is-pressed { opacity: var(--opacity-pressed); }
+.is-disabled { opacity: var(--opacity-disabled); pointer-events: none; }
+.is-secondary { opacity: var(--opacity-secondary); }
+.is-focused { border-color: var(--focus) !important; }

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Add Income</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 412px; height: 892px">
+  <dc-import name="AddExpense" kind="income" theme="{{theme}}" lang="{{lang}}" width="{{width}}" font-scale="{{fontScale}}" hint-size="412px,892px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light","black","black_yellow"],"default":"dark"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    return { theme: p.theme || 'dark', lang: p.lang || 'en', width: p.width || '412', fontScale: p.fontScale || '1' };
+  }
+}
+</script>
+</body>
+</html>

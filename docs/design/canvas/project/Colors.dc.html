@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Colors</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&amp;family=Roboto+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1320px; min-height: 1580px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 40px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+  <div>
+    <h1 style="margin: 0 0 4px; font-size: 28px; font-weight: 700">Colors</h1>
+    <p style="margin: 0; font-size: 14px; color: #a1a1aa; max-width: 900px">12 tokens in 4 themes, read live from <code style="font-family: 'Roboto Mono', monospace">tokens.css</code> (mirrors <code style="font-family: 'Roboto Mono', monospace">theme.ts</code>). The app follows the system light or dark setting until the user picks a theme.</p>
+  </div>
+
+  <section>
+    <div style="display: grid; grid-template-columns: 300px repeat(4, minmax(0, 1fr)); column-gap: 16px; align-items: end; padding-bottom: 10px; border-bottom: 1px solid #3a3a40">
+      <span style="font-size: 12px; font-weight: 600; color: #a1a1aa">Token / used for</span>
+      <sc-for list="{{themes}}" as="th" hint-placeholder-count="4">
+        <span style="font-size: 16px; font-weight: 600">{{th.name}} <span style="font-size: 12px; font-weight: 400; color: #a1a1aa">· {{th.mode}}</span></span>
+      </sc-for>
+    </div>
+
+    <sc-for list="{{rows}}" as="row" hint-placeholder-count="12">
+      <div style="display: grid; grid-template-columns: 300px repeat(4, minmax(0, 1fr)); column-gap: 16px; align-items: center; padding: 8px 0; border-bottom: 1px solid #2a2a2f">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-family: 'Roboto Mono', monospace; font-size: 14px">{{row.name}}</span>
+          <span style="font-size: 12px; color: #a1a1aa">{{row.role}}</span>
+        </div>
+        <sc-for list="{{row.cells}}" as="cell" hint-placeholder-count="4">
+          <div data-theme="{{cell.theme}}" style="display: flex; align-items: center; gap: 10px; padding: 6px">
+            <div style="width: 36px; height: 36px; flex: none; border-radius: 6px; border: 1px solid #4a4a50; background: {{cell.swatch}}"></div>
+            <span style="font-family: 'Roboto Mono', monospace; font-size: 13px">{{cell.hex}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+  </section>
+
+  <section>
+    <h2 style="margin: 0 0 4px; font-size: 18px; font-weight: 600">Roles</h2>
+    <p style="margin: 0 0 12px; font-size: 13px; color: #a1a1aa">Semantic roles from <code style="font-family: 'Roboto Mono', monospace">roleSources</code> in <code style="font-family: 'Roboto Mono', monospace">theme.ts</code>. Components use the role; the role points to a palette token.</p>
+    <sc-for list="{{roleRows}}" as="row" hint-placeholder-count="6">
+      <div style="display: grid; grid-template-columns: 300px repeat(4, minmax(0, 1fr)); column-gap: 16px; align-items: center; padding: 8px 0; border-bottom: 1px solid #2a2a2f">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-family: 'Roboto Mono', monospace; font-size: 14px">{{row.name}} → {{row.source}}</span>
+          <span style="font-size: 12px; color: #a1a1aa">{{row.role}}</span>
+        </div>
+        <sc-for list="{{row.cells}}" as="cell" hint-placeholder-count="4">
+          <div data-theme="{{cell.theme}}" style="display: flex; align-items: center; gap: 10px; padding: 6px">
+            <div style="width: 36px; height: 36px; flex: none; border-radius: 6px; border: 1px solid #4a4a50; background: {{cell.swatch}}"></div>
+            <span style="font-family: 'Roboto Mono', monospace; font-size: 13px">{{cell.hex}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+  </section>
+
+  <section>
+    <h2 style="margin: 0 0 4px; font-size: 18px; font-weight: 600">Contrast checks</h2>
+    <p style="margin: 0 0 12px; font-size: 13px; color: #a1a1aa">WCAG ratio, computed from the live tokens. Body text needs 4.5:1; amounts are 20px bold (large text) and need 3:1. Cards use <code style="font-family: 'Roboto Mono', monospace">canvas</code>; fields use <code style="font-family: 'Roboto Mono', monospace">inset</code>.</p>
+    <div style="display: grid; grid-template-columns: 300px repeat(4, minmax(0, 1fr)); column-gap: 16px; padding-bottom: 10px; border-bottom: 1px solid #3a3a40; font-size: 12px; font-weight: 600; color: #a1a1aa">
+      <span>Pair (needs)</span>
+      <sc-for list="{{themes}}" as="th" hint-placeholder-count="4"><span>{{th.name}}</span></sc-for>
+    </div>
+    <sc-for list="{{checks}}" as="ck" hint-placeholder-count="5">
+      <div style="display: grid; grid-template-columns: 300px repeat(4, minmax(0, 1fr)); column-gap: 16px; align-items: center; padding: 8px 0; border-bottom: 1px solid #2a2a2f">
+        <span style="font-size: 13px">{{ck.label}}</span>
+        <sc-for list="{{ck.cells}}" as="c" hint-placeholder-count="4">
+          <span style="font-family: 'Roboto Mono', monospace; font-size: 13px; color: {{c.color}}">{{c.text}}</span>
+        </sc-for>
+      </div>
+    </sc-for>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1320,"height":1580}}'>
+var THEMES = [
+  { id: 'light', name: 'Light', mode: 'light' },
+  { id: 'dark', name: 'Dark', mode: 'dark' },
+  { id: 'black', name: 'Black', mode: 'dark' },
+  { id: 'black_yellow', name: 'Black Yellow', mode: 'dark' }
+];
+// [theme.ts name, CSS variable, used for]
+var TOKENS = [
+  ['canvas', 'canvas', 'Drawer, transaction cards, picker sheet, system background'],
+  ['background', 'background', 'Screen background'],
+  ['surface', 'surface', 'Totals card, button panel, settings groups'],
+  ['inset', 'inset', 'Form fields, balance block, active drawer item, date/time pickers'],
+  ['elevated', 'elevated', 'Header bar, selected filter chip, secondary button'],
+  ['text', 'text', 'Text and icons only — never a fill'],
+  ['contrastText', 'contrast-text', 'Text and icons on income/expense/accent fills'],
+  ['separator', 'separator', 'Dividers and outlines'],
+  ['income', 'income', 'Income amounts, + button'],
+  ['expense', 'expense', 'Expense amounts, − button'],
+  ['accent', 'accent', 'App accent; source of the action-primary, selection and focus roles'],
+  ['pickerText', 'picker-text', 'Date/time picker text']
+];
+// [role, CSS variable, palette source, used for]
+var ROLES = [
+  ['actionPrimary', 'action-primary', 'accent', 'Primary button fill, date/time picker primary'],
+  ['onActionPrimary', 'on-action-primary', 'contrastText', 'Text and icon on the primary button'],
+  ['actionSecondary', 'action-secondary', 'elevated', 'Secondary button fill'],
+  ['onActionSecondary', 'on-action-secondary', 'text', 'Text on the secondary button'],
+  ['selection', 'selection', 'accent', 'Selected-option checkmark'],
+  ['focus', 'focus', 'accent', 'Focus ring, cursor and text selection in fields']
+];
+// [label, needs, foreground, background, foreground opacity]
+var CHECKS = [
+  ['text on background (4.5)', 4.5, 'text', 'background', 1],
+  ['text on inset — fields (4.5)', 4.5, 'text', 'inset', 1],
+  ['secondary text 70% on background (4.5)', 4.5, 'text', 'background', 0.7],
+  ['income on card (3.0)', 3, 'income', 'canvas', 1],
+  ['expense on card (3.0)', 3, 'expense', 'canvas', 1]
+];
+var PASS = '#7fd6a8', FAIL = '#ff8a80';
+function rgba(hex) {
+  var h = (hex || '').replace('#', '');
+  if (h.length === 3) h = h.split('').map(function (x) { return x + x; }).join('');
+  if (h.length !== 6 && h.length !== 8) return null;
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16), h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1];
+}
+function over(fg, bg, alpha) {
+  var a = fg[3] * alpha;
+  return [0, 1, 2].map(function (i) { return fg[i] * a + bg[i] * (1 - a); });
+}
+function lum(c) {
+  var v = c.map(function (x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+  return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+}
+function ratio(a, b) {
+  var l1 = lum(a), l2 = lum(b);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
+class Component extends DCLogic {
+  componentDidMount() { this.tries = 0; this.read(); }
+  componentWillUnmount() { clearTimeout(this.timer); }
+  read() {
+    var self = this, vals = {}, complete = true;
+    THEMES.forEach(function (th) {
+      var el = document.querySelector('[data-theme="' + th.id + '"]');
+      var cs = el ? getComputedStyle(el) : null;
+      vals[th.id] = {};
+      TOKENS.concat(ROLES).forEach(function (t) {
+        var v = cs ? cs.getPropertyValue('--' + t[1]).trim() : '';
+        if (!v) complete = false;
+        vals[th.id][t[0]] = v;
+      });
+    });
+    if (complete || this.tries >= 40) { this.setState({ vals: vals }); return; }
+    this.tries++;
+    this.timer = setTimeout(function () { self.read(); }, 150);
+  }
+  renderVals() {
+    var vals = (this.state && this.state.vals) || {};
+    var rows = TOKENS.map(function (t) {
+      return {
+        name: t[0],
+        role: t[2],
+        cells: THEMES.map(function (th) {
+          return { theme: th.id, swatch: 'var(--' + t[1] + ', #ff00ff)', hex: (vals[th.id] && vals[th.id][t[0]]) || '…' };
+        })
+      };
+    });
+    var checks = CHECKS.map(function (ck) {
+      return {
+        label: ck[0],
+        cells: THEMES.map(function (th) {
+          var v = vals[th.id] || {};
+          var fg = rgba(v[ck[2]]), bgRaw = rgba(v[ck[3]]), base = rgba(v.background);
+          if (!fg || !bgRaw || !base) return { text: '…', color: '#a1a1aa' };
+          var bg = over(bgRaw, base, 1);
+          var r = ratio(over(fg, bg, ck[4]), bg);
+          var ok = r >= ck[1];
+          return { text: r.toFixed(1) + (ok ? '  ✓' : '  ✗'), color: ok ? PASS : FAIL };
+        })
+      };
+    });
+    var roleRows = ROLES.map(function (r) {
+      return {
+        name: r[0], source: r[2], role: r[3],
+        cells: THEMES.map(function (th) {
+          return { theme: th.id, swatch: 'var(--' + r[1] + ', #ff00ff)', hex: (vals[th.id] && vals[th.id][r[0]]) || '…' };
+        })
+      };
+    });
+    return { themes: THEMES, rows: rows, roleRows: roleRows, checks: checks };
+  }
+}
+</script>
+</body>
+</html>

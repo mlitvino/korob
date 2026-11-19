@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Category sheet</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<section role="dialog" aria-label="{{title}}" style="width: 100%; box-sizing: border-box; padding: 8px 16px 16px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; flex-direction: column; font-family: Roboto, system-ui, sans-serif; background: var(--canvas); color: var(--text)">
+  <div aria-hidden="true" style="align-self: center; width: 32px; height: 4px; border-radius: var(--radius-full); opacity: 0.4; background: var(--text)"></div>
+  <h2 style="margin: 0; padding: 12px 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 700">{{title}}</h2>
+  <div style="display: flex; flex-direction: column">
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+      <dc-import name="SettingsRow" variant="option" position="{{r.position}}" selected="{{r.selected}}" label="{{r.label}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+    </sc-for>
+  </div>
+  <div style="margin-top: 16px">
+    <dc-import name="Button" variant="primary" size="lg" icon="" label="{{done}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"selected":{"editor":"text","default":"food"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":560}}'>
+var KEYS = {
+  expense: ['food', 'transport', 'housing', 'entertainment', 'shopping', 'health', 'other'],
+  income: ['salary', 'freelance', 'gift', 'investment', 'other']
+};
+var CAT = {
+  en: { salary: 'Salary', freelance: 'Freelance', gift: 'Gift', investment: 'Investment', food: 'Food', transport: 'Transport', housing: 'Housing', entertainment: 'Entertainment', shopping: 'Shopping', health: 'Health', other: 'Other' },
+  fi: { salary: 'Palkka', freelance: 'Freelance', gift: 'Lahja', investment: 'Sijoitus', food: 'Ruoka', transport: 'Liikenne', housing: 'Asuminen', entertainment: 'Viihde', shopping: 'Ostokset', health: 'Terveys', other: 'Muu' },
+  ru: { salary: 'Зарплата', freelance: 'Фриланс', gift: 'Подарок', investment: 'Инвестиции', food: 'Еда', transport: 'Транспорт', housing: 'Жильё', entertainment: 'Развлечения', shopping: 'Покупки', health: 'Здоровье', other: 'Другое' }
+};
+var STR = { en: ['Category', 'Done'], fi: ['Kategoria', 'Valmis'], ru: ['Категория', 'Готово'] };
+class Component extends DCLogic {
+  renderVals() {
+    var lang = CAT[this.props.lang] ? this.props.lang : 'en';
+    var keys = KEYS[this.props.kind] || KEYS.expense;
+    var sel = String(this.props.selected ?? keys[0]).toLowerCase();
+    return {
+      title: STR[lang][0], done: STR[lang][1], href: this.props.href || '',
+      rows: keys.map(function (k, i) {
+        return { label: CAT[lang][k], selected: k === sel, position: i === 0 ? 'first' : i === keys.length - 1 ? 'last' : 'middle' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

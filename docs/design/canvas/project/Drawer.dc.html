@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Drawer</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="{{theme}}" data-font-scale="{{fontScale}}" style="width: {{width}}px; height: 892px; position: relative; overflow: hidden; font-family: Roboto, system-ui, sans-serif; background: var(--background); color: var(--text)">
+  <div aria-hidden="true" style="position: absolute; inset: 0">
+    <dc-import name="Main" theme="{{theme}}" lang="{{lang}}" width="{{widthStr}}" font-scale="{{fontScale}}" hint-size="412px,892px"></dc-import>
+  </div>
+  <a href="Main.dc.html" aria-label="Close menu" style="position: absolute; inset: 0; background: rgba(0,0,0,0.5)"></a>
+  <nav aria-label="Main" style="position: absolute; left: 0; top: 0; bottom: 0; width: 280px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 4px; background: var(--canvas)">
+    <dc-import name="DrawerItem" active="{{ true }}" label="{{s.home}}" href="Main.dc.html" hint-size="100%,48px"></dc-import>
+    <dc-import name="DrawerItem" active="{{ false }}" label="{{s.transactions}}" href="Transactions.dc.html" hint-size="100%,48px"></dc-import>
+    <dc-import name="DrawerItem" active="{{ false }}" label="{{s.settings}}" href="Settings.dc.html" hint-size="100%,48px"></dc-import>
+    <dc-import name="DrawerItem" active="{{ false }}" label="Debug (dev only)" hint-size="100%,48px"></dc-import>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["dark","light","black","black_yellow"],"default":"dark"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
+var THEMES = ['dark', 'light', 'black', 'black_yellow'];
+var STR = {
+  en: { home: 'Home', transactions: 'Transactions', settings: 'Settings' },
+  fi: { home: 'Koti', transactions: 'Tapahtumat', settings: 'Asetukset' },
+  ru: { home: 'Главная', transactions: 'Транзакции', settings: 'Настройки' }
+};
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    var lang = STR[p.lang] ? p.lang : 'en';
+    return {
+      theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : 'dark',
+      lang: lang, s: STR[lang],
+      width: p.width === '360' ? 360 : 412, widthStr: p.width === '360' ? '360' : '412',
+      fontScale: p.fontScale === '1.3' ? '1.3' : '1'
+    };
+  }
+}
+</script>
+</body>
+</html>

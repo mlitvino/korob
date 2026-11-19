@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Type Scale</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;family=Roboto+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1000px; min-height: 1180px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 40px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+  <div>
+    <h1 style="margin: 0 0 4px; font-size: 28px; font-weight: 700">Type scale</h1>
+    <p style="margin: 0; font-size: 14px; color: #a1a1aa">The platform font (Roboto on Android). 6 steps, read live from <code style="font-family: 'Roboto Mono', monospace">tokens.css</code>. Dimmed text uses the <code style="font-family: 'Roboto Mono', monospace">is-secondary</code> state rule (opacity {{secondary}}).</p>
+  </div>
+
+  <section>
+    <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 600">Scale</h2>
+    <sc-for list="{{steps}}" as="s" hint-placeholder-count="6">
+      <div style="display: grid; grid-template-columns: 130px 160px minmax(0, 1fr); column-gap: 20px; align-items: center; padding: 10px 0; border-bottom: 1px solid #2a2a2f">
+        <span style="font-family: 'Roboto Mono', monospace; font-size: 14px">{{s.name}}</span>
+        <span style="font-family: 'Roboto Mono', monospace; font-size: 13px; color: #c4c4c8">{{s.spec}}</span>
+        <span style="{{s.css}}">{{s.sample}}</span>
+      </div>
+    </sc-for>
+  </section>
+
+  <section>
+    <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 600">Where each step is used</h2>
+    <div style="display: grid; grid-template-columns: 340px 220px minmax(0, 1fr); column-gap: 16px; padding-bottom: 8px; border-bottom: 1px solid #3a3a40; font-size: 12px; font-weight: 600; color: #a1a1aa">
+      <span>Used for</span>
+      <span>Step</span>
+      <span>Sample</span>
+    </div>
+    <sc-for list="{{uses}}" as="m" hint-placeholder-count="17">
+      <div style="display: grid; grid-template-columns: 340px 220px minmax(0, 1fr); column-gap: 16px; align-items: center; padding: 6px 0; border-bottom: 1px solid #2a2a2f">
+        <span style="font-size: 13px; color: #c4c4c8">{{m.use}}</span>
+        <span style="font-family: 'Roboto Mono', monospace; font-size: 13px">{{m.step}}</span>
+        <span class="{{m.cls}}" style="{{m.css}}">{{m.sample}}</span>
+      </div>
+    </sc-for>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1000,"height":1180}}'>
+// [step name, CSS variable prefix, sample]
+var STEPS = [
+  ['display', 'display', '€1,658.00'],
+  ['headline', 'headline', 'Expense'],
+  ['title', 'title', 'Transactions'],
+  ['body', 'body', 'Appearance'],
+  ['bodySm', 'body-sm', '02:15 PM   Food'],
+  ['caption', 'caption', 'SUN, NOV 15']
+];
+// [use, step CSS prefix, weight, secondary, caps, sample]
+var USES = [
+  ['Balance amount (Home)', 'display', 400, false, false, '€1,658.00'],
+  ['Add income/expense title', 'headline', 700, false, false, 'Expense'],
+  ['Total amount (totals card)', 'headline', 600, false, false, '€2,850.00'],
+  ['Transaction amount', 'title', 700, false, false, '-€42.00'],
+  ['Header title', 'title', 600, false, false, 'Transactions'],
+  ['Loading overlay', 'title', 400, false, false, 'Loading'],
+  ['Totals card header', 'title', 600, false, false, 'Income'],
+  ['Amount input', 'title', 400, false, false, 'Enter amount'],
+  ['Sheet title', 'title', 700, false, false, 'Category'],
+  ['Picker value; button label', 'body', 600, false, false, 'Food'],
+  ['Settings rows; "Balance:"', 'body', 400, false, false, 'Appearance'],
+  ['Filter chips; sheet options', 'body', 600, false, false, 'Expense'],
+  ['Drawer items', 'body', 600, false, false, 'Transactions'],
+  ['Settings row value', 'body-sm', 400, true, false, 'EUR'],
+  ['Transaction time & category', 'body-sm', 400, true, false, '02:15 PM   Food'],
+  ['Date separator', 'caption', 600, true, true, 'Sun, Nov 15'],
+  ['Field label', 'caption', 400, true, false, 'Category']
+];
+function css(prefix, weight, caps) {
+  return 'font-size: var(--type-' + prefix + '-size); line-height: var(--type-' + prefix + '-line); font-weight: ' + weight + ';' +
+    (caps ? ' text-transform: uppercase;' : '') + ' white-space: pre;';
+}
+class Component extends DCLogic {
+  componentDidMount() { this.tries = 0; this.read(); }
+  componentWillUnmount() { clearTimeout(this.timer); }
+  read() {
+    var self = this, cs = getComputedStyle(document.documentElement), vals = {};
+    STEPS.forEach(function (s) {
+      ['size', 'line', 'weight'].forEach(function (k) { vals[s[1] + '-' + k] = cs.getPropertyValue('--type-' + s[1] + '-' + k).trim(); });
+    });
+    vals.secondary = cs.getPropertyValue('--opacity-secondary').trim();
+    if (vals['title-size'] || this.tries >= 40) { this.setState({ vals: vals }); return; }
+    this.tries++;
+    this.timer = setTimeout(function () { self.read(); }, 150);
+  }
+  renderVals() {
+    var v = (this.state && this.state.vals) || {};
+    var num = function (x) { return x ? x.replace('px', '') : '…'; };
+    return {
+      secondary: v.secondary || '…',
+      steps: STEPS.map(function (s) {
+        return {
+          name: s[0],
+          spec: num(v[s[1] + '-size']) + ' / ' + num(v[s[1] + '-line']) + ' · ' + (v[s[1] + '-weight'] || '…'),
+          sample: s[2],
+          css: 'font-size: var(--type-' + s[1] + '-size); line-height: var(--type-' + s[1] + '-line); font-weight: var(--type-' + s[1] + '-weight); white-space: pre;'
+        };
+      }),
+      uses: USES.map(function (m) {
+        return {
+          use: m[0],
+          step: m[1] + ' ' + m[2] + (m[3] ? ' · secondary' : '') + (m[4] ? ' · caps' : ''),
+          sample: m[5],
+          cls: m[3] ? 'is-secondary' : '',
+          css: css(m[1], m[2], m[4])
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

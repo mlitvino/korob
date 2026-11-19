@@ -1,0 +1,430 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AddExpense.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Add expense (modal)",
+      "w": 412,
+      "x": 1476,
+      "y": 0
+    },
+    "AddIncome.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Add income (modal)",
+      "w": 412,
+      "x": 2460,
+      "y": 0
+    },
+    "Appearance.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Settings › Appearance",
+      "w": 412,
+      "x": 492,
+      "y": 1012
+    },
+    "BalancePanel.dc.html": {
+      "h": 112,
+      "page": "components",
+      "title": "BalancePanel",
+      "w": 328,
+      "x": 2184,
+      "y": 3080
+    },
+    "Button.dc.html": {
+      "h": 56,
+      "page": "components",
+      "title": "Button",
+      "w": 328,
+      "x": 160,
+      "y": 3080
+    },
+    "CategoryPicker.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Category picker sheet",
+      "w": 412,
+      "x": 1968,
+      "y": 0
+    },
+    "CircleButton.dc.html": {
+      "h": 80,
+      "page": "components",
+      "title": "CircleButton",
+      "w": 80,
+      "x": 0,
+      "y": 3080
+    },
+    "Colors.dc.html": {
+      "h": 1580,
+      "page": "foundations",
+      "title": "Colors — 4 themes",
+      "w": 1320,
+      "x": 0,
+      "y": 0
+    },
+    "CompButtons.dc.html": {
+      "h": 880,
+      "page": "components",
+      "title": "Buttons & filters",
+      "w": 1784,
+      "x": 1864,
+      "y": 0
+    },
+    "CompData.dc.html": {
+      "h": 1140,
+      "page": "components",
+      "title": "Totals, balance & transactions",
+      "w": 1784,
+      "x": 0,
+      "y": 1000
+    },
+    "CompForms.dc.html": {
+      "h": 1660,
+      "page": "components",
+      "title": "Fields, settings rows & sheet",
+      "w": 1784,
+      "x": 1864,
+      "y": 1000
+    },
+    "CompNavigation.dc.html": {
+      "h": 700,
+      "page": "components",
+      "title": "Navigation",
+      "w": 1784,
+      "x": 0,
+      "y": 0
+    },
+    "Currency.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Settings › Currency",
+      "w": 412,
+      "x": 984,
+      "y": 1012
+    },
+    "Drawer.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Drawer open",
+      "w": 412,
+      "x": 492,
+      "y": 0
+    },
+    "DrawerItem.dc.html": {
+      "h": 48,
+      "page": "components",
+      "title": "DrawerItem",
+      "w": 280,
+      "x": 1416,
+      "y": 3080
+    },
+    "Header.dc.html": {
+      "h": 56,
+      "page": "components",
+      "title": "Header",
+      "w": 360,
+      "x": 976,
+      "y": 3080
+    },
+    "Language.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Settings › Language",
+      "w": 412,
+      "x": 1476,
+      "y": 1012
+    },
+    "Main.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Home",
+      "w": 412,
+      "x": 0,
+      "y": 0
+    },
+    "Settings.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Settings",
+      "w": 412,
+      "x": 0,
+      "y": 1012
+    },
+    "SettingsRow.dc.html": {
+      "h": 56,
+      "page": "components",
+      "title": "SettingsRow",
+      "w": 328,
+      "x": 3816,
+      "y": 3080
+    },
+    "SpacingRadius.dc.html": {
+      "h": 1180,
+      "page": "foundations",
+      "title": "Spacing, radii & sizes",
+      "w": 1000,
+      "x": 2480,
+      "y": 0
+    },
+    "Themes.dc.html": {
+      "h": 892,
+      "page": "screens",
+      "title": "Home in all four themes",
+      "w": 1768,
+      "x": 0,
+      "y": 2024
+    },
+    "TotalsCard.dc.html": {
+      "h": 144,
+      "page": "components",
+      "title": "TotalsCard",
+      "w": 328,
+      "x": 1776,
+      "y": 3080
+    },
+    "TransactionItem.dc.html": {
+      "h": 80,
+      "page": "components",
+      "title": "TransactionItem",
+      "w": 328,
+      "x": 3000,
+      "y": 3080
+    },
+    "Transactions.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Transactions",
+      "w": 412,
+      "x": 984,
+      "y": 0
+    },
+    "Typography.dc.html": {
+      "h": 1180,
+      "page": "foundations",
+      "title": "Type scale",
+      "w": 1000,
+      "x": 1400,
+      "y": 0
+    },
+    "TransactionFilterBar.dc.html": {
+      "h": 48,
+      "page": "components",
+      "title": "TransactionFilterBar",
+      "w": 328,
+      "x": 568,
+      "y": 3080
+    },
+    "TransactionDateSeparator.dc.html": {
+      "h": 40,
+      "page": "components",
+      "title": "TransactionDateSeparator",
+      "w": 328,
+      "x": 2592,
+      "y": 3080
+    },
+    "CategorySheet.dc.html": {
+      "h": 560,
+      "page": "components",
+      "title": "CategorySheet",
+      "w": 360,
+      "x": 4224,
+      "y": 3080
+    },
+    "FieldInput.dc.html": {
+      "h": 64,
+      "page": "components",
+      "title": "FieldInput",
+      "w": 328,
+      "x": 3408,
+      "y": 3080
+    },
+    "FieldPicker.dc.html": {
+      "h": 64,
+      "page": "components",
+      "title": "FieldPicker",
+      "w": 328,
+      "x": 3408,
+      "y": 3176
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-17T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "noteOrder": [
+    "primitives",
+    "specBalancePanel",
+    "specButton",
+    "specCircleButton",
+    "specDrawerItem",
+    "specHeader",
+    "specSettingsRow",
+    "specTotalsCard",
+    "specTransactionItem",
+    "specTransactionFilterBar",
+    "specTransactionDateSeparator",
+    "specCategorySheet",
+    "specField"
+  ],
+  "notes": {
+    "primitives": {
+      "kind": "title1",
+      "maxW": 4584,
+      "page": "components",
+      "text": "Primitives — imported by the boards above and by Screens",
+      "w": 240,
+      "x": 0,
+      "y": 2800
+    },
+    "specBalancePanel": {
+      "page": "components",
+      "text": "BalancePanel\nProps: balance (cents) · lang · incomeHref · expenseHref\nUses: CircleButton md × 2\nTokens: surface, inset, text, radius-md / sm, type-body / display\nCode: app/(drawer)/index.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 2184,
+      "y": 3232
+    },
+    "specButton": {
+      "page": "components",
+      "text": "Button\nProps: variant primary | secondary · size md 48 | lg 56 · icon (name; empty = none) · label · state / href (canvas)\nTokens: action-primary + on-action-primary, action-secondary + on-action-secondary (roles), radius-sm, type-body\nStates: is-pressed, is-disabled\nCode: components/Button.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 160,
+      "y": 3176
+    },
+    "specCircleButton": {
+      "page": "components",
+      "text": "CircleButton\nkind income | expense\nsize md 64 | lg 80\nstate · href\nTokens: income / expense, contrast-text\nCode: components/CircleButton.tsx\nContract: docs/design/components.json",
+      "w": 140,
+      "x": 0,
+      "y": 3200
+    },
+    "specDrawerItem": {
+      "page": "components",
+      "text": "DrawerItem\nProps: active · state default | pressed · label · href\nTokens: inset (active), text, radius-full, type-body, touch-target\nStates: is-pressed\nCode: app/(drawer)/_layout.tsx (drawer items)\nContract: docs/design/components.json",
+      "w": 320,
+      "x": 1416,
+      "y": 3168
+    },
+    "specHeader": {
+      "page": "components",
+      "text": "Header\nProps: variant drawer | back · title · href (canvas) · accessibilityLabel\nTokens: elevated, text, type-title, touch-target, radius-full\nCode: navigator header (app/(drawer)/_layout.tsx) + components/HeaderLeft.tsx\nContract: docs/design/components.json",
+      "w": 360,
+      "x": 976,
+      "y": 3176
+    },
+    "specSettingsRow": {
+      "page": "components",
+      "text": "SettingsRow\nProps: variant nav | value | option · position only | first | middle | last · selected · leading none | flag-en | flag-fi | flag-ru · label · value · state / href (canvas)\nTokens: surface, text, separator, selection (role, check), radius-md, type-body / body-sm\nStates: is-pressed, is-secondary\nCode: components/SettingsRow.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 3816,
+      "y": 3176
+    },
+    "specTotalsCard": {
+      "page": "components",
+      "text": "TotalsCard\nProps: income · expense (cents) · lang\nTokens: surface, text, separator, radius-md, type-title / body / headline\nCode: components/Total.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 1776,
+      "y": 3264
+    },
+    "specTransactionItem": {
+      "page": "components",
+      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 3000,
+      "y": 3200
+    },
+    "specTransactionFilterBar": {
+      "page": "components",
+      "text": "TransactionFilterBar\nProps: filter all | income | expense · lang (canvas)\nTokens: elevated (All), income / expense + contrast-text (selected), separator, radius-sm, type-body, touch-target\nCode: features/transaction-list/components/TransactionFilterBar.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 568,
+      "y": 3168
+    },
+    "specTransactionDateSeparator": {
+      "page": "components",
+      "text": "TransactionDateSeparator\nProps: label (canvas; code takes occurredAt and formats it)\nTokens: separator, text, type-caption\nStates: is-secondary\nCode: features/transaction-list/components/TransactionDateSeparator.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 2592,
+      "y": 3160
+    },
+    "specCategorySheet": {
+      "page": "components",
+      "text": "CategorySheet\nCanvas-only composite: code Sheet + category options in TransactionForm\nProps: kind expense | income · selected (category key) · lang · href\nUses: SettingsRow option × N, Button primary\nTokens: canvas, text, radius-lg, type-title\nCode: components/Sheet.tsx, features/transaction-form/components/TransactionForm.tsx\nContract: docs/design/components.json",
+      "w": 360,
+      "x": 4224,
+      "y": 3680
+    },
+    "specField": {
+      "page": "components",
+      "text": "FieldInput · FieldPicker\nInput: label · placeholder · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 3408,
+      "y": 3280
+    }
+  },
+  "order": [
+    "Colors.dc.html",
+    "Typography.dc.html",
+    "SpacingRadius.dc.html",
+    "CircleButton.dc.html",
+    "Button.dc.html",
+    "TransactionFilterBar.dc.html",
+    "Header.dc.html",
+    "DrawerItem.dc.html",
+    "TotalsCard.dc.html",
+    "BalancePanel.dc.html",
+    "TransactionDateSeparator.dc.html",
+    "TransactionItem.dc.html",
+    "FieldInput.dc.html",
+    "FieldPicker.dc.html",
+    "SettingsRow.dc.html",
+    "CategorySheet.dc.html",
+    "CompNavigation.dc.html",
+    "CompButtons.dc.html",
+    "CompData.dc.html",
+    "CompForms.dc.html",
+    "Main.dc.html",
+    "Drawer.dc.html",
+    "Transactions.dc.html",
+    "AddExpense.dc.html",
+    "AddIncome.dc.html",
+    "CategoryPicker.dc.html",
+    "Settings.dc.html",
+    "Appearance.dc.html",
+    "Currency.dc.html",
+    "Language.dc.html",
+    "Themes.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "foundations",
+      "name": "Foundations"
+    },
+    {
+      "id": "components",
+      "name": "Components"
+    },
+    {
+      "id": "screens",
+      "name": "Screens"
+    }
+  ],
+  "title": "Korob — Design"
+}

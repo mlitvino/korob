@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Spacing and Radii</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;family=Roboto+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1000px; min-height: 1180px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 36px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+  <div>
+    <h1 style="margin: 0 0 4px; font-size: 28px; font-weight: 700">Spacing, radii &amp; sizes</h1>
+    <p style="margin: 0; font-size: 14px; color: #a1a1aa">An 8-step spacing scale, 4 named radii and the state opacities, read live from <code style="font-family: 'Roboto Mono', monospace">tokens.css</code>. Layouts use full width minus the {{gutter}} gutter.</p>
+  </div>
+
+  <section>
+    <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 600">Corner radii</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+      <sc-for list="{{radii}}" as="r" hint-placeholder-count="4">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="{{r.css}}"></div>
+          <span style="font-family: 'Roboto Mono', monospace; font-size: 14px">{{r.name}} · {{r.value}}</span>
+          <span style="font-size: 12px; color: #c4c4c8">{{r.use}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section>
+    <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 600">Spacing scale</h2>
+    <sc-for list="{{spacing}}" as="s" hint-placeholder-count="8">
+      <div style="display: grid; grid-template-columns: 110px 60px minmax(0, 1fr); column-gap: 16px; align-items: center; padding: 6px 0; border-bottom: 1px solid #2a2a2f">
+        <span style="font-family: 'Roboto Mono', monospace; font-size: 14px">{{s.name}} · {{s.value}}</span>
+        <div style="{{s.css}}"></div>
+        <span style="font-size: 13px; color: #c4c4c8">{{s.use}}</span>
+      </div>
+    </sc-for>
+  </section>
+
+  <section>
+    <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 600">State opacities</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+      <sc-for list="{{states}}" as="st" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div class="{{st.cls}}" style="width: 48px; height: 48px; flex: none; border-radius: 8px; background: #8ec5ff"></div>
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <span style="font-family: 'Roboto Mono', monospace; font-size: 14px">.{{st.cls}} · {{st.value}}</span>
+            <span style="font-size: 12px; color: #c4c4c8">{{st.use}}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 32px">
+    <div>
+      <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 600">Fixed sizes</h2>
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) 170px; column-gap: 12px; padding-bottom: 6px; border-bottom: 1px solid #3a3a40; font-size: 12px; font-weight: 600; color: #a1a1aa">
+        <span>Element</span><span>Size</span>
+      </div>
+      <sc-for list="{{sizes}}" as="z" hint-placeholder-count="12">
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 170px; column-gap: 12px; padding: 5px 0; border-bottom: 1px solid #2a2a2f; font-size: 13px">
+          <span style="color: #c4c4c8">{{z.use}}</span>
+          <span style="font-family: 'Roboto Mono', monospace">{{z.value}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div>
+      <h2 style="margin: 0 0 4px; font-size: 18px; font-weight: 600">On a 360 dp phone</h2>
+      <p style="margin: 0 0 12px; font-size: 12px; color: #a1a1aa">Half scale. Totals card and button panel.</p>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <div style="width: 180px; height: 220px; box-sizing: border-box; border: 2px solid #5a5762; border-radius: 16px; padding: 30px 8px 0; display: flex; flex-direction: column; gap: 10px">
+          <div style="height: 65px; border-radius: 6px; background: #3a3257"></div>
+          <div style="height: 75px; border-radius: 6px; background: #3a3257"></div>
+        </div>
+        <span style="font-size: 12px; color: #c4c4c8">Full width − 2 × gutter</span>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1000,"height":1180}}'>
+var RADII = [
+  ['sm', 'Form fields, chips, category options, small buttons'],
+  ['md', 'Cards: totals, transactions, button panel, settings groups'],
+  ['lg', 'Bottom sheets (category picker)'],
+  ['full', 'Circle +/− buttons, drawer items']
+];
+var SPACING = [
+  ['xs', 'Label ↔ field, meta row gap, card vertical margin'],
+  ['sm', 'Chip gaps, icon ↔ label, list gaps'],
+  ['md', 'Transaction card padding, filter bar margin'],
+  ['lg', 'Screen gutter, card padding, settings rows'],
+  ['xl', 'Form gap, modal padding'],
+  ['xxl', 'Gap between sections'],
+  ['xxxl', 'Large section breaks'],
+  ['xxxxl', 'Home: space above totals card']
+];
+var STATES = [
+  ['is-pressed', 'pressed', 'Pressed buttons, chips, rows, drawer items'],
+  ['is-disabled', 'disabled', 'Disabled buttons'],
+  ['is-secondary', 'secondary', 'Dimmed text: labels, meta, values']
+];
+var SIZES = [
+  ['Totals card', 'full − 2 × gutter'],
+  ['Button panel', 'full − 2 × gutter'],
+  ['Transaction form', 'full − 2 × gutter'],
+  ['Balance block', 'auto, min 150'],
+  ['Time field', '130'],
+  ['Circle button', 'lg 80 · md 64'],
+  ['Wide button min height', '56'],
+  ['Touch target min', 'var(--touch-target)'],
+  ['Drawer width', '280'],
+  ['Header icon', '24'],
+  ['Circle button icon', 'lg 40 · md 32'],
+  ['Wide button icon', '24']
+];
+class Component extends DCLogic {
+  componentDidMount() { this.tries = 0; this.read(); }
+  componentWillUnmount() { clearTimeout(this.timer); }
+  read() {
+    var self = this, cs = getComputedStyle(document.documentElement), vals = {};
+    var get = function (name) { return cs.getPropertyValue('--' + name).trim(); };
+    RADII.forEach(function (r) { vals['radius-' + r[0]] = get('radius-' + r[0]); });
+    SPACING.forEach(function (s) { vals['spacing-' + s[0]] = get('spacing-' + s[0]); });
+    STATES.forEach(function (s) { vals['opacity-' + s[1]] = get('opacity-' + s[1]); });
+    vals.gutter = get('gutter');
+    vals['touch-target'] = get('touch-target');
+    if (vals.gutter || this.tries >= 40) { this.setState({ vals: vals }); return; }
+    this.tries++;
+    this.timer = setTimeout(function () { self.read(); }, 150);
+  }
+  renderVals() {
+    var v = (this.state && this.state.vals) || {};
+    var px = function (x) { return x ? x.replace('px', '') : '…'; };
+    return {
+      gutter: px(v.gutter),
+      radii: RADII.map(function (r) {
+        return { name: r[0], value: px(v['radius-' + r[0]]), use: r[1], css: 'width: 80px; height: 80px; background: #2c2b30; border: 1px solid #5a5762; border-radius: var(--radius-' + r[0] + ');' };
+      }),
+      spacing: SPACING.map(function (s) {
+        return { name: s[0], value: px(v['spacing-' + s[0]]), use: s[1], css: 'height: 12px; background: #8e8a96; width: var(--spacing-' + s[0] + ');' };
+      }),
+      states: STATES.map(function (s) {
+        return { cls: s[0], value: v['opacity-' + s[1]] || '…', use: s[2] };
+      }),
+      sizes: SIZES.map(function (z) {
+        return { use: z[0], value: z[1] === 'var(--touch-target)' ? px(v['touch-target']) : z[1] };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

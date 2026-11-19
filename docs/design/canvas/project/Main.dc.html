@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Home</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="{{theme}}" data-font-scale="{{fontScale}}" style="width: {{width}}px; height: 892px; display: flex; flex-direction: column; overflow: hidden; font-family: Roboto, system-ui, sans-serif; background: var(--background); color: var(--text)">
+  <dc-import name="Header" variant="drawer" title="{{title}}" hint-size="100%,56px"></dc-import>
+  <main style="flex: 1; min-height: 0; box-sizing: border-box; padding: 48px 16px 16px; display: flex; flex-direction: column">
+    <a href="Transactions.dc.html" aria-label="{{title}}" style="display: block; text-decoration: none; color: inherit">
+      <dc-import name="TotalsCard" income="{{income}}" expense="{{expense}}" lang="{{lang}}" hint-size="100%,144px"></dc-import>
+    </a>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center">
+      <dc-import name="BalancePanel" balance="{{balance}}" lang="{{lang}}" income-href="AddIncome.dc.html" expense-href="AddExpense.dc.html" hint-size="100%,112px"></dc-import>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;,&quot;black&quot;,&quot;black_yellow&quot;],&quot;default&quot;:&quot;dark&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fi&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;},&quot;width&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;412&quot;,&quot;360&quot;],&quot;default&quot;:&quot;412&quot;},&quot;fontScale&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;1.3&quot;],&quot;default&quot;:&quot;1&quot;},&quot;$preview&quot;:{&quot;width&quot;:412,&quot;height&quot;:892}}">
+var THEMES = ['dark', 'light', 'black', 'black_yellow'];
+var TITLE = { en: 'Home', fi: 'Koti', ru: 'Главная' };
+// Seed data from frontend/src/features/debug/mockTransactions.ts: [days ago, type, category, cents].
+var SEED = [[2, 'expense', 'food', 4200], [5, 'expense', 'shopping', 12000], [8, 'expense', 'entertainment', 2500], [12, 'expense', 'transport', 4000], [15, 'expense', 'food', 6500], [20, 'income', 'freelance', 35000], [27, 'expense', 'housing', 90000], [28, 'income', 'salary', 250000]];
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    var lang = TITLE[p.lang] ? p.lang : 'en';
+    var income = 0, expense = 0;
+    SEED.forEach(function (t) { if (t[1] === 'income') income += t[3]; else expense += t[3]; });
+    return {
+      theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : 'dark',
+      lang: lang, title: TITLE[lang],
+      width: p.width === '360' ? 360 : 412,
+      fontScale: p.fontScale === '1.3' ? '1.3' : '1',
+      income: income, expense: expense, balance: income - expense
+    };
+  }
+}
+</script>
+</body>
+</html>

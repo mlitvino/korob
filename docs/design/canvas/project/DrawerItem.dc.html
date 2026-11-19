@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Drawer item</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<a href="{{href}}" class="{{stateClass}}" aria-current="{{current}}" style="width: 100%; min-height: var(--touch-target); box-sizing: border-box; padding: 0 16px; border-radius: var(--radius-full); display: flex; align-items: center; text-decoration: none; font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-size); line-height: var(--type-body-line); font-weight: 600; background: {{bg}}; color: var(--text)">{{label}}</a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"boolean","default":true},"state":{"editor":"enum","options":["default","pressed"],"default":"default"},"label":{"editor":"text","default":"Home"},"href":{"editor":null,"default":""},"$preview":{"width":280,"height":48}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var active = this.props.active ?? true;
+    return {
+      bg: active ? 'var(--inset)' : 'transparent',
+      current: active ? 'page' : 'false',
+      href: this.props.href || '#',
+      stateClass: this.props.state === 'pressed' ? 'is-pressed' : '',
+      label: this.props.label ?? 'Home'
+    };
+  }
+}
+</script>
+</body>
+</html>

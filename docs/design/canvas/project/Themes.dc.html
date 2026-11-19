@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Themes</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1768px; height: 892px; display: flex; gap: 40px; font-family: Roboto, system-ui, sans-serif; background: transparent">
+  <dc-import name="Main" theme="light" hint-size="412px,892px"></dc-import>
+  <dc-import name="Main" theme="dark" hint-size="412px,892px"></dc-import>
+  <dc-import name="Main" theme="black" hint-size="412px,892px"></dc-import>
+  <dc-import name="Main" theme="black_yellow" hint-size="412px,892px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1768,"height":892}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

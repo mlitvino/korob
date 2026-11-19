@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Totals, balance and transactions</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1784px; min-height: 1140px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+  <div style="display: flex; gap: 48px; align-items: flex-start">
+    <h1 style="margin: 0; flex: none; font-size: 28px; font-weight: 700">Totals, balance &amp; transactions</h1>
+    <ul style="margin: 0; padding: 0 0 0 18px; font-size: 13px; line-height: 20px; color: #c4c4c8">
+      <li>Totals card: full width; header title 20/600; padding 12/16; label stacks above the amount.</li>
+      <li>Balance panel: full width with md circle buttons; balance block radius 8. Fits a 360 dp phone (bottom example).</li>
+      <li>Transaction item: radius 12; meta body-sm 14 secondary; amounts in the income and expense colors.</li>
+      <li>Date separator: caption 12/600 caps, secondary 70%.</li>
+    </ul>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="4">
+      <div data-theme="{{t.id}}" style="box-sizing: border-box; border-radius: 16px; border: 1px solid #3a3a40; padding: 16px; display: flex; flex-direction: column; gap: 20px; background: var(--background); color: var(--text)">
+        <span class="is-secondary" style="font-size: 14px; font-weight: 600">{{t.name}}</span>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">TotalsCard</span>
+          <dc-import name="TotalsCard" hint-size="100%,144px"></dc-import>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">BalancePanel</span>
+          <dc-import name="BalancePanel" hint-size="100%,112px"></dc-import>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">TransactionDateSeparator + TransactionItem (income / expense)</span>
+          <dc-import name="TransactionDateSeparator" label="Wed, Oct 28" hint-size="100%,24px"></dc-import>
+          <dc-import name="TransactionItem" kind="income" time="02:15 PM" category="Freelance" amount="€350.00" hint-size="100%,76px"></dc-import>
+          <dc-import name="TransactionItem" kind="expense" time="12:40 PM" category="Food" amount="€42.00" hint-size="100%,76px"></dc-import>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">At 360 dp (328 content width)</span>
+          <div style="width: 328px; display: flex; flex-direction: column; gap: 8px">
+            <dc-import name="TotalsCard" hint-size="100%,144px"></dc-import>
+            <dc-import name="BalancePanel" hint-size="100%,112px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1784,"height":1140}}'>
+var THEMES = [
+  { id: 'light', name: 'Light' },
+  { id: 'dark', name: 'Dark' },
+  { id: 'black', name: 'Black' },
+  { id: 'black_yellow', name: 'Black Yellow' }
+];
+class Component extends DCLogic {
+  renderVals() {
+    return { themes: THEMES };
+  }
+}
+</script>
+</body>
+</html>

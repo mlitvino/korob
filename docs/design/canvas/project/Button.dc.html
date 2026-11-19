@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Button</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 100%">
+<button type="button" class="{{stateClass}}" style="width: 100%; min-height: {{height}}px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; gap: 8px; font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-size); line-height: var(--type-body-line); font-weight: 600; background: {{bg}}; color: {{fg}}">
+  <sc-if value="{{showIcon}}" hint-placeholder-val="{{ true }}">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg>
+  </sc-if>
+  <span>{{label}}</span>
+</button>
+<sc-if value="{{hasHref}}" hint-placeholder-val="{{ false }}">
+  <a href="{{href}}" aria-label="{{label}}" style="position: absolute; inset: 0; border-radius: var(--radius-sm)"></a>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["primary","secondary"],"default":"primary"},"size":{"editor":"enum","options":["md","lg"],"default":"lg"},"state":{"editor":"enum","options":["default","pressed","disabled"],"default":"default"},"icon":{"editor":"enum","options":["check",""],"default":"check"},"label":{"editor":"text","default":"Done"},"href":{"editor":null,"default":""},"$preview":{"width":328,"height":56}}'>
+var STATE = { default: '', pressed: 'is-pressed', disabled: 'is-disabled' };
+class Component extends DCLogic {
+  renderVals() {
+    var primary = (this.props.variant ?? 'primary') === 'primary';
+    return {
+      bg: primary ? 'var(--action-primary)' : 'var(--action-secondary)',
+      fg: primary ? 'var(--on-action-primary)' : 'var(--on-action-secondary)',
+      height: (this.props.size ?? 'lg') === 'lg' ? 56 : 48,
+      stateClass: STATE[this.props.state] || '',
+      href: this.props.href || '', hasHref: !!this.props.href,
+      showIcon: (this.props.icon ?? 'check') === 'check',
+      label: this.props.label ?? 'Done'
+    };
+  }
+}
+</script>
+</body>
+</html>

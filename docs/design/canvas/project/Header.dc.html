@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Header</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<header style="width: 100%; height: 56px; box-sizing: border-box; padding: 0 4px; display: flex; align-items: center; gap: 4px; font-family: Roboto, system-ui, sans-serif; background: var(--elevated); color: var(--text)">
+  <span style="position: relative; flex: none; display: flex">
+  <button type="button" aria-label="{{iconLabel}}" style="width: var(--touch-target); height: var(--touch-target); flex: none; padding: 0; border: 0; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; background: transparent; color: inherit">
+    <sc-if value="{{isDrawer}}" hint-placeholder-val="{{ true }}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+    </sc-if>
+    <sc-if value="{{isBack}}" hint-placeholder-val="{{ false }}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+    </sc-if>
+  </button>
+  <sc-if value="{{hasHref}}" hint-placeholder-val="{{ false }}">
+    <a href="{{href}}" aria-label="{{iconLabel}}" style="position: absolute; inset: 0; border-radius: var(--radius-full)"></a>
+  </sc-if>
+  </span>
+  <h1 style="margin: 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{title}}</h1>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["drawer","back"],"default":"drawer"},"title":{"editor":"text","default":"Home"},"href":{"editor":null,"default":""},"accessibilityLabel":{"editor":null,"default":""},"$preview":{"width":360,"height":56}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var back = this.props.variant === 'back';
+    // Drawer screens open the drawer by default; back headers link where the screen says.
+    var href = this.props.href || (back ? '' : 'Drawer.dc.html');
+    return {
+      isDrawer: !back, isBack: back,
+      href: href, hasHref: !!href,
+      iconLabel: this.props.accessibilityLabel || (back ? 'Back' : 'Open menu'),
+      title: this.props.title ?? 'Home'
+    };
+  }
+}
+</script>
+</body>
+</html>

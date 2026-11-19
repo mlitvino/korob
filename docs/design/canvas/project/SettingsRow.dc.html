@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings row</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 100%">
+<button type="button" class="{{stateClass}}" aria-pressed="{{pressed}}" style="width: 100%; min-height: 56px; box-sizing: border-box; padding: 0 0 0 16px; border: 0; border-radius: {{radius}}; display: flex; align-items: stretch; text-align: left; font-family: Roboto, system-ui, sans-serif; background: var(--surface); color: var(--text)">
+  <span style="flex: 1; min-width: 0; padding-right: 8px; display: flex; align-items: center; gap: 12px; border-bottom: {{divider}}">
+    <sc-if value="{{hasFlag}}" hint-placeholder-val="{{ false }}">
+      <span aria-hidden="true" style="width: 24px; height: 24px; flex: none; border-radius: var(--radius-full); overflow: hidden; display: flex">
+        <sc-if value="{{flagEn}}" hint-placeholder-val="{{ false }}">
+          <svg width="24" height="24" viewBox="0 0 60 60"><rect width="60" height="60" fill="#012169"></rect><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"></path><path d="M0 0L60 60M60 0L0 60" stroke="#C8102E" stroke-width="4"></path><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="20"></path><path d="M30 0V60M0 30H60" stroke="#C8102E" stroke-width="12"></path></svg>
+        </sc-if>
+        <sc-if value="{{flagFi}}" hint-placeholder-val="{{ false }}">
+          <svg width="24" height="24" viewBox="0 0 60 60"><rect width="60" height="60" fill="#fff"></rect><rect x="16" width="12" height="60" fill="#002F6C"></rect><rect y="24" width="60" height="12" fill="#002F6C"></rect></svg>
+        </sc-if>
+        <sc-if value="{{flagRu}}" hint-placeholder-val="{{ false }}">
+          <svg width="24" height="24" viewBox="0 0 60 60"><rect width="60" height="20" fill="#fff"></rect><rect y="20" width="60" height="20" fill="#0039A6"></rect><rect y="40" width="60" height="20" fill="#D52B1E"></rect></svg>
+        </sc-if>
+      </span>
+    </sc-if>
+    <span style="flex: 1; min-width: 0; font-size: var(--type-body-size); line-height: var(--type-body-line)">{{label}}</span>
+    <sc-if value="{{showValue}}" hint-placeholder-val="{{ true }}">
+      <span class="is-secondary" style="font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-line)">{{value}}</span>
+    </sc-if>
+    <sc-if value="{{showChevron}}" hint-placeholder-val="{{ true }}">
+      <svg class="is-secondary" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex: none"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>
+    </sc-if>
+    <sc-if value="{{showCheck}}" hint-placeholder-val="{{ false }}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex: none; margin-right: 8px; color: var(--selection)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg>
+    </sc-if>
+  </span>
+</button>
+<sc-if value="{{hasHref}}" hint-placeholder-val="{{ false }}">
+  <a href="{{href}}" aria-label="{{label}}" style="position: absolute; inset: 0; border-radius: {{radius}}"></a>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["nav","value","option"],"default":"value"},"position":{"editor":"enum","options":["only","first","middle","last"],"default":"only"},"selected":{"editor":"boolean","default":false},"leading":{"editor":"enum","options":["none","flag-en","flag-fi","flag-ru"],"default":"none"},"state":{"editor":"enum","options":["default","pressed"],"default":"default"},"label":{"editor":"text","default":"Currency"},"value":{"editor":"text","default":"EUR"},"href":{"editor":null,"default":""},"$preview":{"width":328,"height":56}}'>
+var R = 'var(--radius-md)';
+var RADIUS = { only: R, first: R + ' ' + R + ' 0 0', middle: '0', last: '0 0 ' + R + ' ' + R };
+class Component extends DCLogic {
+  renderVals() {
+    var variant = this.props.variant ?? 'value';
+    var pos = this.props.position ?? 'only';
+    var selected = variant === 'option' && !!this.props.selected;
+    var flag = String(this.props.leading ?? 'none').replace('flag-', '');
+    return {
+      hasFlag: flag !== 'none', flagEn: flag === 'en', flagFi: flag === 'fi', flagRu: flag === 'ru',
+      radius: RADIUS[pos] || RADIUS.only,
+      href: this.props.href || '', hasHref: !!this.props.href,
+      divider: pos === 'first' || pos === 'middle' ? '1px solid var(--separator)' : '0',
+      showValue: variant === 'value',
+      showChevron: variant !== 'option',
+      showCheck: selected,
+      pressed: variant === 'option' ? (selected ? 'true' : 'false') : null,
+      stateClass: this.props.state === 'pressed' ? 'is-pressed' : '',
+      label: this.props.label ?? 'Currency',
+      value: this.props.value ?? 'EUR'
+    };
+  }
+}
+</script>
+</body>
+</html>

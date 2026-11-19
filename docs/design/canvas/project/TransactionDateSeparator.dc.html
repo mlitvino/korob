@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Transaction date separator</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div role="separator" aria-label="{{label}}" style="width: 100%; height: 24px; display: flex; align-items: center; gap: 8px; font-family: Roboto, system-ui, sans-serif; color: var(--text)">
+  <div style="flex: 1; height: 1px; background: var(--separator)"></div>
+  <span class="is-secondary" style="font-size: var(--type-caption-size); line-height: var(--type-caption-line); font-weight: 600; text-transform: uppercase">{{label}}</span>
+  <div style="flex: 1; height: 1px; background: var(--separator)"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"Wed, Oct 28"},"$preview":{"width":328,"height":24}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { label: this.props.label ?? 'Wed, Oct 28' };
+  }
+}
+</script>
+</body>
+</html>

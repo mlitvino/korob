@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Navigation</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 1784px; min-height: 700px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+  <div style="display: flex; gap: 48px; align-items: flex-start">
+    <h1 style="margin: 0; flex: none; font-size: 28px; font-weight: 700">Navigation</h1>
+    <ul style="margin: 0; padding: 0 0 0 18px; font-size: 13px; line-height: 20px; color: #c4c4c8">
+      <li>Header: title 20/600; 24 icon inside a 48 touch target; back uses the Android arrow.</li>
+      <li>Settings sub-pages use the back header; the page title lives only in the header.</li>
+      <li>Drawer 280 wide; items 48 high, body 16/600; the active item is filled with the <code>inset</code> token.</li>
+    </ul>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+    <sc-for list="{{themes}}" as="t" hint-placeholder-count="4">
+      <div data-theme="{{t.id}}" style="box-sizing: border-box; border-radius: 16px; border: 1px solid #3a3a40; padding: 16px; display: flex; flex-direction: column; gap: 20px; background: var(--background); color: var(--text)">
+        <span class="is-secondary" style="font-size: 14px; font-weight: 600">{{t.name}}</span>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">Header — drawer screens</span>
+          <dc-import name="Header" variant="drawer" title="Home" hint-size="100%,56px"></dc-import>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">Header — modal and settings sub-pages</span>
+          <dc-import name="Header" variant="back" title="Add expense" hint-size="100%,56px"></dc-import>
+          <dc-import name="Header" variant="back" title="Appearance" hint-size="100%,56px"></dc-import>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">Drawer (280) — active / inactive / pressed</span>
+          <div style="width: 280px; box-sizing: border-box; padding: 12px; display: flex; flex-direction: column; gap: 4px; background: var(--canvas)">
+            <dc-import name="DrawerItem" active="{{ true }}" label="Home" hint-size="100%,48px"></dc-import>
+            <dc-import name="DrawerItem" active="{{ false }}" label="Transactions" hint-size="100%,48px"></dc-import>
+            <dc-import name="DrawerItem" active="{{ false }}" state="pressed" label="Settings" hint-size="100%,48px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1784,"height":700}}'>
+var THEMES = [
+  { id: 'light', name: 'Light' },
+  { id: 'dark', name: 'Dark' },
+  { id: 'black', name: 'Black' },
+  { id: 'black_yellow', name: 'Black Yellow' }
+];
+class Component extends DCLogic {
+  renderVals() {
+    return { themes: THEMES };
+  }
+}
+</script>
+</body>
+</html>
