@@ -1,6 +1,9 @@
 module.exports = {
   preset: 'jest-expo',
 
+  // Design checks run only via `yarn test:design`.
+  testPathIgnorePatterns: ['/node_modules/', '/__design__/'],
+
   transformIgnorePatterns: [
     'node_modules/(?!' +
       '((jest-)?react-native|' +

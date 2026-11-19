@@ -1,0 +1,83 @@
+{
+  "$comment": "Canvas primitive ↔ code. shared = same prop name on both sides; canvasOnly = preview props (state, href, lang, flattened data); codeOnly = props the canvas does not model. Checked by `yarn test:design`.",
+  "components": {
+    "Button": {
+      "code": ["frontend/src/components/Button.tsx"],
+      "shared": ["label", "variant", "size", "icon"],
+      "canvasOnly": ["state", "href"],
+      "codeOnly": ["onPress", "disabled", "style"]
+    },
+    "CircleButton": {
+      "code": ["frontend/src/components/CircleButton.tsx"],
+      "shared": ["kind", "size"],
+      "canvasOnly": ["state", "href"],
+      "codeOnly": ["accessibilityLabel", "onPress", "disabled", "style"]
+    },
+    "TransactionFilterBar": {
+      "code": ["frontend/src/features/transaction-list/components/TransactionFilterBar.tsx"],
+      "shared": ["filter"],
+      "canvasOnly": ["lang"],
+      "codeOnly": ["onFilterChange"]
+    },
+    "Header": {
+      "code": ["frontend/src/components/HeaderLeft.tsx", "frontend/src/app/(drawer)/_layout.tsx"],
+      "shared": ["accessibilityLabel"],
+      "canvasOnly": ["variant", "title", "href"],
+      "codeOnly": ["icon", "onPress", "style"]
+    },
+    "DrawerItem": {
+      "code": ["frontend/src/app/(drawer)/_layout.tsx"],
+      "shared": [],
+      "canvasOnly": ["active", "state", "label", "href"],
+      "codeOnly": []
+    },
+    "TotalsCard": {
+      "code": ["frontend/src/components/Total.tsx", "frontend/src/app/(drawer)/index.tsx"],
+      "shared": [],
+      "canvasOnly": ["income", "expense", "lang"],
+      "codeOnly": ["type"]
+    },
+    "BalancePanel": {
+      "code": ["frontend/src/app/(drawer)/index.tsx"],
+      "shared": [],
+      "canvasOnly": ["balance", "lang", "incomeHref", "expenseHref"],
+      "codeOnly": []
+    },
+    "TransactionDateSeparator": {
+      "code": ["frontend/src/features/transaction-list/components/TransactionDateSeparator.tsx"],
+      "shared": [],
+      "canvasOnly": ["label"],
+      "codeOnly": ["occurredAt"]
+    },
+    "TransactionItem": {
+      "code": ["frontend/src/features/transaction-list/components/TransactionItem.tsx"],
+      "shared": [],
+      "canvasOnly": ["kind", "time", "category", "amount"],
+      "codeOnly": ["transaction"]
+    },
+    "FieldInput": {
+      "code": ["frontend/src/components/Field.tsx"],
+      "shared": ["label", "placeholder"],
+      "canvasOnly": ["state"],
+      "codeOnly": ["error", "style"]
+    },
+    "FieldPicker": {
+      "code": ["frontend/src/components/Field.tsx"],
+      "shared": ["label", "value"],
+      "canvasOnly": ["href"],
+      "codeOnly": ["onPress", "style"]
+    },
+    "SettingsRow": {
+      "code": ["frontend/src/components/SettingsRow.tsx"],
+      "shared": ["label", "variant", "position", "value", "selected", "leading"],
+      "canvasOnly": ["state", "href"],
+      "codeOnly": ["onPress", "style"]
+    },
+    "CategorySheet": {
+      "code": ["frontend/src/components/Sheet.tsx", "frontend/src/features/transaction-form/components/TransactionForm.tsx"],
+      "shared": [],
+      "canvasOnly": ["kind", "selected", "lang", "href"],
+      "codeOnly": ["visible", "title", "closeLabel", "onClose", "children"]
+    }
+  }
+}

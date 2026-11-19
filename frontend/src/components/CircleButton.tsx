@@ -8,6 +8,7 @@ import type { TransactionType } from '@/types/Transaction';
 type Size = 'lg' | 'md';
 
 type Props = {
+  /** income: + on the income color; expense: − on the expense color. */
   kind: TransactionType;
   size?: Size;
   accessibilityLabel: string;

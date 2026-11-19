@@ -9,6 +9,7 @@ import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 type TotalProps = {
+  /** Which all-time total to show. */
   type: TransactionType;
 };
 

@@ -10,6 +10,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watchAll",
+    "test:design": "jest -c jest.design.config.js",
+    "design:tokens": "DESIGN_WRITE=1 jest -c jest.design.config.js tokens",
     "tsc": "tsc --noEmit",
     "migration:generate": "drizzle-kit generate --config ./src/db/drizzle.config.ts"
   },

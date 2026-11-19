@@ -1,4 +1,4 @@
-.PHONY: install ci test lint-compile migrations-check front tunnel preview up down logs ps
+.PHONY: install ci test test-design lint-compile migrations-check front tunnel preview up down logs ps
 
 # =========== Frontend ===========
 
@@ -10,6 +10,9 @@ ci:
 
 test:
 	cd frontend && yarn test
+
+test-design:
+	cd frontend && yarn test:design
 
 lint-compile:
 	cd frontend && yarn lint && yarn tsc
