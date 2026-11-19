@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Category editor sheet</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<section role="dialog" aria-label="{{title}}" style="width: 100%; box-sizing: border-box; padding: 8px 16px 16px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; flex-direction: column; font-family: Roboto, system-ui, sans-serif; background: var(--canvas); color: var(--text)">
+  <div aria-hidden="true" style="align-self: center; width: 32px; height: 4px; border-radius: var(--radius-full); opacity: 0.4; background: var(--text)"></div>
+  <h2 style="margin: 0; padding: 12px 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 700">{{title}}</h2>
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <dc-import name="FieldInput" state="focused" label="{{s.name}}" placeholder="{{s.name}}" value="{{name}}" error="{{error}}" hint-size="100%,64px"></dc-import>
+    <dc-import name="Button" variant="primary" size="lg" icon="" label="{{s.save}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+    <sc-if value="{{isEdit}}" hint-placeholder-val="{{ true }}">
+      <dc-import name="Button" variant="secondary" size="lg" icon="" label="{{s.archive}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+    </sc-if>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["add","edit"],"default":"edit"},"name":{"editor":"text","default":"Food"},"error":{"editor":"enum","options":["none","empty","duplicate"],"default":"none"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":340}}'>
+var STR = {
+  en: { newTitle: 'New category', editTitle: 'Edit category', name: 'Name', save: 'Save', archive: 'Archive', empty: 'Enter a name', duplicate: 'A category with this name already exists' },
+  fi: { newTitle: 'Uusi kategoria', editTitle: 'Muokkaa kategoriaa', name: 'Nimi', save: 'Tallenna', archive: 'Arkistoi', empty: 'Anna nimi', duplicate: 'Samanniminen kategoria on jo olemassa' },
+  ru: { newTitle: 'Новая категория', editTitle: 'Изменить категорию', name: 'Название', save: 'Сохранить', archive: 'В архив', empty: 'Введите название', duplicate: 'Категория с таким названием уже есть' }
+};
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    var lang = STR[p.lang] ? p.lang : 'en';
+    var s = STR[lang], isEdit = p.mode !== 'add';
+    return {
+      s: s, isEdit: isEdit, title: isEdit ? s.editTitle : s.newTitle,
+      name: isEdit ? (p.name ?? 'Food') : '',
+      error: p.error === 'empty' ? s.empty : p.error === 'duplicate' ? s.duplicate : '',
+      href: p.href || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

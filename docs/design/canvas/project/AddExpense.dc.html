@@ -29,17 +29,17 @@ body{margin:0}
           <dc-import name="FieldPicker" label="{{s.time}}" value="{{time}}" hint-size="100%,64px"></dc-import>
         </div>
       </div>
-      <dc-import name="Button" variant="primary" size="lg" label="{{s.done}}" href="Main.dc.html" hint-size="100%,56px"></dc-import>
+      <dc-import name="Button" variant="primary" size="lg" state="{{doneState}}" label="{{s.done}}" href="Main.dc.html" hint-size="100%,56px"></dc-import>
     </form>
   </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"theme":{"editor":"enum","options":["global","dark","light","black","black_yellow"],"default":"global"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"theme":{"editor":"enum","options":["global","dark","light","black","black_yellow"],"default":"global"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"categories":{"editor":"enum","options":["some","none"],"default":"some"},"$preview":{"width":412,"height":892}}'>
 var THEMES = ['dark', 'light', 'black', 'black_yellow'];
 var STR = {
-  en: { addExpense: 'Add expense', addIncome: 'Add income', expense: 'Expense', income: 'Income', amount: 'Amount', enterAmount: 'Enter amount', category: 'Category', date: 'Date', time: 'Time', done: 'Done', food: 'Food', salary: 'Salary' },
-  fi: { addExpense: 'Lisää meno', addIncome: 'Lisää tulo', expense: 'Menot', income: 'Tulot', amount: 'Summa', enterAmount: 'Syötä summa', category: 'Kategoria', date: 'Päivä', time: 'Aika', done: 'Valmis', food: 'Ruoka', salary: 'Palkka' },
-  ru: { addExpense: 'Добавить расход', addIncome: 'Добавить доход', expense: 'Расходы', income: 'Доходы', amount: 'Сумма', enterAmount: 'Введите сумму', category: 'Категория', date: 'Дата', time: 'Время', done: 'Готово', food: 'Еда', salary: 'Зарплата' }
+  en: { addExpense: 'Add expense', addIncome: 'Add income', expense: 'Expense', income: 'Income', amount: 'Amount', enterAmount: 'Enter amount', category: 'Category', date: 'Date', time: 'Time', done: 'Done', food: 'Food', salary: 'Salary', noCategories: 'No categories' },
+  fi: { addExpense: 'Lisää meno', addIncome: 'Lisää tulo', expense: 'Menot', income: 'Tulot', amount: 'Summa', enterAmount: 'Syötä summa', category: 'Kategoria', date: 'Päivä', time: 'Aika', done: 'Valmis', food: 'Ruoka', salary: 'Palkka', noCategories: 'Ei kategorioita' },
+  ru: { addExpense: 'Добавить расход', addIncome: 'Добавить доход', expense: 'Расходы', income: 'Доходы', amount: 'Сумма', enterAmount: 'Введите сумму', category: 'Категория', date: 'Дата', time: 'Время', done: 'Готово', food: 'Еда', salary: 'Зарплата', noCategories: 'Нет категорий' }
 };
 function pad(n) { return String(n).padStart(2, '0'); }
 class Component extends DCLogic {
@@ -66,6 +66,7 @@ class Component extends DCLogic {
     var lang = STR[p.lang] ? p.lang : 'en';
     var t = STR[lang];
     var income = p.kind === 'income';
+    var none = p.categories === 'none';
     var now = new Date(), h = now.getHours(), m = pad(now.getMinutes());
     return {
       theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : this.globalTheme(),
@@ -75,7 +76,8 @@ class Component extends DCLogic {
         title: income ? t.addIncome : t.addExpense, heading: income ? t.income : t.expense,
         amount: t.amount, enterAmount: t.enterAmount, category: t.category, date: t.date, time: t.time, done: t.done
       },
-      category: income ? t.salary : t.food,
+      doneState: none ? 'disabled' : 'default',
+      category: none ? t.noCategories : (income ? t.salary : t.food),
       // Only the expense flow has a category picker board.
       pickerHref: income ? '' : 'CategoryPicker.dc.html',
       date: now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()),

@@ -87,7 +87,7 @@
       "y": 1000
     },
     "CompForms.dc.html": {
-      "h": 1760,
+      "h": 2260,
       "page": "components",
       "title": "Fields, settings rows & sheet",
       "w": 1784,
@@ -268,6 +268,32 @@
       "w": 328,
       "x": 4664,
       "y": 3080
+    },
+    "Categories.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Settings › Categories",
+      "w": 412,
+      "x": 1968,
+      "y": 1012
+    },
+    "CategoryEditor.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Category editor sheet",
+      "w": 412,
+      "x": 2460,
+      "y": 1012
+    },
+    "CategoryEditorSheet.dc.html": {
+      "h": 340,
+      "page": "components",
+      "title": "CategoryEditorSheet",
+      "w": 360,
+      "x": 5084,
+      "y": 3080
     }
   },
   "createdOnFiles": {
@@ -292,7 +318,8 @@
     "specTransactionDateSeparator",
     "specCategorySheet",
     "specField",
-    "specCategoryChip"
+    "specCategoryChip",
+    "specCategoryEditorSheet"
   ],
   "notes": {
     "primitives": {
@@ -376,14 +403,14 @@
     },
     "specCategorySheet": {
       "page": "components",
-      "text": "CategorySheet\nCanvas-only composite: code Sheet + category options in TransactionForm\nProps: kind expense | income · selected (category key) · lang · href\nUses: CategoryChip × N (wrapping rows) + add chip, Button primary\nTokens: canvas, text, radius-lg, type-title\nCode: components/Sheet.tsx, features/transaction-form/components/TransactionForm.tsx\nContract: docs/design/components.json",
+      "text": "CategorySheet\nCanvas-only composite: code Sheet + category options in TransactionForm\nProps: kind expense | income · selected (category key) · lang · href\nUses: CategoryChip × N (wrapping rows, × archives) + add chip, Button primary\nChips scroll past half the screen height; Done stays visible\nProps also: categories some | none (canvas tweak; none = only the + chip)\nTokens: canvas, text, radius-lg, type-title\nCode: components/Sheet.tsx, features/transaction-form/components/TransactionForm.tsx\nContract: docs/design/components.json",
       "w": 360,
       "x": 4224,
       "y": 3680
     },
     "specField": {
       "page": "components",
-      "text": "FieldInput · FieldPicker\nInput: label · placeholder · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
+      "text": "FieldInput · FieldPicker\nInput: label · placeholder · value · error (message, expense color) · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
       "w": 328,
       "x": 3408,
       "y": 3280
@@ -393,7 +420,14 @@
       "x": 4664,
       "y": 3168,
       "w": 328,
-      "text": "CategoryChip (canvas only, not in code yet)\nProps: variant category | add · label · selected · removable · state default | pressed · lang · href (canvas)\nWidth fits the label, max = container; long names end with …\nTokens: selection + on-action-primary (selected), separator, text, radius-full, type-body, touch-target\nStates: is-pressed\nContract: docs/design/components.json"
+      "text": "CategoryChip\nProps: variant category | add · label · selected · removable (× archives) · state default | pressed · lang · href (canvas)\nWidth fits the label, max = container; long names end with …\nTokens: selection + on-action-primary (selected), separator, text, radius-full, type-body, touch-target\nStates: is-pressed\nCode: features/categories/CategoryChip.tsx\nContract: docs/design/components.json"
+    },
+    "specCategoryEditorSheet": {
+      "page": "components",
+      "x": 5084,
+      "y": 3480,
+      "w": 360,
+      "text": "CategoryEditorSheet\nCanvas-only composite: Sheet + FieldInput + Buttons in the category editor\nProps: mode add | edit · name · error none | empty | duplicate · lang · href (canvas)\nUses: FieldInput (error), Button primary + secondary (Archive, edit only)\nTokens: canvas, text, radius-lg, type-title\nCode: features/categories/CategoryEditorSheet.tsx\nContract: docs/design/components.json"
     }
   },
   "order": [
@@ -414,6 +448,7 @@
     "SettingsRow.dc.html",
     "CategoryChip.dc.html",
     "CategorySheet.dc.html",
+    "CategoryEditorSheet.dc.html",
     "CompNavigation.dc.html",
     "CompButtons.dc.html",
     "CompData.dc.html",
@@ -428,7 +463,9 @@
     "Settings.dc.html",
     "Appearance.dc.html",
     "Currency.dc.html",
-    "Language.dc.html"
+    "Language.dc.html",
+    "Categories.dc.html",
+    "CategoryEditor.dc.html"
   ],
   "pages": [
     {

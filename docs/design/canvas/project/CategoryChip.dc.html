@@ -31,9 +31,9 @@ body{margin:0}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["category","add"],"default":"category"},"label":{"editor":"text","default":"Food"},"selected":{"editor":"boolean","default":false},"removable":{"editor":"boolean","default":true},"state":{"editor":"enum","options":["default","pressed"],"default":"default"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":328,"height":48}}'>
 var STR = {
-  en: { add: 'Add category', remove: 'Delete' },
-  fi: { add: 'Lisää kategoria', remove: 'Poista' },
-  ru: { add: 'Добавить категорию', remove: 'Удалить' }
+  en: { add: 'Add category', remove: 'Archive' },
+  fi: { add: 'Lisää kategoria', remove: 'Arkistoi' },
+  ru: { add: 'Добавить категорию', remove: 'В архив:' }
 };
 class Component extends DCLogic {
   renderVals() {

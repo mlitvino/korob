@@ -14,13 +14,14 @@
 body{margin:0}
 </style>
 </helmet>
-<div style="width: 1784px; min-height: 1760px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+<div style="width: 1784px; min-height: 2260px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
   <div style="display: flex; gap: 48px; align-items: flex-start">
     <h1 style="margin: 0; flex: none; font-size: 28px; font-weight: 700">Fields, settings rows &amp; sheet</h1>
     <ul style="margin: 0; padding: 0 0 0 18px; font-size: 13px; line-height: 20px; color: #c4c4c8">
       <li>Fields: <code>inset</code> fill, <code>text</code> color; every field has a caption label; focus ring in accent (<code>is-focused</code>); amount in title 20; full width; pickers show a ▾.</li>
       <li>Settings: one grouped SettingsRow with nav / value / option variants, 56 high, inset hairlines, group radius 12.</li>
-      <li>Category sheet: radius 16 (top only), drag handle, title 20/700; categories as wrapping CategoryChips (width fits the name, capped at the sheet width, × deletes, + adds; selected uses <code>selection</code>); Done reuses Button.</li>
+      <li>Field error: message under the field in <code>expense</code>, body-sm; the focus ring and fill stay.</li>
+      <li>Category sheet: radius 16 (top only), drag handle, title 20/700; categories as wrapping CategoryChips (width fits the name, capped at the sheet width, × archives, + adds; selected uses <code>selection</code>); Done reuses Button.</li>
     </ul>
   </div>
   <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
@@ -29,9 +30,10 @@ body{margin:0}
         <span class="is-secondary" style="font-size: 14px; font-weight: 600">{{t.name}}</span>
 
         <div style="display: flex; flex-direction: column; gap: 8px">
-          <span class="is-secondary" style="font-size: 12px">FieldInput — empty / focused</span>
+          <span class="is-secondary" style="font-size: 12px">FieldInput — empty / focused / error</span>
           <dc-import name="FieldInput" label="Amount" placeholder="Enter amount" hint-size="100%,64px"></dc-import>
           <dc-import name="FieldInput" state="focused" label="Amount" placeholder="Enter amount" hint-size="100%,64px"></dc-import>
+          <dc-import name="FieldInput" label="Name" value="Food" error="A category with this name already exists" hint-size="100%,96px"></dc-import>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 8px">
@@ -81,12 +83,19 @@ body{margin:0}
             <dc-import name="CategorySheet" selected="Food" hint-size="100%,400px"></dc-import>
           </div>
         </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">CategoryEditorSheet — edit</span>
+          <div style="padding-top: 16px; border-radius: 12px; overflow: hidden; background: #00000066">
+            <dc-import name="CategoryEditorSheet" mode="edit" hint-size="100%,340px"></dc-import>
+          </div>
+        </div>
       </div>
     </sc-for>
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1784,"height":1760}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1784,"height":2260}}'>
 var THEMES = [
   { id: 'light', name: 'Light' },
   { id: 'dark', name: 'Dark' },

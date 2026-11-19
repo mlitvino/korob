@@ -32,7 +32,7 @@ body{margin:0}
   </div>
 </section>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"selected":{"editor":"text","default":"food"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":560}}'>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"selected":{"editor":"text","default":"food"},"categories":{"editor":"enum","options":["some","none"],"default":"some"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":560}}'>
 var KEYS = {
   expense: ['food', 'transport', 'housing', 'entertainment', 'shopping', 'health', 'other'],
   income: ['salary', 'freelance', 'gift', 'investment', 'other']
@@ -46,8 +46,8 @@ var STR = { en: ['Category', 'Done'], fi: ['Kategoria', 'Valmis'], ru: ['Кат�
 class Component extends DCLogic {
   renderVals() {
     var lang = CAT[this.props.lang] ? this.props.lang : 'en';
-    var keys = KEYS[this.props.kind] || KEYS.expense;
-    var sel = String(this.props.selected ?? keys[0]).toLowerCase();
+    var keys = this.props.categories === 'none' ? [] : (KEYS[this.props.kind] || KEYS.expense);
+    var sel = String(this.props.selected ?? keys[0] ?? '').toLowerCase();
     return {
       title: STR[lang][0], done: STR[lang][1], href: this.props.href || '', lang: lang,
       rows: keys.map(function (k, i) {

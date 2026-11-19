@@ -57,9 +57,9 @@
     },
     "FieldInput": {
       "code": ["frontend/src/components/Field.tsx"],
-      "shared": ["label", "placeholder"],
+      "shared": ["label", "placeholder", "value", "error"],
       "canvasOnly": ["state"],
-      "codeOnly": ["error", "style"]
+      "codeOnly": ["style"]
     },
     "FieldPicker": {
       "code": ["frontend/src/components/Field.tsx"],
@@ -74,16 +74,22 @@
       "codeOnly": ["onPress", "style"]
     },
     "CategoryChip": {
-      "code": [],
-      "shared": [],
-      "canvasOnly": ["variant", "label", "selected", "removable", "state", "lang", "href"],
-      "codeOnly": []
+      "code": ["frontend/src/features/categories/CategoryChip.tsx"],
+      "shared": ["variant", "label", "selected"],
+      "canvasOnly": ["removable", "state", "lang", "href"],
+      "codeOnly": ["onPress", "onRemove", "removeLabel", "style"]
     },
     "CategorySheet": {
       "code": ["frontend/src/components/Sheet.tsx", "frontend/src/features/transaction-form/components/TransactionForm.tsx"],
       "shared": [],
-      "canvasOnly": ["kind", "selected", "lang", "href"],
+      "canvasOnly": ["kind", "selected", "categories", "lang", "href"],
       "codeOnly": ["visible", "title", "closeLabel", "onClose", "children"]
+    },
+    "CategoryEditorSheet": {
+      "code": ["frontend/src/features/categories/CategoryEditorSheet.tsx"],
+      "shared": ["mode", "name", "error"],
+      "canvasOnly": ["lang", "href"],
+      "codeOnly": ["visible", "saving", "onChangeName", "onSave", "onArchive", "onClose"]
     }
   }
 }
