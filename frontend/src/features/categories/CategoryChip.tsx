@@ -21,6 +21,7 @@ type Props = {
 };
 
 const REMOVE_BOX = 40;
+const BORDER_WIDTH = 2;
 
 /** Pill that fits its label up to the row width; wraps in a flex-wrap row. */
 export default function CategoryChip({
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     minHeight: touchTarget,
     paddingLeft: spacing.lg,
-    borderWidth: 1,
+    borderWidth: BORDER_WIDTH,
     borderRadius: radius.full,
     flexDirection: 'row',
     alignItems: 'center',
