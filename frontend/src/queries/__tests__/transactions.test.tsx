@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 
 import { createTestDb, type TestDb } from '@/db/testing/createTestDb';
 import { TransactionsRepo } from '@/db/transactions.repo';
-import { createQueryClient } from '@/queries/queryClient';
+import { createTestQueryClient } from '@/testing/createTestQueryClient';
 import {
   useAddTransaction,
   useBalance,
@@ -52,7 +52,7 @@ function useTransactionsApi() {
 }
 
 async function renderLoaded() {
-  const client = createQueryClient();
+  const client = createTestQueryClient();
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>{children}</QueryClientProvider>
   );

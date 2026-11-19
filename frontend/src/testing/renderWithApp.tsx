@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import '@/locales';
 import { SettingsProvider } from '@/contexts/SettingsContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
-import { createQueryClient } from '@/queries/queryClient';
+import { createTestQueryClient } from '@/testing/createTestQueryClient';
 
 const NO_INSETS = {
   frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -16,7 +16,7 @@ const NO_INSETS = {
 };
 
 export function renderWithApp(ui: ReactElement) {
-  const client = createQueryClient();
+  const client = createTestQueryClient();
   const Wrapper = ({ children }: { children: ReactNode }) => (
     <SafeAreaProvider initialMetrics={NO_INSETS}>
       <SettingsProvider>

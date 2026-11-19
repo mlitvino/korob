@@ -61,9 +61,12 @@ describe('TransactionForm categories', () => {
       await CategoriesRepo.archive(id);
     }
 
-    renderWithApp(<TransactionForm transactionType="expense" onSubmit={jest.fn()} />);
+    const { client } = renderWithApp(
+      <TransactionForm transactionType="expense" onSubmit={jest.fn()} />,
+    );
 
-    await waitFor(() => expect(screen.getByText('No categories')).toBeOnTheScreen());
+    await waitFor(() => expect(client.isFetching()).toBe(0));
+    expect(screen.getByText('No categories')).toBeOnTheScreen();
     expect(screen.getByRole('button', { name: 'Done' })).toBeDisabled();
   });
 });

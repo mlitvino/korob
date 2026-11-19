@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 
 import Button from '@/components/Button';
 import CircleButton from '@/components/CircleButton';
@@ -16,20 +16,23 @@ function ThemeProbe() {
   return null;
 }
 
-const renderThemed = (ui: ReactElement) =>
-  render(
+const renderThemed = async (ui: ReactElement) => {
+  const result = render(
     <ThemeProvider>
       <ThemeProbe />
       {ui}
     </ThemeProvider>,
   );
+  await act(async () => {});
+  return result;
+};
 
 const styleOf = (node: { props: { style?: unknown } }) =>
   StyleSheet.flatten(node.props.style as never) as Record<string, unknown>;
 
 describe('Button', () => {
-  it('fills primary with the accent and secondary with elevated', () => {
-    renderThemed(
+  it('fills primary with the accent and secondary with elevated', async () => {
+    await renderThemed(
       <>
         <Button label="Primary" />
         <Button label="Secondary" variant="secondary" />
@@ -41,9 +44,9 @@ describe('Button', () => {
     expect(styleOf(secondary).backgroundColor).toBe(theme.elevated);
   });
 
-  it('does not fire onPress and dims when disabled', () => {
+  it('does not fire onPress and dims when disabled', async () => {
     const onPress = jest.fn();
-    renderThemed(<Button label="Done" disabled onPress={onPress} />);
+    await renderThemed(<Button label="Done" disabled onPress={onPress} />);
 
     const button = screen.getByRole('button');
     fireEvent.press(button);
@@ -58,8 +61,10 @@ describe('CircleButton', () => {
   it.each([
     ['lg', 80],
     ['md', 64],
-  ] as const)('renders size %s as a %ipx circle', (size, px) => {
-    renderThemed(<CircleButton kind="expense" size={size} accessibilityLabel="Add expense" />);
+  ] as const)('renders size %s as a %ipx circle', async (size, px) => {
+    await renderThemed(
+      <CircleButton kind="expense" size={size} accessibilityLabel="Add expense" />,
+    );
 
     const button = screen.getByRole('button', { name: 'Add expense' });
     expect(styleOf(button)).toMatchObject({ width: px, height: px });
@@ -68,8 +73,8 @@ describe('CircleButton', () => {
 });
 
 describe('SettingsRow', () => {
-  it('shows the accent check only on the selected option', () => {
-    renderThemed(
+  it('shows the accent check only on the selected option', async () => {
+    await renderThemed(
       <>
         <SettingsRow variant="option" label="Euro" selected />
         <SettingsRow variant="option" label="Dollar" />
@@ -81,8 +86,8 @@ describe('SettingsRow', () => {
     expect(screen.getByRole('radio', { name: /Dollar/ })).not.toBeSelected();
   });
 
-  it('shows the current value on value rows', () => {
-    renderThemed(<SettingsRow variant="value" label="Currency" value="EUR" />);
+  it('shows the current value on value rows', async () => {
+    await renderThemed(<SettingsRow variant="value" label="Currency" value="EUR" />);
 
     expect(screen.getByText('EUR')).toBeOnTheScreen();
   });
@@ -94,8 +99,8 @@ describe('SettingsRow', () => {
 });
 
 describe('Field', () => {
-  it('shows an accent border while the input is focused', () => {
-    renderThemed(<FieldInput label="Amount" testID="amount" />);
+  it('shows an accent border while the input is focused', async () => {
+    await renderThemed(<FieldInput label="Amount" testID="amount" />);
 
     const input = screen.getByTestId('amount');
     const box = () => styleOf(input.parent?.parent as never);
@@ -105,8 +110,8 @@ describe('Field', () => {
     expect(box().borderColor).toBe(theme.accent);
   });
 
-  it('fills fields with inset, never with the text color', () => {
-    renderThemed(<FieldPicker label="Category" value="Food" onPress={() => {}} />);
+  it('fills fields with inset, never with the text color', async () => {
+    await renderThemed(<FieldPicker label="Category" value="Food" onPress={() => {}} />);
 
     const picker = screen.getByRole('button', { name: 'Category: Food' });
     expect(styleOf(picker).backgroundColor).toBe(theme.inset);

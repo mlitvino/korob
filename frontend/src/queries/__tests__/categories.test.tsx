@@ -10,7 +10,7 @@ import {
   useCreateCategory,
   useRenameCategory,
 } from '@/queries/categories';
-import { createQueryClient } from '@/queries/queryClient';
+import { createTestQueryClient } from '@/testing/createTestQueryClient';
 import { useTransactions } from '@/queries/transactions';
 import type { Category } from '@/types/Category';
 
@@ -42,7 +42,7 @@ function useCategoriesApi() {
 }
 
 async function renderLoaded() {
-  const client = createQueryClient();
+  const client = createTestQueryClient();
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>{children}</QueryClientProvider>
   );

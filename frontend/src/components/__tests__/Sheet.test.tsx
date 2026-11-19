@@ -1,5 +1,5 @@
 import { Modal, Text } from 'react-native';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Sheet from '@/components/Sheet';
@@ -11,7 +11,7 @@ const NO_INSETS = {
 };
 
 describe('Sheet', () => {
-  it('shows its content and closes on system Back', () => {
+  it('shows its content and closes on system Back', async () => {
     const onClose = jest.fn();
     render(
       <ThemeProvider>
@@ -22,6 +22,7 @@ describe('Sheet', () => {
         </SafeAreaProvider>
       </ThemeProvider>,
     );
+    await act(async () => {});
 
     expect(screen.getByText('Food')).toBeOnTheScreen();
     // The scrim is hidden from screen readers by the modal panel; Back is how they close it.
