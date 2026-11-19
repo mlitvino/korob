@@ -71,7 +71,7 @@ const fi: LocaleResource = {
       black: 'Musta',
       light: 'Vaalea',
       dark: 'Tumma',
-      black_yellow: 'Must Kultainen',
+      black_yellow: 'Musta-keltainen',
     },
     nav: {
       home: 'Koti',
