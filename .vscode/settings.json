@@ -1,10 +1,5 @@
 {
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
-    "github.copilot.chat.commitMessageGeneration.instructions": [
-        {
-            "text": "Write a single-line conventional commit message: 'type(scope): short summary', max 50 characters. Scope is the area changed, e.g. theme, ui, nav, home, form, settings, i18n, deps. Prefer a subject line alone. If the subject cannot capture the change, add a blank line and a short body (1-2 lines wrapped at 50 characters) explaining what and why. Types: feat, fix, refac, chore, test, docs."
-        }
-    ],
+    "editor.detectIndentation": false
 }

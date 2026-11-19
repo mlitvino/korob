@@ -23,13 +23,25 @@ make front          # Expo dev server — scan the QR code with Expo Go (same Wi
 make tunnel         # Same, but reachable from any network
 ```
 
+## Server
+
+```bash
+make up             # Local stack: http://127.0.0.1:8080/health
+make down
+```
+
+Pushes to `main` run [cd.yml](.github/workflows/cd.yml): CI checks, then push the image `ghcr.io/mlitvino/korob-proxy:<commit sha>` and deploy
+[deploy/compose.yml](deploy/compose.yml) to the VPS (`~/korob`). Roll back on the server with
+`TAG=<sha>` in `~/korob/.env` and `docker compose up -d`.
+
 ## Roadmap
 
 - [ ] Backend (Golang) with REST API
 - [ ] Open Banking API integration for automatic transaction import
 - [ ] Multi-account support
-- [ ] Light/dark theme toggle
-- [ ] Categories and tags
+- [x] Light/dark theme toggle
+- [x] Categories
+- [ ] Tags
 - [ ] Budget tracking
 - [ ] Export reports (PDF/CSV)
 - [ ] Cloud sync
@@ -38,7 +50,7 @@ make tunnel         # Same, but reachable from any network
 
 - **Frontend**: React Native (Expo) with TypeScript — iOS and Android
 - **Storage**: SQLite (expo-sqlite + Drizzle ORM) on device
-- **Nginx**: TLS reverse proxy for the planned backend API
+- **Server**: Caddy proxy for the planned backend API at `api.korob.mlitvino.dev`
 
 ## License
 

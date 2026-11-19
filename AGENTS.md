@@ -4,9 +4,11 @@ This is the shared starting point for AI coding agents working in this repositor
 
 ## Project Snapshot
 
-- Monorepo with an Expo React Native app in [frontend](frontend) and nginx in [nginx](nginx).
+- Monorepo with an Expo React Native app in [frontend](frontend) and a Caddy proxy in [proxy](proxy).
 - The app targets **iOS and Android only** — there is no web target. Do not add `.web.ts` overrides, `Platform.OS === 'web'` branches, or `react-native-web`.
-- nginx is the TLS gateway for a planned backend API; until that exists it only serves `/health`.
+- The proxy serves `api.korob.mlitvino.dev` behind the VPS edge Caddy (which terminates TLS). Until the backend exists it only answers `GET /health` with `{"status":"ok","version":"<commit sha>"}`.
+- Production runs [deploy/compose.yml](deploy/compose.yml) on the VPS. [cd.yml](.github/workflows/cd.yml) runs the CI checks ([ci.yml](.github/workflows/ci.yml)), pushes `ghcr.io/mlitvino/korob-proxy:<sha>` and deploys it with `mlitvino/vps-deploy` on every push to `main`; nothing is built on the server. Keep that file complete (no override files), with no published ports and no secrets.
+- One image per service, all tagged with the same commit SHA: `korob-proxy` and, once the Go backend exists, `korob-api` (service `api`, port 3000, in `backend/`). Only the proxy joins `edge_korob`; the proxy and `api` share the app's private `default` network, and the proxy forwards to `api:3000`.
 - Main app code is in [frontend/src](frontend/src).
 - Local persistence: SQLite via expo-sqlite + Drizzle in [frontend/src/db](frontend/src/db); settings in AsyncStorage via [frontend/src/storage](frontend/src/storage).
 
@@ -17,7 +19,7 @@ This is the shared starting point for AI coding agents working in this repositor
   - `make tunnel` to run the Expo dev server reachable from any network
   - `make preview` to build an installable Android APK on EAS
   - `make test` to run frontend tests
-  - `make build` / `make start` / `make down` to manage the nginx container stack
+  - `make up` / `make down` / `make logs` to run the local server stack ([compose.yml](compose.yml), `http://127.0.0.1:8080/health`)
 - From [frontend](frontend) (uses yarn — `yarn.lock` is the lockfile):
   - `yarn start`
   - `yarn test`
@@ -27,8 +29,9 @@ This is the shared starting point for AI coding agents working in this repositor
 ## Architecture Boundaries
 
 - Keep Expo Router structure under [frontend/src/app](frontend/src/app): root stack + drawer group + modal route.
-- Keep feature-local UI and logic under [frontend/src/features](frontend/src/features), grouped by page/flow concern.
-- Keep app settings state (settings, theme) in context modules under [frontend/src/contexts](frontend/src/contexts).
+- Keep feature-local UI and logic under [frontend/src/features](frontend/src/features), grouped by page/flow concern. `transaction-list` (drawer page) and `transaction-form` (modal flow) stay separate features even though both are about transactions.
+- Only truly reusable primitives go in [frontend/src/components](frontend/src/components) and [frontend/src/hooks](frontend/src/hooks); promote a view there once two features use it.
+- Keep app settings state (settings, theme) in context modules under [frontend/src/contexts](frontend/src/contexts), with separate state and setter hooks.
 - Read and write database data only through TanStack Query hooks in [frontend/src/queries](frontend/src/queries). Every write is a mutation hook that invalidates the queries it affects; components never call repos directly.
 - Keep transaction domain model aligned with [frontend/src/types/Transaction.ts](frontend/src/types/Transaction.ts).
 - Use theme and locale infrastructure from [frontend/src/constants/theme.ts](frontend/src/constants/theme.ts), [frontend/src/contexts/ThemeContext.tsx](frontend/src/contexts/ThemeContext.tsx), and [frontend/src/locales/index.ts](frontend/src/locales/index.ts).
@@ -36,18 +39,23 @@ This is the shared starting point for AI coding agents working in this repositor
 ## Conventions That Matter
 
 - TypeScript is strict; prefer `type` over `interface` for props and action unions.
-- Use typed route params and validate critical runtime params in modal flows.
+- Use typed route params and mutation inputs; validate critical runtime params in modal flows.
 - Balance is derived from transactions via `useBalance` in [frontend/src/queries/transactions.ts](frontend/src/queries/transactions.ts); never store it separately.
 - Prefer translated strings and theme tokens over hardcoded labels and colors.
-- Preserve provider layering in [frontend/src/contexts/AppProviders.tsx](frontend/src/contexts/AppProviders.tsx).
+- Preserve provider order in [frontend/src/contexts/AppProviders.tsx](frontend/src/contexts/AppProviders.tsx): `SettingsProvider` → `ThemeProvider` → `PaperThemeProvider` → `QueryClientProvider`.
 
 ## Testing Expectations
 
 - Use `jest-expo` patterns already used under [frontend/src/components/__tests__](frontend/src/components/__tests__).
 - Add or update tests for behavioral changes; avoid shipping logic changes without coverage.
 
+## Commits
+
+- `type(scope): short summary`, at most 50 characters; scope is the area changed (theme, ui, nav, home, form, settings, i18n, db, deps, proxy, ci). Types: feat, fix, refac, chore, test, docs.
+- Prefer the subject line alone; if it cannot capture the change, add a blank line and a 1–2 line body (wrapped at 50) saying what and why.
+
 ## Reference Docs
 
 - Product and environment overview: [README.md](README.md)
-- Frontend-focused coding instructions: [.github/instructions/frontend.instructions.md](.github/instructions/frontend.instructions.md)
+- Design docs: [docs/design](docs/design)
 
