@@ -22,6 +22,15 @@ export default function TransactionModal() {
     throw new Error('Error in transaction-modal.tsx: type is invalid');
   }
 
+  /** Back to where the modal was opened; Home if it was opened without history. */
+  const goBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace('/(drawer)');
+    }
+  };
+
   const handleSubmit = async (
     amountCents: number,
     occurredAt: Date,
@@ -62,7 +71,7 @@ export default function TransactionModal() {
           <HeaderLeft
             icon={'arrow-back'}
             accessibilityLabel={t('nav.back')}
-            onPress={() => router.push('/(drawer)')}
+            onPress={goBack}
             style={styles.headerLeft}
           />
         ),
