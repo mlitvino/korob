@@ -54,7 +54,10 @@ This is the shared starting point for AI coding agents working in this repositor
 - [docs/design/canvas](docs/design/canvas) mirrors the claude.ai design canvas; see its README for the sync flow.
 - `theme.ts` is the source of truth. Use semantic roles (`actionPrimary`, `selection`, `focus`, …) where a component means a role; add a role to `roleSources` rather than reusing `accent` for a new meaning.
 - The canvas `tokens.css` is generated: run `yarn design:tokens` after changing `theme.ts`. Canvas primitives follow code names/props, listed in [docs/design/components.json](docs/design/components.json).
-- `yarn test:design` (or `make test-design`) checks both; it is opt-in and not part of `yarn test` or CI.
+- Code shared by many boards (global-theme follower, category names) lives once in `docs/design/canvas/blocks/*.block` and is copied into each board between `// <generated:NAME>` markers: edit the `.block` file, then run `yarn design:screens`. A new interactive screen needs the `global-theme` markers.
+- `yarn test:design` (or `make test-design`) checks tokens, component contracts and the shared blocks; it is opt-in and not part of `yarn test` or CI.
+- Canvas sync: pull the live files into `docs/design/canvas/project` first and read the diff (browser edits inside a marked region are overwritten by `yarn design:screens`), edit locally, run `yarn design:tokens` / `yarn design:screens` / `yarn test:design`, then publish from that folder. Details in the canvas README.
+- A change to a component's props or look is made in both code and canvas, and its entry in `components.json` is updated.
 
 ## Commits
 
