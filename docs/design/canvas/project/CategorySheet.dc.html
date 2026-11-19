@@ -17,10 +17,15 @@ body{margin:0}
 <section role="dialog" aria-label="{{title}}" style="width: 100%; box-sizing: border-box; padding: 8px 16px 16px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; flex-direction: column; font-family: Roboto, system-ui, sans-serif; background: var(--canvas); color: var(--text)">
   <div aria-hidden="true" style="align-self: center; width: 32px; height: 4px; border-radius: var(--radius-full); opacity: 0.4; background: var(--text)"></div>
   <h2 style="margin: 0; padding: 12px 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 700">{{title}}</h2>
-  <div style="display: flex; flex-direction: column">
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
     <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
-      <dc-import name="SettingsRow" variant="option" position="{{r.position}}" selected="{{r.selected}}" label="{{r.label}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+      <div style="max-width: 100%; min-width: 0; display: flex">
+        <dc-import name="CategoryChip" label="{{r.label}}" selected="{{r.selected}}" lang="{{lang}}" href="{{href}}" hint-size="auto,48px"></dc-import>
+      </div>
     </sc-for>
+    <div style="max-width: 100%; min-width: 0; display: flex">
+      <dc-import name="CategoryChip" variant="add" lang="{{lang}}" hint-size="auto,48px"></dc-import>
+    </div>
   </div>
   <div style="margin-top: 16px">
     <dc-import name="Button" variant="primary" size="lg" icon="" label="{{done}}" href="{{href}}" hint-size="100%,56px"></dc-import>
@@ -44,7 +49,7 @@ class Component extends DCLogic {
     var keys = KEYS[this.props.kind] || KEYS.expense;
     var sel = String(this.props.selected ?? keys[0]).toLowerCase();
     return {
-      title: STR[lang][0], done: STR[lang][1], href: this.props.href || '',
+      title: STR[lang][0], done: STR[lang][1], href: this.props.href || '', lang: lang,
       rows: keys.map(function (k, i) {
         return { label: CAT[lang][k], selected: k === sel, position: i === 0 ? 'first' : i === keys.length - 1 ? 'last' : 'middle' };
       })

@@ -14,13 +14,13 @@
 body{margin:0}
 </style>
 </helmet>
-<div style="width: 1784px; min-height: 1660px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+<div style="width: 1784px; min-height: 1760px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
   <div style="display: flex; gap: 48px; align-items: flex-start">
     <h1 style="margin: 0; flex: none; font-size: 28px; font-weight: 700">Fields, settings rows &amp; sheet</h1>
     <ul style="margin: 0; padding: 0 0 0 18px; font-size: 13px; line-height: 20px; color: #c4c4c8">
       <li>Fields: <code>inset</code> fill, <code>text</code> color; every field has a caption label; focus ring in accent (<code>is-focused</code>); amount in title 20; full width; pickers show a ▾.</li>
       <li>Settings: one grouped SettingsRow with nav / value / option variants, 56 high, inset hairlines, group radius 12.</li>
-      <li>Selection checkmark in accent. Sheet: radius 16 (top only), drag handle, title 20/700; options and Done reuse SettingsRow and Button.</li>
+      <li>Category sheet: radius 16 (top only), drag handle, title 20/700; categories as wrapping CategoryChips (width fits the name, capped at the sheet width, × deletes, + adds; selected uses <code>selection</code>); Done reuses Button.</li>
     </ul>
   </div>
   <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
@@ -66,9 +66,19 @@ body{margin:0}
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">CategoryChip — default / selected / long name / add</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <div style="max-width: 100%; min-width: 0; display: flex"><dc-import name="CategoryChip" label="Transport" hint-size="auto,48px"></dc-import></div>
+            <div style="max-width: 100%; min-width: 0; display: flex"><dc-import name="CategoryChip" label="Food" selected="{{ true }}" hint-size="auto,48px"></dc-import></div>
+            <div style="max-width: 100%; min-width: 0; display: flex"><dc-import name="CategoryChip" label="Kids' activities, school trips and summer camps" hint-size="auto,48px"></dc-import></div>
+            <div style="max-width: 100%; min-width: 0; display: flex"><dc-import name="CategoryChip" variant="add" hint-size="auto,48px"></dc-import></div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
           <span class="is-secondary" style="font-size: 12px">CategorySheet</span>
           <div style="padding-top: 16px; border-radius: 12px; overflow: hidden; background: #00000066">
-            <dc-import name="CategorySheet" selected="Food" hint-size="100%,544px"></dc-import>
+            <dc-import name="CategorySheet" selected="Food" hint-size="100%,400px"></dc-import>
           </div>
         </div>
       </div>
@@ -76,7 +86,7 @@ body{margin:0}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1784,"height":1660}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1784,"height":1760}}'>
 var THEMES = [
   { id: 'light', name: 'Light' },
   { id: 'dark', name: 'Dark' },

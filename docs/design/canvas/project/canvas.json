@@ -87,7 +87,7 @@
       "y": 1000
     },
     "CompForms.dc.html": {
-      "h": 1660,
+      "h": 1760,
       "page": "components",
       "title": "Fields, settings rows & sheet",
       "w": 1784,
@@ -179,14 +179,6 @@
       "x": 2480,
       "y": 0
     },
-    "Themes.dc.html": {
-      "h": 892,
-      "page": "screens",
-      "title": "Home in all four themes",
-      "w": 1768,
-      "x": 0,
-      "y": 2024
-    },
     "TotalsCard.dc.html": {
       "h": 144,
       "page": "components",
@@ -259,6 +251,23 @@
       "w": 328,
       "x": 3408,
       "y": 3176
+    },
+    "GlobalTheme.dc.html": {
+      "h": 420,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Global theme (canvas preview)",
+      "w": 412,
+      "x": 2952,
+      "y": 0
+    },
+    "CategoryChip.dc.html": {
+      "h": 48,
+      "page": "components",
+      "title": "CategoryChip",
+      "w": 328,
+      "x": 4664,
+      "y": 3080
     }
   },
   "createdOnFiles": {
@@ -282,7 +291,8 @@
     "specTransactionFilterBar",
     "specTransactionDateSeparator",
     "specCategorySheet",
-    "specField"
+    "specField",
+    "specCategoryChip"
   ],
   "notes": {
     "primitives": {
@@ -366,7 +376,7 @@
     },
     "specCategorySheet": {
       "page": "components",
-      "text": "CategorySheet\nCanvas-only composite: code Sheet + category options in TransactionForm\nProps: kind expense | income · selected (category key) · lang · href\nUses: SettingsRow option × N, Button primary\nTokens: canvas, text, radius-lg, type-title\nCode: components/Sheet.tsx, features/transaction-form/components/TransactionForm.tsx\nContract: docs/design/components.json",
+      "text": "CategorySheet\nCanvas-only composite: code Sheet + category options in TransactionForm\nProps: kind expense | income · selected (category key) · lang · href\nUses: CategoryChip × N (wrapping rows) + add chip, Button primary\nTokens: canvas, text, radius-lg, type-title\nCode: components/Sheet.tsx, features/transaction-form/components/TransactionForm.tsx\nContract: docs/design/components.json",
       "w": 360,
       "x": 4224,
       "y": 3680
@@ -377,6 +387,13 @@
       "w": 328,
       "x": 3408,
       "y": 3280
+    },
+    "specCategoryChip": {
+      "page": "components",
+      "x": 4664,
+      "y": 3168,
+      "w": 328,
+      "text": "CategoryChip (canvas only, not in code yet)\nProps: variant category | add · label · selected · removable · state default | pressed · lang · href (canvas)\nWidth fits the label, max = container; long names end with …\nTokens: selection + on-action-primary (selected), separator, text, radius-full, type-body, touch-target\nStates: is-pressed\nContract: docs/design/components.json"
     }
   },
   "order": [
@@ -395,11 +412,13 @@
     "FieldInput.dc.html",
     "FieldPicker.dc.html",
     "SettingsRow.dc.html",
+    "CategoryChip.dc.html",
     "CategorySheet.dc.html",
     "CompNavigation.dc.html",
     "CompButtons.dc.html",
     "CompData.dc.html",
     "CompForms.dc.html",
+    "GlobalTheme.dc.html",
     "Main.dc.html",
     "Drawer.dc.html",
     "Transactions.dc.html",
@@ -409,8 +428,7 @@
     "Settings.dc.html",
     "Appearance.dc.html",
     "Currency.dc.html",
-    "Language.dc.html",
-    "Themes.dc.html"
+    "Language.dc.html"
   ],
   "pages": [
     {

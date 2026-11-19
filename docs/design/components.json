@@ -73,6 +73,12 @@
       "canvasOnly": ["state", "href"],
       "codeOnly": ["onPress", "style"]
     },
+    "CategoryChip": {
+      "code": [],
+      "shared": [],
+      "canvasOnly": ["variant", "label", "selected", "removable", "state", "lang", "href"],
+      "codeOnly": []
+    },
     "CategorySheet": {
       "code": ["frontend/src/components/Sheet.tsx", "frontend/src/features/transaction-form/components/TransactionForm.tsx"],
       "shared": [],

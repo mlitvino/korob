@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Category chip</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="{{stateClass}}" style="position: relative; max-width: 100%; min-height: var(--touch-target); box-sizing: border-box; padding: 0 {{padEnd}} 0 16px; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 4px; font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-size); line-height: var(--type-body-line); font-weight: 600; border: 1px {{borderStyle}} {{border}}; background: {{bg}}; color: {{fg}}">
+  <sc-if value="{{isAdd}}" hint-placeholder-val="{{ false }}">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex: none; margin-left: -4px"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
+  </sc-if>
+  <button type="button" aria-pressed="{{pressed}}" style="min-width: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{text}}</button>
+  <sc-if value="{{showRemove}}" hint-placeholder-val="{{ true }}">
+    <button type="button" aria-label="{{removeLabel}}" style="width: 40px; height: 40px; flex: none; padding: 0; border: 0; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; background: transparent; color: inherit">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+    </button>
+  </sc-if>
+  <sc-if value="{{hasHref}}" hint-placeholder-val="{{ false }}">
+    <a href="{{href}}" aria-label="{{text}}" style="position: absolute; top: 0; bottom: 0; left: 0; right: {{linkRight}}; border-radius: var(--radius-full)"></a>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["category","add"],"default":"category"},"label":{"editor":"text","default":"Food"},"selected":{"editor":"boolean","default":false},"removable":{"editor":"boolean","default":true},"state":{"editor":"enum","options":["default","pressed"],"default":"default"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":328,"height":48}}'>
+var STR = {
+  en: { add: 'Add category', remove: 'Delete' },
+  fi: { add: 'Lisää kategoria', remove: 'Poista' },
+  ru: { add: 'Добавить категорию', remove: 'Удалить' }
+};
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    var s = STR[p.lang] || STR.en;
+    var isAdd = p.variant === 'add';
+    var selected = !isAdd && !!p.selected;
+    var showRemove = !isAdd && (p.removable ?? true);
+    var label = p.label ?? 'Food';
+    return {
+      isAdd: isAdd,
+      text: isAdd ? s.add : label,
+      pressed: isAdd ? null : (selected ? 'true' : 'false'),
+      showRemove: showRemove,
+      removeLabel: s.remove + ' ' + label,
+      padEnd: showRemove ? '4px' : '16px',
+      borderStyle: isAdd ? 'dashed' : 'solid',
+      border: selected ? 'var(--selection)' : 'var(--separator)',
+      bg: selected ? 'var(--selection)' : 'transparent',
+      fg: selected ? 'var(--on-action-primary)' : 'var(--text)',
+      stateClass: p.state === 'pressed' ? 'is-pressed' : '',
+      href: p.href || '', hasHref: !!p.href,
+      // The link covers the label only, so the × stays its own target.
+      linkRight: showRemove ? '44px' : '0'
+    };
+  }
+}
+</script>
+</body>
+</html>
