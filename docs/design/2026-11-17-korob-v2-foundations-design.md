@@ -103,3 +103,7 @@ v2 now lives in code; code is the source of truth from here on.
 - Settings sub-pages use the settings stack's own header with the native back arrow.
 - Not ported: `+not-found.tsx`, `LoadingOverlay`, `features/debug` still use literal sizes.
 - Settings → Categories (added later) has no canvas board: it is composed only from `SettingsRow`, `Button`, `FieldInput` and `Sheet`.
+
+## Roles and canvas sync (2026-11-19)
+- `accent` carried four meanings, so `theme.ts` adds semantic roles via `roleSources`: `actionPrimary` / `onActionPrimary`, `actionSecondary` / `onActionSecondary`, `selection`, `focus`. All map to existing palette tokens: no visual change. Button, SettingsRow, Field and the paper date picker use them.
+- The canvas lives in the repo at `docs/design/canvas/`; its `tokens.css` is generated from `theme.ts` (`yarn design:tokens`), and canvas primitives follow code names (`docs/design/components.json`). Checked by the opt-in `yarn test:design`.

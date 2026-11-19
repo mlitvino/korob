@@ -49,6 +49,13 @@ This is the shared starting point for AI coding agents working in this repositor
 - Use `jest-expo` patterns already used under [frontend/src/components/__tests__](frontend/src/components/__tests__).
 - Add or update tests for behavioral changes; avoid shipping logic changes without coverage.
 
+## Design Canvas
+
+- [docs/design/canvas](docs/design/canvas) mirrors the claude.ai design canvas; see its README for the sync flow.
+- `theme.ts` is the source of truth. Use semantic roles (`actionPrimary`, `selection`, `focus`, …) where a component means a role; add a role to `roleSources` rather than reusing `accent` for a new meaning.
+- The canvas `tokens.css` is generated: run `yarn design:tokens` after changing `theme.ts`. Canvas primitives follow code names/props, listed in [docs/design/components.json](docs/design/components.json).
+- `yarn test:design` (or `make test-design`) checks both; it is opt-in and not part of `yarn test` or CI.
+
 ## Commits
 
 - `type(scope): short summary`, at most 50 characters; scope is the area changed (theme, ui, nav, home, form, settings, i18n, db, deps, proxy, ci). Types: feat, fix, refac, chore, test, docs.
