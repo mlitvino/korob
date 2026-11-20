@@ -1,4 +1,4 @@
-import { Alert, type AlertButton } from 'react-native';
+import { Alert } from 'react-native';
 import { fireEvent, screen, waitFor } from '@testing-library/react-native';
 
 import { CategoriesRepo } from '@/db/categories.repo';
@@ -48,39 +48,48 @@ describe('TransactionItem category name', () => {
   });
 });
 
-describe('TransactionItem delete', () => {
+describe('TransactionItem details sheet', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  const answerAlertWith = (style: AlertButton['style']) =>
-    jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
-      buttons?.find((button) => button.style === style)?.onPress?.();
-    });
-
   const rowCount = () => mockTestDb.sqlite
     .prepare('SELECT count(*) AS n FROM transactions').get() as { n: number };
 
-  it('deletes after a long press and confirmation', async () => {
-    await TransactionsRepo.insert(transaction('expense-food'));
-    answerAlertWith('destructive');
+  const openDetails = async () => {
     renderWithApp(<TransactionItem transaction={transaction('expense-food')} />);
-
     await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
-    fireEvent(screen.getByText('Food'), 'longPress');
+    fireEvent.press(screen.getByText('Food'));
+  };
+
+  it('opens on tap, titled with the amount and category', async () => {
+    await openDetails();
+
+    expect(screen.getByRole('header')).toHaveTextContent('\u2212€12.00 \u00b7 Food');
+    expect(screen.getByText('Delete')).toBeOnTheScreen();
+  });
+
+  it('deletes through the sheet after confirmation', async () => {
+    await TransactionsRepo.insert(transaction('expense-food'));
+    jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
+      buttons?.find((button) => button.style === 'destructive')?.onPress?.();
+    });
+    await openDetails();
+
+    fireEvent.press(screen.getByText('Delete'));
 
     await waitFor(() => expect(rowCount()).toEqual({ n: 0 }));
   });
 
-  it('keeps the transaction when cancelled', async () => {
+  it('keeps the transaction when the confirmation is cancelled', async () => {
     await TransactionsRepo.insert(transaction('expense-food'));
-    const alert = answerAlertWith('cancel');
-    renderWithApp(<TransactionItem transaction={transaction('expense-food')} />);
+    jest.spyOn(Alert, 'alert').mockImplementation(() => {});
+    await openDetails();
 
-    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
-    fireEvent(screen.getByText('Food'), 'longPress');
+    fireEvent.press(screen.getByText('Delete'));
 
-    expect(alert).toHaveBeenCalled();
+    expect(Alert.alert).toHaveBeenCalled();
     expect(rowCount()).toEqual({ n: 1 });
+    expect(screen.getByRole('header')).toBeOnTheScreen();
   });
 });

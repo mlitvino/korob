@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { Alert, Pressable, View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import Button from '@/components/Button';
+import Sheet from '@/components/Sheet';
 import type { Transaction } from '@/types/Transaction';
 import { opacity, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -20,6 +23,7 @@ type TransactionItemProps = {
 export function TransactionItem({ transaction }: TransactionItemProps) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const deleteTransaction = useDeleteTransaction();
   const categoryById = useCategoryById();
   const nameOf = useCategoryName();
@@ -36,6 +40,7 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
         text: t('transaction.delete'),
         style: 'destructive',
         onPress: () => {
+          setDetailsOpen(false);
           deleteTransaction.mutate(transaction.id, {
             onError: (error) => {
               console.warn('Failed to delete transaction', error);
@@ -47,34 +52,43 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
     ]);
   };
 
-  return (
-    <Pressable
-      onLongPress={confirmDelete}
-      accessibilityHint={t('transaction.deleteHint')}
-      accessibilityActions={[{ name: 'delete', label: t('transaction.delete') }]}
-      onAccessibilityAction={({ nativeEvent }) => {
-        if (nativeEvent.actionName === 'delete') {
-          confirmDelete();
-        }
-      }}
-      style={({ pressed }) => [
-        styles.transactionItem,
-        { backgroundColor: theme.canvas, opacity: pressed ? opacity.pressed : 1 },
-      ]}
-    >
-      <View style={styles.metaRow}>
-        <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
-          {formatTimeInput(occurredAt, uses12HourClock(i18n.language))}
-        </Text>
-        <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
-          {category ? nameOf(category) : ''}
-        </Text>
-      </View>
+  const amount = formatCurrency(transaction.amountCents, transaction.currency);
+  const amountText = `${valuePrefix}${amount}`;
+  const categoryText = category ? nameOf(category) : '';
 
-      <Text style={[typography.title, styles.valueText, { color: valueColor }]}>
-        {valuePrefix}{formatCurrency(transaction.amountCents, transaction.currency)}
-      </Text>
-    </Pressable>
+  return (
+    <>
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => setDetailsOpen(true)}
+        style={({ pressed }) => [
+          styles.transactionItem,
+          { backgroundColor: theme.canvas, opacity: pressed ? opacity.pressed : 1 },
+        ]}
+      >
+        <View style={styles.metaRow}>
+          <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
+            {formatTimeInput(occurredAt, uses12HourClock(i18n.language))}
+          </Text>
+          <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
+            {categoryText}
+          </Text>
+        </View>
+
+        <Text style={[typography.title, styles.valueText, { color: valueColor }]}>
+          {amountText}
+        </Text>
+      </Pressable>
+
+      <Sheet
+        visible={detailsOpen}
+        title={`${amountText} \u00b7 ${categoryText}`}
+        closeLabel={t('common.cancel')}
+        onClose={() => setDetailsOpen(false)}
+      >
+        <Button variant="secondary" label={t('transaction.delete')} onPress={confirmDelete} />
+      </Sheet>
+    </>
   );
 }
 
