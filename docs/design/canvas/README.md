@@ -3,7 +3,7 @@
 Repo copy of the Korob design canvas on claude.ai:
 https://claude.ai/artifact/YB7ayG42JFkvwBC7W9wys9 (private; share from its Share menu).
 
-`project/` holds the canvas's own files exactly as served:
+`project/` holds the canvas's own files exactly as served (`blocks/` holds source for shared script blocks, see below):
 
 - `canvas.json` — pages (Foundations / Components / Screens), board positions, spec notes.
 - `tokens.css` — **generated** from `frontend/src/constants/theme.ts`. Do not edit by hand.
@@ -20,20 +20,32 @@ https://claude.ai/artifact/YB7ayG42JFkvwBC7W9wys9 (private; share from its Share
 
 ```bash
 cd frontend
-yarn test:design      # tokens.css matches theme.ts; contracts hold; shared blocks identical
+yarn test:design      # tokens.css matches theme.ts; contracts hold; shared blocks identical;
+                      # product boards contain no hex or rgba() colors (flag artwork excepted)
 yarn design:tokens    # rewrite project/tokens.css from theme.ts
 yarn design:screens   # rewrite the shared script blocks in every board from blocks/
 ```
 
-`make test-design` runs the same checks from the repo root.
+`make test-design` runs the same checks from the repo root. Color contrast (text 4.5:1, amounts and non-text parts
+such as outlines, focus ring and selection mark 3:1) is checked by `frontend/src/constants/__tests__/theme.test.ts`,
+which runs in the normal `yarn test`.
 
 ## Sync flow
 
 1. Pull: download the current canvas files into `project/` (Claude: Artifact `read` with `paths`,
-   `out_dir` = this folder). Do this first, so edits made in the browser are not lost.
+   `out_dir` = this folder). Do this first, so edits made in the browser are not lost. Moving boards or notes
+   in the browser changes `canvas.json` (positions, order): adopt the live file before editing.
 2. Edit here (or change `theme.ts` and run `yarn design:tokens`).
 3. Publish from here (Claude: Artifact publish with `root` = this folder). A publish over a newer
    browser edit is refused; pull again and redo the change.
+
+## Screens page
+
+One titled lane per flow (Home & menu, Transactions, Add a transaction, Settings), entry screen on the left,
+overlays right after their parent, small "tap …" notes in the gaps. A new screen goes at the end of its lane.
+In a lane with several sub-flows (Settings) the sub-flows stay in one row, separated by a wider gap (400 px)
+than the boards inside a sub-flow (200 px).
+A note on the page lists flows that have no board yet; update it when one is added.
 
 ## Shared script blocks
 

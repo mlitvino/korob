@@ -2,6 +2,11 @@
 
 Canvas: https://claude.ai/artifact/YB7ayG42JFkvwBC7W9wys9 (page "Foundations v2")
 
+> **Status (2026-11-20):** historical record of the v2 work. The "v2" pages and `…V2` file names below no longer exist
+> (pages are Foundations / Components / Screens), `CircleButton` has one size (64), and `Colors` has 13 tokens.
+> Current rules live in `AGENTS.md`, `docs/design/canvas/README.md` and `frontend/src/constants/theme.ts`;
+> later decisions are in "Updates since 2026-11-19" at the end.
+
 ## Intent
 Make the current look consistent before any visual redesign. Keep the palette, the 4 themes
 (light, dark, black, black_yellow) and the layouts; fix the bugs the v1 canvas surfaced and replace
@@ -102,8 +107,19 @@ v2 now lives in code; code is the source of truth from here on.
 - Category sheet: RN `Modal` sliding from the bottom (no new dependency; `@expo/ui` BottomSheet's universal layer needs SDK 56).
 - Settings sub-pages use the settings stack's own header with the native back arrow.
 - Not ported: `+not-found.tsx`, `LoadingOverlay`, `features/debug` still use literal sizes.
-- Settings → Categories (added later) has no canvas board: it is composed only from `SettingsRow`, `Button`, `FieldInput` and `Sheet`.
+- Settings → Categories was added later; its canvas boards exist now (see "Updates since 2026-11-19").
 
 ## Roles and canvas sync (2026-11-19)
 - `accent` carried four meanings, so `theme.ts` adds semantic roles via `roleSources`: `actionPrimary` / `onActionPrimary`, `actionSecondary` / `onActionSecondary`, `selection`, `focus`. All map to existing palette tokens: no visual change. Button, SettingsRow, Field and the paper date picker use them.
 - The canvas lives in the repo at `docs/design/canvas/`; its `tokens.css` is generated from `theme.ts` (`yarn design:tokens`), and canvas primitives follow code names (`docs/design/components.json`). Checked by the opt-in `yarn test:design`.
+
+## Updates since 2026-11-19 (2026-11-20)
+Decisions made after the port; code and canvas both follow them.
+
+- **Tokens:** `outline` (border of unfilled chips and filter buttons, ≥3:1 on `background` and `canvas`; dark `#7e7d81`, light `#666666`, black `#686868`, black_yellow `#696545`) and one `scrim` (50% black behind sheets, dialogs and the drawer; the canvas had 40% in places). Light `canvas` changed from `#c8c4cc` to `#f2f0f5` so sheets, drawer and cards no longer read as a different white; cards in light are now closer to the white background (1.13:1), revisit with a mid value such as `#e6e3ec` if they get too faint.
+- **Contrast checks** in `constants/__tests__/theme.test.ts` (run in `yarn test`): text 4.5:1 on every surface, secondary text at 70%, amounts and fills 3:1, and non-text parts 3:1 (outline, focus ring, selection mark). Known and accepted: in the light theme income and expense are close for protanopia (CIE ΔE ≈ 6); amounts carry a +/− sign, so colour is never the only cue.
+- **Categories:** chips (`CategoryChip`, wrapping rows, × deletes, + adds, 2px outline) in the form's picker sheet and in Settings → Categories, one shared editor sheet (`CategoryEditorSheet`, `useCategoryEditor`). The picker's chip list scrolls past half the screen height. Deleting is a soft delete (`archivedAt`): the row is kept, past transactions keep the name, nothing can be restored; the UI says Delete. Reason: no dangling references, and a future sync can send "deleted" as a flag.
+- **Transactions:** tapping a row opens a details sheet (title "signed amount · category") whose only content for now is Delete, which asks for confirmation. The long-press delete and its hint were removed. More details are planned.
+- **Navigation:** the add-transaction back arrow returns to where it was opened from (Home if opened without history); the drawer no longer adds a second 12px of padding on top of the library's.
+- **Canvas structure:** the Screens page is arranged in titled flow lanes with sub-flows of one lane (Settings: Currency, Categories → editor, Appearance, Language) separated by a wider gap than the boards inside a sub-flow, small "tap …" notes between boards and a note listing screens not designed yet (income category picker, editor opened from the picker's + chip, empty Transactions list, invalid-amount error, date/time dialogs, loading screen). Script code every screen needs is kept once in `docs/design/canvas/blocks/` and written into the boards by `yarn design:screens`. `yarn test:design` also rejects raw hex/`rgba()` colours in product boards.
+- **Tests:** after-mutation assertions use `waitFor`, and "gone" assertions use `.not.toBeOnTheScreen()` (a failing `toBeNull()` on an element takes ~0.8 s and made tests flaky).

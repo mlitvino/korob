@@ -23,6 +23,17 @@ make front          # Expo dev server — scan the QR code with Expo Go (same Wi
 make tunnel         # Same, but reachable from any network
 ```
 
+## Design
+
+The design canvas lives on claude.ai and is mirrored in [docs/design/canvas](docs/design/canvas) (see its README for the sync flow). Colors come from `frontend/src/constants/theme.ts`; the canvas `tokens.css` is generated from it.
+
+```bash
+cd frontend
+yarn test:design    # canvas checks (opt-in, not part of yarn test or CI)
+yarn design:tokens  # regenerate canvas tokens.css from theme.ts
+yarn design:screens # regenerate the shared script blocks in the canvas boards
+```
+
 ## Server
 
 ```bash
