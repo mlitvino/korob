@@ -8,8 +8,8 @@
       "page": "screens",
       "title": "Add expense (modal)",
       "w": 412,
-      "x": 1476,
-      "y": 0
+      "x": 0,
+      "y": 1292
     },
     "AddIncome.dc.html": {
       "h": 892,
@@ -17,8 +17,8 @@
       "page": "screens",
       "title": "Add income (modal)",
       "w": 412,
-      "x": 2460,
-      "y": 0
+      "x": 1224,
+      "y": 1292
     },
     "Appearance.dc.html": {
       "h": 892,
@@ -26,8 +26,8 @@
       "page": "screens",
       "title": "Settings › Appearance",
       "w": 412,
-      "x": 492,
-      "y": 1012
+      "x": 2848,
+      "y": 2444
     },
     "BalancePanel.dc.html": {
       "h": 112,
@@ -51,8 +51,8 @@
       "page": "screens",
       "title": "Settings › Categories",
       "w": 412,
-      "x": 1968,
-      "y": 1012
+      "x": 1424,
+      "y": 2444
     },
     "CategoryChip.dc.html": {
       "h": 48,
@@ -68,8 +68,8 @@
       "page": "screens",
       "title": "Category editor sheet",
       "w": 412,
-      "x": 2460,
-      "y": 1012
+      "x": 2036,
+      "y": 2444
     },
     "CategoryEditorSheet.dc.html": {
       "h": 340,
@@ -85,8 +85,8 @@
       "page": "screens",
       "title": "Category picker sheet",
       "w": 412,
-      "x": 1968,
-      "y": 0
+      "x": 612,
+      "y": 1292
     },
     "CategorySheet.dc.html": {
       "h": 560,
@@ -150,8 +150,8 @@
       "page": "screens",
       "title": "Settings › Currency",
       "w": 412,
-      "x": 984,
-      "y": 1012
+      "x": 612,
+      "y": 2444
     },
     "Drawer.dc.html": {
       "h": 892,
@@ -159,8 +159,8 @@
       "page": "screens",
       "title": "Drawer open",
       "w": 412,
-      "x": 492,
-      "y": 0
+      "x": 612,
+      "y": 140
     },
     "DrawerItem.dc.html": {
       "h": 48,
@@ -192,8 +192,8 @@
       "page": "screens",
       "title": "Global theme (canvas preview)",
       "w": 412,
-      "x": 2952,
-      "y": 0
+      "x": 2848,
+      "y": 140
     },
     "Header.dc.html": {
       "h": 56,
@@ -209,8 +209,8 @@
       "page": "screens",
       "title": "Settings › Language",
       "w": 412,
-      "x": 1476,
-      "y": 1012
+      "x": 3660,
+      "y": 2444
     },
     "Main.dc.html": {
       "h": 892,
@@ -219,7 +219,7 @@
       "title": "Home",
       "w": 412,
       "x": 0,
-      "y": 0
+      "y": 140
     },
     "Settings.dc.html": {
       "h": 892,
@@ -228,7 +228,7 @@
       "title": "Settings",
       "w": 412,
       "x": 0,
-      "y": 1012
+      "y": 2444
     },
     "SettingsRow.dc.html": {
       "h": 56,
@@ -268,8 +268,8 @@
       "page": "screens",
       "title": "Transaction details sheet",
       "w": 412,
-      "x": 2952,
-      "y": 1012
+      "x": 2036,
+      "y": 140
     },
     "TransactionFilterBar.dc.html": {
       "h": 48,
@@ -301,8 +301,8 @@
       "page": "screens",
       "title": "Transactions",
       "w": 412,
-      "x": 984,
-      "y": 0
+      "x": 1424,
+      "y": 140
     },
     "Typography.dc.html": {
       "h": 1180,
@@ -337,7 +337,22 @@
     "specField",
     "specCategoryChip",
     "specCategoryEditorSheet",
-    "specTransactionSheet"
+    "specTransactionSheet",
+    "laneHome",
+    "laneTransactions",
+    "laneTools",
+    "laneAdd",
+    "laneSettings",
+    "missingScreens",
+    "trigMenu",
+    "trigRow",
+    "trigCategory",
+    "trigIncome",
+    "trigCurrency",
+    "trigCategories",
+    "trigEditor",
+    "trigAppearance",
+    "trigLanguage"
   ],
   "notes": {
     "primitives": {
@@ -453,26 +468,141 @@
       "w": 360,
       "x": 2504,
       "y": 4129
+    },
+    "missingScreens": {
+      "page": "screens",
+      "text": "Not designed yet\nIncome category picker · category editor opened from the picker’s + chip · empty Transactions list · invalid-amount error · date and time dialogs · loading screen",
+      "w": 600,
+      "x": 1836,
+      "y": 1292
+    },
+    "trigMenu": {
+      "page": "screens",
+      "text": "menu button →",
+      "w": 176,
+      "x": 424,
+      "y": 164
+    },
+    "trigRow": {
+      "page": "screens",
+      "text": "tap a row →",
+      "w": 176,
+      "x": 1848,
+      "y": 164
+    },
+    "trigCategory": {
+      "page": "screens",
+      "text": "tap the Category field →",
+      "w": 176,
+      "x": 424,
+      "y": 1316
+    },
+    "trigIncome": {
+      "page": "screens",
+      "text": "Add income opens from Home’s + button. No picker board yet.",
+      "w": 176,
+      "x": 1036,
+      "y": 1316
+    },
+    "trigCurrency": {
+      "page": "screens",
+      "text": "from Settings: tap Currency →",
+      "w": 176,
+      "x": 424,
+      "y": 2468
+    },
+    "trigCategories": {
+      "page": "screens",
+      "text": "from Settings: tap Categories →",
+      "w": 376,
+      "x": 1036,
+      "y": 2468
+    },
+    "trigEditor": {
+      "page": "screens",
+      "text": "tap a chip or + →",
+      "w": 176,
+      "x": 1848,
+      "y": 2468
+    },
+    "trigAppearance": {
+      "page": "screens",
+      "text": "from Settings: tap Appearance →",
+      "w": 376,
+      "x": 2460,
+      "y": 2468
+    },
+    "trigLanguage": {
+      "page": "screens",
+      "text": "from Settings: tap Language →",
+      "w": 376,
+      "x": 3272,
+      "y": 2468
+    },
+    "laneHome": {
+      "kind": "title1",
+      "maxW": 900,
+      "page": "screens",
+      "text": "Home & menu",
+      "w": 900,
+      "x": 0,
+      "y": 0
+    },
+    "laneTransactions": {
+      "kind": "title1",
+      "maxW": 900,
+      "page": "screens",
+      "text": "Transactions",
+      "w": 900,
+      "x": 1424,
+      "y": 0
+    },
+    "laneTools": {
+      "kind": "title1",
+      "maxW": 412,
+      "page": "screens",
+      "text": "Canvas preview",
+      "w": 412,
+      "x": 2848,
+      "y": 0
+    },
+    "laneAdd": {
+      "kind": "title1",
+      "maxW": 1636,
+      "page": "screens",
+      "text": "Add a transaction",
+      "w": 1636,
+      "x": 0,
+      "y": 1152
+    },
+    "laneSettings": {
+      "kind": "title1",
+      "maxW": 4072,
+      "page": "screens",
+      "text": "Settings",
+      "w": 4072,
+      "x": 0,
+      "y": 2304
     }
   },
   "order": [
     "Colors.dc.html",
     "Typography.dc.html",
     "SpacingRadius.dc.html",
-    "GlobalTheme.dc.html",
     "Main.dc.html",
     "Drawer.dc.html",
     "Transactions.dc.html",
+    "TransactionDetails.dc.html",
     "AddExpense.dc.html",
-    "AddIncome.dc.html",
     "CategoryPicker.dc.html",
+    "AddIncome.dc.html",
     "Settings.dc.html",
-    "Appearance.dc.html",
     "Currency.dc.html",
-    "Language.dc.html",
     "Categories.dc.html",
     "CategoryEditor.dc.html",
-    "TransactionDetails.dc.html",
+    "Appearance.dc.html",
+    "Language.dc.html",
+    "GlobalTheme.dc.html",
     "CircleButton.dc.html",
     "Button.dc.html",
     "TransactionFilterBar.dc.html",
