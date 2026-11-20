@@ -13,6 +13,7 @@
     "test:design": "jest -c jest.design.config.js",
     "design:tokens": "DESIGN_WRITE=1 jest -c jest.design.config.js tokens",
     "design:screens": "DESIGN_WRITE=1 jest -c jest.design.config.js screens",
+    "fingerprint": "expo-updates fingerprint:generate --platform android | node -e \"let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).hash))\"",
     "tsc": "tsc --noEmit",
     "migration:generate": "drizzle-kit generate --config ./src/db/drizzle.config.ts"
   },

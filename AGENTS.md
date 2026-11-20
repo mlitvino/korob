@@ -25,6 +25,7 @@ This is the shared starting point for AI coding agents working in this repositor
   - `yarn test`
   - `yarn lint`
   - `yarn tsc`
+  - `yarn fingerprint` to print the Android native fingerprint (see Over-the-Air Updates)
 
 ## Architecture Boundaries
 
@@ -51,6 +52,16 @@ This is the shared starting point for AI coding agents working in this repositor
 - Add or update tests for behavioral changes; avoid shipping logic changes without coverage.
 - Theme colors are checked by `constants/__tests__/theme.test.ts` (text 4.5:1 on every surface, secondary text, amounts and non-text parts 3:1): a new color or theme must pass it.
 - Assert that something is gone with `expect(queryBy…(…)).not.toBeOnTheScreen()`, never `.toBeNull()` on an element: a failing `toBeNull()` pretty-prints the whole React instance (~0.8 s), which blocks the event loop inside `waitFor` and makes tests flaky. After a mutation, wait for the result with `waitFor`; React gets refreshed query data a tick after the mutation promise resolves.
+
+## Over-the-Air Updates (EAS Update)
+
+- Installed apps get JavaScript-only changes with `eas update` (channels `preview` and `production` in [frontend/eas.json](frontend/eas.json); `runtimeVersion` policy `fingerprint` in [frontend/app.json](frontend/app.json)). A change that alters the native fingerprint cannot be delivered that way: it needs a new build (`make preview` or a production build), and builds made before it stop receiving updates.
+- **Warn the user, in the final message and without being asked,** when a change needs a new build. That is any change that:
+  - adds, removes or upgrades a dependency with native code (anything autolinked: `expo-*`, `react-native-*`, `@expo/*`), or upgrades the Expo SDK or React Native;
+  - edits `plugins` or a native field in `app.json` (icon, splash, permissions, `package` / `bundleIdentifier`, `newArchEnabled`, `edgeToEdgeEnabled`, `updates`, `runtimeVersion`) or `eas.json` build profiles;
+  - edits the `scripts` section of `frontend/package.json`: Expo hashes it into the fingerprint, so even adding a yarn script changes the runtime version.
+- To check, run `yarn fingerprint` (from `frontend/`) before and after the change: a different hash means a new build is required.
+- Database migrations ship inside the JavaScript bundle: an update that adds one changes the database on every phone that installs it, and another update cannot undo that. Say so when adding a migration, and test it on the `preview` channel first.
 
 ## Design Canvas
 
