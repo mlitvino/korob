@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Transaction details</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="{{theme}}" data-font-scale="{{fontScale}}" style="width: {{width}}px; height: 892px; position: relative; overflow: hidden; font-family: Roboto, system-ui, sans-serif; background: var(--background); color: var(--text)">
+  <div aria-hidden="true" style="position: absolute; inset: 0">
+    <dc-import name="Transactions" theme="{{theme}}" lang="{{lang}}" width="{{widthStr}}" font-scale="{{fontScale}}" hint-size="412px,892px"></dc-import>
+  </div>
+  <a href="Transactions.dc.html" aria-label="Close" style="position: absolute; inset: 0; background: var(--scrim)"></a>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0">
+    <dc-import name="TransactionSheet" kind="expense" amount="€42.00" category="{{category}}" lang="{{lang}}" href="Transactions.dc.html" hint-size="100%,152px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["global","dark","light","black","black_yellow"],"default":"global"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
+var THEMES = ['dark', 'light', 'black', 'black_yellow'];
+class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
+  componentDidMount() {
+    // Canvas preview: follow the Global theme board (shared per-app storage).
+    var self = this, read = function () {
+      var v = null;
+      try { v = localStorage.getItem('korob-canvas-global-theme'); } catch (e) { v = null; }
+      return ['dark', 'light', 'black', 'black_yellow'].indexOf(v) >= 0 ? v : 'dark';
+    };
+    this.onGlobal = function () { self.setState({ globalTheme: read() }); };
+    this.onStorage = function (e) { if (e.key === 'korob-canvas-global-theme') self.onGlobal(); };
+    window.addEventListener('storage', this.onStorage);
+    try { this.bc = new BroadcastChannel('korob-canvas-global-theme'); this.bc.onmessage = this.onGlobal; } catch (e) { this.bc = null; }
+    this.onGlobal();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.onStorage);
+    if (this.bc) this.bc.close();
+  }
+  globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
+  renderVals() {
+    var p = this.props;
+    return {
+      theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : this.globalTheme(),
+      lang: ['en', 'fi', 'ru'].indexOf(p.lang) >= 0 ? p.lang : 'en',
+      width: p.width === '360' ? 360 : 412, widthStr: p.width === '360' ? '360' : '412',
+      fontScale: p.fontScale === '1.3' ? '1.3' : '1',
+      category: ({ en: 'Food', fi: 'Ruoka', ru: 'Еда' })[p.lang] || 'Food'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -52,7 +52,7 @@
     "TransactionItem": {
       "code": ["frontend/src/features/transaction-list/components/TransactionItem.tsx"],
       "shared": [],
-      "canvasOnly": ["kind", "time", "category", "amount"],
+      "canvasOnly": ["kind", "time", "category", "amount", "href"],
       "codeOnly": ["transaction"]
     },
     "FieldInput": {
@@ -89,7 +89,13 @@
       "code": ["frontend/src/features/categories/CategoryEditorSheet.tsx"],
       "shared": ["mode", "name", "error"],
       "canvasOnly": ["lang", "href"],
-      "codeOnly": ["visible", "saving", "onChangeName", "onSave", "onArchive", "onClose"]
+      "codeOnly": ["visible", "saving", "onChangeName", "onSave", "onDelete", "onClose"]
+    },
+    "TransactionSheet": {
+      "code": ["frontend/src/features/transaction-list/components/TransactionItem.tsx", "frontend/src/components/Sheet.tsx"],
+      "shared": [],
+      "canvasOnly": ["kind", "amount", "category", "lang", "href"],
+      "codeOnly": ["visible", "title", "closeLabel", "onClose", "children"]
     }
   }
 }

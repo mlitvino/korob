@@ -45,6 +45,40 @@
       "x": 160,
       "y": 3080
     },
+    "Categories.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Settings › Categories",
+      "w": 412,
+      "x": 1968,
+      "y": 1012
+    },
+    "CategoryChip.dc.html": {
+      "h": 48,
+      "page": "components",
+      "title": "CategoryChip",
+      "w": 328,
+      "x": 1664,
+      "y": 3957
+    },
+    "CategoryEditor.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Category editor sheet",
+      "w": 412,
+      "x": 2460,
+      "y": 1012
+    },
+    "CategoryEditorSheet.dc.html": {
+      "h": 340,
+      "page": "components",
+      "title": "CategoryEditorSheet",
+      "w": 360,
+      "x": 2084,
+      "y": 3957
+    },
     "CategoryPicker.dc.html": {
       "h": 892,
       "is_interactive": true,
@@ -53,6 +87,14 @@
       "w": 412,
       "x": 1968,
       "y": 0
+    },
+    "CategorySheet.dc.html": {
+      "h": 560,
+      "page": "components",
+      "title": "CategorySheet",
+      "w": 360,
+      "x": 1224,
+      "y": 3957
     },
     "CircleButton.dc.html": {
       "h": 64,
@@ -76,7 +118,7 @@
       "title": "Buttons & filters",
       "w": 1784,
       "x": 1864,
-      "y": 0
+      "y": -661
     },
     "CompData.dc.html": {
       "h": 1140,
@@ -84,7 +126,7 @@
       "title": "Totals, balance & transactions",
       "w": 1784,
       "x": 0,
-      "y": 1000
+      "y": 339
     },
     "CompForms.dc.html": {
       "h": 2260,
@@ -92,7 +134,7 @@
       "title": "Fields, settings rows & sheet",
       "w": 1784,
       "x": 1864,
-      "y": 1000
+      "y": 339
     },
     "CompNavigation.dc.html": {
       "h": 700,
@@ -100,7 +142,7 @@
       "title": "Navigation",
       "w": 1784,
       "x": 0,
-      "y": 0
+      "y": -661
     },
     "Currency.dc.html": {
       "h": 892,
@@ -127,6 +169,31 @@
       "w": 280,
       "x": 1416,
       "y": 3080
+    },
+    "FieldInput.dc.html": {
+      "h": 64,
+      "page": "components",
+      "title": "FieldInput",
+      "w": 328,
+      "x": 408,
+      "y": 3957
+    },
+    "FieldPicker.dc.html": {
+      "h": 64,
+      "page": "components",
+      "title": "FieldPicker",
+      "w": 328,
+      "x": 408,
+      "y": 4053
+    },
+    "GlobalTheme.dc.html": {
+      "h": 420,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Global theme (canvas preview)",
+      "w": 412,
+      "x": 2952,
+      "y": 0
     },
     "Header.dc.html": {
       "h": 56,
@@ -168,8 +235,8 @@
       "page": "components",
       "title": "SettingsRow",
       "w": 328,
-      "x": 3816,
-      "y": 3080
+      "x": 816,
+      "y": 3957
     },
     "SpacingRadius.dc.html": {
       "h": 1180,
@@ -187,13 +254,46 @@
       "x": 1776,
       "y": 3080
     },
+    "TransactionDateSeparator.dc.html": {
+      "h": 40,
+      "page": "components",
+      "title": "TransactionDateSeparator",
+      "w": 328,
+      "x": 2592,
+      "y": 3080
+    },
+    "TransactionDetails.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Transaction details sheet",
+      "w": 412,
+      "x": 2952,
+      "y": 1012
+    },
+    "TransactionFilterBar.dc.html": {
+      "h": 48,
+      "page": "components",
+      "title": "TransactionFilterBar",
+      "w": 328,
+      "x": 568,
+      "y": 3080
+    },
     "TransactionItem.dc.html": {
       "h": 80,
       "page": "components",
       "title": "TransactionItem",
       "w": 328,
-      "x": 3000,
-      "y": 3080
+      "x": 0,
+      "y": 3957
+    },
+    "TransactionSheet.dc.html": {
+      "h": 152,
+      "page": "components",
+      "title": "TransactionSheet",
+      "w": 360,
+      "x": 2504,
+      "y": 3957
     },
     "Transactions.dc.html": {
       "h": 892,
@@ -211,89 +311,6 @@
       "w": 1000,
       "x": 1400,
       "y": 0
-    },
-    "TransactionFilterBar.dc.html": {
-      "h": 48,
-      "page": "components",
-      "title": "TransactionFilterBar",
-      "w": 328,
-      "x": 568,
-      "y": 3080
-    },
-    "TransactionDateSeparator.dc.html": {
-      "h": 40,
-      "page": "components",
-      "title": "TransactionDateSeparator",
-      "w": 328,
-      "x": 2592,
-      "y": 3080
-    },
-    "CategorySheet.dc.html": {
-      "h": 560,
-      "page": "components",
-      "title": "CategorySheet",
-      "w": 360,
-      "x": 4224,
-      "y": 3080
-    },
-    "FieldInput.dc.html": {
-      "h": 64,
-      "page": "components",
-      "title": "FieldInput",
-      "w": 328,
-      "x": 3408,
-      "y": 3080
-    },
-    "FieldPicker.dc.html": {
-      "h": 64,
-      "page": "components",
-      "title": "FieldPicker",
-      "w": 328,
-      "x": 3408,
-      "y": 3176
-    },
-    "GlobalTheme.dc.html": {
-      "h": 420,
-      "is_interactive": true,
-      "page": "screens",
-      "title": "Global theme (canvas preview)",
-      "w": 412,
-      "x": 2952,
-      "y": 0
-    },
-    "CategoryChip.dc.html": {
-      "h": 48,
-      "page": "components",
-      "title": "CategoryChip",
-      "w": 328,
-      "x": 4664,
-      "y": 3080
-    },
-    "Categories.dc.html": {
-      "h": 892,
-      "is_interactive": true,
-      "page": "screens",
-      "title": "Settings › Categories",
-      "w": 412,
-      "x": 1968,
-      "y": 1012
-    },
-    "CategoryEditor.dc.html": {
-      "h": 892,
-      "is_interactive": true,
-      "page": "screens",
-      "title": "Category editor sheet",
-      "w": 412,
-      "x": 2460,
-      "y": 1012
-    },
-    "CategoryEditorSheet.dc.html": {
-      "h": 340,
-      "page": "components",
-      "title": "CategoryEditorSheet",
-      "w": 360,
-      "x": 5084,
-      "y": 3080
     }
   },
   "createdOnFiles": {
@@ -319,7 +336,8 @@
     "specCategorySheet",
     "specField",
     "specCategoryChip",
-    "specCategoryEditorSheet"
+    "specCategoryEditorSheet",
+    "specTransactionSheet"
   ],
   "notes": {
     "primitives": {
@@ -345,6 +363,27 @@
       "x": 160,
       "y": 3176
     },
+    "specCategoryChip": {
+      "page": "components",
+      "text": "CategoryChip\nProps: variant category | add · label · selected · removable (× deletes) · state default | pressed · lang · href (canvas)\nWidth fits the label, max = container; long names end with …\nTokens: selection + on-action-primary (selected), outline, text, radius-full, type-body, touch-target\nStates: is-pressed\nCode: features/categories/CategoryChip.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 1664,
+      "y": 4045
+    },
+    "specCategoryEditorSheet": {
+      "page": "components",
+      "text": "CategoryEditorSheet\nCanvas-only composite: Sheet + FieldInput + Buttons in the category editor\nProps: mode add | edit · name · error none | empty | duplicate · lang · href (canvas)\nUses: FieldInput (error), Button primary + secondary (Delete, edit only)\nTokens: canvas, text, radius-lg, type-title\nCode: features/categories/CategoryEditorSheet.tsx\nContract: docs/design/components.json",
+      "w": 360,
+      "x": 2084,
+      "y": 4357
+    },
+    "specCategorySheet": {
+      "page": "components",
+      "text": "CategorySheet\nCanvas-only composite: code Sheet + category options in TransactionForm\nProps: kind expense | income · selected (category key) · lang · href\nUses: CategoryChip × N (wrapping rows, × deletes) + add chip, Button primary\nChips scroll past half the screen height; Done stays visible\nProps also: categories some | none (canvas tweak; none = only the + chip)\nTokens: canvas, text, radius-lg, type-title\nCode: components/Sheet.tsx, features/transaction-form/components/TransactionForm.tsx\nContract: docs/design/components.json",
+      "w": 360,
+      "x": 1224,
+      "y": 4557
+    },
     "specCircleButton": {
       "page": "components",
       "text": "CircleButton\nkind income | expense\n64 · icon 32\nstate · href (canvas)\nTokens: income / expense, contrast-text\nCode: components/CircleButton.tsx\nContract: docs/design/components.json",
@@ -359,6 +398,13 @@
       "x": 1416,
       "y": 3168
     },
+    "specField": {
+      "page": "components",
+      "text": "FieldInput · FieldPicker\nInput: label · placeholder · value · error (message, expense color) · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 408,
+      "y": 4157
+    },
     "specHeader": {
       "page": "components",
       "text": "Header\nProps: variant drawer | back · title · href (canvas) · accessibilityLabel\nTokens: elevated, text, type-title, touch-target, radius-full\nCode: navigator header (app/(drawer)/_layout.tsx) + components/HeaderLeft.tsx\nContract: docs/design/components.json",
@@ -370,8 +416,8 @@
       "page": "components",
       "text": "SettingsRow\nProps: variant nav | value | option · position only | first | middle | last · selected · leading none | flag-en | flag-fi | flag-ru · label · value · state / href (canvas)\nTokens: surface, text, separator, selection (role, check), radius-md, type-body / body-sm\nStates: is-pressed, is-secondary\nCode: components/SettingsRow.tsx\nContract: docs/design/components.json",
       "w": 328,
-      "x": 3816,
-      "y": 3176
+      "x": 816,
+      "y": 4053
     },
     "specTotalsCard": {
       "page": "components",
@@ -380,12 +426,12 @@
       "x": 1776,
       "y": 3264
     },
-    "specTransactionItem": {
+    "specTransactionDateSeparator": {
       "page": "components",
-      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nGesture: long press → Delete transaction? Cancel / Delete (native dialog, not drawn)\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
+      "text": "TransactionDateSeparator\nProps: label (canvas; code takes occurredAt and formats it)\nTokens: separator, text, type-caption\nStates: is-secondary\nCode: features/transaction-list/components/TransactionDateSeparator.tsx\nContract: docs/design/components.json",
       "w": 328,
-      "x": 3000,
-      "y": 3200
+      "x": 2592,
+      "y": 3160
     },
     "specTransactionFilterBar": {
       "page": "components",
@@ -394,46 +440,39 @@
       "x": 568,
       "y": 3168
     },
-    "specTransactionDateSeparator": {
+    "specTransactionItem": {
       "page": "components",
-      "text": "TransactionDateSeparator\nProps: label (canvas; code takes occurredAt and formats it)\nTokens: separator, text, type-caption\nStates: is-secondary\nCode: features/transaction-list/components/TransactionDateSeparator.tsx\nContract: docs/design/components.json",
+      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added) · href (canvas)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nTap: opens the details sheet (TransactionSheet), the only way to delete\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
       "w": 328,
-      "x": 2592,
-      "y": 3160
+      "x": 0,
+      "y": 4077
     },
-    "specCategorySheet": {
+    "specTransactionSheet": {
       "page": "components",
-      "text": "CategorySheet\nCanvas-only composite: code Sheet + category options in TransactionForm\nProps: kind expense | income · selected (category key) · lang · href\nUses: CategoryChip × N (wrapping rows, × archives) + add chip, Button primary\nChips scroll past half the screen height; Done stays visible\nProps also: categories some | none (canvas tweak; none = only the + chip)\nTokens: canvas, text, radius-lg, type-title\nCode: components/Sheet.tsx, features/transaction-form/components/TransactionForm.tsx\nContract: docs/design/components.json",
+      "text": "TransactionSheet\nCanvas-only composite: Sheet + Delete button, opened by tapping a transaction row\nProps: kind income | expense · amount · category · lang · href (canvas)\nTitle: signed amount · category; body is only Delete for now (asks to confirm)\nTokens: canvas, text, radius-lg, type-title\nCode: features/transaction-list/components/TransactionItem.tsx, components/Sheet.tsx\nContract: docs/design/components.json",
       "w": 360,
-      "x": 4224,
-      "y": 3680
-    },
-    "specField": {
-      "page": "components",
-      "text": "FieldInput · FieldPicker\nInput: label · placeholder · value · error (message, expense color) · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
-      "w": 328,
-      "x": 3408,
-      "y": 3280
-    },
-    "specCategoryChip": {
-      "page": "components",
-      "x": 4664,
-      "y": 3168,
-      "w": 328,
-      "text": "CategoryChip\nProps: variant category | add · label · selected · removable (× archives) · state default | pressed · lang · href (canvas)\nWidth fits the label, max = container; long names end with …\nTokens: selection + on-action-primary (selected), outline, text, radius-full, type-body, touch-target\nStates: is-pressed\nCode: features/categories/CategoryChip.tsx\nContract: docs/design/components.json"
-    },
-    "specCategoryEditorSheet": {
-      "page": "components",
-      "x": 5084,
-      "y": 3480,
-      "w": 360,
-      "text": "CategoryEditorSheet\nCanvas-only composite: Sheet + FieldInput + Buttons in the category editor\nProps: mode add | edit · name · error none | empty | duplicate · lang · href (canvas)\nUses: FieldInput (error), Button primary + secondary (Archive, edit only)\nTokens: canvas, text, radius-lg, type-title\nCode: features/categories/CategoryEditorSheet.tsx\nContract: docs/design/components.json"
+      "x": 2504,
+      "y": 4129
     }
   },
   "order": [
     "Colors.dc.html",
     "Typography.dc.html",
     "SpacingRadius.dc.html",
+    "GlobalTheme.dc.html",
+    "Main.dc.html",
+    "Drawer.dc.html",
+    "Transactions.dc.html",
+    "AddExpense.dc.html",
+    "AddIncome.dc.html",
+    "CategoryPicker.dc.html",
+    "Settings.dc.html",
+    "Appearance.dc.html",
+    "Currency.dc.html",
+    "Language.dc.html",
+    "Categories.dc.html",
+    "CategoryEditor.dc.html",
+    "TransactionDetails.dc.html",
     "CircleButton.dc.html",
     "Button.dc.html",
     "TransactionFilterBar.dc.html",
@@ -449,23 +488,11 @@
     "CategoryChip.dc.html",
     "CategorySheet.dc.html",
     "CategoryEditorSheet.dc.html",
+    "TransactionSheet.dc.html",
     "CompNavigation.dc.html",
     "CompButtons.dc.html",
     "CompData.dc.html",
-    "CompForms.dc.html",
-    "GlobalTheme.dc.html",
-    "Main.dc.html",
-    "Drawer.dc.html",
-    "Transactions.dc.html",
-    "AddExpense.dc.html",
-    "AddIncome.dc.html",
-    "CategoryPicker.dc.html",
-    "Settings.dc.html",
-    "Appearance.dc.html",
-    "Currency.dc.html",
-    "Language.dc.html",
-    "Categories.dc.html",
-    "CategoryEditor.dc.html"
+    "CompForms.dc.html"
   ],
   "pages": [
     {

@@ -21,16 +21,16 @@ body{margin:0}
     <dc-import name="FieldInput" state="focused" label="{{s.name}}" placeholder="{{s.name}}" value="{{name}}" error="{{error}}" hint-size="100%,64px"></dc-import>
     <dc-import name="Button" variant="primary" size="lg" icon="" label="{{s.save}}" href="{{href}}" hint-size="100%,56px"></dc-import>
     <sc-if value="{{isEdit}}" hint-placeholder-val="{{ true }}">
-      <dc-import name="Button" variant="secondary" size="lg" icon="" label="{{s.archive}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+      <dc-import name="Button" variant="secondary" size="lg" icon="" label="{{s.delete}}" href="{{href}}" hint-size="100%,56px"></dc-import>
     </sc-if>
   </div>
 </section>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["add","edit"],"default":"edit"},"name":{"editor":"text","default":"Food"},"error":{"editor":"enum","options":["none","empty","duplicate"],"default":"none"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":340}}'>
 var STR = {
-  en: { newTitle: 'New category', editTitle: 'Edit category', name: 'Name', save: 'Save', archive: 'Archive', empty: 'Enter a name', duplicate: 'A category with this name already exists' },
-  fi: { newTitle: 'Uusi kategoria', editTitle: 'Muokkaa kategoriaa', name: 'Nimi', save: 'Tallenna', archive: 'Arkistoi', empty: 'Anna nimi', duplicate: 'Samanniminen kategoria on jo olemassa' },
-  ru: { newTitle: 'Новая категория', editTitle: 'Изменить категорию', name: 'Название', save: 'Сохранить', archive: 'В архив', empty: 'Введите название', duplicate: 'Категория с таким названием уже есть' }
+  en: { newTitle: 'New category', editTitle: 'Edit category', name: 'Name', save: 'Save', delete: 'Delete', empty: 'Enter a name', duplicate: 'A category with this name already exists' },
+  fi: { newTitle: 'Uusi kategoria', editTitle: 'Muokkaa kategoriaa', name: 'Nimi', save: 'Tallenna', delete: 'Poista', empty: 'Anna nimi', duplicate: 'Samanniminen kategoria on jo olemassa' },
+  ru: { newTitle: 'Новая категория', editTitle: 'Изменить категорию', name: 'Название', save: 'Сохранить', delete: 'Удалить', empty: 'Введите название', duplicate: 'Категория с таким названием уже есть' }
 };
 class Component extends DCLogic {
   renderVals() {

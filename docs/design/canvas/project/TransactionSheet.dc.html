@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Transaction sheet</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<section role="dialog" aria-label="{{title}}" style="width: 100%; box-sizing: border-box; padding: 8px 16px 16px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; flex-direction: column; font-family: Roboto, system-ui, sans-serif; background: var(--canvas); color: var(--text)">
+  <div aria-hidden="true" style="align-self: center; width: 32px; height: 4px; border-radius: var(--radius-full); opacity: 0.4; background: var(--text)"></div>
+  <h2 style="margin: 0; padding: 12px 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 700">{{title}}</h2>
+  <dc-import name="Button" variant="secondary" size="lg" icon="" label="{{delete}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"amount":{"editor":"text","default":"€42.00"},"category":{"editor":"text","default":"Food"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":152}}'>
+var DELETE = { en: 'Delete', fi: 'Poista', ru: 'Удалить' };
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    var lang = DELETE[p.lang] ? p.lang : 'en';
+    var sign = p.kind === 'income' ? '+' : '\u2212';
+    return {
+      title: sign + (p.amount ?? '€42.00') + ' \u00b7 ' + (p.category ?? 'Food'),
+      delete: DELETE[lang], href: p.href || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

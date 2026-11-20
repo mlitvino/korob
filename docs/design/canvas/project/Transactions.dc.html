@@ -21,7 +21,7 @@ body{margin:0}
     <div style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 8px">
       <sc-for list="{{rows}}" as="row" hint-placeholder-count="8">
         <dc-import name="TransactionDateSeparator" label="{{row.date}}" hint-size="100%,24px"></dc-import>
-        <dc-import name="TransactionItem" kind="{{row.kind}}" time="{{row.time}}" category="{{row.category}}" amount="{{row.amount}}" hint-size="100%,76px"></dc-import>
+        <dc-import name="TransactionItem" kind="{{row.kind}}" time="{{row.time}}" category="{{row.category}}" amount="{{row.amount}}" href="TransactionDetails.dc.html" hint-size="100%,76px"></dc-import>
       </sc-for>
     </div>
   </main>
