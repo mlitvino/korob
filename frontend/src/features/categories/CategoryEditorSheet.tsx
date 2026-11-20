@@ -7,14 +7,14 @@ import type { CategoryNameError } from '@/features/categories/validateCategoryNa
 
 type Props = {
   visible: boolean;
-  /** add: empty name, no Archive button; edit: renaming, with Archive. */
+  /** add: empty name, no Delete button; edit: renaming, with Delete. */
   mode: 'add' | 'edit';
   name: string;
   error: CategoryNameError | null;
   saving: boolean;
   onChangeName: (name: string) => void;
   onSave: () => void;
-  onArchive: () => void;
+  onDelete: () => void;
   onClose: () => void;
 };
 
@@ -23,7 +23,7 @@ const ERROR_KEYS = {
   duplicate: 'categories.errorDuplicate',
 } as const satisfies Record<CategoryNameError, string>;
 
-/** Sheet to name a new category or rename / archive an existing one. */
+/** Sheet to name a new category or rename / delete an existing one. */
 export default function CategoryEditorSheet({
   visible,
   mode,
@@ -32,7 +32,7 @@ export default function CategoryEditorSheet({
   saving,
   onChangeName,
   onSave,
-  onArchive,
+  onDelete,
   onClose,
 }: Props) {
   const { t } = useTranslation();
@@ -55,7 +55,7 @@ export default function CategoryEditorSheet({
       />
       <Button label={t('categories.save')} disabled={saving} onPress={onSave} />
       {mode === 'edit' ? (
-        <Button variant="secondary" label={t('categories.archive')} onPress={onArchive} />
+        <Button variant="secondary" label={t('categories.delete')} onPress={onDelete} />
       ) : null}
     </Sheet>
   );

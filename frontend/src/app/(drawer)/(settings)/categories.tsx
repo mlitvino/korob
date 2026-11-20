@@ -28,7 +28,7 @@ export default function Categories() {
             <CategoryChipList
               type={type}
               onPress={editor.openEdit}
-              onRemove={editor.confirmArchive}
+              onRemove={editor.confirmDelete}
               onAdd={() => editor.openAdd(type)}
             />
           </View>

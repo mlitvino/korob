@@ -125,7 +125,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
             type={transactionType}
             selectedId={categoryId}
             onPress={(category) => setCategoryId(category.id)}
-            onRemove={editor.confirmArchive}
+            onRemove={editor.confirmDelete}
             onAdd={() => {
               setShowCategoryPicker(false);
               editor.openAdd(transactionType);

@@ -38,7 +38,7 @@ export default function CategoryChipList({ type, selectedId, onPress, onRemove, 
             pickable={selectedId !== undefined}
             onPress={() => onPress(category)}
             onRemove={() => onRemove(category)}
-            removeLabel={t('categories.archiveLabel', { name })}
+            removeLabel={t('categories.deleteLabel', { name })}
           />
         );
       })}

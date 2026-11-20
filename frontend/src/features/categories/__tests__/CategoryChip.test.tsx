@@ -48,10 +48,10 @@ describe('CategoryChip', () => {
         pickable
         onPress={onPress}
         onRemove={onRemove}
-        removeLabel="Archive Food"
+        removeLabel="Delete Food"
       />,
     );
-    fireEvent.press(screen.getByRole('button', { name: 'Archive Food' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Delete Food' }));
     expect(onRemove).toHaveBeenCalledTimes(1);
     expect(onPress).not.toHaveBeenCalled();
     fireEvent.press(screen.getByRole('radio', { name: 'Food' }));

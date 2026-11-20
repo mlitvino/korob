@@ -25,7 +25,7 @@ type Options = {
   onCreated?: (category: Category) => void;
 };
 
-/** Add/rename sheet and archive confirmation shared by Settings and the form. */
+/** Add/rename sheet and delete confirmation shared by Settings and the form. */
 export function useCategoryEditor({ onCreated }: Options = {}) {
   const { t } = useTranslation();
   const nameOf = useCategoryName();
@@ -71,14 +71,14 @@ export function useCategoryEditor({ onCreated }: Options = {}) {
     }
   };
 
-  const confirmArchive = (category: Category) => {
+  const confirmDelete = (category: Category) => {
     Alert.alert(
-      t('categories.archiveTitle', { name: nameOf(category) }),
-      t('categories.archiveMessage'),
+      t('categories.deleteTitle', { name: nameOf(category) }),
+      t('categories.deleteMessage'),
       [
         { text: t('common.cancel'), style: 'cancel' },
         {
-          text: t('categories.archive'),
+          text: t('categories.delete'),
           style: 'destructive',
           onPress: () => {
             archiveCategory.mutate(category.id);
@@ -103,9 +103,9 @@ export function useCategoryEditor({ onCreated }: Options = {}) {
         setError(null);
       }}
       onSave={() => void save()}
-      onArchive={() => {
+      onDelete={() => {
         if (editor?.mode === 'edit') {
-          confirmArchive(editor.category);
+          confirmDelete(editor.category);
         }
       }}
       onClose={close}
@@ -115,7 +115,7 @@ export function useCategoryEditor({ onCreated }: Options = {}) {
   return {
     openAdd: (type: TransactionType) => open({ mode: 'add', type }),
     openEdit: (category: Category) => open({ mode: 'edit', category }),
-    confirmArchive,
+    confirmDelete,
     sheet,
   };
 }

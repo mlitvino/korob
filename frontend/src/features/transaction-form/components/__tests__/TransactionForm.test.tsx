@@ -103,7 +103,7 @@ describe('TransactionForm categories', () => {
     expect(screen.getByRole('button', { name: 'Add category' })).toBeOnTheScreen();
   });
 
-  it('archives from the picker and moves off the archived selection', async () => {
+  it('deletes from the picker and moves off the deleted selection', async () => {
     jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
       buttons?.find((button) => button.style === 'destructive')?.onPress?.();
     });
@@ -111,21 +111,21 @@ describe('TransactionForm categories', () => {
 
     await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
     fireEvent.press(screen.getByRole('button', { name: 'Category: Food' }));
-    fireEvent.press(screen.getByRole('button', { name: 'Archive Food' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Delete Food' }));
 
     await waitFor(() => expect(
       screen.getByRole('button', { name: 'Category: Transport' }),
     ).toBeOnTheScreen());
-    expect(screen.queryByRole('button', { name: 'Archive Food' })).not.toBeOnTheScreen();
+    expect(screen.queryByRole('button', { name: 'Delete Food' })).not.toBeOnTheScreen();
   });
 
-  it('keeps a category when the archive is cancelled', async () => {
+  it('keeps a category when the delete is cancelled', async () => {
     jest.spyOn(Alert, 'alert').mockImplementation(() => {});
     renderWithApp(<TransactionForm transactionType="expense" onSubmit={jest.fn()} />);
 
     await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
     fireEvent.press(screen.getByRole('button', { name: 'Category: Food' }));
-    fireEvent.press(screen.getByRole('button', { name: 'Archive Food' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Delete Food' }));
 
     expect(Alert.alert).toHaveBeenCalled();
     expect(screen.getByRole('button', { name: 'Category: Food' })).toBeOnTheScreen();

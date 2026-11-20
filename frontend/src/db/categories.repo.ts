@@ -93,6 +93,7 @@ export const CategoriesRepo = {
     });
   },
 
+  /** Soft delete: the row stays so past transactions keep their category name. */
   async archive(id: string): Promise<void> {
     await db
       .update(categories)

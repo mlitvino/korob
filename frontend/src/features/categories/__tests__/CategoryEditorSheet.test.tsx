@@ -7,7 +7,7 @@ const renderSheet = (props: Partial<Parameters<typeof CategoryEditorSheet>[0]> =
   const handlers = {
     onChangeName: jest.fn(),
     onSave: jest.fn(),
-    onArchive: jest.fn(),
+    onDelete: jest.fn(),
     onClose: jest.fn(),
   };
   renderWithApp(
@@ -25,17 +25,17 @@ const renderSheet = (props: Partial<Parameters<typeof CategoryEditorSheet>[0]> =
 };
 
 describe('CategoryEditorSheet', () => {
-  it('offers Archive only when editing', () => {
-    const { onArchive } = renderSheet();
+  it('offers Delete only when editing', () => {
+    const { onDelete } = renderSheet();
     expect(screen.getByText('Edit category')).toBeOnTheScreen();
-    fireEvent.press(screen.getByText('Archive'));
-    expect(onArchive).toHaveBeenCalledTimes(1);
+    fireEvent.press(screen.getByText('Delete'));
+    expect(onDelete).toHaveBeenCalledTimes(1);
   });
 
-  it('hides Archive when adding', () => {
+  it('hides Delete when adding', () => {
     renderSheet({ mode: 'add', name: '' });
     expect(screen.getByText('New category')).toBeOnTheScreen();
-    expect(screen.queryByText('Archive')).not.toBeOnTheScreen();
+    expect(screen.queryByText('Delete')).not.toBeOnTheScreen();
   });
 
   it('shows the validation message under the field', () => {

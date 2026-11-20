@@ -59,7 +59,7 @@ describe('Categories settings', () => {
     expect(expenseGroup().queryByText('Food')).not.toBeOnTheScreen();
   });
 
-  it('archives a category after confirmation', async () => {
+  it('deletes a category after confirmation', async () => {
     jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
       buttons?.find((button) => button.style === 'destructive')?.onPress?.();
     });
@@ -67,7 +67,7 @@ describe('Categories settings', () => {
     await waitFor(() => expect(expenseGroup().getByText('Food')).toBeOnTheScreen());
 
     fireEvent.press(expenseGroup().getByText('Food'));
-    fireEvent.press(screen.getByText('Archive'));
+    fireEvent.press(screen.getByText('Delete'));
 
     expect(Alert.alert).toHaveBeenCalled();
     const food = mockTestDb.sqlite.prepare(
@@ -77,14 +77,14 @@ describe('Categories settings', () => {
     await waitFor(() => expect(expenseGroup().queryByText('Food')).not.toBeOnTheScreen());
   });
 
-  it('archives from the chip × after confirmation', async () => {
+  it('deletes from the chip × after confirmation', async () => {
     jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
       buttons?.find((button) => button.style === 'destructive')?.onPress?.();
     });
     renderWithApp(<Categories />);
     await waitFor(() => expect(expenseGroup().getByText('Food')).toBeOnTheScreen());
 
-    fireEvent.press(expenseGroup().getByLabelText('Archive Food'));
+    fireEvent.press(expenseGroup().getByLabelText('Delete Food'));
 
     await waitFor(() => expect(expenseGroup().queryByText('Food')).not.toBeOnTheScreen());
   });

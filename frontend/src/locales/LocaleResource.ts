@@ -21,7 +21,6 @@ export type LocaleResource = {
       delete: string;
       deleteTitle: string;
       deleteMessage: string;
-      deleteHint: string;
       deleteFailed: string;
       saveFailed: string;
     };
@@ -51,10 +50,10 @@ export type LocaleResource = {
       editTitle: string;
       name: string;
       save: string;
-      archive: string;
-      archiveLabel: string;
-      archiveTitle: string;
-      archiveMessage: string;
+      delete: string;
+      deleteLabel: string;
+      deleteTitle: string;
+      deleteMessage: string;
       errorEmpty: string;
       errorDuplicate: string;
       saveFailed: string;
