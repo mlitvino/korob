@@ -4,7 +4,7 @@
     "slug": "frontend",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/korob_logo.png",
+    "icon": "./src/assets/images/korob_icon.png",
     "scheme": "korob",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -20,8 +20,8 @@
       "package": "com.mlitvino.korob",
       "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#782DCC",
-        "foregroundImage": "./src/assets/images/korob_logo.png"
+        "backgroundColor": "#302A46",
+        "foregroundImage": "./src/assets/images/korob_adaptive_icon.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
@@ -31,12 +31,12 @@
       [
         "expo-splash-screen",
         {
-          "image": "./src/assets/images/korob_logo.png",
+          "image": "./src/assets/images/korob_icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#782DCC",
+          "backgroundColor": "#302A46",
           "dark": {
-            "backgroundColor": "#782DCC"
+            "backgroundColor": "#302A46"
           }
         }
       ],
