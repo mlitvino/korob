@@ -55,7 +55,7 @@ const palettes: Record<ThemeName, Palette> = {
   light:  {
     mode: 'light',
 
-    canvas:   '#c8c4cc',
+    canvas:   '#f2f0f5',
     background: '#ffffff',
     surface:  '#c8c5d380',
     inset:    '#b8c8cf',
