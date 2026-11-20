@@ -51,7 +51,7 @@ class Component extends DCLogic {
       removeLabel: s.remove + ' ' + label,
       padEnd: showRemove ? '4px' : '16px',
       borderStyle: isAdd ? 'dashed' : 'solid',
-      border: selected ? 'var(--selection)' : 'var(--separator)',
+      border: selected ? 'var(--selection)' : 'var(--outline)',
       bg: selected ? 'var(--selection)' : 'transparent',
       fg: selected ? 'var(--on-action-primary)' : 'var(--text)',
       stateClass: p.state === 'pressed' ? 'is-pressed' : '',

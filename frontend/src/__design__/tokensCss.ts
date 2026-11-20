@@ -3,6 +3,7 @@ import {
   opacity,
   radius,
   roleSources,
+  scrim,
   spacing,
   Themes,
   touchTarget,
@@ -19,7 +20,7 @@ const THEME_ORDER: ThemeName[] = ['dark', 'light', 'black', 'black_yellow'];
 
 const PALETTE_KEYS: (keyof ThemeColor)[] = [
   'canvas', 'background', 'surface', 'inset', 'elevated', 'text', 'contrastText',
-  'separator', 'income', 'expense', 'accent', 'pickerText',
+  'separator', 'outline', 'income', 'expense', 'accent', 'pickerText',
 ];
 
 const HEADER = [
@@ -74,6 +75,7 @@ export function buildTokensCss(): string {
     ...Object.entries(opacity).map(([key, value]) => `--opacity-${key}: ${value};`),
     '',
     `--touch-target: ${touchTarget}px;`,
+    `--scrim: ${scrim};`,
   ]);
 
   const scaled = typeSteps.flatMap(([step, style]) => [

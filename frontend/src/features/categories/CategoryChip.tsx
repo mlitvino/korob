@@ -48,7 +48,7 @@ export default function CategoryChip({
         {
           paddingRight: showRemove ? spacing.xs : spacing.lg,
           borderStyle: isAdd ? 'dashed' : 'solid',
-          borderColor: isSelected ? theme.selection : theme.separator,
+          borderColor: isSelected ? theme.selection : theme.outline,
           backgroundColor: isSelected ? theme.selection : 'transparent',
         },
         style,

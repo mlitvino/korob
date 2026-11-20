@@ -37,7 +37,7 @@ export function TransactionFilterBar({ filter, onFilterChange }: TransactionFilt
             style={({ pressed }) => [
               styles.filterButton,
               {
-                borderColor: isSelected ? fill : theme.separator,
+                borderColor: isSelected ? fill : theme.outline,
                 backgroundColor: isSelected ? fill : 'transparent',
                 opacity: pressed ? opacity.pressed : 1,
               },

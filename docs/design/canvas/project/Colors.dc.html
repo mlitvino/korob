@@ -18,7 +18,7 @@ body{margin:0}
 <div style="width: 1320px; min-height: 1580px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 40px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
   <div>
     <h1 style="margin: 0 0 4px; font-size: 28px; font-weight: 700">Colors</h1>
-    <p style="margin: 0; font-size: 14px; color: #a1a1aa; max-width: 900px">12 tokens in 4 themes, read live from <code style="font-family: 'Roboto Mono', monospace">tokens.css</code> (mirrors <code style="font-family: 'Roboto Mono', monospace">theme.ts</code>). The app follows the system light or dark setting until the user picks a theme.</p>
+    <p style="margin: 0; font-size: 14px; color: #a1a1aa; max-width: 900px">13 tokens in 4 themes, read live from <code style="font-family: 'Roboto Mono', monospace">tokens.css</code> (mirrors <code style="font-family: 'Roboto Mono', monospace">theme.ts</code>). The app follows the system light or dark setting until the user picks a theme.</p>
   </div>
 
   <section>
@@ -97,6 +97,7 @@ var TOKENS = [
   ['inset', 'inset', 'Form fields, balance block, active drawer item, date/time pickers'],
   ['elevated', 'elevated', 'Header bar, selected filter chip, secondary button'],
   ['text', 'text', 'Text and icons only — never a fill'],
+  ['outline', 'outline', 'Border of unfilled chips and filter buttons (3:1 on background and canvas)'],
   ['contrastText', 'contrast-text', 'Text and icons on income/expense/accent fills'],
   ['separator', 'separator', 'Dividers and outlines'],
   ['income', 'income', 'Income amounts, + button'],
@@ -119,7 +120,10 @@ var CHECKS = [
   ['text on inset — fields (4.5)', 4.5, 'text', 'inset', 1],
   ['secondary text 70% on background (4.5)', 4.5, 'text', 'background', 0.7],
   ['income on card (3.0)', 3, 'income', 'canvas', 1],
-  ['expense on card (3.0)', 3, 'expense', 'canvas', 1]
+  ['expense on card (3.0)', 3, 'expense', 'canvas', 1],
+  ['chip outline on background (3.0)', 3, 'outline', 'background', 1],
+  ['chip outline on sheet (3.0)', 3, 'outline', 'canvas', 1],
+  ['focus ring on fields (3.0)', 3, 'focus', 'inset', 1]
 ];
 var PASS = '#7fd6a8', FAIL = '#ff8a80';
 function rgba(hex) {

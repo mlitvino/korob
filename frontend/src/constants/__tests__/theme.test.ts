@@ -1,4 +1,5 @@
-import { roleSources, Themes, ThemeName, type ThemeRole } from '@/constants/theme';
+import { opacity, roleSources, Themes, ThemeName, type ThemeRole } from '@/constants/theme';
+import { contrast, toRgb, withOpacity } from '@/testing/colorMath';
 
 const themeNames = Object.keys(Themes) as ThemeName[];
 
@@ -8,35 +9,6 @@ const luminance = (hex: string) => {
   const g = parseInt(clean.substring(2, 4), 16);
   const b = parseInt(clean.substring(4, 6), 16);
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-};
-
-/** Expands #rgb / #rrggbb / #rrggbbaa into RGB channels, blending alpha over `base`. */
-const toRgb = (hex: string, base = '#ffffff'): [number, number, number] => {
-  let clean = hex.replace('#', '');
-  if (clean.length === 3) {
-    clean = clean.split('').map((ch) => ch + ch).join('');
-  }
-  const channels = [0, 2, 4].map((i) => parseInt(clean.substring(i, i + 2), 16));
-  if (clean.length === 8) {
-    const alpha = parseInt(clean.substring(6, 8), 16) / 255;
-    const under = toRgb(base);
-    return channels.map((c, i) => c * alpha + under[i] * (1 - alpha)) as [number, number, number];
-  }
-  return channels as [number, number, number];
-};
-
-const relativeLuminance = ([r, g, b]: [number, number, number]) => {
-  const lin = (c: number) => {
-    const s = c / 255;
-    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-  };
-  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
-};
-
-const contrast = (fg: string, bg: string, base?: string) => {
-  const a = relativeLuminance(toRgb(fg, base));
-  const b = relativeLuminance(toRgb(bg, base));
-  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 };
 
 describe('Themes', () => {
@@ -86,5 +58,24 @@ describe('Themes', () => {
     const t = Themes[name];
     const colors = [t.income, t.expense, t.accent].map((c) => c.toLowerCase());
     expect(new Set(colors).size).toBe(3);
+  });
+
+  it.each(themeNames)('%s secondary text (70%) stays readable (4.5:1) on every surface', (name) => {
+    const t = Themes[name];
+    for (const bg of [t.background, t.surface, t.canvas, t.inset, t.elevated]) {
+      const under = toRgb(bg, t.background);
+      const text = withOpacity(toRgb(t.text), under, opacity.secondary);
+      expect(contrast(text, under)).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
+  it.each(themeNames)('%s outlines and marks are visible (3:1, non-text)', (name) => {
+    const t = Themes[name];
+    // Unfilled chips and filter buttons sit on the screen background or on a sheet.
+    expect(contrast(t.outline, t.background, t.background)).toBeGreaterThanOrEqual(3);
+    expect(contrast(t.outline, t.canvas, t.canvas)).toBeGreaterThanOrEqual(3);
+    // Focus ring in fields, selection mark on grouped rows.
+    expect(contrast(t.focus, t.inset, t.background)).toBeGreaterThanOrEqual(3);
+    expect(contrast(t.selection, t.surface, t.background)).toBeGreaterThanOrEqual(3);
   });
 });

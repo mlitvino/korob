@@ -11,6 +11,8 @@ export type ThemeColor = {
     contrastText: string;
 
     separator: string;
+    /** Border of unfilled controls (chips, filter buttons): 3:1 on background and canvas. */
+    outline: string;
 
     income: string;
     expense: string;
@@ -63,6 +65,7 @@ const palettes: Record<ThemeName, Palette> = {
     contrastText: '#ffffff',
 
     separator: '#020000',
+    outline:   '#666666',
 
     income:   '#1f6e4a',
     expense:  '#b83b3b',
@@ -83,6 +86,7 @@ const palettes: Record<ThemeName, Palette> = {
     contrastText: '#000',
 
     separator: '#ffffff1a',
+    outline:   '#686868',
 
     income:   '#449e75',
     expense:  '#e05c5c',
@@ -103,6 +107,7 @@ const palettes: Record<ThemeName, Palette> = {
     contrastText: '#000',
 
     separator: '#ffffff1a',
+    outline:   '#7e7d81',
 
     income:   '#5cc595',
     expense:  '#f27a7a',
@@ -123,6 +128,7 @@ const palettes: Record<ThemeName, Palette> = {
     contrastText: '#000000',
 
     separator:   '#fff7a81a',
+    outline:     '#696545',
 
     income:      '#ffd600',
     expense:     '#ff9800',
@@ -179,6 +185,9 @@ export const opacity = {
   pressed: 0.7,
   disabled: 0.4,
 } as const;
+
+/** Dimming behind sheets, dialogs and the drawer: 50% black, the same in every theme. */
+export const scrim = '#00000080';
 
 /** Minimum touch target. */
 export const touchTarget = 48;

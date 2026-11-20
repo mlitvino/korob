@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { MD3DarkTheme, MD3LightTheme, type MD3Theme } from 'react-native-paper';
 
+import { scrim } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 
 export function usePaperTheme(): MD3Theme {
@@ -26,7 +27,7 @@ export function usePaperTheme(): MD3Theme {
         surfaceVariant: theme.surface,
         onSurfaceVariant: theme.pickerText,
         outline: theme.separator,
-        backdrop: '#00000066',
+        backdrop: scrim,
         elevation: {
           ...base.colors.elevation,
           level3: theme.elevated,

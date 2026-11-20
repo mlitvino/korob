@@ -389,7 +389,7 @@
     },
     "specTransactionFilterBar": {
       "page": "components",
-      "text": "TransactionFilterBar\nProps: filter all | income | expense · lang (canvas)\nTokens: elevated (All), income / expense + contrast-text (selected), separator, radius-sm, type-body, touch-target\nCode: features/transaction-list/components/TransactionFilterBar.tsx\nContract: docs/design/components.json",
+      "text": "TransactionFilterBar\nProps: filter all | income | expense · lang (canvas)\nTokens: elevated (All), income / expense + contrast-text (selected), outline, radius-sm, type-body, touch-target\nCode: features/transaction-list/components/TransactionFilterBar.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 568,
       "y": 3168
@@ -420,7 +420,7 @@
       "x": 4664,
       "y": 3168,
       "w": 328,
-      "text": "CategoryChip\nProps: variant category | add · label · selected · removable (× archives) · state default | pressed · lang · href (canvas)\nWidth fits the label, max = container; long names end with …\nTokens: selection + on-action-primary (selected), separator, text, radius-full, type-body, touch-target\nStates: is-pressed\nCode: features/categories/CategoryChip.tsx\nContract: docs/design/components.json"
+      "text": "CategoryChip\nProps: variant category | add · label · selected · removable (× archives) · state default | pressed · lang · href (canvas)\nWidth fits the label, max = container; long names end with …\nTokens: selection + on-action-primary (selected), outline, text, radius-full, type-body, touch-target\nStates: is-pressed\nCode: features/categories/CategoryChip.tsx\nContract: docs/design/components.json"
     },
     "specCategoryEditorSheet": {
       "page": "components",

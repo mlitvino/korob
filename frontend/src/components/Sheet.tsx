@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { opacity, radius, spacing, typography } from '@/constants/theme';
+import { opacity, radius, scrim, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 
 type Props = {
@@ -14,7 +14,6 @@ type Props = {
   children: ReactNode;
 };
 
-const SCRIM = '#00000080';
 const HANDLE = { width: 32, height: 4 };
 
 /** Bottom sheet: slides up over a scrim; tapping the scrim or Back closes it. */
@@ -35,7 +34,7 @@ export default function Sheet({ visible, title, closeLabel, onClose, children }:
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={closeLabel}
-          style={[StyleSheet.absoluteFill, { backgroundColor: SCRIM }]}
+          style={[StyleSheet.absoluteFill, { backgroundColor: scrim }]}
           onPress={onClose}
         />
         <View

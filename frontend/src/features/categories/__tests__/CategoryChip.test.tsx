@@ -34,6 +34,11 @@ describe('CategoryChip', () => {
     expect(styleOf(screen.getByTestId('category-chip')).backgroundColor).toBe(theme.selection);
   });
 
+  it('uses the outline color for the border when not selected', async () => {
+    await renderThemed(<CategoryChip label="Food" />);
+    expect(styleOf(screen.getByTestId('category-chip')).borderColor).toBe(theme.outline);
+  });
+
   it('calls onPress and onRemove from separate targets', async () => {
     const onPress = jest.fn();
     const onRemove = jest.fn();

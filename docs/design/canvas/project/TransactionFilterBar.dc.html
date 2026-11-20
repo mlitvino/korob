@@ -38,7 +38,7 @@ class Component extends DCLogic {
         return {
           label: ch[1],
           pressed: on ? 'true' : 'false',
-          border: on ? fill : 'var(--separator)',
+          border: on ? fill : 'var(--outline)',
           bg: on ? fill : 'transparent',
           fg: on && ch[0] !== 'all' ? 'var(--contrast-text)' : 'var(--text)'
         };
