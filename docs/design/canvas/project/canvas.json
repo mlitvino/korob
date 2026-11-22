@@ -453,7 +453,7 @@
     },
     "missingScreens": {
       "page": "screens",
-      "text": "Not in the app, so nothing to mirror\nEmpty Transactions list: the filter bar over an empty list, no message (Transactions board, tweak \"transactions: none\").\nInvalid or empty amount: Done does nothing and no error is shown.",
+      "text": "Not in the app, so nothing to mirror\nEmpty Transactions list: the filter bar over an empty list, no message (Transactions board, tweak \"transactions: none\").",
       "w": 520,
       "x": 4884,
       "y": 1292

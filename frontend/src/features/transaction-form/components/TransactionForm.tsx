@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+  ScrollView, StyleSheet, View, useWindowDimensions, type TextInput,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 
@@ -31,6 +33,8 @@ type Props = {
 
 export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [amount, setAmount] = useState('');
+  const [amountError, setAmountError] = useState(false);
+  const amountRef = useRef<TextInput>(null);
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [occurredAt, setOccurredAt] = useState(() => new Date());
@@ -74,7 +78,12 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const handleSubmit = async () => {
     const value = parseAmount(amount);
 
-    if (value === null || categoryId === null || isSubmitting) {
+    if (value === null) {
+      setAmountError(true);
+      amountRef.current?.focus();
+      return;
+    }
+    if (categoryId === null || isSubmitting) {
       return;
     }
 
@@ -93,7 +102,12 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
         placeholder={t('transaction.enterAmount')}
         keyboardType="decimal-pad"
         value={amount}
-        onChangeText={setAmount}
+        onChangeText={(text) => {
+          setAmount(text);
+          setAmountError(false);
+        }}
+        error={amountError ? t('transaction.amountRequired') : null}
+        ref={amountRef}
       />
 
       <FieldPicker

@@ -59,7 +59,7 @@
       "code": ["frontend/src/components/Field.tsx"],
       "shared": ["label", "placeholder", "value", "error", "multiline", "maxLength"],
       "canvasOnly": ["state"],
-      "codeOnly": ["style"]
+      "codeOnly": ["style", "ref"]
     },
     "FieldPicker": {
       "code": ["frontend/src/components/Field.tsx"],

@@ -144,3 +144,41 @@ describe('TransactionForm categories', () => {
     expect(onSubmit.mock.calls[0][3]).toBe('Lunch with Anna');
   });
 });
+
+describe('TransactionForm amount', () => {
+  it('asks for an amount instead of submitting an empty one', async () => {
+    const onSubmit = jest.fn().mockResolvedValue(undefined);
+    renderWithApp(<TransactionForm transactionType="expense" onSubmit={onSubmit} />);
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.press(screen.getByRole('button', { name: 'Done' }));
+
+    expect(screen.getByText('Enter an amount')).toBeOnTheScreen();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('asks for an amount when the input is not a number', async () => {
+    const onSubmit = jest.fn().mockResolvedValue(undefined);
+    renderWithApp(<TransactionForm transactionType="expense" onSubmit={onSubmit} />);
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.changeText(screen.getByLabelText('Amount'), '.');
+    fireEvent.press(screen.getByRole('button', { name: 'Done' }));
+
+    expect(screen.getByText('Enter an amount')).toBeOnTheScreen();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('clears the error once the amount is typed', async () => {
+    const onSubmit = jest.fn().mockResolvedValue(undefined);
+    renderWithApp(<TransactionForm transactionType="expense" onSubmit={onSubmit} />);
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.press(screen.getByRole('button', { name: 'Done' }));
+    fireEvent.changeText(screen.getByLabelText('Amount'), '5');
+
+    expect(screen.queryByText('Enter an amount')).not.toBeOnTheScreen();
+    fireEvent.press(screen.getByRole('button', { name: 'Done' }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalled());
+  });
+});

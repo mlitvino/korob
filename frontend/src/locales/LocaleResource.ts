@@ -12,6 +12,7 @@ export type LocaleResource = {
       addIncome: string;
       addExpense: string;
       enterAmount: string;
+      amountRequired: string;
       amount: string;
       selectDate: string;
       selectTime: string;

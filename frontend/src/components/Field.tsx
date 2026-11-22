@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type Ref } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -36,11 +36,13 @@ type FieldInputProps = Omit<TextInputProps, 'style'> & {
   /** Validation message shown under the field. */
   error?: string | null;
   style?: StyleProp<ViewStyle>;
+  ref?: Ref<TextInput>;
 };
 
 export function FieldInput({
   label,
   error,
+  ref,
   style,
   onFocus,
   onBlur,
@@ -65,6 +67,7 @@ export function FieldInput({
         {label}
       </Text>
       <TextInput
+        ref={ref}
         accessibilityLabel={label}
         placeholderTextColor={`${theme.text}${SECONDARY_ALPHA_HEX}`}
         selectionColor={theme.focus}

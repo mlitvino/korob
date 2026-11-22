@@ -14,6 +14,7 @@ const ru: LocaleResource = {
       addIncome: 'Добавить доход',
       addExpense: 'Добавить расход',
       enterAmount: 'Введите сумму',
+      amountRequired: 'Укажите сумму',
       amount: 'Сумма',
       selectDate: 'Дата',
       selectTime: 'Время',

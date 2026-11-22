@@ -14,6 +14,7 @@ const en: LocaleResource = {
       addIncome: 'Add income',
       addExpense: 'Add expense',
       enterAmount: 'Enter amount',
+      amountRequired: 'Enter an amount',
       amount: 'Amount',
       selectDate: 'Date',
       selectTime: 'Time',

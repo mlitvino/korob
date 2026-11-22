@@ -14,6 +14,7 @@ const fi: LocaleResource = {
       addIncome: 'Lisää tulo',
       addExpense: 'Lisää meno',
       enterAmount: 'Syötä summa',
+      amountRequired: 'Anna summa',
       amount: 'Summa',
       selectDate: 'Päivä',
       selectTime: 'Aika',
