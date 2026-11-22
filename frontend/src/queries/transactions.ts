@@ -61,6 +61,14 @@ export function useDeleteTransaction() {
   });
 }
 
+export function useDeleteTransactions() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (ids: string[]) => TransactionsRepo.deleteByIds(ids),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: transactionsKey }),
+  });
+}
+
 export function useClearTransactions() {
   const queryClient = useQueryClient();
   return useMutation({

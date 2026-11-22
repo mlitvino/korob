@@ -1,9 +1,7 @@
-import { Alert } from 'react-native';
 import { fireEvent, screen, waitFor } from '@testing-library/react-native';
 
 import { CategoriesRepo } from '@/db/categories.repo';
 import { createTestDb, type TestDb } from '@/db/testing/createTestDb';
-import { TransactionsRepo } from '@/db/transactions.repo';
 import { TransactionItem } from '@/features/transaction-list/components/TransactionItem';
 import { renderWithApp } from '@/testing/renderWithApp';
 import type { Transaction } from '@/types/Transaction';
@@ -33,9 +31,18 @@ const transaction = (categoryId: string): Transaction => ({
   updatedAt: at,
 });
 
+const row = (props: Partial<Parameters<typeof TransactionItem>[0]> = {}) => (
+  <TransactionItem
+    transaction={transaction('expense-food')}
+    onPress={jest.fn()}
+    onLongPress={jest.fn()}
+    {...props}
+  />
+);
+
 describe('TransactionItem category name', () => {
   it('translates built-in categories', async () => {
-    renderWithApp(<TransactionItem transaction={transaction('expense-food')} />);
+    renderWithApp(row());
     await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
   });
 
@@ -43,82 +50,37 @@ describe('TransactionItem category name', () => {
     const pets = await CategoriesRepo.create('expense', 'Pets');
     await CategoriesRepo.archive(pets.id);
 
-    renderWithApp(<TransactionItem transaction={transaction(pets.id)} />);
+    renderWithApp(row({ transaction: transaction(pets.id) }));
     await waitFor(() => expect(screen.getByText('Pets')).toBeOnTheScreen());
   });
 });
 
-describe('TransactionItem details sheet', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  const rowCount = () => mockTestDb.sqlite
-    .prepare('SELECT count(*) AS n FROM transactions').get() as { n: number };
-
-  const openDetails = async () => {
-    renderWithApp(<TransactionItem transaction={transaction('expense-food')} />);
+describe('TransactionItem selection', () => {
+  it('is a button with no checkbox outside selection mode', async () => {
+    const onPress = jest.fn();
+    const onLongPress = jest.fn();
+    renderWithApp(row({ onPress, onLongPress }));
     await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+
+    expect(screen.queryByTestId('transaction-checkbox')).not.toBeOnTheScreen();
     fireEvent.press(screen.getByText('Food'));
-  };
-
-  it('opens on tap, titled with the amount and category', async () => {
-    await openDetails();
-
-    expect(screen.getByRole('header')).toHaveTextContent('\u2212€12.00 \u00b7 Food');
-    expect(screen.getByText('Delete')).toBeOnTheScreen();
+    fireEvent(screen.getByText('Food'), 'longPress');
+    expect(onPress).toHaveBeenCalledTimes(1);
+    expect(onLongPress).toHaveBeenCalledTimes(1);
   });
 
-  it('deletes through the sheet after confirmation', async () => {
-    await TransactionsRepo.insert(transaction('expense-food'));
-    jest.spyOn(Alert, 'alert').mockImplementation((_title, _message, buttons) => {
-      buttons?.find((button) => button.style === 'destructive')?.onPress?.();
-    });
-    await openDetails();
-
-    fireEvent.press(screen.getByText('Delete'));
-
-    await waitFor(() => expect(rowCount()).toEqual({ n: 0 }));
-  });
-
-  it('keeps the transaction when the confirmation is cancelled', async () => {
-    await TransactionsRepo.insert(transaction('expense-food'));
-    jest.spyOn(Alert, 'alert').mockImplementation(() => {});
-    await openDetails();
-
-    fireEvent.press(screen.getByText('Delete'));
-
-    expect(Alert.alert).toHaveBeenCalled();
-    expect(rowCount()).toEqual({ n: 1 });
-    expect(screen.getByRole('header')).toBeOnTheScreen();
-  });
-
-  it('edits the comment and saves it', async () => {
-    const noted = { ...transaction('expense-food'), description: 'old note' };
-    await TransactionsRepo.insert(noted);
-    renderWithApp(<TransactionItem transaction={noted} />);
+  it('shows a checked checkbox on the right when selected', async () => {
+    renderWithApp(row({ selecting: true, selected: true }));
     await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
-    fireEvent.press(screen.getByText('Food'));
 
-    expect(screen.getByLabelText('Comment')).toHaveDisplayValue('old note');
-    fireEvent.changeText(screen.getByLabelText('Comment'), 'paid for both');
-    fireEvent.press(screen.getByText('Save'));
-
-    const row = mockTestDb.sqlite.prepare("SELECT description FROM transactions WHERE id = 't1'");
-    await waitFor(() => expect(row.get()).toEqual({ description: 'paid for both' }));
+    expect(screen.getByTestId('transaction-checkbox')).toBeOnTheScreen();
+    expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
-  it('keeps Save disabled until the comment really changes', async () => {
-    const noted = { ...transaction('expense-food'), description: 'old note' };
-    renderWithApp(<TransactionItem transaction={noted} />);
+  it('shows an empty checkbox when not selected', async () => {
+    renderWithApp(row({ selecting: true, selected: false }));
     await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
-    fireEvent.press(screen.getByText('Food'));
 
-    const save = () => screen.getByRole('button', { name: 'Save' });
-    expect(save()).toBeDisabled();
-    fireEvent.changeText(screen.getByLabelText('Comment'), '  old note  ');
-    expect(save()).toBeDisabled();
-    fireEvent.changeText(screen.getByLabelText('Comment'), 'new note');
-    expect(save()).toBeEnabled();
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 });

@@ -20,6 +20,9 @@ body{margin:0}
     <sc-if value="{{isDrawer}}" hint-placeholder-val="{{ true }}">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
     </sc-if>
+    <sc-if value="{{isSelection}}" hint-placeholder-val="{{ false }}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+    </sc-if>
     <sc-if value="{{isBack}}" hint-placeholder-val="{{ false }}">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
     </sc-if>
@@ -28,19 +31,26 @@ body{margin:0}
     <a href="{{href}}" aria-label="{{iconLabel}}" style="position: absolute; inset: 0; border-radius: var(--radius-full)"></a>
   </sc-if>
   </span>
-  <h1 style="margin: 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{title}}</h1>
+  <h1 style="margin: 0; flex: 1; min-width: 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{title}}</h1>
+  <sc-if value="{{isSelection}}" hint-placeholder-val="{{ false }}">
+    <span style="min-height: 40px; padding: 0 12px; display: flex; align-items: center; font-size: var(--type-body-sm-size); font-weight: 600">{{allLabel}}</span>
+    <span style="width: var(--touch-target); height: var(--touch-target); flex: none; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg></span>
+  </sc-if>
 </header>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["drawer","back"],"default":"drawer"},"title":{"editor":"text","default":"Home"},"href":{"editor":null,"default":""},"accessibilityLabel":{"editor":null,"default":""},"$preview":{"width":360,"height":56}}'>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["drawer","back","selection"],"default":"drawer"},"allSelected":{"editor":"boolean","default":false},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"title":{"editor":"text","default":"Home"},"href":{"editor":null,"default":""},"accessibilityLabel":{"editor":null,"default":""},"$preview":{"width":360,"height":56}}'>
 class Component extends DCLogic {
   renderVals() {
-    var back = this.props.variant === 'back';
+    var back = this.props.variant === 'back', selection = this.props.variant === 'selection';
+    var ALL = { en: ['Select all', 'Deselect all'], fi: ['Valitse kaikki', 'Poista valinnat'], ru: ['Выбрать все', 'Снять выбор'] };
+    var all = ALL[this.props.lang] || ALL.en;
     // Drawer screens open the drawer by default; back headers link where the screen says.
-    var href = this.props.href || (back ? '' : 'Drawer.dc.html');
+    var href = this.props.href || (back || selection ? '' : 'Drawer.dc.html');
     return {
-      isDrawer: !back, isBack: back,
+      isDrawer: !back && !selection, isBack: back, isSelection: selection,
+      allLabel: this.props.allSelected ? all[1] : all[0],
       href: href, hasHref: !!href,
-      iconLabel: this.props.accessibilityLabel || (back ? 'Back' : 'Open menu'),
+      iconLabel: this.props.accessibilityLabel || (selection ? 'Cancel selection' : back ? 'Back' : 'Open menu'),
       title: this.props.title ?? 'Home'
     };
   }

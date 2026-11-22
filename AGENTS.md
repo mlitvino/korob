@@ -35,7 +35,7 @@ This is the shared starting point for AI coding agents working in this repositor
 - Keep app settings state (settings, theme) in context modules under [frontend/src/contexts](frontend/src/contexts), with separate state and setter hooks.
 - Read and write database data only through TanStack Query hooks in [frontend/src/queries](frontend/src/queries). Every write is a mutation hook that invalidates the queries it affects; components never call repos directly.
 - Keep transaction domain model aligned with [frontend/src/types/Transaction.ts](frontend/src/types/Transaction.ts).
-- Deleting a category is a soft delete (`archivedAt`): the row stays so past transactions keep their category name; the UI says Delete and there is no restore. A transaction is deleted for good, only from its details sheet (tap a row in the list).
+- Deleting a category is a soft delete (`archivedAt`): the row stays so past transactions keep their category name; the UI says Delete and there is no restore. A transaction is deleted for good, only from its details sheet (tap a row in the list) or from selection mode on the list (long-press a row, then Delete selected; one confirmation for all selected rows).
 - Use theme and locale infrastructure from [frontend/src/constants/theme.ts](frontend/src/constants/theme.ts), [frontend/src/contexts/ThemeContext.tsx](frontend/src/contexts/ThemeContext.tsx), and [frontend/src/locales/index.ts](frontend/src/locales/index.ts).
 
 ## Conventions That Matter

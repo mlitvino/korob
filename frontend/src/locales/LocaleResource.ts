@@ -25,6 +25,14 @@ export type LocaleResource = {
       deleteTitle: string;
       deleteMessage: string;
       deleteFailed: string;
+      select: string;
+      selectHint: string;
+      selectedCount: string;
+      selectAll: string;
+      deselectAll: string;
+      cancelSelection: string;
+      deleteSelected: string;
+      deleteSelectedTitle: string;
       saveFailed: string;
     };
     category: {

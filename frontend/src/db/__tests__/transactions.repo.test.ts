@@ -62,4 +62,15 @@ describe('TransactionsRepo', () => {
     await TransactionsRepo.updateDescription('t1', '');
     expect((await TransactionsRepo.getById('t1'))?.description).toBeUndefined();
   });
+
+  it('deletes several transactions at once and ignores an empty list', async () => {
+    for (const id of ['t1', 't2', 't3']) {
+      await TransactionsRepo.insert(transaction(id, 'expense-food'));
+    }
+
+    await TransactionsRepo.deleteByIds([]);
+    await TransactionsRepo.deleteByIds(['t1', 't3']);
+
+    expect((await TransactionsRepo.list()).map((t) => t.id)).toEqual(['t2']);
+  });
 });

@@ -402,7 +402,8 @@
     "trigPickerAdd",
     "trigDate",
     "trigTime",
-    "trigIncomeCategory"
+    "trigIncomeCategory",
+    "trigSelectRows"
   ],
   "notes": {
     "laneAdd": {
@@ -524,7 +525,7 @@
     },
     "specHeader": {
       "page": "components",
-      "text": "Header\nProps: variant drawer | back · title · href (canvas) · accessibilityLabel\nTokens: elevated, text, type-title, touch-target, radius-full\nCode: navigator header (app/(drawer)/_layout.tsx) + components/HeaderLeft.tsx\nContract: docs/design/components.json",
+      "text": "Header\nProps: variant drawer | back | selection · title · allSelected · lang · href (canvas) · accessibilityLabel\nSelection: ✕ · \"N selected\" · Select all / Deselect all · delete\nTokens: elevated, text, type-title, touch-target, radius-full\nCode: navigator header (app/(drawer)/_layout.tsx) + components/HeaderLeft.tsx\nContract: docs/design/components.json",
       "w": 360,
       "x": 976,
       "y": 3176
@@ -559,7 +560,7 @@
     },
     "specTransactionItem": {
       "page": "components",
-      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added) · href (canvas)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nTap: opens the details sheet (TransactionSheet), the only way to delete\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
+      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added) · selecting · selected · href (canvas)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nTap: opens the details sheet (TransactionSheet). Long-press: selection mode; then a tap toggles the checkbox on the right (selection fill, outline border)\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 0,
       "y": 4077
@@ -668,6 +669,13 @@
       "w": 376,
       "x": 2460,
       "y": 1316
+    },
+    "trigSelectRows": {
+      "page": "screens",
+      "text": "long-press a row → selection (tweak mode: selecting)",
+      "w": 176,
+      "x": 2460,
+      "y": 232
     }
   },
   "order": [

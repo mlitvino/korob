@@ -22,7 +22,7 @@
     "Header": {
       "code": ["frontend/src/components/HeaderLeft.tsx", "frontend/src/app/(drawer)/_layout.tsx"],
       "shared": ["accessibilityLabel"],
-      "canvasOnly": ["variant", "title", "href"],
+      "canvasOnly": ["variant", "title", "href", "allSelected", "lang"],
       "codeOnly": ["icon", "onPress", "style"]
     },
     "DrawerItem": {
@@ -51,9 +51,9 @@
     },
     "TransactionItem": {
       "code": ["frontend/src/features/transaction-list/components/TransactionItem.tsx"],
-      "shared": [],
+      "shared": ["selecting", "selected"],
       "canvasOnly": ["kind", "time", "category", "amount", "href"],
-      "codeOnly": ["transaction"]
+      "codeOnly": ["transaction", "onPress", "onLongPress"]
     },
     "FieldInput": {
       "code": ["frontend/src/components/Field.tsx"],

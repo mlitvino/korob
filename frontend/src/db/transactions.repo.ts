@@ -1,4 +1,4 @@
-import { eq, desc } from 'drizzle-orm';
+import { desc, eq, inArray } from 'drizzle-orm';
 import type { Transaction } from '../types/Transaction';
 import {
   transactions,
@@ -61,6 +61,13 @@ export const TransactionsRepo = {
       .update(transactions)
       .set({ description: normalizeComment(description), updatedAt: Date.now() })
       .where(eq(transactions.id, id));
+  },
+
+  async deleteByIds(ids: string[]): Promise<void> {
+    if (ids.length === 0) {
+      return;
+    }
+    await db.delete(transactions).where(inArray(transactions.id, ids));
   },
 
   async deleteById(id: string): Promise<void> {
