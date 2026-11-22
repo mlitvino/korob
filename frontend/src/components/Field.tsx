@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Pressable,
+  StyleSheet,
   Text,
   TextInput,
   View,
@@ -29,7 +30,7 @@ const boxStyle = (theme: Theme, focused: boolean): ViewStyle => ({
   justifyContent: 'center',
 });
 
-/** TextInput props (placeholder, value, onChangeText, …) plus a label and an error. */
+/** TextInput props (placeholder, value, multiline, maxLength, …) plus a label and an error. */
 type FieldInputProps = Omit<TextInputProps, 'style'> & {
   label: string;
   /** Validation message shown under the field. */
@@ -47,9 +48,19 @@ export function FieldInput({
 }: FieldInputProps) {
   const theme = useTheme();
   const [focused, setFocused] = useState(false);
+  const multiline = inputProps.multiline === true;
+  const counter = multiline && inputProps.maxLength !== undefined
+    ? `${(inputProps.value ?? '').length} / ${inputProps.maxLength}`
+    : null;
 
   const field = (
-    <View style={[boxStyle(theme, focused), { paddingRight: spacing.lg }, error ? null : style]}>
+    <View
+      style={[
+        boxStyle(theme, focused),
+        { paddingRight: spacing.lg },
+        error || counter ? null : style,
+      ]}
+    >
       <Text style={[typography.caption, { color: theme.text, opacity: opacity.secondary }]}>
         {label}
       </Text>
@@ -60,25 +71,33 @@ export function FieldInput({
         cursorColor={theme.focus}
         onFocus={(e) => { setFocused(true); onFocus?.(e); }}
         onBlur={(e) => { setFocused(false); onBlur?.(e); }}
-        style={[typography.title, { fontWeight: '400', color: theme.text, padding: 0 }]}
+        style={[
+          multiline ? styles.multiline : typography.title,
+          { fontWeight: '400', color: theme.text, padding: 0 },
+        ]}
         {...inputProps}
       />
     </View>
   );
 
-  if (!error) {
+  if (!error && !counter) {
     return field;
   }
 
   return (
     <View style={[{ gap: spacing.xs }, style]}>
       {field}
-      <Text
-        accessibilityLiveRegion="polite"
-        style={[typography.bodySm, { color: theme.expense }]}
-      >
-        {error}
-      </Text>
+      {error ? (
+        <Text
+          accessibilityLiveRegion="polite"
+          style={[typography.bodySm, { color: theme.expense }]}
+        >
+          {error}
+        </Text>
+      ) : null}
+      {counter ? (
+        <Text style={[typography.caption, styles.counter, { color: theme.text }]}>{counter}</Text>
+      ) : null}
     </View>
   );
 }
@@ -131,3 +150,15 @@ export function FieldPicker({ label, value, onPress, style }: FieldPickerProps) 
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  multiline: {
+    ...typography.body,
+    minHeight: typography.body.lineHeight * 2,
+    textAlignVertical: 'top',
+  },
+  counter: {
+    alignSelf: 'flex-end',
+    opacity: opacity.secondary,
+  },
+});

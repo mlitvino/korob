@@ -130,4 +130,17 @@ describe('TransactionForm categories', () => {
     expect(Alert.alert).toHaveBeenCalled();
     expect(screen.getByRole('button', { name: 'Category: Food' })).toBeOnTheScreen();
   });
+
+  it('submits the comment with the transaction', async () => {
+    const onSubmit = jest.fn().mockResolvedValue(undefined);
+    renderWithApp(<TransactionForm transactionType="expense" onSubmit={onSubmit} />);
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.changeText(screen.getByLabelText('Amount'), '12');
+    fireEvent.changeText(screen.getByLabelText('Comment'), 'Lunch with Anna');
+    fireEvent.press(screen.getByRole('button', { name: 'Done' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalled());
+    expect(onSubmit.mock.calls[0][3]).toBe('Lunch with Anna');
+  });
 });

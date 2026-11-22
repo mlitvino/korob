@@ -32,6 +32,9 @@ export type Transaction = {
   createdAt: Date;
   /** Last change to the record; set by the app. */
   updatedAt: Date;
-  /** Optional free-text note. Nothing in the UI sets it yet. */
+  /** Optional comment, entered in the add form and edited in the details sheet. */
   description?: string;
 };
+
+/** Longest comment (`description`) a transaction can have. */
+export const MAX_COMMENT_LENGTH = 500;

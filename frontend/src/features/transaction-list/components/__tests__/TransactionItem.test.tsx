@@ -92,4 +92,33 @@ describe('TransactionItem details sheet', () => {
     expect(rowCount()).toEqual({ n: 1 });
     expect(screen.getByRole('header')).toBeOnTheScreen();
   });
+
+  it('edits the comment and saves it', async () => {
+    const noted = { ...transaction('expense-food'), description: 'old note' };
+    await TransactionsRepo.insert(noted);
+    renderWithApp(<TransactionItem transaction={noted} />);
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.press(screen.getByText('Food'));
+
+    expect(screen.getByLabelText('Comment')).toHaveDisplayValue('old note');
+    fireEvent.changeText(screen.getByLabelText('Comment'), 'paid for both');
+    fireEvent.press(screen.getByText('Save'));
+
+    const row = mockTestDb.sqlite.prepare("SELECT description FROM transactions WHERE id = 't1'");
+    await waitFor(() => expect(row.get()).toEqual({ description: 'paid for both' }));
+  });
+
+  it('keeps Save disabled until the comment really changes', async () => {
+    const noted = { ...transaction('expense-food'), description: 'old note' };
+    renderWithApp(<TransactionItem transaction={noted} />);
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    fireEvent.press(screen.getByText('Food'));
+
+    const save = () => screen.getByRole('button', { name: 'Save' });
+    expect(save()).toBeDisabled();
+    fireEvent.changeText(screen.getByLabelText('Comment'), '  old note  ');
+    expect(save()).toBeDisabled();
+    fireEvent.changeText(screen.getByLabelText('Comment'), 'new note');
+    expect(save()).toBeEnabled();
+  });
 });

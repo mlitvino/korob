@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { opacity, radius, scrim, spacing, typography } from '@/constants/theme';
@@ -30,7 +30,7 @@ export default function Sheet({ visible, title, closeLabel, onClose, children }:
       statusBarTranslucent
       navigationBarTranslucent
     >
-      <View style={styles.root}>
+      <KeyboardAvoidingView behavior="padding" style={styles.root}>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={closeLabel}
@@ -53,7 +53,7 @@ export default function Sheet({ visible, title, closeLabel, onClose, children }:
           </Text>
           <View style={styles.body}>{children}</View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }

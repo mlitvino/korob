@@ -17,15 +17,21 @@ import {
 } from '@/features/transaction-form/utils/dateTimeHelpers';
 import { useCategoryName } from '@/hooks/useCategoryName';
 import { useActiveCategories } from '@/queries/categories';
-import type { TransactionType } from '@/types/Transaction';
+import { MAX_COMMENT_LENGTH, type TransactionType } from '@/types/Transaction';
 
 type Props = {
   transactionType: TransactionType;
-  onSubmit: (amountCents: number, occurredAt: Date, categoryId: string) => Promise<void>;
+  onSubmit: (
+    amountCents: number,
+    occurredAt: Date,
+    categoryId: string,
+    comment: string,
+  ) => Promise<void>;
 };
 
 export default function TransactionForm({ transactionType, onSubmit }: Props) {
   const [amount, setAmount] = useState('');
+  const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [occurredAt, setOccurredAt] = useState(() => new Date());
   const categories = useActiveCategories(transactionType);
@@ -74,7 +80,7 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
 
     setIsSubmitting(true);
     try {
-      await onSubmit(value, occurredAt, categoryId);
+      await onSubmit(value, occurredAt, categoryId, comment);
     } finally {
       setIsSubmitting(false);
     }
@@ -110,6 +116,15 @@ export default function TransactionForm({ transactionType, onSubmit }: Props) {
           style={styles.timeInput}
         />
       </View>
+
+      <FieldInput
+        label={t('transaction.comment')}
+        placeholder={t('transaction.commentPlaceholder')}
+        value={comment}
+        onChangeText={setComment}
+        multiline
+        maxLength={MAX_COMMENT_LENGTH}
+      />
 
       <Sheet
         visible={showCategoryPicker}

@@ -44,6 +44,15 @@ export function useAddTransaction() {
   });
 }
 
+export function useUpdateTransactionComment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, comment }: { id: string; comment: string }) =>
+      TransactionsRepo.updateDescription(id, comment),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: transactionsKey }),
+  });
+}
+
 export function useDeleteTransaction() {
   const queryClient = useQueryClient();
   return useMutation({

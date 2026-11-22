@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/Button';
 import Sheet from '@/components/Sheet';
-import type { Transaction } from '@/types/Transaction';
+import { FieldInput } from '@/components/Field';
+import { MAX_COMMENT_LENGTH, type Transaction } from '@/types/Transaction';
 import { opacity, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCategoryName } from '@/hooks/useCategoryName';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { useCategoryById } from '@/queries/categories';
-import { useDeleteTransaction } from '@/queries/transactions';
+import { useDeleteTransaction, useUpdateTransactionComment } from '@/queries/transactions';
 import {
   formatTimeInput,
   uses12HourClock,
@@ -24,6 +25,8 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [comment, setComment] = useState('');
+  const updateComment = useUpdateTransactionComment();
   const deleteTransaction = useDeleteTransaction();
   const categoryById = useCategoryById();
   const nameOf = useCategoryName();
@@ -52,6 +55,19 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
     ]);
   };
 
+  const saveComment = () => {
+    updateComment.mutate({ id: transaction.id, comment }, {
+      onSuccess: () => setDetailsOpen(false),
+      onError: (error) => {
+        console.warn('Failed to save comment', error);
+        Alert.alert(t('transaction.saveFailed'));
+      },
+    });
+  };
+
+  // the repository trims, so whitespace-only edits do not count
+  const commentChanged = comment.trim() !== (transaction.description ?? '');
+
   const amount = formatCurrency(transaction.amountCents, transaction.currency);
   const amountText = `${valuePrefix}${amount}`;
   const categoryText = category ? nameOf(category) : '';
@@ -60,7 +76,10 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
     <>
       <Pressable
         accessibilityRole="button"
-        onPress={() => setDetailsOpen(true)}
+        onPress={() => {
+          setComment(transaction.description ?? '');
+          setDetailsOpen(true);
+        }}
         style={({ pressed }) => [
           styles.transactionItem,
           { backgroundColor: theme.canvas, opacity: pressed ? opacity.pressed : 1 },
@@ -86,6 +105,19 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
         closeLabel={t('common.cancel')}
         onClose={() => setDetailsOpen(false)}
       >
+        <FieldInput
+          label={t('transaction.comment')}
+          placeholder={t('transaction.commentPlaceholder')}
+          value={comment}
+          onChangeText={setComment}
+          multiline
+          maxLength={MAX_COMMENT_LENGTH}
+        />
+        <Button
+          label={t('transaction.save')}
+          disabled={!commentChanged || updateComment.isPending}
+          onPress={saveComment}
+        />
         <Button variant="secondary" label={t('transaction.delete')} onPress={confirmDelete} />
       </Sheet>
     </>

@@ -41,4 +41,25 @@ describe('TransactionsRepo', () => {
     await expect(TransactionsRepo.insert(transaction('t3', 'no-such-category'))).rejects.toThrow();
     expect(await TransactionsRepo.getById('t3')).toBeNull();
   });
+
+  it('stores a trimmed comment, and none when it is blank', async () => {
+    const food = transaction('t1', 'expense-food');
+    await TransactionsRepo.insert({ ...food, description: '  lunch  ' });
+    await TransactionsRepo.insert({ ...transaction('t2', 'expense-food'), description: '   ' });
+
+    expect((await TransactionsRepo.getById('t1'))?.description).toBe('lunch');
+    expect((await TransactionsRepo.getById('t2'))?.description).toBeUndefined();
+  });
+
+  it('updates a comment and the updatedAt time', async () => {
+    await TransactionsRepo.insert(transaction('t1', 'expense-food'));
+
+    await TransactionsRepo.updateDescription('t1', ' paid for both ');
+    const updated = await TransactionsRepo.getById('t1');
+    expect(updated?.description).toBe('paid for both');
+    expect(updated?.updatedAt.getTime()).toBeGreaterThan(at.getTime());
+
+    await TransactionsRepo.updateDescription('t1', '');
+    expect((await TransactionsRepo.getById('t1'))?.description).toBeUndefined();
+  });
 });

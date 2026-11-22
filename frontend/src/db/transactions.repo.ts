@@ -19,6 +19,9 @@ const toDomain = (row: SelectTransaction): Transaction => ({
   description: row.description ?? undefined,
 });
 
+/** Trimmed comment, or null when empty. */
+const normalizeComment = (text: string | undefined) => text?.trim() || null;
+
 const toDbInsert = (input: Transaction): InsertTransaction => ({
   id: input.id,
   type: input.type,
@@ -28,7 +31,7 @@ const toDbInsert = (input: Transaction): InsertTransaction => ({
   occurredAt: input.occurredAt.getTime(),
   createdAt: input.createdAt.getTime(),
   updatedAt: input.updatedAt.getTime(),
-  description: input.description ?? null,
+  description: normalizeComment(input.description),
 });
 
 export const TransactionsRepo = {
@@ -51,6 +54,13 @@ export const TransactionsRepo = {
 
   async insert(input: Transaction): Promise<void> {
     await db.insert(transactions).values(toDbInsert(input));
+  },
+
+  async updateDescription(id: string, description: string | undefined): Promise<void> {
+    await db
+      .update(transactions)
+      .set({ description: normalizeComment(description), updatedAt: Date.now() })
+      .where(eq(transactions.id, id));
   },
 
   async deleteById(id: string): Promise<void> {

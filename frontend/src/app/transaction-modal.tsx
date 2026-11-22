@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, Text } from 'react-native';
 import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import uuid from 'react-native-uuid';
@@ -35,6 +35,7 @@ export default function TransactionModal() {
     amountCents: number,
     occurredAt: Date,
     categoryId: string,
+    comment: string,
   ) => {
     const now = new Date();
     const transaction: Transaction = {
@@ -42,6 +43,7 @@ export default function TransactionModal() {
       type,
       categoryId,
       amountCents,
+      description: comment,
       currency,
       occurredAt,
       createdAt: now,
@@ -77,25 +79,36 @@ export default function TransactionModal() {
         ),
       }}/>
 
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text style={[typography.headline, styles.title, { color: theme.text }]}>
-          {type === 'income'
-            ? t('total.income')
-            : t('total.expense')
-          }
-        </Text>
-        <TransactionForm
-          transactionType={type}
-          onSubmit={handleSubmit}
-        />
-      </View>
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={[styles.screen, { backgroundColor: theme.background }]}
+      >
+        <ScrollView
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text style={[typography.headline, styles.title, { color: theme.text }]}>
+            {type === 'income'
+              ? t('total.income')
+              : t('total.expense')
+            }
+          </Text>
+          <TransactionForm
+            transactionType={type}
+            onSubmit={handleSubmit}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
+  },
+  container: {
+    flexGrow: 1,
     justifyContent: 'center',
     paddingVertical: spacing.xxl,
     paddingHorizontal: gutter,

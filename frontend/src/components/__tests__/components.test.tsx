@@ -105,6 +105,16 @@ describe('Field', () => {
     expect(box().borderColor).toBe(theme.accent);
   });
 
+  it('counts characters of a multi-line field against its limit', async () => {
+    await renderThemed(<FieldInput label="Comment" value="lunch" multiline maxLength={500} />);
+    expect(screen.getByText('5 / 500')).toBeOnTheScreen();
+  });
+
+  it('shows no counter on a single-line field', async () => {
+    await renderThemed(<FieldInput label="Amount" value="12" maxLength={10} />);
+    expect(screen.queryByText('2 / 10')).not.toBeOnTheScreen();
+  });
+
   it('fills fields with inset, never with the text color', async () => {
     await renderThemed(<FieldPicker label="Category" value="Food" onPress={() => {}} />);
 
