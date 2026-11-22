@@ -17,10 +17,19 @@ body{margin:0}
 <section role="dialog" aria-label="{{title}}" style="width: 100%; box-sizing: border-box; padding: 8px 16px 16px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; flex-direction: column; font-family: Roboto, system-ui, sans-serif; background: var(--canvas); color: var(--text)">
   <div aria-hidden="true" style="align-self: center; width: 32px; height: 4px; border-radius: var(--radius-full); opacity: 0.4; background: var(--text)"></div>
   <h2 style="margin: 0; padding: 12px 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 700">{{title}}</h2>
-  <dc-import name="Button" variant="secondary" size="lg" icon="" label="{{delete}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+  <div style="display: flex; flex-direction: column; gap: 16px">
+    <dc-import name="FieldInput" label="{{cm.label}}" placeholder="{{cm.placeholder}}" value="{{cm.value}}" multiline="{{ true }}" max-length="500" hint-size="100%,108px"></dc-import>
+    <dc-import name="Button" variant="primary" size="lg" icon="" label="{{cm.save}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+    <dc-import name="Button" variant="secondary" size="lg" icon="" label="{{delete}}" href="{{href}}" hint-size="100%,56px"></dc-import>
+  </div>
 </section>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"amount":{"editor":"text","default":"€42.00"},"category":{"editor":"text","default":"Food"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":152}}'>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"amount":{"editor":"text","default":"€42.00"},"category":{"editor":"text","default":"Food"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"comment":{"editor":"enum","options":["filled","empty"],"default":"filled"},"$preview":{"width":360,"height":380}}'>
+var CSTR = {
+  en: { comment: 'Comment', optional: 'Optional', save: 'Save', sample: 'Lunch with Anna at the market. Paid for both, she owes me half.' },
+  fi: { comment: 'Kommentti', optional: 'Valinnainen', save: 'Tallenna', sample: 'Lounas Annan kanssa torilla. Maksoin molempien puolesta, hän on velkaa puolet.' },
+  ru: { comment: 'Комментарий', optional: 'Необязательно', save: 'Сохранить', sample: 'Обед с Анной на рынке. Заплатил за двоих, она должна половину.' }
+};
 var DELETE = { en: 'Delete', fi: 'Poista', ru: 'Удалить' };
 class Component extends DCLogic {
   renderVals() {
@@ -29,6 +38,8 @@ class Component extends DCLogic {
     var sign = p.kind === 'income' ? '+' : '\u2212';
     return {
       title: sign + (p.amount ?? '€42.00') + ' \u00b7 ' + (p.category ?? 'Food'),
+      cm: (function () { var cs = CSTR[lang] || CSTR.en;
+        return { label: cs.comment, placeholder: cs.optional, value: p.comment === 'empty' ? '' : cs.sample, save: cs.save }; })(),
       delete: DELETE[lang], href: p.href || ''
     };
   }

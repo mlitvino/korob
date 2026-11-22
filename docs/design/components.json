@@ -57,7 +57,7 @@
     },
     "FieldInput": {
       "code": ["frontend/src/components/Field.tsx"],
-      "shared": ["label", "placeholder", "value", "error"],
+      "shared": ["label", "placeholder", "value", "error", "multiline", "maxLength"],
       "canvasOnly": ["state"],
       "codeOnly": ["style"]
     },
@@ -82,7 +82,7 @@
     "CategorySheet": {
       "code": ["frontend/src/components/Sheet.tsx", "frontend/src/features/transaction-form/components/TransactionForm.tsx"],
       "shared": [],
-      "canvasOnly": ["kind", "selected", "categories", "lang", "href"],
+      "canvasOnly": ["kind", "selected", "categories", "lang", "href", "addHref"],
       "codeOnly": ["visible", "title", "closeLabel", "onClose", "children"]
     },
     "CategoryEditorSheet": {
@@ -94,7 +94,7 @@
     "TransactionSheet": {
       "code": ["frontend/src/features/transaction-list/components/TransactionItem.tsx", "frontend/src/components/Sheet.tsx"],
       "shared": [],
-      "canvasOnly": ["kind", "amount", "category", "lang", "href"],
+      "canvasOnly": ["kind", "amount", "category", "comment", "lang", "href"],
       "codeOnly": ["visible", "title", "closeLabel", "onClose", "children"]
     }
   }

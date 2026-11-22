@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Time Picker</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="{{theme}}" data-font-scale="{{fontScale}}" style="position: relative; width: {{width}}px; height: 892px; overflow: hidden; font-family: Roboto, system-ui, sans-serif; background: var(--background); color: var(--text)">
+  <div aria-hidden="true" style="position: absolute; inset: 0">
+    <dc-import name="AddExpense" theme="{{theme}}" lang="{{lang}}" width="{{widthStr}}" font-scale="{{fontScale}}" hint-size="412px,892px"></dc-import>
+  </div>
+  <a href="AddExpense.dc.html" aria-label="{{s.cancel}}" style="position: absolute; inset: 0; background: var(--scrim)"></a>
+  <section role="dialog" aria-label="{{s.label}}" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 328px; box-sizing: border-box; padding: 24px 24px 12px; border-radius: 28px; display: flex; flex-direction: column; background: var(--elevated); color: var(--text)">
+    <span style="font-size: var(--type-caption-size); line-height: var(--type-caption-line); color: var(--picker-text)">{{s.label}}</span>
+    <div style="margin-top: 20px; display: flex; align-items: center; gap: 6px">
+      <div style="width: 96px; height: 72px; box-sizing: border-box; border-radius: var(--radius-sm); border: 2px solid var(--picker-text); display: flex; align-items: center; justify-content: center; font-size: 45px; background: var(--inset); color: var(--picker-text)">{{hh}}</div>
+      <span style="font-size: 45px">:</span>
+      <div style="width: 96px; height: 72px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 45px; background: var(--surface)">{{mm}}</div>
+      <sc-if value="{{is12}}" hint-placeholder-val="{{ true }}">
+        <div style="margin-left: 6px; width: 52px; height: 72px; box-sizing: border-box; border: 1px solid var(--separator); border-radius: var(--radius-sm); overflow: hidden; display: flex; flex-direction: column; font-size: var(--type-body-sm-size); font-weight: 600">
+          <span style="flex: 1; display: flex; align-items: center; justify-content: center; {{amCss}}">AM</span>
+          <span style="height: 1px; background: var(--separator)"></span>
+          <span style="flex: 1; display: flex; align-items: center; justify-content: center; {{pmCss}}">PM</span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="position: relative; margin: 24px auto 0; width: 256px; height: 256px; border-radius: var(--radius-full); background: var(--surface)">
+      <svg width="256" height="256" viewBox="0 0 256 256" aria-hidden="true" style="position: absolute; inset: 0; color: var(--action-primary)">
+        <line x1="128" y1="128" x2="{{hand.x}}" y2="{{hand.y}}" stroke="currentColor" stroke-width="2"></line>
+        <circle cx="{{hand.x}}" cy="{{hand.y}}" r="{{hand.r}}" fill="currentColor"></circle>
+        <circle cx="128" cy="128" r="4" fill="currentColor"></circle>
+      </svg>
+      <sc-for list="{{nums}}" as="n" hint-placeholder-count="12">
+        <span style="{{n.css}}">{{n.label}}</span>
+      </sc-for>
+    </div>
+    <div style="margin-top: 12px; display: flex; align-items: center; justify-content: space-between">
+      <span style="width: var(--touch-target); height: var(--touch-target); display: flex; align-items: center; justify-content: center; color: var(--picker-text)"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 7v10H4V7h16m0-2H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2zm0 3h2v2h-2zM8 8h2v2H8zm0 3h2v2H8zm-3 0h2v2H5zm0-3h2v2H5zm3 6h8v2H8zm6-3h2v2h-2zm0-3h2v2h-2zm3 3h2v2h-2zm0-3h2v2h-2z"></path></svg></span>
+      <div style="display: flex; gap: 4px">
+        <a href="AddExpense.dc.html" style="min-height: 40px; padding: 0 12px; display: flex; align-items: center; text-decoration: none; font-size: var(--type-body-sm-size); font-weight: 600; color: var(--action-primary)">{{s.cancel}}</a>
+        <a href="AddExpense.dc.html" style="min-height: 40px; padding: 0 12px; display: flex; align-items: center; text-decoration: none; font-size: var(--type-body-sm-size); font-weight: 600; color: var(--action-primary)">{{s.done}}</a>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["global","dark","light","black","black_yellow"],"default":"global"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
+var THEMES = ['dark', 'light', 'black', 'black_yellow'];
+// TimePickerModal props from TransactionForm: label = Time, cancel = Cancel, confirm = Done; 24 h unless English
+var TSTR = {
+  en: { label: 'Time', cancel: 'Cancel', done: 'Done' },
+  fi: { label: 'Aika', cancel: 'Peruuta', done: 'Valmis' },
+  ru: { label: 'Время', cancel: 'Отмена', done: 'Готово' }
+};
+function pad(n) { return String(n).padStart(2, '0'); }
+class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
+  componentDidMount() {
+    // Canvas preview: follow the Global theme board (shared per-app storage).
+    var self = this, read = function () {
+      var v = null;
+      try { v = localStorage.getItem('korob-canvas-global-theme'); } catch (e) { v = null; }
+      return ['dark', 'light', 'black', 'black_yellow'].indexOf(v) >= 0 ? v : 'dark';
+    };
+    this.onGlobal = function () { self.setState({ globalTheme: read() }); };
+    this.onStorage = function (e) { if (e.key === 'korob-canvas-global-theme') self.onGlobal(); };
+    window.addEventListener('storage', this.onStorage);
+    try { this.bc = new BroadcastChannel('korob-canvas-global-theme'); this.bc.onmessage = this.onGlobal; } catch (e) { this.bc = null; }
+    this.onGlobal();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.onStorage);
+    if (this.bc) this.bc.close();
+  }
+  globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
+  renderVals() {
+    var p = this.props;
+    var lang = ['en', 'fi', 'ru'].indexOf(p.lang) >= 0 ? p.lang : 'en';
+    var t = TSTR[lang], now = new Date(), h = now.getHours(), is12 = lang === 'en';
+    var place = function (radius, k) { var a = k * Math.PI / 6; return { x: 128 + radius * Math.sin(a), y: 128 - radius * Math.cos(a) }; };
+    var nums = [], hand;
+    var mark = function (label, pos, size, on) {
+      return { label: label, css: 'position: absolute; left: ' + (pos.x - 20) + 'px; top: ' + (pos.y - 20) + 'px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: ' + size + '; color: ' + (on ? 'var(--on-action-primary)' : 'var(--text)') + ';' };
+    };
+    if (is12) {
+      // 12-hour face: one ring, 12 at the top
+      var h12 = h % 12 || 12;
+      for (var k = 0; k < 12; k++) { var v = k || 12; nums.push(mark(String(v), place(102, k), 'var(--type-body-size)', v === h12)); }
+      var e = place(102, h12 % 12); hand = { x: e.x, y: e.y, r: 24 };
+    } else {
+      // 24-hour face (react-native-paper-dates): outer 1–11 with 00 on top, inner 13–23 with 12 on top
+      for (var k2 = 0; k2 < 12; k2++) {
+        nums.push(mark(k2 ? String(k2) : '00', place(102, k2), 'var(--type-body-size)', h === k2));
+        nums.push(mark(k2 ? String(k2 + 12) : '12', place(64, k2), 'var(--type-caption-size)', h === (k2 ? k2 + 12 : 12)));
+      }
+      var outer = h < 12, e2 = place(outer ? 102 : 64, h % 12); hand = { x: e2.x, y: e2.y, r: outer ? 24 : 18 };
+    }
+    var on = 'background: var(--inset); color: var(--picker-text);';
+    return {
+      theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : this.globalTheme(),
+      lang: lang,
+      width: p.width === '360' ? 360 : 412, widthStr: p.width === '360' ? '360' : '412',
+      fontScale: p.fontScale === '1.3' ? '1.3' : '1',
+      s: t, is12: is12, hand: hand, nums: nums,
+      hh: is12 ? pad(h % 12 || 12) : pad(h), mm: pad(now.getMinutes()),
+      amCss: h < 12 ? on : '', pmCss: h >= 12 ? on : ''
+    };
+  }
+}
+</script>
+</body>
+</html>

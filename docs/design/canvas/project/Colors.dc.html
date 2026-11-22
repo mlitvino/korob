@@ -38,7 +38,7 @@ body{margin:0}
         <sc-for list="{{row.cells}}" as="cell" hint-placeholder-count="4">
           <div data-theme="{{cell.theme}}" style="display: flex; align-items: center; gap: 10px; padding: 6px">
             <div style="width: 36px; height: 36px; flex: none; border-radius: 6px; border: 1px solid #4a4a50; background: {{cell.swatch}}"></div>
-            <span style="font-family: 'Roboto Mono', monospace; font-size: 13px">{{cell.hex}}</span>
+            <span style="font-family: 'Roboto Mono', monospace; font-size: 13px; color: #ececee">{{cell.hex}}</span>
           </div>
         </sc-for>
       </div>

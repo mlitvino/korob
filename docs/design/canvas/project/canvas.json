@@ -17,7 +17,7 @@
       "page": "screens",
       "title": "Add income (modal)",
       "w": 412,
-      "x": 1224,
+      "x": 3660,
       "y": 1292
     },
     "Appearance.dc.html": {
@@ -153,13 +153,22 @@
       "x": 612,
       "y": 2444
     },
+    "DatePicker.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Date picker",
+      "w": 412,
+      "x": 2036,
+      "y": 1292
+    },
     "Drawer.dc.html": {
       "h": 892,
       "is_interactive": true,
       "page": "screens",
       "title": "Drawer open",
       "w": 412,
-      "x": 612,
+      "x": 1224,
       "y": 140
     },
     "DrawerItem.dc.html": {
@@ -192,7 +201,7 @@
       "page": "screens",
       "title": "Global theme (canvas preview)",
       "w": 412,
-      "x": 2848,
+      "x": 3460,
       "y": 140
     },
     "Header.dc.html": {
@@ -203,6 +212,15 @@
       "x": 976,
       "y": 3080
     },
+    "IncomeCategoryPicker.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Income category picker sheet",
+      "w": 412,
+      "x": 4272,
+      "y": 1292
+    },
     "Language.dc.html": {
       "h": 892,
       "is_interactive": true,
@@ -212,14 +230,32 @@
       "x": 3660,
       "y": 2444
     },
+    "Loading.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Loading (app start)",
+      "w": 412,
+      "x": 0,
+      "y": 140
+    },
     "Main.dc.html": {
       "h": 892,
       "is_interactive": true,
       "page": "screens",
       "title": "Home",
       "w": 412,
-      "x": 0,
+      "x": 612,
       "y": 140
+    },
+    "PickerCategoryEditor.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Category editor from the picker",
+      "w": 412,
+      "x": 1224,
+      "y": 1292
     },
     "Settings.dc.html": {
       "h": 892,
@@ -246,6 +282,15 @@
       "x": 2480,
       "y": 0
     },
+    "TimePicker.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Time picker",
+      "w": 412,
+      "x": 2848,
+      "y": 1292
+    },
     "TotalsCard.dc.html": {
       "h": 144,
       "page": "components",
@@ -268,7 +313,7 @@
       "page": "screens",
       "title": "Transaction details sheet",
       "w": 412,
-      "x": 2036,
+      "x": 2648,
       "y": 140
     },
     "TransactionFilterBar.dc.html": {
@@ -288,7 +333,7 @@
       "y": 3957
     },
     "TransactionSheet.dc.html": {
-      "h": 152,
+      "h": 380,
       "page": "components",
       "title": "TransactionSheet",
       "w": 360,
@@ -301,7 +346,7 @@
       "page": "screens",
       "title": "Transactions",
       "w": 412,
-      "x": 1424,
+      "x": 2036,
       "y": 140
     },
     "Typography.dc.html": {
@@ -352,9 +397,66 @@
     "trigCategories",
     "trigEditor",
     "trigAppearance",
-    "trigLanguage"
+    "trigLanguage",
+    "trigLoading",
+    "trigPickerAdd",
+    "trigDate",
+    "trigTime",
+    "trigIncomeCategory"
   ],
   "notes": {
+    "laneAdd": {
+      "kind": "title1",
+      "maxW": 4684,
+      "page": "screens",
+      "text": "Add a transaction",
+      "w": 2000,
+      "x": 0,
+      "y": 1152
+    },
+    "laneHome": {
+      "kind": "title1",
+      "maxW": 1636,
+      "page": "screens",
+      "text": "Home & menu",
+      "w": 1636,
+      "x": 0,
+      "y": 0
+    },
+    "laneSettings": {
+      "kind": "title1",
+      "maxW": 4072,
+      "page": "screens",
+      "text": "Settings",
+      "w": 2000,
+      "x": 0,
+      "y": 2304
+    },
+    "laneTools": {
+      "kind": "title1",
+      "maxW": 412,
+      "page": "screens",
+      "text": "Canvas preview",
+      "w": 412,
+      "x": 3460,
+      "y": 0
+    },
+    "laneTransactions": {
+      "kind": "title1",
+      "maxW": 1024,
+      "page": "screens",
+      "text": "Transactions",
+      "w": 1024,
+      "x": 2036,
+      "y": 0
+    },
+    "missingScreens": {
+      "page": "screens",
+      "text": "Not in the app, so nothing to mirror\nEmpty Transactions list: the filter bar over an empty list, no message (Transactions board, tweak \"transactions: none\").\nInvalid or empty amount: Done does nothing and no error is shown.",
+      "w": 520,
+      "x": 4884,
+      "y": 1292
+    },
     "primitives": {
       "kind": "title1",
       "maxW": 4584,
@@ -415,7 +517,7 @@
     },
     "specField": {
       "page": "components",
-      "text": "FieldInput · FieldPicker\nInput: label · placeholder · value · error (message, expense color) · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
+      "text": "FieldInput · FieldPicker\nInput: label · placeholder · value · error (message, expense color) · multiline (wraps body text) · maxLength (counter under a multiline field) · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
       "w": 328,
       "x": 408,
       "y": 4157
@@ -464,51 +566,16 @@
     },
     "specTransactionSheet": {
       "page": "components",
-      "text": "TransactionSheet\nCanvas-only composite: Sheet + Delete button, opened by tapping a transaction row\nProps: kind income | expense · amount · category · lang · href (canvas)\nTitle: signed amount · category; body is only Delete for now (asks to confirm)\nTokens: canvas, text, radius-lg, type-title\nCode: features/transaction-list/components/TransactionItem.tsx, components/Sheet.tsx\nContract: docs/design/components.json",
+      "text": "TransactionSheet\nCanvas-only composite: Sheet + comment field + Save + Delete, opened by tapping a transaction row\nProps: kind income | expense · amount · category · comment filled | empty · lang · href (canvas)\nTitle: signed amount · category; comment (multiline, max 500) with Save; Delete asks to confirm\nTokens: canvas, text, radius-lg, type-title\nCode: features/transaction-list/components/TransactionItem.tsx, components/Sheet.tsx\nContract: docs/design/components.json",
       "w": 360,
       "x": 2504,
       "y": 4129
     },
-    "missingScreens": {
+    "trigAppearance": {
       "page": "screens",
-      "text": "Not designed yet\nIncome category picker · category editor opened from the picker’s + chip · empty Transactions list · invalid-amount error · date and time dialogs · loading screen",
-      "w": 600,
-      "x": 1836,
-      "y": 1292
-    },
-    "trigMenu": {
-      "page": "screens",
-      "text": "menu button →",
-      "w": 176,
-      "x": 424,
-      "y": 164
-    },
-    "trigRow": {
-      "page": "screens",
-      "text": "tap a row →",
-      "w": 176,
-      "x": 1848,
-      "y": 164
-    },
-    "trigCategory": {
-      "page": "screens",
-      "text": "tap the Category field →",
-      "w": 176,
-      "x": 424,
-      "y": 1316
-    },
-    "trigIncome": {
-      "page": "screens",
-      "text": "Add income opens from Home’s + button. No picker board yet.",
-      "w": 176,
-      "x": 1036,
-      "y": 1316
-    },
-    "trigCurrency": {
-      "page": "screens",
-      "text": "from Settings: tap Currency →",
-      "w": 176,
-      "x": 424,
+      "text": "from Settings: tap Appearance →",
+      "w": 376,
+      "x": 2460,
       "y": 2468
     },
     "trigCategories": {
@@ -518,6 +585,27 @@
       "x": 1036,
       "y": 2468
     },
+    "trigCategory": {
+      "page": "screens",
+      "text": "tap the Category field →",
+      "w": 176,
+      "x": 424,
+      "y": 1316
+    },
+    "trigCurrency": {
+      "page": "screens",
+      "text": "from Settings: tap Currency →",
+      "w": 176,
+      "x": 424,
+      "y": 2468
+    },
+    "trigDate": {
+      "page": "screens",
+      "text": "from the form: tap Date →",
+      "w": 376,
+      "x": 1648,
+      "y": 1316
+    },
     "trigEditor": {
       "page": "screens",
       "text": "tap a chip or + →",
@@ -525,12 +613,19 @@
       "x": 1848,
       "y": 2468
     },
-    "trigAppearance": {
+    "trigIncome": {
       "page": "screens",
-      "text": "from Settings: tap Appearance →",
+      "text": "from Home: tap + →",
       "w": 376,
-      "x": 2460,
-      "y": 2468
+      "x": 3272,
+      "y": 1316
+    },
+    "trigIncomeCategory": {
+      "page": "screens",
+      "text": "tap the Category field →",
+      "w": 176,
+      "x": 4084,
+      "y": 1316
     },
     "trigLanguage": {
       "page": "screens",
@@ -539,63 +634,58 @@
       "x": 3272,
       "y": 2468
     },
-    "laneHome": {
-      "kind": "title1",
-      "maxW": 900,
+    "trigLoading": {
       "page": "screens",
-      "text": "Home & menu",
-      "w": 900,
-      "x": 0,
-      "y": 0
+      "text": "app start, while data loads →",
+      "w": 176,
+      "x": 424,
+      "y": 164
     },
-    "laneTransactions": {
-      "kind": "title1",
-      "maxW": 900,
+    "trigMenu": {
       "page": "screens",
-      "text": "Transactions",
-      "w": 900,
-      "x": 1424,
-      "y": 0
+      "text": "menu button →",
+      "w": 176,
+      "x": 1036,
+      "y": 164
     },
-    "laneTools": {
-      "kind": "title1",
-      "maxW": 412,
+    "trigPickerAdd": {
       "page": "screens",
-      "text": "Canvas preview",
-      "w": 412,
-      "x": 2848,
-      "y": 0
+      "text": "tap + Add category →",
+      "w": 176,
+      "x": 1036,
+      "y": 1316
     },
-    "laneAdd": {
-      "kind": "title1",
-      "maxW": 1636,
+    "trigRow": {
       "page": "screens",
-      "text": "Add a transaction",
-      "w": 1636,
-      "x": 0,
-      "y": 1152
+      "text": "tap a row →",
+      "w": 176,
+      "x": 2460,
+      "y": 164
     },
-    "laneSettings": {
-      "kind": "title1",
-      "maxW": 4072,
+    "trigTime": {
       "page": "screens",
-      "text": "Settings",
-      "w": 4072,
-      "x": 0,
-      "y": 2304
+      "text": "from the form: tap Time →",
+      "w": 376,
+      "x": 2460,
+      "y": 1316
     }
   },
   "order": [
     "Colors.dc.html",
     "Typography.dc.html",
     "SpacingRadius.dc.html",
+    "Loading.dc.html",
     "Main.dc.html",
     "Drawer.dc.html",
     "Transactions.dc.html",
     "TransactionDetails.dc.html",
     "AddExpense.dc.html",
     "CategoryPicker.dc.html",
+    "PickerCategoryEditor.dc.html",
+    "DatePicker.dc.html",
+    "TimePicker.dc.html",
     "AddIncome.dc.html",
+    "IncomeCategoryPicker.dc.html",
     "Settings.dc.html",
     "Currency.dc.html",
     "Categories.dc.html",

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Korob Date Picker</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div data-theme="{{theme}}" data-font-scale="{{fontScale}}" style="display: flex; flex-direction: column; width: {{width}}px; height: 892px; overflow: hidden; font-family: Roboto, system-ui, sans-serif; background: var(--elevated); color: var(--text)">
+  <div style="height: 56px; padding: 0 4px; display: flex; align-items: center; justify-content: space-between">
+    <a href="AddExpense.dc.html" aria-label="{{s.close}}" style="width: var(--touch-target); height: var(--touch-target); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; color: var(--text)"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></a>
+    <a href="AddExpense.dc.html" style="min-height: 40px; padding: 0 12px; border-radius: var(--radius-full); display: flex; align-items: center; text-decoration: none; font-size: var(--type-body-sm-size); font-weight: 600; color: var(--action-primary)">{{s.save}}</a>
+  </div>
+  <div style="padding: 0 24px 12px; display: flex; flex-direction: column; gap: 4px">
+    <span style="font-size: var(--type-caption-size); line-height: var(--type-caption-line); color: var(--picker-text)">{{s.select}}</span>
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <span style="font-size: 32px; line-height: 40px">{{headline}}</span>
+      <span style="width: var(--touch-target); height: var(--touch-target); display: flex; align-items: center; justify-content: center; color: var(--text)"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83a.996.996 0 0 0 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"></path></svg></span>
+    </div>
+  </div>
+  <div style="height: 1px; background: var(--separator)"></div>
+  <div style="padding: 8px 12px 0 24px; display: flex; align-items: center; justify-content: space-between">
+    <span style="font-size: var(--type-body-sm-size); font-weight: 600">{{month}} ▾</span>
+    <div style="display: flex">
+      <span style="width: var(--touch-target); height: var(--touch-target); display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></span>
+      <span style="width: var(--touch-target); height: var(--touch-target); display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></span>
+    </div>
+  </div>
+  <div style="padding: 0 12px; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr))">
+    <sc-for list="{{weekdays}}" as="w" hint-placeholder-count="7">
+      <span style="height: 40px; display: flex; align-items: center; justify-content: center; font-size: var(--type-caption-size); color: var(--picker-text)">{{w.label}}</span>
+    </sc-for>
+    <sc-for list="{{cells}}" as="c" hint-placeholder-count="35">
+      <div style="height: 48px; display: flex; align-items: center; justify-content: center"><span style="{{c.css}}">{{c.label}}</span></div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["global","dark","light","black","black_yellow"],"default":"global"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"width":{"editor":"enum","options":["412","360"],"default":"412"},"fontScale":{"editor":"enum","options":["1","1.3"],"default":"1"},"$preview":{"width":412,"height":892}}'>
+var THEMES = ['dark', 'light', 'black', 'black_yellow'];
+var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
+// react-native-paper-dates 0.24 translations, as registered in frontend/src/locales/index.ts
+var DSTR = {
+  en: { select: 'Select date', save: 'Save', close: 'Close' },
+  fi: { select: 'Valitse päivämäärä', save: 'Tallenna', close: 'Sulje' },
+  ru: { select: 'Выбор даты', save: 'Сохранить', close: 'Закрыть' }
+};
+class Component extends DCLogic {
+  // <generated:global-theme> edit docs/design/canvas/blocks/global-theme.block, then yarn design:screens
+  componentDidMount() {
+    // Canvas preview: follow the Global theme board (shared per-app storage).
+    var self = this, read = function () {
+      var v = null;
+      try { v = localStorage.getItem('korob-canvas-global-theme'); } catch (e) { v = null; }
+      return ['dark', 'light', 'black', 'black_yellow'].indexOf(v) >= 0 ? v : 'dark';
+    };
+    this.onGlobal = function () { self.setState({ globalTheme: read() }); };
+    this.onStorage = function (e) { if (e.key === 'korob-canvas-global-theme') self.onGlobal(); };
+    window.addEventListener('storage', this.onStorage);
+    try { this.bc = new BroadcastChannel('korob-canvas-global-theme'); this.bc.onmessage = this.onGlobal; } catch (e) { this.bc = null; }
+    this.onGlobal();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.onStorage);
+    if (this.bc) this.bc.close();
+  }
+  globalTheme() { return (this.state && this.state.globalTheme) || 'dark'; }
+  // </generated:global-theme>
+  renderVals() {
+    var p = this.props;
+    var lang = ['en', 'fi', 'ru'].indexOf(p.lang) >= 0 ? p.lang : 'en';
+    var t = DSTR[lang], loc = LOCALE[lang], now = new Date();
+    var first = new Date(now.getFullYear(), now.getMonth(), 1);
+    var days = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    var month = new Intl.DateTimeFormat(loc, { month: 'long', year: 'numeric' }).format(now);
+    var base = 'width: 40px; height: 40px; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: var(--type-body-sm-size);';
+    var cells = [];
+    for (var i = 0; i < first.getDay(); i++) cells.push({ label: '', css: base });
+    for (var d = 1; d <= days; d++) cells.push({ label: String(d), css: base + (d === now.getDate() ? ' background: var(--action-primary); color: var(--on-action-primary);' : '') });
+    // the app does not pass startWeekOnMonday, so every language starts on Sunday
+    var weekdays = [0, 1, 2, 3, 4, 5, 6].map(function (i) { return { label: new Intl.DateTimeFormat(loc, { weekday: 'narrow' }).format(new Date(2026, 10, 1 + i)) }; });
+    return {
+      theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : this.globalTheme(),
+      lang: lang,
+      width: p.width === '360' ? 360 : 412, widthStr: p.width === '360' ? '360' : '412',
+      fontScale: p.fontScale === '1.3' ? '1.3' : '1',
+      s: t, headline: new Intl.DateTimeFormat(loc, { month: 'short', day: 'numeric' }).format(now),
+      month: month.charAt(0).toUpperCase() + month.slice(1), weekdays: weekdays, cells: cells
+    };
+  }
+}
+</script>
+</body>
+</html>

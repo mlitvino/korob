@@ -24,7 +24,7 @@ body{margin:0}
       </div>
     </sc-for>
     <div style="max-width: 100%; min-width: 0; display: flex">
-      <dc-import name="CategoryChip" variant="add" lang="{{lang}}" hint-size="auto,48px"></dc-import>
+      <dc-import name="CategoryChip" variant="add" lang="{{lang}}" href="{{addHref}}" hint-size="auto,48px"></dc-import>
     </div>
   </div>
   <div style="margin-top: 16px">
@@ -32,7 +32,7 @@ body{margin:0}
   </div>
 </section>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"selected":{"editor":"text","default":"food"},"categories":{"editor":"enum","options":["some","none"],"default":"some"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"$preview":{"width":360,"height":560}}'>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["expense","income"],"default":"expense"},"selected":{"editor":"text","default":"food"},"categories":{"editor":"enum","options":["some","none"],"default":"some"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"href":{"editor":null,"default":""},"addHref":{"editor":null,"default":""},"$preview":{"width":360,"height":560}}'>
 var KEYS = {
   expense: ['food', 'transport', 'housing', 'entertainment', 'shopping', 'health', 'other'],
   income: ['salary', 'freelance', 'gift', 'investment', 'other']
@@ -51,7 +51,7 @@ class Component extends DCLogic {
     var keys = this.props.categories === 'none' ? [] : (KEYS[this.props.kind] || KEYS.expense);
     var sel = String(this.props.selected ?? keys[0] ?? '').toLowerCase();
     return {
-      title: STR[lang][0], done: STR[lang][1], href: this.props.href || '', lang: lang,
+      title: STR[lang][0], done: STR[lang][1], href: this.props.href || '', addHref: this.props.addHref || '', lang: lang,
       rows: keys.map(function (k, i) {
         return { label: CAT[lang][k], selected: k === sel, position: i === 0 ? 'first' : i === keys.length - 1 ? 'last' : 'middle' };
       })

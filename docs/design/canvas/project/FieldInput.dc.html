@@ -18,14 +18,22 @@ body{margin:0}
 <div style="width: 100%; display: flex; flex-direction: column; gap: 4px; font-family: Roboto, system-ui, sans-serif">
 <label class="{{stateClass}}" style="width: 100%; min-height: 64px; box-sizing: border-box; padding: 8px 16px; border-radius: var(--radius-sm); border: 2px solid transparent; display: flex; flex-direction: column; justify-content: center; font-family: Roboto, system-ui, sans-serif; background: var(--inset); color: var(--text)">
   <span class="is-secondary" style="font-size: var(--type-caption-size); line-height: var(--type-caption-line)">{{label}}</span>
+  <sc-if value="{{single}}" hint-placeholder-val="{{ true }}">
   <input class="kf-input" type="text" inputmode="decimal" placeholder="{{placeholder}}" value="{{value}}" style="width: 100%; padding: 0; border: 0; outline: 0; font-family: inherit; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 400; background: transparent; color: inherit">
+  </sc-if>
+  <sc-if value="{{multi}}" hint-placeholder-val="{{ false }}">
+    <span class="{{multiClass}}" style="min-height: calc(2 * var(--type-body-line)); font-size: var(--type-body-size); line-height: var(--type-body-line); white-space: pre-wrap">{{multiText}}</span>
+  </sc-if>
 </label>
 <sc-if value="{{hasError}}" hint-placeholder-val="{{ false }}">
   <span role="alert" style="font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-line); color: var(--expense)">{{error}}</span>
 </sc-if>
+<sc-if value="{{hasCounter}}" hint-placeholder-val="{{ false }}">
+  <span class="is-secondary" style="align-self: flex-end; font-size: var(--type-caption-size); line-height: var(--type-caption-line)">{{counter}}</span>
+</sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"Amount"},"placeholder":{"editor":"text","default":"Enter amount"},"value":{"editor":"text","default":""},"error":{"editor":"text","default":""},"state":{"editor":"enum","options":["default","focused"],"default":"default"},"$preview":{"width":328,"height":64}}'>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"Amount"},"placeholder":{"editor":"text","default":"Enter amount"},"value":{"editor":"text","default":""},"error":{"editor":"text","default":""},"multiline":{"editor":"boolean","default":false},"maxLength":{"editor":"text","default":""},"state":{"editor":"enum","options":["default","focused"],"default":"default"},"$preview":{"width":328,"height":64}}'>
 class Component extends DCLogic {
   renderVals() {
     return {
@@ -33,7 +41,13 @@ class Component extends DCLogic {
       label: this.props.label ?? 'Amount',
       placeholder: this.props.placeholder ?? 'Enter amount',
       value: this.props.value || '',
-      error: this.props.error || '', hasError: !!this.props.error
+      error: this.props.error || '', hasError: !!this.props.error,
+      // multiline: wraps body-size text; with maxLength a counter shows under the field, as in the code
+      single: !this.props.multiline, multi: !!this.props.multiline,
+      multiText: this.props.value || this.props.placeholder || '',
+      multiClass: this.props.value ? '' : 'is-secondary',
+      hasCounter: !!this.props.multiline && !!this.props.maxLength,
+      counter: String((this.props.value || '').length) + ' / ' + this.props.maxLength
     };
   }
 }
