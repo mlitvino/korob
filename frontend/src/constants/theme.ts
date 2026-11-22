@@ -33,6 +33,7 @@ export const roleSources = {
   onActionSecondary: 'text',
   selection: 'accent',
   focus: 'accent',
+  badge: 'accent',
 } as const satisfies Record<string, keyof ThemeColor>;
 
 export type ThemeRole = keyof typeof roleSources;

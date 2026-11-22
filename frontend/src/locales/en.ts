@@ -89,6 +89,8 @@ const en: LocaleResource = {
       openMenu: 'Open menu',
       back: 'Back',
       transactions: 'Transactions',
+      updates: 'Updates',
+      updatesNew: 'Updates, new',
       settings: 'Settings',
     },
     total: {

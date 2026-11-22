@@ -26,9 +26,12 @@
       "codeOnly": ["icon", "onPress", "style"]
     },
     "DrawerItem": {
-      "code": ["frontend/src/app/(drawer)/_layout.tsx"],
+      "code": [
+        "frontend/src/app/(drawer)/_layout.tsx",
+        "frontend/src/features/updates/components/UpdatesDrawerLabel.tsx"
+      ],
       "shared": [],
-      "canvasOnly": ["active", "state", "label", "href"],
+      "canvasOnly": ["active", "state", "label", "badge", "href"],
       "codeOnly": []
     },
     "TotalsCard": {

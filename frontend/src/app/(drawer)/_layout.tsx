@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { radius, touchTarget, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import DrawerMenuButton from '@/components/DrawerMenuButton';
+import { UpdatesDrawerLabel } from '@/features/updates/components/UpdatesDrawerLabel';
 
 const SWIPE_EDGE_WIDTH_RATIO = 0.2;
 const DRAWER_WIDTH = 280;
@@ -43,6 +44,13 @@ export default function Layout() {
         options={{
           title: t('nav.transactions'),
           drawerLabel: t('nav.transactions'),
+        }}
+      />
+      <Drawer.Screen
+        name={'updates'}
+        options={{
+          title: t('nav.updates'),
+          drawerLabel: ({ color }) => <UpdatesDrawerLabel color={color} />,
         }}
       />
       <Drawer.Screen

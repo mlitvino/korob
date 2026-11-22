@@ -87,6 +87,8 @@ export type LocaleResource = {
       openMenu: string;
       back: string;
       transactions: string;
+      updates: string;
+      updatesNew: string;
       settings: string;
     };
     total: {

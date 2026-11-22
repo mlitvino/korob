@@ -89,6 +89,8 @@ const fi: LocaleResource = {
       openMenu: 'Avaa valikko',
       back: 'Takaisin',
       transactions: 'Tapahtumat',
+      updates: 'Päivitykset',
+      updatesNew: 'Päivitykset, uusia',
       settings: 'Asetukset',
     },
     total: {

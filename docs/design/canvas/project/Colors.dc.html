@@ -102,7 +102,7 @@ var TOKENS = [
   ['separator', 'separator', 'Dividers and outlines'],
   ['income', 'income', 'Income amounts, + button'],
   ['expense', 'expense', 'Expense amounts, − button'],
-  ['accent', 'accent', 'App accent; source of the action-primary, selection and focus roles'],
+  ['accent', 'accent', 'App accent; source of the action-primary, selection, focus and badge roles'],
   ['pickerText', 'picker-text', 'Date/time picker text']
 ];
 // [role, CSS variable, palette source, used for]
@@ -112,7 +112,8 @@ var ROLES = [
   ['actionSecondary', 'action-secondary', 'elevated', 'Secondary button fill'],
   ['onActionSecondary', 'on-action-secondary', 'text', 'Text on the secondary button'],
   ['selection', 'selection', 'accent', 'Selected-option checkmark'],
-  ['focus', 'focus', 'accent', 'Focus ring, cursor and text selection in fields']
+  ['focus', 'focus', 'accent', 'Focus ring, cursor and text selection in fields'],
+  ['badge', 'badge', 'accent', 'New-updates dot in the drawer']
 ];
 // [label, needs, foreground, background, foreground opacity]
 var CHECKS = [
@@ -123,7 +124,9 @@ var CHECKS = [
   ['expense on card (3.0)', 3, 'expense', 'canvas', 1],
   ['chip outline on background (3.0)', 3, 'outline', 'background', 1],
   ['chip outline on sheet (3.0)', 3, 'outline', 'canvas', 1],
-  ['focus ring on fields (3.0)', 3, 'focus', 'inset', 1]
+  ['focus ring on fields (3.0)', 3, 'focus', 'inset', 1],
+  ['badge dot on drawer (3.0)', 3, 'badge', 'canvas', 1],
+  ['badge dot on active drawer item (3.0)', 3, 'badge', 'inset', 1]
 ];
 var PASS = '#7fd6a8', FAIL = '#ff8a80';
 function rgba(hex) {

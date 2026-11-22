@@ -77,5 +77,8 @@ describe('Themes', () => {
     // Focus ring in fields, selection mark on grouped rows.
     expect(contrast(t.focus, t.inset, t.background)).toBeGreaterThanOrEqual(3);
     expect(contrast(t.selection, t.surface, t.background)).toBeGreaterThanOrEqual(3);
+    // New-updates dot in the drawer, on the drawer background and on the active item.
+    expect(contrast(t.badge, t.canvas, t.canvas)).toBeGreaterThanOrEqual(3);
+    expect(contrast(t.badge, t.inset, t.canvas)).toBeGreaterThanOrEqual(3);
   });
 });

@@ -14,15 +14,16 @@
 body{margin:0}
 </style>
 </helmet>
-<a href="{{href}}" class="{{stateClass}}" aria-current="{{current}}" style="width: 100%; min-height: var(--touch-target); box-sizing: border-box; padding: 0 16px; border-radius: var(--radius-full); display: flex; align-items: center; text-decoration: none; font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-size); line-height: var(--type-body-line); font-weight: 600; background: {{bg}}; color: var(--text)">{{label}}</a>
+<a href="{{href}}" class="{{stateClass}}" aria-current="{{current}}" style="width: 100%; min-height: var(--touch-target); box-sizing: border-box; padding: 0 16px; border-radius: var(--radius-full); display: flex; align-items: center; gap: var(--spacing-sm); text-decoration: none; font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-size); line-height: var(--type-body-line); font-weight: 600; background: {{bg}}; color: var(--text)">{{label}}<span aria-hidden="true" style="display: {{dotDisplay}}; width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--badge)"></span></a>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"boolean","default":true},"state":{"editor":"enum","options":["default","pressed"],"default":"default"},"label":{"editor":"text","default":"Home"},"href":{"editor":null,"default":""},"$preview":{"width":280,"height":48}}'>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"boolean","default":true},"state":{"editor":"enum","options":["default","pressed"],"default":"default"},"label":{"editor":"text","default":"Home"},"badge":{"editor":"boolean","default":false},"href":{"editor":null,"default":""},"$preview":{"width":280,"height":48}}'>
 class Component extends DCLogic {
   renderVals() {
     var active = this.props.active ?? true;
     return {
       bg: active ? 'var(--inset)' : 'transparent',
       current: active ? 'page' : 'false',
+      dotDisplay: this.props.badge ? 'block' : 'none',
       href: this.props.href || '#',
       stateClass: this.props.state === 'pressed' ? 'is-pressed' : '',
       label: this.props.label ?? 'Home'

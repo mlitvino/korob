@@ -201,7 +201,7 @@
       "page": "screens",
       "title": "Global theme (canvas preview)",
       "w": 412,
-      "x": 3460,
+      "x": 4072,
       "y": 140
     },
     "Header.dc.html": {
@@ -313,7 +313,7 @@
       "page": "screens",
       "title": "Transaction details sheet",
       "w": 412,
-      "x": 2648,
+      "x": 3260,
       "y": 140
     },
     "TransactionFilterBar.dc.html": {
@@ -346,7 +346,7 @@
       "page": "screens",
       "title": "Transactions",
       "w": 412,
-      "x": 2036,
+      "x": 2648,
       "y": 140
     },
     "Typography.dc.html": {
@@ -356,6 +356,15 @@
       "w": 1000,
       "x": 1400,
       "y": 0
+    },
+    "Updates.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Updates",
+      "w": 412,
+      "x": 1836,
+      "y": 140
     }
   },
   "createdOnFiles": {
@@ -403,7 +412,8 @@
     "trigDate",
     "trigTime",
     "trigIncomeCategory",
-    "trigSelectRows"
+    "trigSelectRows",
+    "trigUpdates"
   ],
   "notes": {
     "laneAdd": {
@@ -417,10 +427,10 @@
     },
     "laneHome": {
       "kind": "title1",
-      "maxW": 1636,
+      "maxW": 2248,
       "page": "screens",
       "text": "Home & menu",
-      "w": 1636,
+      "w": 2248,
       "x": 0,
       "y": 0
     },
@@ -439,7 +449,7 @@
       "page": "screens",
       "text": "Canvas preview",
       "w": 412,
-      "x": 3460,
+      "x": 4072,
       "y": 0
     },
     "laneTransactions": {
@@ -448,7 +458,7 @@
       "page": "screens",
       "text": "Transactions",
       "w": 1024,
-      "x": 2036,
+      "x": 2648,
       "y": 0
     },
     "missingScreens": {
@@ -511,7 +521,7 @@
     },
     "specDrawerItem": {
       "page": "components",
-      "text": "DrawerItem\nProps: active · state default | pressed · label · href\nTokens: inset (active), text, radius-full, type-body, touch-target\nStates: is-pressed\nLayout: pill starts 12 from the drawer edge; the library already pads the content by 12, so the app adds none\nCode: app/(drawer)/_layout.tsx (drawer items)\nContract: docs/design/components.json",
+      "text": "DrawerItem\nProps: active · state default | pressed · label · badge · href\nTokens: inset (active), text, radius-full, type-body, touch-target\nStates: is-pressed\nLayout: pill starts 12 from the drawer edge; the library already pads the content by 12, so the app adds none\nCode: app/(drawer)/_layout.tsx (drawer items), features/updates/components/UpdatesDrawerLabel.tsx (Updates item)\nbadge: the dot. The app draws it in UpdatesDrawerLabel, which copies the drawer label style by hand; when a second drawer item needs a badge, replace it with one shared drawer label that takes a badge prop (then badge becomes shared)\nContract: docs/design/components.json",
       "w": 320,
       "x": 1416,
       "y": 3168
@@ -660,8 +670,15 @@
       "page": "screens",
       "text": "tap a row →",
       "w": 176,
-      "x": 2460,
+      "x": 3072,
       "y": 164
+    },
+    "trigSelectRows": {
+      "page": "screens",
+      "text": "long-press a row → selection (tweak mode: selecting)",
+      "w": 176,
+      "x": 3072,
+      "y": 232
     },
     "trigTime": {
       "page": "screens",
@@ -670,12 +687,12 @@
       "x": 2460,
       "y": 1316
     },
-    "trigSelectRows": {
+    "trigUpdates": {
       "page": "screens",
-      "text": "long-press a row → selection (tweak mode: selecting)",
+      "text": "Updates item →",
       "w": 176,
-      "x": 2460,
-      "y": 232
+      "x": 1648,
+      "y": 164
     }
   },
   "order": [
@@ -685,6 +702,7 @@
     "Loading.dc.html",
     "Main.dc.html",
     "Drawer.dc.html",
+    "Updates.dc.html",
     "Transactions.dc.html",
     "TransactionDetails.dc.html",
     "AddExpense.dc.html",

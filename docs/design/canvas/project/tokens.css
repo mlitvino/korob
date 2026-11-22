@@ -75,6 +75,7 @@
   --on-action-secondary: var(--text);
   --selection: var(--accent);
   --focus: var(--accent);
+  --badge: var(--accent);
 }
 
 :root {
