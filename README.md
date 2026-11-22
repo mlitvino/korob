@@ -27,12 +27,7 @@ make tunnel         # Same, but reachable from any network
 
 The design canvas lives on claude.ai and is mirrored in [docs/design/canvas](docs/design/canvas) (see its README for the sync flow). Colors come from `frontend/src/constants/theme.ts`; the canvas `tokens.css` is generated from it.
 
-```bash
-cd frontend
-yarn test:design    # canvas checks (opt-in, not part of yarn test or CI)
-yarn design:tokens  # regenerate canvas tokens.css from theme.ts
-yarn design:screens # regenerate the shared script blocks in the canvas boards
-```
+Commands (`yarn test:design`, `yarn design:tokens`, `yarn design:screens`) are listed in the canvas README.
 
 ## Server
 
@@ -52,6 +47,8 @@ Pushes to `main` run [cd.yml](.github/workflows/cd.yml): CI checks, then push th
 - [ ] Multi-account support
 - [x] Light/dark theme toggle
 - [x] Categories
+- [x] Delete transactions (one or many)
+- [x] What's-new page
 - [ ] Tags
 - [ ] Budget tracking
 - [ ] Export reports (PDF/CSV)
@@ -60,7 +57,7 @@ Pushes to `main` run [cd.yml](.github/workflows/cd.yml): CI checks, then push th
 ## Tech Stack
 
 - **Frontend**: React Native (Expo) with TypeScript — iOS and Android
-- **Storage**: SQLite (expo-sqlite + Drizzle ORM) on device
+- **Storage**: SQLite (expo-sqlite + Drizzle ORM) on device, read and written through TanStack Query; settings in AsyncStorage
 - **Server**: Caddy proxy for the planned backend API at `api.korob.mlitvino.dev`
 
 ## License

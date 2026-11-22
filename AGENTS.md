@@ -18,7 +18,7 @@ This is the shared starting point for AI coding agents working in this repositor
   - `make front` to run the Expo dev server (Expo Go, same network)
   - `make tunnel` to run the Expo dev server reachable from any network
   - `make preview` to build an installable Android APK on EAS
-  - `make test` to run frontend tests
+  - `make test` to run frontend tests; `make lint-compile` for lint + tsc; `make migrations-check` to verify the schema has a migration
   - `make up` / `make down` / `make logs` to run the local server stack ([compose.yml](compose.yml), `http://127.0.0.1:8080/health`)
 - From [frontend](frontend) (uses yarn — `yarn.lock` is the lockfile):
   - `yarn start`
@@ -36,6 +36,10 @@ This is the shared starting point for AI coding agents working in this repositor
 - Read and write database data only through TanStack Query hooks in [frontend/src/queries](frontend/src/queries). Every write is a mutation hook that invalidates the queries it affects; components never call repos directly.
 - Keep transaction domain model aligned with [frontend/src/types/Transaction.ts](frontend/src/types/Transaction.ts).
 - Deleting a category is a soft delete (`archivedAt`): the row stays so past transactions keep their category name; the UI says Delete and there is no restore. A transaction is deleted for good, only from its details sheet (tap a row in the list) or from selection mode on the list (long-press a row, then Delete selected; one confirmation for all selected rows).
+- The Updates drawer page ([frontend/src/features/updates](frontend/src/features/updates)) shows a hand-written, Russian-only changelog bundled in the JavaScript: [changelog.ts](frontend/src/features/updates/changelog.ts), newest release first, feature title plus one or two lines on how to use it, no bug fixes. **Before each `eas update` that adds a feature, add a release entry there** (ids are unique dates, sorted newest first; a test checks it). A new release id brings the unseen dot back in the drawer; the last opened id is kept in AsyncStorage (`STORAGE_KEYS.lastSeenUpdate`) by a small shared store in `useUnseenUpdates`. When a second shared persisted value appears, move that store into a `usePersistedValue(key)` hook in `storage/`.
+- Money is whole cents everywhere (`amountCents`, `parseAmount`, `formatCents`); never store or sum floats.
+- A schema change needs a committed migration: run `yarn migration:generate` (CI runs `make migrations-check` and fails without it).
+- A new string goes into all three locales (en, fi, ru) and `LocaleResource`; `locales/__tests__` checks they match.
 - Use theme and locale infrastructure from [frontend/src/constants/theme.ts](frontend/src/constants/theme.ts), [frontend/src/contexts/ThemeContext.tsx](frontend/src/contexts/ThemeContext.tsx), and [frontend/src/locales/index.ts](frontend/src/locales/index.ts).
 
 ## Conventions That Matter
@@ -48,6 +52,7 @@ This is the shared starting point for AI coding agents working in this repositor
 
 ## Testing Expectations
 
+- Render with `renderWithApp` ([frontend/src/testing/renderWithApp.tsx](frontend/src/testing/renderWithApp.tsx)) and use `createTestDb` (real SQLite) for database tests.
 - Use `jest-expo` patterns already used under [frontend/src/components/__tests__](frontend/src/components/__tests__).
 - Add or update tests for behavioral changes; avoid shipping logic changes without coverage.
 - Theme colors are checked by `constants/__tests__/theme.test.ts` (text 4.5:1 on every surface, secondary text, amounts and non-text parts 3:1): a new color or theme must pass it.
@@ -66,12 +71,10 @@ This is the shared starting point for AI coding agents working in this repositor
 ## Design Canvas
 
 - [docs/design/canvas](docs/design/canvas) mirrors the claude.ai design canvas; see its README for the sync flow.
-- `theme.ts` is the source of truth. Colors in product boards and app code come from tokens (`outline` for unfilled chips and buttons, `scrim` for the dimming behind sheets and dialogs); `yarn test:design` rejects raw hex or `rgba()` in product boards. Use semantic roles (`actionPrimary`, `selection`, `focus`, …) where a component means a role; add a role to `roleSources` rather than reusing `accent` for a new meaning.
+- `theme.ts` is the source of truth. Colors in product boards and app code come from tokens (`outline` for unfilled chips and buttons, `scrim` for the dimming behind sheets and dialogs); `yarn test:design` rejects raw hex or `rgba()` in product boards. Use semantic roles (`actionPrimary`, `selection`, `focus`, …) where a component means a role; add a role to `roleSources` rather than reusing `accent` for a new meaning (`badge` is the new-updates dot in the drawer).
 - The canvas `tokens.css` is generated: run `yarn design:tokens` after changing `theme.ts`. Canvas primitives follow code names/props, listed in [docs/design/components.json](docs/design/components.json).
-- Code shared by many boards (global-theme follower, category names) lives once in `docs/design/canvas/blocks/*.block` and is copied into each board between `// <generated:NAME>` markers: edit the `.block` file, then run `yarn design:screens`. A new interactive screen needs the `global-theme` markers.
-- `yarn test:design` (or `make test-design`) checks tokens, component contracts and the shared blocks; it is opt-in and not part of `yarn test` or CI.
-- Canvas sync: pull the live files into `docs/design/canvas/project` first and read the diff (browser edits inside a marked region are overwritten by `yarn design:screens`), edit locally, run `yarn design:tokens` / `yarn design:screens` / `yarn test:design`, then publish from that folder. Details in the canvas README.
-- A change to a component's props or look is made in both code and canvas, and its entry in `components.json` is updated.
+- Shared script blocks (`blocks/*.block`), `yarn design:screens`, `yarn test:design` (opt-in, not in `yarn test` or CI) and the sync flow are in the [canvas README](docs/design/canvas/README.md). Pull the live files and read the diff before editing: browser edits inside a marked region are overwritten by `yarn design:screens`.
+- A change to a component's props or look is made in both code and canvas, and its entry in `components.json` is updated. The drawer's Updates item is drawn by `UpdatesDrawerLabel` (listed under `DrawerItem`'s code); the canvas `badge` prop stays canvas-only until one shared drawer label with a `badge` prop replaces it.
 
 ## Commits
 

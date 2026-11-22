@@ -36,12 +36,12 @@ which runs in the normal `yarn test`.
    `out_dir` = this folder). Do this first, so edits made in the browser are not lost. Moving boards or notes
    in the browser changes `canvas.json` (positions, order): adopt the live file before editing.
 2. Edit here (or change `theme.ts` and run `yarn design:tokens`).
-3. Publish from here (Claude: Artifact publish with `root` = this folder). A publish over a newer
+3. Publish from here (Claude: read the whole artifact once first, or the publish is refused; then Artifact publish with `root` = `project/`, `file_path` = one changed file and the others in `files` as `{"project/X": "X"}`). A publish over a newer
    browser edit is refused; pull again and redo the change.
 
 ## Screens page
 
-One titled lane per flow (Home & menu, Transactions, Add a transaction, Settings), entry screen on the left,
+One titled lane per flow (Home & menu with Updates after the drawer, Transactions, Add a transaction, Settings), entry screen on the left,
 overlays right after their parent, small "tap …" notes in the gaps. A new screen goes at the end of its lane.
 In a lane with several sub-flows (Settings) the sub-flows stay in one row, separated by a wider gap (400 px)
 than the boards inside a sub-flow (200 px).
