@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { opacity, radius, scrim, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useKeyboardVisible } from '@/hooks/useKeyboardVisible';
 
 type Props = {
   visible: boolean;
@@ -20,6 +21,7 @@ const HANDLE = { width: 32, height: 4 };
 export default function Sheet({ visible, title, closeLabel, onClose, children }: Props) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const keyboardVisible = useKeyboardVisible();
 
   return (
     <Modal
@@ -30,7 +32,7 @@ export default function Sheet({ visible, title, closeLabel, onClose, children }:
       statusBarTranslucent
       navigationBarTranslucent
     >
-      <KeyboardAvoidingView behavior="padding" style={styles.root}>
+      <KeyboardAvoidingView behavior="padding" enabled={keyboardVisible} style={styles.root}>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={closeLabel}
