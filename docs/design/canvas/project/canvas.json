@@ -201,7 +201,7 @@
       "page": "screens",
       "title": "Global theme (canvas preview)",
       "w": 412,
-      "x": 4072,
+      "x": 4684,
       "y": 140
     },
     "Header.dc.html": {
@@ -313,7 +313,7 @@
       "page": "screens",
       "title": "Transaction details sheet",
       "w": 412,
-      "x": 3260,
+      "x": 3872,
       "y": 140
     },
     "TransactionFilterBar.dc.html": {
@@ -346,7 +346,7 @@
       "page": "screens",
       "title": "Transactions",
       "w": 412,
-      "x": 2648,
+      "x": 3260,
       "y": 140
     },
     "Typography.dc.html": {
@@ -364,6 +364,15 @@
       "title": "Updates",
       "w": 412,
       "x": 1836,
+      "y": 140
+    },
+    "StartupError.dc.html": {
+      "h": 892,
+      "is_interactive": true,
+      "page": "screens",
+      "title": "Startup error (data fails to load)",
+      "w": 412,
+      "x": 2448,
       "y": 140
     }
   },
@@ -413,7 +422,9 @@
     "trigTime",
     "trigIncomeCategory",
     "trigSelectRows",
-    "trigUpdates"
+    "trigUpdates",
+    "trigStartupError",
+    "failureDialogs"
   ],
   "notes": {
     "laneAdd": {
@@ -427,10 +438,10 @@
     },
     "laneHome": {
       "kind": "title1",
-      "maxW": 2248,
+      "maxW": 2860,
       "page": "screens",
       "text": "Home & menu",
-      "w": 2248,
+      "w": 2000,
       "x": 0,
       "y": 0
     },
@@ -449,7 +460,7 @@
       "page": "screens",
       "text": "Canvas preview",
       "w": 412,
-      "x": 4072,
+      "x": 4684,
       "y": 0
     },
     "laneTransactions": {
@@ -458,7 +469,7 @@
       "page": "screens",
       "text": "Transactions",
       "w": 1024,
-      "x": 2648,
+      "x": 3260,
       "y": 0
     },
     "missingScreens": {
@@ -670,14 +681,14 @@
       "page": "screens",
       "text": "tap a row →",
       "w": 176,
-      "x": 3072,
+      "x": 3684,
       "y": 164
     },
     "trigSelectRows": {
       "page": "screens",
       "text": "long-press a row → selection (tweak mode: selecting)",
       "w": 176,
-      "x": 3072,
+      "x": 3684,
       "y": 232
     },
     "trigTime": {
@@ -693,6 +704,20 @@
       "w": 176,
       "x": 1648,
       "y": 164
+    },
+    "trigStartupError": {
+      "page": "screens",
+      "text": "app start, data fails to load →",
+      "w": 176,
+      "x": 2260,
+      "y": 164
+    },
+    "failureDialogs": {
+      "page": "screens",
+      "text": "Failure dialogs (system alerts, not screens)\nEach is a native alert with one OK button.\n• Save transaction (add form, details sheet): \"Could not save the transaction\" · \"Tapahtuman tallennus epäonnistui\" · \"Не удалось сохранить транзакцию\"\n• Delete transaction (selection mode, details sheet): \"Could not delete the transaction\" · \"Tapahtuman poisto epäonnistui\" · \"Не удалось удалить транзакцию\"\n• Save category (editor sheet): \"Could not save the category\" · \"Kategorian tallennus epäonnistui\" · \"Не удалось сохранить категорию\"\nTexts: failed keys in frontend/src/locales. Debug panel alerts are dev only and untranslated.",
+      "w": 520,
+      "x": 5484,
+      "y": 1292
     }
   },
   "order": [
@@ -703,6 +728,7 @@
     "Main.dc.html",
     "Drawer.dc.html",
     "Updates.dc.html",
+    "StartupError.dc.html",
     "Transactions.dc.html",
     "TransactionDetails.dc.html",
     "AddExpense.dc.html",

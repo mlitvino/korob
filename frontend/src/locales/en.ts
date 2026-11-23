@@ -98,6 +98,11 @@ const en: LocaleResource = {
       expense: 'Expense',
       allTime: 'all-time',
     },
+    startupError: {
+      title: "Couldn't open your data",
+      message: "The app couldn't read its data. Try again, or restart the app.",
+      retry: 'Try again',
+    },
     notFoundScreen: {
       header: 'Oops! Not Found!',
       mainMessage: 'Go back to Home screen',

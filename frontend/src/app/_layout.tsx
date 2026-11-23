@@ -12,6 +12,8 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useCategoriesLoading } from '@/queries/categories';
 import { useTransactionsLoading } from '@/queries/transactions';
 import LoadingOverlay from '@/components/LoadingOverlay';
+import StartupErrorScreen from '@/components/StartupErrorScreen';
+import { useStartupError } from '@/queries/startup';
 
 export default function RootLayout() {
   useDrizzleStudio(sqliteDb);
@@ -30,6 +32,7 @@ function Inner() {
   const transactionsLoading = useTransactionsLoading();
   const categoriesLoading = useCategoriesLoading();
   const isLoading = transactionsLoading || categoriesLoading;
+  const { error, retrying, retry } = useStartupError();
 
   useEffect(() => {
     setBackgroundColorAsync(canvas).catch(console.error);
@@ -42,7 +45,11 @@ function Inner() {
         <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
         <Stack.Screen name="transaction-modal" options={{ presentation: 'modal' }} />
       </Stack>
-      {isLoading ? <LoadingOverlay /> : null}
+      {isLoading || retrying
+        ? <LoadingOverlay />
+        : error
+        ? <StartupErrorScreen error={error} onRetry={retry} />
+        : null}
     </>
   );
 }

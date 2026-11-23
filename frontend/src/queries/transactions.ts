@@ -10,7 +10,7 @@ export const transactionsKey = ['transactions'] as const;
 
 const NO_TRANSACTIONS: Transaction[] = [];
 
-function useTransactionsQuery() {
+export function useTransactionsQuery() {
   return useQuery({
     queryKey: transactionsKey,
     queryFn: readAfterMigrations(() => TransactionsRepo.list()),

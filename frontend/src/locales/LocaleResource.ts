@@ -96,6 +96,11 @@ export type LocaleResource = {
       expense: string;
       allTime: string;
     };
+    startupError: {
+      title: string;
+      message: string;
+      retry: string;
+    };
     notFoundScreen: {
       header: string;
       mainMessage: string;

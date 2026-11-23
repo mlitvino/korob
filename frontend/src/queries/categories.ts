@@ -11,7 +11,7 @@ export const categoriesKey = ['categories'] as const;
 
 const NO_CATEGORIES: Category[] = [];
 
-function useCategoriesQuery() {
+export function useCategoriesQuery() {
   return useQuery({
     queryKey: categoriesKey,
     queryFn: readAfterMigrations(() => CategoriesRepo.list()),

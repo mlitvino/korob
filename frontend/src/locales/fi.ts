@@ -98,6 +98,12 @@ const fi: LocaleResource = {
       expense: 'Menot',
       allTime: 'kaikki ajat',
     },
+    startupError: {
+      title: 'Tietoja ei voitu avata',
+      message:
+        'Sovellus ei voinut lukea tietojaan. Yritä uudelleen tai käynnistä sovellus uudelleen.',
+      retry: 'Yritä uudelleen',
+    },
     notFoundScreen: {
       header: 'Hups! Ei löytynyt!',
       mainMessage: 'Palaa kotisivulle',

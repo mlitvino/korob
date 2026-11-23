@@ -1,6 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
+import { memoizeUntilFailure } from './memoizeUntilFailure';
 import * as schema from './schema';
 import migrations from './migrations/migrations';
 
@@ -10,9 +11,5 @@ sqliteDb.execSync('PRAGMA foreign_keys = ON;');
 export const db = drizzle(sqliteDb, { schema });
 export type DbClient = typeof db;
 
-let migration: Promise<void> | null = null;
-
-export const initDb = (): Promise<void> => {
-  migration ??= migrate(db, migrations);
-  return migration;
-};
+/** A failed migration is not cached, so a retry runs it again. */
+export const initDb = memoizeUntilFailure(() => migrate(db, migrations));
