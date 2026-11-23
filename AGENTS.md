@@ -37,6 +37,7 @@ This is the shared starting point for AI coding agents working in this repositor
 - Keep transaction domain model aligned with [frontend/src/types/Transaction.ts](frontend/src/types/Transaction.ts).
 - Deleting a category is a soft delete (`archivedAt`): the row stays so past transactions keep their category name; the UI says Delete and there is no restore. A transaction is deleted for good, only from its details sheet (tap a row in the list) or from selection mode on the list (long-press a row, then Delete selected; one confirmation for all selected rows).
 - The Updates drawer page ([frontend/src/features/updates](frontend/src/features/updates)) shows a hand-written, Russian-only changelog bundled in the JavaScript: [changelog.ts](frontend/src/features/updates/changelog.ts), newest release first, feature title plus one or two lines on how to use it, no bug fixes. **Before each `eas update` that adds a feature, add a release entry there** (ids are unique dates, sorted newest first; a test checks it). A new release id brings the unseen dot back in the drawer; the last opened id is kept in AsyncStorage (`STORAGE_KEYS.lastSeenUpdate`) by a small shared store in `useUnseenUpdates`. When a second shared persisted value appears, move that store into a `usePersistedValue(key)` hook in `storage/`.
+- A failed first load of data (migrations or the first read) shows `StartupErrorScreen` with Try again; mutation failures use `Alert.alert` with a translated message. A new startup path must not cache a rejected promise (`memoizeUntilFailure`).
 - Money is whole cents everywhere (`amountCents`, `parseAmount`, `formatCents`); never store or sum floats.
 - A schema change needs a committed migration: run `yarn migration:generate` (CI runs `make migrations-check` and fails without it).
 - A new string goes into all three locales (en, fi, ru) and `LocaleResource`; `locales/__tests__` checks they match.
@@ -85,5 +86,5 @@ This is the shared starting point for AI coding agents working in this repositor
 ## Reference Docs
 
 - Product and environment overview: [README.md](README.md)
-- Design docs: [docs/design](docs/design)
+- Design docs: [docs/design](docs/design). [decisions.md](docs/design/decisions.md) keeps only a non-obvious *why* that code, tests and the canvas cannot show, as one line under a topic; do not add a section per feature, and edit or delete lines when a decision changes.
 

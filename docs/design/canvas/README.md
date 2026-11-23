@@ -41,7 +41,7 @@ which runs in the normal `yarn test`.
 
 ## Screens page
 
-One titled lane per flow (Home & menu with Updates after the drawer, Transactions, Add a transaction, Settings), entry screen on the left,
+One titled lane per flow (Home & menu with Updates and the startup error after the drawer, Transactions, Add a transaction, Settings), entry screen on the left,
 overlays right after their parent, small "tap …" notes in the gaps. A new screen goes at the end of its lane.
 In a lane with several sub-flows (Settings) the sub-flows stay in one row, separated by a wider gap (400 px)
 than the boards inside a sub-flow (200 px).
