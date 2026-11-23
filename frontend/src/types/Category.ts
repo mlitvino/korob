@@ -11,9 +11,11 @@ type CategoryBase = {
   archivedAt: Date | null;
 };
 
-export type Category = CategoryBase & (
-  /** Built-in: label comes from the `category.<key>` translation. */
-  | { key: TransactionCategory; name: null }
-  /** Custom: label is the name the user typed, in every language. */
-  | { key: null; name: string }
-);
+export type Category =
+  & CategoryBase
+  & (
+    /** Built-in: label comes from the `category.<key>` translation. */
+    | { key: TransactionCategory; name: null }
+    /** Custom: label is the name the user typed, in every language. */
+    | { key: null; name: string }
+  );

@@ -3,10 +3,20 @@ import { categoryName } from '@/hooks/useCategoryName';
 import type { Category } from '@/types/Category';
 
 const food: Category = {
-  id: 'expense-food', type: 'expense', key: 'food', name: null, sortOrder: 0, archivedAt: null,
+  id: 'expense-food',
+  type: 'expense',
+  key: 'food',
+  name: null,
+  sortOrder: 0,
+  archivedAt: null,
 };
 const pets: Category = {
-  id: 'custom-1', type: 'expense', key: null, name: 'Pets', sortOrder: 7, archivedAt: null,
+  id: 'custom-1',
+  type: 'expense',
+  key: null,
+  name: 'Pets',
+  sortOrder: 7,
+  archivedAt: null,
 };
 
 describe('categoryName', () => {

@@ -54,9 +54,9 @@ export default function CategoryEditorSheet({
         error={error ? t(ERROR_KEYS[error]) : null}
       />
       <Button label={t('categories.save')} disabled={saving} onPress={onSave} />
-      {mode === 'edit' ? (
-        <Button variant="secondary" label={t('categories.delete')} onPress={onDelete} />
-      ) : null}
+      {mode === 'edit'
+        ? <Button variant="secondary" label={t('categories.delete')} onPress={onDelete} />
+        : null}
     </Sheet>
   );
 }

@@ -82,12 +82,26 @@ describe('migration 0006 (drop old category column, add FK)', () => {
     const sqlite = seed();
     expect(sqlite.prepare('SELECT * FROM transactions ORDER BY id').all()).toEqual([
       {
-        id: 'linked', type: 'expense', categoryId: 'expense-food', amount: 1250, currency: 'USD',
-        occurredAt: 10, createdAt: 20, updatedAt: 30, description: 'lunch',
+        id: 'linked',
+        type: 'expense',
+        categoryId: 'expense-food',
+        amount: 1250,
+        currency: 'USD',
+        occurredAt: 10,
+        createdAt: 20,
+        updatedAt: 30,
+        description: 'lunch',
       },
       {
-        id: 'unlinked', type: 'income', categoryId: 'income-other', amount: 700, currency: 'EUR',
-        occurredAt: 1, createdAt: 2, updatedAt: 3, description: null,
+        id: 'unlinked',
+        type: 'income',
+        categoryId: 'income-other',
+        amount: 700,
+        currency: 'EUR',
+        occurredAt: 1,
+        createdAt: 2,
+        updatedAt: 3,
+        description: null,
       },
     ]);
   });

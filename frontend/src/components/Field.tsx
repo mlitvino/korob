@@ -72,8 +72,14 @@ export function FieldInput({
         placeholderTextColor={`${theme.text}${SECONDARY_ALPHA_HEX}`}
         selectionColor={theme.focus}
         cursorColor={theme.focus}
-        onFocus={(e) => { setFocused(true); onFocus?.(e); }}
-        onBlur={(e) => { setFocused(false); onBlur?.(e); }}
+        onFocus={(e) => {
+          setFocused(true);
+          onFocus?.(e);
+        }}
+        onBlur={(e) => {
+          setFocused(false);
+          onBlur?.(e);
+        }}
         style={[
           multiline ? styles.multiline : typography.title,
           { fontWeight: '400', color: theme.text, padding: 0 },
@@ -90,17 +96,19 @@ export function FieldInput({
   return (
     <View style={[{ gap: spacing.xs }, style]}>
       {field}
-      {error ? (
-        <Text
-          accessibilityLiveRegion="polite"
-          style={[typography.bodySm, { color: theme.expense }]}
-        >
-          {error}
-        </Text>
-      ) : null}
-      {counter ? (
-        <Text style={[typography.caption, styles.counter, { color: theme.text }]}>{counter}</Text>
-      ) : null}
+      {error
+        ? (
+          <Text
+            accessibilityLiveRegion="polite"
+            style={[typography.bodySm, { color: theme.expense }]}
+          >
+            {error}
+          </Text>
+        )
+        : null}
+      {counter
+        ? <Text style={[typography.caption, styles.counter, { color: theme.text }]}>{counter}</Text>
+        : null}
     </View>
   );
 }

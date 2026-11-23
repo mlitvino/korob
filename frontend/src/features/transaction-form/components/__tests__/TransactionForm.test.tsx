@@ -24,8 +24,13 @@ afterEach(() => {
 });
 
 const EXPENSE_IDS = [
-  'expense-food', 'expense-transport', 'expense-housing', 'expense-entertainment',
-  'expense-shopping', 'expense-health', 'expense-other',
+  'expense-food',
+  'expense-transport',
+  'expense-housing',
+  'expense-entertainment',
+  'expense-shopping',
+  'expense-health',
+  'expense-other',
 ];
 
 describe('TransactionForm categories', () => {
@@ -84,9 +89,11 @@ describe('TransactionForm categories', () => {
     fireEvent.changeText(screen.getByLabelText('Name'), 'Pets');
     fireEvent.press(screen.getByText('Save'));
 
-    await waitFor(() => expect(
-      screen.getByRole('button', { name: 'Category: Pets' }),
-    ).toBeOnTheScreen());
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Category: Pets' }),
+      ).toBeOnTheScreen()
+    );
   });
 
   it('still offers the add chip when no category is left', async () => {
@@ -113,9 +120,11 @@ describe('TransactionForm categories', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Category: Food' }));
     fireEvent.press(screen.getByRole('button', { name: 'Delete Food' }));
 
-    await waitFor(() => expect(
-      screen.getByRole('button', { name: 'Category: Transport' }),
-    ).toBeOnTheScreen());
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Category: Transport' }),
+      ).toBeOnTheScreen()
+    );
     expect(screen.queryByRole('button', { name: 'Delete Food' })).not.toBeOnTheScreen();
   });
 

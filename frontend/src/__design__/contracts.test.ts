@@ -53,8 +53,9 @@ describe('canvas ↔ code component contracts', () => {
   });
 
   it.each(Object.entries(components))('%s shared props exist in code', (_, contract) => {
-    const source =
-      contract.code.map((file) => fs.readFileSync(path.join(REPO, file), 'utf8')).join('\n');
+    const source = contract.code.map((file) => fs.readFileSync(path.join(REPO, file), 'utf8')).join(
+      '\n',
+    );
     expect(contract.shared.filter((prop) => !new RegExp(`\\b${prop}\\b`).test(source))).toEqual([]);
   });
 });

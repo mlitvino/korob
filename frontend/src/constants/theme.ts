@@ -1,26 +1,26 @@
 import type { TextStyle } from 'react-native';
 
 export type ThemeColor = {
-    canvas: string;
-    background: string;
-    surface: string;
-    inset: string;
-    elevated: string;
+  canvas: string;
+  background: string;
+  surface: string;
+  inset: string;
+  elevated: string;
 
-    text: string;
-    contrastText: string;
+  text: string;
+  contrastText: string;
 
-    separator: string;
-    /** Border of unfilled controls (chips, filter buttons): 3:1 on background and canvas. */
-    outline: string;
+  separator: string;
+  /** Border of unfilled controls (chips, filter buttons): 3:1 on background and canvas. */
+  outline: string;
 
-    income: string;
-    expense: string;
+  income: string;
+  expense: string;
 
-    /** App accent: primary buttons, selection checks, focus ring. */
-    accent: string;
-    /** Text color for react-native-paper date/time pickers. */
-    pickerText: string;
+  /** App accent: primary buttons, selection checks, focus ring. */
+  accent: string;
+  /** Text color for react-native-paper date/time pickers. */
+  pickerText: string;
 };
 
 export type ThemeMode = 'light' | 'dark';
@@ -53,23 +53,23 @@ export type ThemeName =
   | 'black_yellow';
 
 const palettes: Record<ThemeName, Palette> = {
-  light:  {
+  light: {
     mode: 'light',
 
-    canvas:   '#f2f0f5',
+    canvas: '#f2f0f5',
     background: '#ffffff',
-    surface:  '#c8c5d380',
-    inset:    '#b8c8cf',
+    surface: '#c8c5d380',
+    inset: '#b8c8cf',
     elevated: '#c8c4cc',
 
-    text:     '#000000',
+    text: '#000000',
     contrastText: '#ffffff',
 
     separator: '#020000',
-    outline:   '#666666',
+    outline: '#666666',
 
-    income:   '#1f6e4a',
-    expense:  '#b83b3b',
+    income: '#1f6e4a',
+    expense: '#b83b3b',
 
     accent: '#413d46',
     pickerText: '#111111',
@@ -77,20 +77,20 @@ const palettes: Record<ThemeName, Palette> = {
   black: {
     mode: 'dark',
 
-    canvas:   '#141314',
+    canvas: '#141314',
     background: '#0c0c0c',
-    surface:  '#222125',
-    inset:    '#413d4e',
+    surface: '#222125',
+    inset: '#413d4e',
     elevated: '#2a292c',
 
-    text:     '#ffffff',
+    text: '#ffffff',
     contrastText: '#000',
 
     separator: '#ffffff1a',
-    outline:   '#686868',
+    outline: '#686868',
 
-    income:   '#449e75',
-    expense:  '#e05c5c',
+    income: '#449e75',
+    expense: '#e05c5c',
 
     accent: '#76d9b3',
     pickerText: '#ffffff',
@@ -98,20 +98,20 @@ const palettes: Record<ThemeName, Palette> = {
   dark: {
     mode: 'dark',
 
-    canvas:   '#222025',
+    canvas: '#222025',
     background: '#2f2e33',
-    surface:  '#262236',
-    inset:    '#3a3257',
+    surface: '#262236',
+    inset: '#3a3257',
     elevated: '#413d46',
 
-    text:     '#ffffff',
+    text: '#ffffff',
     contrastText: '#000',
 
     separator: '#ffffff1a',
-    outline:   '#7e7d81',
+    outline: '#7e7d81',
 
-    income:   '#5cc595',
-    expense:  '#f27a7a',
+    income: '#5cc595',
+    expense: '#f27a7a',
 
     accent: '#8ec5ff',
     pickerText: '#ffffff',
@@ -119,20 +119,20 @@ const palettes: Record<ThemeName, Palette> = {
   black_yellow: {
     mode: 'dark',
 
-    canvas:      '#070607',
-    background:  '#000000',
-    surface:     '#12100d',
-    inset:       '#241f13',
-    elevated:    '#342b18',
+    canvas: '#070607',
+    background: '#000000',
+    surface: '#12100d',
+    inset: '#241f13',
+    elevated: '#342b18',
 
-    text:        '#fff7a8',
+    text: '#fff7a8',
     contrastText: '#000000',
 
-    separator:   '#fff7a81a',
-    outline:     '#696545',
+    separator: '#fff7a81a',
+    outline: '#696545',
 
-    income:      '#ffd600',
-    expense:     '#ff9800',
+    income: '#ffd600',
+    expense: '#ff9800',
 
     accent: '#fff7a8',
     pickerText: '#fff7a8',

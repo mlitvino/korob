@@ -9,12 +9,14 @@ export default function NotFoundScreen() {
 
   return (
     <>
-      <Stack.Screen options={{
-        title: t('notFoundScreen.header'),
-        headerStyle: { backgroundColor: theme.elevated },
-        headerTitleStyle: { color: theme.text },
-      }}/>
-      <View style={[styles.container, { backgroundColor: theme.canvas}] }>
+      <Stack.Screen
+        options={{
+          title: t('notFoundScreen.header'),
+          headerStyle: { backgroundColor: theme.elevated },
+          headerTitleStyle: { color: theme.text },
+        }}
+      />
+      <View style={[styles.container, { backgroundColor: theme.canvas }]}>
         <Link href="/" style={[styles.button, { color: theme.text }]}>
           {t('notFoundScreen.mainMessage')}
         </Link>

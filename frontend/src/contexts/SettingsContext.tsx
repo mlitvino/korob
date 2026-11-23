@@ -10,7 +10,7 @@ type SettingsProviderProps = {
 };
 
 type SettingsDispatch = {
-  setCurrency: (currency: CurrencyCode) => void
+  setCurrency: (currency: CurrencyCode) => void;
   setLanguage: (language: LanguageName) => void;
 };
 

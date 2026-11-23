@@ -35,7 +35,6 @@ export default function Index() {
 
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
-
       <View style={[styles.totalsCard, { backgroundColor: theme.surface }]}>
         <Pressable
           accessibilityRole="button"
@@ -88,7 +87,6 @@ export default function Index() {
           />
         </View>
       </View>
-
     </View>
   );
 }

@@ -24,8 +24,8 @@ const getAsyncStorage = (): StorageLike | null => {
 const getStorage = (): StorageLike => {
   const storage = getAsyncStorage();
   if (!storage) {
-    const message = 'AsyncStorage is not available.'
-      + 'Make sure @react-native-async-storage/async-storage is installed and linked.';
+    const message = 'AsyncStorage is not available.' +
+      'Make sure @react-native-async-storage/async-storage is installed and linked.';
     console.error(message);
     throw new Error(message);
   }

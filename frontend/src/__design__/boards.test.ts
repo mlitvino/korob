@@ -12,9 +12,10 @@ const productBoards = fs.readdirSync(PROJECT)
   .filter((file) => file.endsWith('.dc.html') && !DOC_BOARDS.test(file))
   .filter((file) => !ARTWORK.includes(file));
 
-const styledLines = (board: string) => fs.readFileSync(path.join(PROJECT, board), 'utf8')
-  .split('\n')
-  .filter((line) => !line.includes('data-props'));
+const styledLines = (board: string) =>
+  fs.readFileSync(path.join(PROJECT, board), 'utf8')
+    .split('\n')
+    .filter((line) => !line.includes('data-props'));
 
 describe('product boards take colors from tokens', () => {
   it.each(productBoards)('%s has no hex or rgba() colors', (board) => {

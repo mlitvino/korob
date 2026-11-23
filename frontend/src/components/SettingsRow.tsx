@@ -1,12 +1,5 @@
 import type { ReactNode } from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  type StyleProp,
-  type ViewStyle,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { opacity, radius, spacing, typography } from '@/constants/theme';
@@ -82,29 +75,35 @@ export default function SettingsRow({
       >
         {leading}
         <Text style={[typography.body, styles.label, { color: theme.text }]}>{label}</Text>
-        {variant === 'value' && value ? (
-          <Text style={[typography.bodySm, { color: theme.text, opacity: opacity.secondary }]}>
-            {value}
-          </Text>
-        ) : null}
-        {isOption ? (
-          selected ? (
+        {variant === 'value' && value
+          ? (
+            <Text style={[typography.bodySm, { color: theme.text, opacity: opacity.secondary }]}>
+              {value}
+            </Text>
+          )
+          : null}
+        {isOption
+          ? (
+            selected
+              ? (
+                <MaterialIcons
+                  testID="settings-row-check"
+                  name="check"
+                  size={24}
+                  color={theme.selection}
+                  style={styles.check}
+                />
+              )
+              : null
+          )
+          : (
             <MaterialIcons
-              testID="settings-row-check"
-              name="check"
+              name="chevron-right"
               size={24}
-              color={theme.selection}
-              style={styles.check}
+              color={theme.text}
+              style={{ opacity: opacity.secondary }}
             />
-          ) : null
-        ) : (
-          <MaterialIcons
-            name="chevron-right"
-            size={24}
-            color={theme.text}
-            style={{ opacity: opacity.secondary }}
-          />
-        )}
+          )}
       </View>
     </Pressable>
   );

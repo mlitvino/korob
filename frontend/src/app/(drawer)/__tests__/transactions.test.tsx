@@ -50,8 +50,14 @@ function WithHeader() {
 
 const day = new Date(Date.now() - 864e5);
 const tx = (id: string, type: Transaction['type'], categoryId: string): Transaction => ({
-  id, type, categoryId, amountCents: 1000, currency: 'EUR',
-  occurredAt: day, createdAt: day, updatedAt: day,
+  id,
+  type,
+  categoryId,
+  amountCents: 1000,
+  currency: 'EUR',
+  occurredAt: day,
+  createdAt: day,
+  updatedAt: day,
 });
 
 let backHandler: () => boolean | null | undefined = () => false;
@@ -72,8 +78,9 @@ afterEach(() => {
 });
 
 const title = () => screen.getByTestId('header-title');
-const ids = () => (mockTestDb.sqlite.prepare('SELECT id FROM transactions ORDER BY id')
-  .all() as { id: string }[]).map((row) => row.id);
+const ids = () =>
+  (mockTestDb.sqlite.prepare('SELECT id FROM transactions ORDER BY id')
+    .all() as { id: string }[]).map((row) => row.id);
 const confirmAlerts = () => jest.spyOn(Alert, 'alert').mockImplementation((_t, _m, buttons) => {
   buttons?.find((button) => button.style === 'destructive')?.onPress?.();
 });

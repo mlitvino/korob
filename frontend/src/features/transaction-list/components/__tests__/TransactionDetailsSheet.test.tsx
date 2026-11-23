@@ -45,8 +45,9 @@ describe('TransactionDetailsSheet', () => {
     jest.restoreAllMocks();
   });
 
-  const rowCount = () => mockTestDb.sqlite
-    .prepare('SELECT count(*) AS n FROM transactions').get() as { n: number };
+  const rowCount = () =>
+    mockTestDb.sqlite
+      .prepare('SELECT count(*) AS n FROM transactions').get() as { n: number };
 
   it('is titled with the amount and category', async () => {
     await openSheet(transaction('expense-food'));

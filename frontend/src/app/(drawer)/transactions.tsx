@@ -18,7 +18,9 @@ import { useDeleteTransactions, useTransactions } from '@/queries/transactions';
 import { gutter, opacity, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
-  useFilteredTransactions, type FilterType, type VisibleTransaction,
+  useFilteredTransactions,
+  type FilterType,
+  type VisibleTransaction,
 } from '@/features/transaction-list/hooks/useFilteredTransactions';
 import type { Transaction } from '@/types/Transaction';
 
@@ -112,7 +114,12 @@ export default function Transactions() {
       swipeEnabled: false,
     });
   }, [
-    confirmDeleteSelected, deleting, navigation, selection, t, theme.text,
+    confirmDeleteSelected,
+    deleting,
+    navigation,
+    selection,
+    t,
+    theme.text,
   ]);
 
   // Back leaves selection mode; leaving the screen ends it too.
@@ -167,13 +174,15 @@ export default function Transactions() {
         )}
       />
 
-      {details ? (
-        <TransactionDetailsSheet
-          transaction={details}
-          visible={detailsOpen}
-          onClose={() => setDetailsOpen(false)}
-        />
-      ) : null}
+      {details
+        ? (
+          <TransactionDetailsSheet
+            transaction={details}
+            visible={detailsOpen}
+            onClose={() => setDetailsOpen(false)}
+          />
+        )
+        : null}
     </View>
   );
 }

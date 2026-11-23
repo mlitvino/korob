@@ -19,8 +19,19 @@ const FONT_SCALE = 1.3;
 const THEME_ORDER: ThemeName[] = ['dark', 'light', 'black', 'black_yellow'];
 
 const PALETTE_KEYS: (keyof ThemeColor)[] = [
-  'canvas', 'background', 'surface', 'inset', 'elevated', 'text', 'contrastText',
-  'separator', 'outline', 'income', 'expense', 'accent', 'pickerText',
+  'canvas',
+  'background',
+  'surface',
+  'inset',
+  'elevated',
+  'text',
+  'contrastText',
+  'separator',
+  'outline',
+  'income',
+  'expense',
+  'accent',
+  'pickerText',
 ];
 
 const HEADER = [
@@ -54,9 +65,12 @@ export function buildTokensCss(): string {
     return block(selector, PALETTE_KEYS.map((key) => `--${kebab(key)}: ${Themes[name][key]};`));
   });
 
-  const roles = block(':root,\n[data-theme]', Object.entries(roleSources).map(
-    ([role, source]) => `--${kebab(role)}: var(--${kebab(source)});`,
-  ));
+  const roles = block(
+    ':root,\n[data-theme]',
+    Object.entries(roleSources).map(
+      ([role, source]) => `--${kebab(role)}: var(--${kebab(source)});`,
+    ),
+  );
 
   const typeSteps = Object.entries(typography);
 

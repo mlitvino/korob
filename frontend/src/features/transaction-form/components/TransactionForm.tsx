@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  ScrollView, StyleSheet, View, useWindowDimensions, type TextInput,
-} from 'react-native';
+import { ScrollView, StyleSheet, View, useWindowDimensions, type TextInput } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DatePickerModal, TimePickerModal } from 'react-native-paper-dates';
 

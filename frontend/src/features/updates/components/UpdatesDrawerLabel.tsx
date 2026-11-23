@@ -20,13 +20,15 @@ export function UpdatesDrawerLabel({ color }: { color: string }) {
       style={styles.row}
     >
       <Text style={[typography.body, styles.label, { color }]}>{t('nav.updates')}</Text>
-      {hasUnseen ? (
-        <View
-          testID="updates-dot"
-          importantForAccessibility="no-hide-descendants"
-          style={[styles.dot, { backgroundColor: theme.badge }]}
-        />
-      ) : null}
+      {hasUnseen
+        ? (
+          <View
+            testID="updates-dot"
+            importantForAccessibility="no-hide-descendants"
+            style={[styles.dot, { backgroundColor: theme.badge }]}
+          />
+        )
+        : null}
     </View>
   );
 }

@@ -41,7 +41,9 @@ export default function Language() {
               <Flag width={FLAG_SIZE} height={FLAG_SIZE} />
             </View>
           }
-          onPress={() => { setLanguage(value); }}
+          onPress={() => {
+            setLanguage(value);
+          }}
         />
       ))}
     </View>

@@ -36,7 +36,9 @@ export default function Currency() {
           position={rowPosition(index, currencyOptions.length)}
           label={option.label}
           selected={currency === option.value}
-          onPress={() => { setCurrency(option.value); }}
+          onPress={() => {
+            setCurrency(option.value);
+          }}
         />
       ))}
     </View>

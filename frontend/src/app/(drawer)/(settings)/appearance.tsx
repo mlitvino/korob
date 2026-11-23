@@ -34,7 +34,9 @@ export default function Appearance() {
           position={rowPosition(index, themeOptions.length)}
           label={option.label}
           selected={themeName === option.value}
-          onPress={() => { setTheme(option.value); }}
+          onPress={() => {
+            setTheme(option.value);
+          }}
         />
       ))}
     </View>

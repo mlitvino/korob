@@ -48,13 +48,16 @@ export function TransactionDetailsSheet({ transaction, visible, onClose }: Props
   };
 
   const saveComment = () => {
-    updateComment.mutate({ id: transaction.id, comment }, {
-      onSuccess: onClose,
-      onError: (error) => {
-        console.warn('Failed to save comment', error);
-        Alert.alert(t('transaction.saveFailed'));
+    updateComment.mutate(
+      { id: transaction.id, comment },
+      {
+        onSuccess: onClose,
+        onError: (error) => {
+          console.warn('Failed to save comment', error);
+          Alert.alert(t('transaction.saveFailed'));
+        },
       },
-    });
+    );
   };
 
   const commentChanged = comment.trim() !== (transaction.description ?? '');

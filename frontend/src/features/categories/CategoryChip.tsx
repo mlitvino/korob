@@ -66,17 +66,19 @@ export default function CategoryChip({
           {label}
         </Text>
       </Pressable>
-      {showRemove ? (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={removeLabel}
-          onPress={onRemove}
-          hitSlop={spacing.xs}
-          style={({ pressed }) => [styles.remove, { opacity: pressed ? opacity.pressed : 1 }]}
-        >
-          <MaterialIcons name="close" size={18} color={fg} />
-        </Pressable>
-      ) : null}
+      {showRemove
+        ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={removeLabel}
+            onPress={onRemove}
+            hitSlop={spacing.xs}
+            style={({ pressed }) => [styles.remove, { opacity: pressed ? opacity.pressed : 1 }]}
+          >
+            <MaterialIcons name="close" size={18} color={fg} />
+          </Pressable>
+        )
+        : null}
     </View>
   );
 }

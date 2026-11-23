@@ -21,7 +21,12 @@ describe('UpdatesDrawerLabel', () => {
       markSeen = useUnseenUpdates().markSeen;
       return null;
     }
-    renderWithApp(<><UpdatesDrawerLabel color="#000" /><Opener /></>);
+    renderWithApp(
+      <>
+        <UpdatesDrawerLabel color="#000" />
+        <Opener />
+      </>,
+    );
     expect(screen.getByText('Updates')).toBeOnTheScreen();
     await waitFor(() => expect(screen.getByTestId('updates-dot', HIDDEN)).toBeOnTheScreen());
     expect(screen.getByLabelText('Updates, new')).toBeOnTheScreen();

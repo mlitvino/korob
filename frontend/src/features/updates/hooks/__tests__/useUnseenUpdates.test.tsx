@@ -6,7 +6,9 @@ import type { Release } from '../../changelog';
 import { resetLastSeenUpdate, useUnseenUpdates } from '../useUnseenUpdates';
 
 const release = (id: string): Release => ({
-  id, date: id, features: [{ title: 't', howTo: 'h' }],
+  id,
+  date: id,
+  features: [{ title: 't', howTo: 'h' }],
 });
 const OLD = [release('2026-11-01')];
 const NEW = [release('2026-11-23'), release('2026-11-01')];

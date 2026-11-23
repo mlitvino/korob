@@ -1,10 +1,6 @@
 import { desc, eq, inArray } from 'drizzle-orm';
 import type { Transaction } from '../types/Transaction';
-import {
-  transactions,
-  type SelectTransaction,
-  type InsertTransaction,
-} from './schema';
+import { transactions, type SelectTransaction, type InsertTransaction } from './schema';
 import { db } from './storage';
 
 const toDomain = (row: SelectTransaction): Transaction => ({

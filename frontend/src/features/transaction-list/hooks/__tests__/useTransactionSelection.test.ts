@@ -2,10 +2,11 @@ import { act, renderHook } from '@testing-library/react-native';
 
 import { useTransactionSelection } from '@/features/transaction-list/hooks/useTransactionSelection';
 
-const setup = (initial: string[]) => renderHook(
-  ({ ids }: { ids: string[] }) => useTransactionSelection(ids),
-  { initialProps: { ids: initial } },
-);
+const setup = (initial: string[]) =>
+  renderHook(
+    ({ ids }: { ids: string[] }) => useTransactionSelection(ids),
+    { initialProps: { ids: initial } },
+  );
 
 describe('useTransactionSelection', () => {
   it('starts with the first toggle and ends when the last row is unselected', () => {

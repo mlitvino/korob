@@ -6,13 +6,13 @@ import { usePersistedState } from '@/hooks/usePersistedState';
 import { STORAGE_KEYS } from '@/storage/persist';
 
 type ThemeProviderProps = {
-  children: ReactNode,
+  children: ReactNode;
 };
 
-type ThemeState = keyof typeof Themes
+type ThemeState = keyof typeof Themes;
 type ThemeAction = { setTheme: (t: ThemeState) => void };
 
-const ThemeStateContext = createContext<ThemeState | undefined >(undefined);
+const ThemeStateContext = createContext<ThemeState | undefined>(undefined);
 const ThemeDispatchContext = createContext<ThemeAction | undefined>(undefined);
 
 const isThemeName = (value: unknown): value is ThemeState =>
@@ -27,38 +27,42 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   );
 
   return (
-    <ThemeStateContext.Provider value={ theme }>
+    <ThemeStateContext.Provider value={theme}>
       <ThemeDispatchContext.Provider value={{ setTheme }}>
         {children}
       </ThemeDispatchContext.Provider>
     </ThemeStateContext.Provider>
   );
-};
+}
 
 export function useTheme() {
   const ctx = useContext(ThemeStateContext);
-  if (!ctx)
+  if (!ctx) {
     throw new Error('Error: useTheme is undefined');
+  }
   return Themes[ctx];
 }
 
 export function useThemeColor(colorName: keyof ThemeColor) {
   const ctx = useContext(ThemeStateContext);
-  if (!ctx)
+  if (!ctx) {
     throw new Error('Error: useTheme is undefined');
+  }
   return Themes[ctx][colorName];
 }
 
 export function useThemeName(): ThemeState {
   const ctx = useContext(ThemeStateContext);
-  if (ctx === undefined)
+  if (ctx === undefined) {
     throw new Error('Error: useThemeName must be used within ThemeProvider');
+  }
   return ctx;
 }
 
 export function useSetTheme() {
   const ctx = useContext(ThemeDispatchContext);
-  if (!ctx)
+  if (!ctx) {
     throw new Error('Error: useThemeAction is undefined');
+  }
   return ctx.setTheme;
 }

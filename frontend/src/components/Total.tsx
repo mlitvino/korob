@@ -28,7 +28,7 @@ export default function Total({ type }: TotalProps) {
 
   return (
     <View>
-      <View style={[styles.header, { borderBottomColor: theme.separator}]}>
+      <View style={[styles.header, { borderBottomColor: theme.separator }]}>
         <Text style={[typography.title, styles.headerText, { color: theme.text }]}>{header}</Text>
       </View>
       <View style={styles.body}>
@@ -44,7 +44,7 @@ export default function Total({ type }: TotalProps) {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   header: {

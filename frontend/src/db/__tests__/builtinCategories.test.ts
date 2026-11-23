@@ -1,11 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import {
-  builtinCategoryId,
-  EXPENSE_CATEGORIES,
-  INCOME_CATEGORIES,
-} from '@/db/builtinCategories';
+import { builtinCategoryId, EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/db/builtinCategories';
 
 const migration = fs.readFileSync(
   path.join(__dirname, '../migrations/0004_add_categories.sql'),
@@ -31,5 +27,4 @@ describe('built-in categories', () => {
 
     expect(seededRows).toEqual(expected);
   });
-
 });

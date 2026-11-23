@@ -30,7 +30,9 @@ export function UpdatesList({ changelog = CHANGELOG }: UpdatesListProps) {
             <View style={[styles.line, { backgroundColor: theme.separator }]} />
             <Text style={[typography.caption, styles.date, { color: theme.text }]}>
               {parseLocalDate(release.date).toLocaleDateString(undefined, {
-                day: '2-digit', month: 'long', year: 'numeric',
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
               })}
             </Text>
             <View style={[styles.line, { backgroundColor: theme.separator }]} />

@@ -20,9 +20,10 @@ const addTransaction = (id: string, categoryId: string) => {
   ).run(id, categoryId);
 };
 
-const transactionRow = (id: string) => mockTestDb.sqlite
-  .prepare('SELECT categoryId, updatedAt FROM transactions WHERE id = ?')
-  .get(id) as { categoryId: string; updatedAt: number };
+const transactionRow = (id: string) =>
+  mockTestDb.sqlite
+    .prepare('SELECT categoryId, updatedAt FROM transactions WHERE id = ?')
+    .get(id) as { categoryId: string; updatedAt: number };
 
 const findCategory = async (id: string) =>
   (await CategoriesRepo.list()).find((category) => category.id === id);
@@ -33,7 +34,13 @@ describe('CategoriesRepo.list', () => {
 
     expect(list).toHaveLength(12);
     expect(list.filter((c) => c.type === 'expense').map((c) => c.key)).toEqual([
-      'food', 'transport', 'housing', 'entertainment', 'shopping', 'health', 'other',
+      'food',
+      'transport',
+      'housing',
+      'entertainment',
+      'shopping',
+      'health',
+      'other',
     ]);
     expect(list.every((c) => c.name === null && c.archivedAt === null)).toBe(true);
   });
@@ -76,7 +83,11 @@ describe('CategoriesRepo.rename', () => {
     const groceries = await CategoriesRepo.rename('expense-food', 'Groceries');
 
     expect(groceries).toMatchObject({
-      type: 'expense', key: null, name: 'Groceries', sortOrder: 0, archivedAt: null,
+      type: 'expense',
+      key: null,
+      name: 'Groceries',
+      sortOrder: 0,
+      archivedAt: null,
     });
     expect(groceries.id).not.toBe('expense-food');
     expect((await findCategory('expense-food'))?.archivedAt).toBeInstanceOf(Date);

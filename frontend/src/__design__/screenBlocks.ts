@@ -10,10 +10,11 @@ export const BLOCKS = path.join(CANVAS, 'blocks');
 export const BLOCK_NAMES = ['global-theme', 'category-names'] as const;
 export type BlockName = (typeof BLOCK_NAMES)[number];
 
-const region = (name: BlockName) => new RegExp(
-  `(^[ \\t]*// <generated:${name}>[^\\n]*\\n)[\\s\\S]*?(^[ \\t]*// </generated:${name}>)`,
-  'm',
-);
+const region = (name: BlockName) =>
+  new RegExp(
+    `(^[ \\t]*// <generated:${name}>[^\\n]*\\n)[\\s\\S]*?(^[ \\t]*// </generated:${name}>)`,
+    'm',
+  );
 
 export const usesBlock = (source: string, name: BlockName) => region(name).test(source);
 

@@ -39,20 +39,22 @@ export function DebugPanel() {
     {
       key: 'wipe',
       label: 'Wipe all data',
-      onPress: () => confirm(
-        'Wipe all data',
-        'This deletes every transaction and resets the balance to 0. This cannot be undone.',
-        () => void wipeAllData(),
-      ),
+      onPress: () =>
+        confirm(
+          'Wipe all data',
+          'This deletes every transaction and resets the balance to 0. This cannot be undone.',
+          () => void wipeAllData(),
+        ),
     },
     {
       key: 'seed',
       label: 'Seed starting data',
-      onPress: () => confirm(
-        'Seed starting data',
-        'This replaces all current data with a fixed set of sample transactions.',
-        () => void seedStartingData(),
-      ),
+      onPress: () =>
+        confirm(
+          'Seed starting data',
+          'This replaces all current data with a fixed set of sample transactions.',
+          () => void seedStartingData(),
+        ),
     },
   ];
 

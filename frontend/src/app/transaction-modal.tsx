@@ -61,23 +61,25 @@ export default function TransactionModal() {
 
   return (
     <>
-      <Stack.Screen options={{
-        title: type === 'income'
-          ? t('transaction.addIncome')
-          : t('transaction.addExpense'),
-        headerStyle: { backgroundColor: theme.elevated },
-        headerTitleStyle: { ...typography.title, color: theme.text },
-        headerTintColor: theme.text,
-        headerShadowVisible: false,
-        headerLeft: () => (
-          <HeaderLeft
-            icon={'arrow-back'}
-            accessibilityLabel={t('nav.back')}
-            onPress={goBack}
-            style={styles.headerLeft}
-          />
-        ),
-      }}/>
+      <Stack.Screen
+        options={{
+          title: type === 'income'
+            ? t('transaction.addIncome')
+            : t('transaction.addExpense'),
+          headerStyle: { backgroundColor: theme.elevated },
+          headerTitleStyle: { ...typography.title, color: theme.text },
+          headerTintColor: theme.text,
+          headerShadowVisible: false,
+          headerLeft: () => (
+            <HeaderLeft
+              icon={'arrow-back'}
+              accessibilityLabel={t('nav.back')}
+              onPress={goBack}
+              style={styles.headerLeft}
+            />
+          ),
+        }}
+      />
 
       <KeyboardAvoidingView
         behavior="padding"
@@ -90,8 +92,7 @@ export default function TransactionModal() {
           <Text style={[typography.headline, styles.title, { color: theme.text }]}>
             {type === 'income'
               ? t('total.income')
-              : t('total.expense')
-            }
+              : t('total.expense')}
           </Text>
           <TransactionForm
             transactionType={type}

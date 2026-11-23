@@ -2,10 +2,20 @@ import { validateCategoryName } from '@/features/categories/validateCategoryName
 import type { Category } from '@/types/Category';
 
 const builtin = (id: string, key: 'food' | 'salary', type: 'income' | 'expense'): Category => ({
-  id, type, key, name: null, sortOrder: 0, archivedAt: null,
+  id,
+  type,
+  key,
+  name: null,
+  sortOrder: 0,
+  archivedAt: null,
 });
 const custom = (id: string, name: string, archived = false): Category => ({
-  id, type: 'expense', key: null, name, sortOrder: 1, archivedAt: archived ? new Date() : null,
+  id,
+  type: 'expense',
+  key: null,
+  name,
+  sortOrder: 1,
+  archivedAt: archived ? new Date() : null,
 });
 
 const categories: Category[] = [

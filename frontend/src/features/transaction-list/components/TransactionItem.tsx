@@ -36,9 +36,9 @@ export function TransactionItem({
       accessibilityState={selecting ? { checked } : undefined}
       accessibilityLabel={`${text.amount}, ${text.category}, ${text.time}`}
       accessibilityHint={selecting ? undefined : t('transaction.selectHint')}
-      accessibilityActions={
-        selecting ? undefined : [{ name: 'longpress', label: t('transaction.select') }]
-      }
+      accessibilityActions={selecting
+        ? undefined
+        : [{ name: 'longpress', label: t('transaction.select') }]}
       onAccessibilityAction={({ nativeEvent }) => {
         if (nativeEvent.actionName === 'longpress') {
           onLongPress();
@@ -69,20 +69,24 @@ export function TransactionItem({
         </Text>
       </View>
 
-      {selecting ? (
-        <View
-          testID="transaction-checkbox"
-          style={[
-            styles.checkbox,
-            {
-              borderColor: checked ? theme.selection : theme.outline,
-              backgroundColor: checked ? theme.selection : 'transparent',
-            },
-          ]}
-        >
-          {checked ? <MaterialIcons name="check" size={18} color={theme.onActionPrimary} /> : null}
-        </View>
-      ) : null}
+      {selecting
+        ? (
+          <View
+            testID="transaction-checkbox"
+            style={[
+              styles.checkbox,
+              {
+                borderColor: checked ? theme.selection : theme.outline,
+                backgroundColor: checked ? theme.selection : 'transparent',
+              },
+            ]}
+          >
+            {checked
+              ? <MaterialIcons name="check" size={18} color={theme.onActionPrimary} />
+              : null}
+          </View>
+        )
+        : null}
     </Pressable>
   );
 }

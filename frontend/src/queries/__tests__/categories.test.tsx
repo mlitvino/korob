@@ -64,7 +64,8 @@ describe('category queries', () => {
     const { result } = await renderLoaded();
 
     const pets = await act(() =>
-      result.current.create.mutateAsync({ type: 'expense', name: 'Pets' }));
+      result.current.create.mutateAsync({ type: 'expense', name: 'Pets' })
+    );
 
     // React receives the refreshed query data on a later tick than the mutation promise.
     await waitFor(() => {
@@ -77,7 +78,8 @@ describe('category queries', () => {
     const listTransactions = jest.spyOn(TransactionsRepo, 'list');
 
     const groceries = await act(() =>
-      result.current.rename.mutateAsync({ id: 'expense-food', name: 'Groceries' }));
+      result.current.rename.mutateAsync({ id: 'expense-food', name: 'Groceries' })
+    );
 
     await waitFor(() => {
       expect(byId(result.current.categories, groceries.id)).toMatchObject({ name: 'Groceries' });
