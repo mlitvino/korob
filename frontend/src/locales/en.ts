@@ -101,7 +101,14 @@ const en: LocaleResource = {
     startupError: {
       title: "Couldn't open your data",
       message: "The app couldn't read its data. Try again, or restart the app.",
+    },
+    screenError: {
+      title: 'Something went wrong',
+      message: 'This screen stopped working. Try again, or restart the app.',
+    },
+    errorActions: {
       retry: 'Try again',
+      restart: 'Restart app',
     },
     notFoundScreen: {
       header: 'Oops! Not Found!',

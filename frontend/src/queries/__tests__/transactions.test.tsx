@@ -10,7 +10,7 @@ import {
   useBalance,
   useClearTransactions,
   useTransactions,
-  useTransactionsLoading,
+  useTransactionsQuery,
 } from '@/queries/transactions';
 import type { Transaction } from '@/types/Transaction';
 
@@ -52,7 +52,7 @@ const usdIncome: Transaction = { ...income, id: 'income-usd', amountCents: 50000
 function useTransactionsApi() {
   return {
     transactions: useTransactions(),
-    isLoading: useTransactionsLoading(),
+    isLoading: useTransactionsQuery().isPending,
     balance: useBalance('EUR'),
     add: useAddTransaction(),
     clear: useClearTransactions(),

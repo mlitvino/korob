@@ -23,10 +23,6 @@ export function useCategories(): Category[] {
   return useCategoriesQuery().data ?? NO_CATEGORIES;
 }
 
-export function useCategoriesLoading(): boolean {
-  return useCategoriesQuery().isPending;
-}
-
 /** Categories that can be picked for a new transaction of `type`. */
 export function useActiveCategories(type: TransactionType): Category[] {
   const categories = useCategories();

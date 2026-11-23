@@ -102,7 +102,14 @@ const fi: LocaleResource = {
       title: 'Tietoja ei voitu avata',
       message:
         'Sovellus ei voinut lukea tietojaan. Yritä uudelleen tai käynnistä sovellus uudelleen.',
+    },
+    screenError: {
+      title: 'Jokin meni vikaan',
+      message: 'Tämä näkymä lakkasi toimimasta. Yritä uudelleen tai käynnistä sovellus uudelleen.',
+    },
+    errorActions: {
       retry: 'Yritä uudelleen',
+      restart: 'Käynnistä uudelleen',
     },
     notFoundScreen: {
       header: 'Hups! Ei löytynyt!',

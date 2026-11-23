@@ -21,10 +21,6 @@ export function useTransactions(): Transaction[] {
   return useTransactionsQuery().data ?? NO_TRANSACTIONS;
 }
 
-export function useTransactionsLoading(): boolean {
-  return useTransactionsQuery().isPending;
-}
-
 export function useBalance(currency: CurrencyCode): number {
   const transactions = useTransactions();
 

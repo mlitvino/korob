@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { setBackgroundColorAsync } from 'expo-system-ui';
 import { StatusBar } from 'expo-status-bar';
@@ -9,11 +10,12 @@ import '@/locales';
 import { sqliteDb } from '@/db/storage';
 import { AppProviders } from '@/contexts/AppProviders';
 import { useTheme } from '@/contexts/ThemeContext';
-import { useCategoriesLoading } from '@/queries/categories';
-import { useTransactionsLoading } from '@/queries/transactions';
-import LoadingOverlay from '@/components/LoadingOverlay';
-import StartupErrorScreen from '@/components/StartupErrorScreen';
-import { useStartupError } from '@/queries/startup';
+import LoadingOverlay from '@/features/app-shell/components/LoadingOverlay';
+import StartupErrorScreen from '@/features/app-shell/components/StartupErrorScreen';
+import { useStartup } from '@/queries/startup';
+
+// Wraps the whole root layout, so its fallback renders outside the providers.
+export { default as ErrorBoundary } from '@/features/app-shell/components/RootErrorFallback';
 
 export default function RootLayout() {
   useDrizzleStudio(sqliteDb);
@@ -29,10 +31,8 @@ export default function RootLayout() {
 
 function Inner() {
   const { canvas, mode } = useTheme();
-  const transactionsLoading = useTransactionsLoading();
-  const categoriesLoading = useCategoriesLoading();
-  const isLoading = transactionsLoading || categoriesLoading;
-  const { error, retrying, retry } = useStartupError();
+  const startup = useStartup();
+  const covered = startup.status !== 'ready';
 
   useEffect(() => {
     setBackgroundColorAsync(canvas).catch(console.error);
@@ -41,15 +41,25 @@ function Inner() {
   return (
     <>
       <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />
-      <Stack>
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        <Stack.Screen name="transaction-modal" options={{ presentation: 'modal' }} />
-      </Stack>
-      {isLoading || retrying
-        ? <LoadingOverlay />
-        : error
-        ? <StartupErrorScreen error={error} onRetry={retry} />
-        : null}
+      {/* While an overlay covers the screens, screen readers must not reach them either. */}
+      <View
+        style={styles.screens}
+        importantForAccessibility={covered ? 'no-hide-descendants' : 'auto'}
+        accessibilityElementsHidden={covered}
+      >
+        <Stack>
+          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+          <Stack.Screen name="transaction-modal" options={{ presentation: 'modal' }} />
+        </Stack>
+      </View>
+      {startup.status === 'loading' && <LoadingOverlay />}
+      {startup.status === 'error' && (
+        <StartupErrorScreen error={startup.error} onRetry={startup.retry} />
+      )}
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  screens: { flex: 1 },
+});

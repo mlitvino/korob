@@ -3,9 +3,7 @@ import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 import { createTestDb, type TestDb } from '@/db/testing/createTestDb';
-import { useCategoriesLoading } from '@/queries/categories';
-import { useStartupError } from '@/queries/startup';
-import { useTransactionsLoading } from '@/queries/transactions';
+import { useStartup } from '@/queries/startup';
 import { createTestQueryClient } from '@/testing/createTestQueryClient';
 
 let mockTestDb: TestDb;
@@ -28,13 +26,6 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-function useStartup() {
-  const startup = useStartupError();
-  const transactionsLoading = useTransactionsLoading();
-  const categoriesLoading = useCategoriesLoading();
-  return { ...startup, loading: transactionsLoading || categoriesLoading };
-}
-
 function setup() {
   const client = createTestQueryClient();
   const wrapper = ({ children }: { children: ReactNode }) => (
@@ -43,40 +34,50 @@ function setup() {
   return { client, ...renderHook(useStartup, { wrapper }) };
 }
 
-describe('useStartupError', () => {
-  it('has no error when the data loads', async () => {
+describe('useStartup', () => {
+  it('is loading, then ready when the data loads', async () => {
     mockInitDb.mockResolvedValue(undefined);
     const { result } = setup();
-    await waitFor(() => expect(result.current.loading).toBe(false));
-    expect(result.current.error).toBeNull();
+    expect(result.current.status).toBe('loading');
+    await waitFor(() => expect(result.current.status).toBe('ready'));
   });
 
   it('reports the failure once loading ends', async () => {
     mockInitDb.mockRejectedValue(new Error('migration failed'));
     const { result } = setup();
-    await waitFor(() => expect(result.current.error?.message).toBe('migration failed'));
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.status).toBe('error'));
+    const startup = result.current;
+    expect(startup.status === 'error' && startup.error.message).toBe('migration failed');
   });
 
-  it('retry reloads and clears the error', async () => {
-    mockInitDb.mockRejectedValueOnce(new Error('migration failed')).mockResolvedValue(undefined);
+  it('shows loading while retrying, then ready', async () => {
+    // Both queries wait for the same migration, like the memoized initDb.
+    let resolveRetry = () => {};
+    const retried = new Promise<void>((resolve) => (resolveRetry = resolve));
+    mockInitDb
+      .mockRejectedValueOnce(new Error('migration failed'))
+      .mockRejectedValueOnce(new Error('migration failed'))
+      .mockReturnValue(retried);
     const { result } = setup();
-    await waitFor(() => expect(result.current.error).not.toBeNull());
+    await waitFor(() => expect(result.current.status).toBe('error'));
 
-    act(() => result.current.retry());
-    await waitFor(() => expect(result.current.error).toBeNull());
-    expect(result.current.retrying).toBe(false);
+    const startup = result.current;
+    if (startup.status !== 'error') throw new Error('expected a startup error');
+    act(() => startup.retry());
+    await waitFor(() => expect(result.current.status).toBe('loading'));
+    act(() => resolveRetry());
+    await waitFor(() => expect(result.current.status).toBe('ready'));
   });
 
-  it('keeps the screen working when a refetch fails but data is already loaded', async () => {
+  it('stays ready when a refetch fails but data is already loaded', async () => {
     mockInitDb.mockResolvedValue(undefined);
     const { result, client } = setup();
-    await waitFor(() => expect(result.current.loading).toBe(false));
+    await waitFor(() => expect(result.current.status).toBe('ready'));
 
     mockInitDb.mockRejectedValue(new Error('later failure'));
     await act(async () => {
       await client.invalidateQueries();
     });
-    expect(result.current.error).toBeNull();
+    expect(result.current.status).toBe('ready');
   });
 });

@@ -7,6 +7,9 @@ import { useTheme } from '@/contexts/ThemeContext';
 import DrawerMenuButton from '@/components/DrawerMenuButton';
 import { UpdatesDrawerLabel } from '@/features/updates/components/UpdatesDrawerLabel';
 
+// A page that throws shows a themed Try again here instead of closing the app.
+export { default as ErrorBoundary } from '@/features/app-shell/components/ScreenErrorFallback';
+
 const SWIPE_EDGE_WIDTH_RATIO = 0.2;
 const DRAWER_WIDTH = 280;
 

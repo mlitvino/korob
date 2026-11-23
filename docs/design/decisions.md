@@ -17,6 +17,7 @@ about 60 lines. History is in `git log -- docs/design`.
 ## Data and errors
 - Deleting a category is a soft delete (`archivedAt`), with no restore — no dangling references on past transactions, and a future sync can send "deleted" as a flag.
 - A failed first load shows `StartupErrorScreen` as an overlay, not a route — no deep link can reach it, and it covers the drawer; its text does not promise the data is safe, because a failed migration cannot guarantee that.
+- Every error screen (startup, both `ErrorBoundary` fallbacks) has Restart (`Updates.reloadAsync`) — a caught error never crashes, so expo-updates never rolls back a bad update; reloading is how a fixed one gets in.
 - Save and delete failures stay native alerts — they are not screens; the canvas lists their texts in a sticky on the Screens page.
 
 ## Content

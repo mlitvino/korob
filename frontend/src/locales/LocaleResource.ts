@@ -99,7 +99,14 @@ export type LocaleResource = {
     startupError: {
       title: string;
       message: string;
+    };
+    screenError: {
+      title: string;
+      message: string;
+    };
+    errorActions: {
       retry: string;
+      restart: string;
     };
     notFoundScreen: {
       header: string;
