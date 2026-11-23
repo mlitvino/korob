@@ -18,12 +18,12 @@ This is the shared starting point for AI coding agents working in this repositor
   - `make front` to run the Expo dev server (Expo Go, same network)
   - `make tunnel` to run the Expo dev server reachable from any network
   - `make preview` to build an installable Android APK on EAS
-  - `make test` to run frontend tests; `make lint-compile` for lint + tsc; `make migrations-check` to verify the schema has a migration
+  - `make test` to run frontend tests; `make format` / `make format-check` to format with dprint / check it (CI runs the check); `make lint-compile` for lint + tsc; `make migrations-check` to verify the schema has a migration
   - `make up` / `make down` / `make logs` to run the local server stack ([compose.yml](compose.yml), `http://127.0.0.1:8080/health`)
 - From [frontend](frontend) (uses yarn — `yarn.lock` is the lockfile):
   - `yarn start`
   - `yarn test`
-  - `yarn lint`
+  - `yarn lint` (ESLint: correctness rules only, not formatting)
   - `yarn tsc`
   - `yarn fingerprint` to print the Android native fingerprint (see Over-the-Air Updates)
 
@@ -44,6 +44,7 @@ This is the shared starting point for AI coding agents working in this repositor
 
 ## Conventions That Matter
 
+- Formatting is dprint ([frontend/dprint.json](frontend/dprint.json)): single quotes, semicolons, trailing commas on multiline, 2-space indent, 100 columns. Run `make format` before committing; ESLint no longer checks formatting. dprint is **not yet in `package.json`** (a new dependency or script changes the native fingerprint), so `make` runs it through `npx`; see [local/plan.md](local/plan.md) for moving it in at the next native build.
 - TypeScript is strict; prefer `type` over `interface` for props and action unions.
 - Use typed route params and mutation inputs; validate critical runtime params in modal flows.
 - Balance is derived from transactions via `useBalance` in [frontend/src/queries/transactions.ts](frontend/src/queries/transactions.ts); never store it separately.

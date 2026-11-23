@@ -33,6 +33,9 @@ jobs:
       - name: Run tests
         run: yarn test
 
+      - name: Check formatting
+        run: make -C .. format-check
+
       - name: Lint and type-check
         run: yarn lint && yarn tsc
 

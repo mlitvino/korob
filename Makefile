@@ -1,4 +1,4 @@
-.PHONY: install ci test test-design lint-compile migrations-check front tunnel preview up down logs ps
+.PHONY: install ci test test-design format format-check lint-compile migrations-check front tunnel preview up down logs ps
 
 # =========== Frontend ===========
 
@@ -13,6 +13,15 @@ test:
 
 test-design:
 	cd frontend && yarn test:design
+
+# Until dprint is in package.json (see local/plan.md) it runs through npx.
+DPRINT ?= npx --yes dprint@0.65.0
+
+format:
+	cd frontend && $(DPRINT) fmt
+
+format-check:
+	cd frontend && $(DPRINT) check
 
 lint-compile:
 	cd frontend && yarn lint && yarn tsc

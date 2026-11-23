@@ -1,0 +1,32 @@
+{
+  "lineWidth": 100,
+  "indentWidth": 2,
+  "useTabs": false,
+  "newLineKind": "lf",
+  "typescript": {
+    "semicolons": "prefer",
+    "quoteStyle": "preferSingle",
+    "quoteProps": "asNeeded",
+    "trailingCommas": "onlyMultiLine",
+    "binaryExpression.operatorPosition": "sameLine",
+    "jsx.quoteStyle": "preferDouble",
+    "module.sortImportDeclarations": "maintain",
+    "module.sortExportDeclarations": "maintain",
+    "importDeclaration.sortNamedImports": "maintain",
+    "exportDeclaration.sortNamedExports": "maintain"
+  },
+  "includes": [
+    "**/*.{ts,tsx,js}"
+  ],
+  "excludes": [
+    "node_modules",
+    "dist",
+    "ios",
+    "android",
+    ".expo",
+    "src/db/migrations"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.101.0.wasm"
+  ]
+}

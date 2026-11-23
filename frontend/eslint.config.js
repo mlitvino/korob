@@ -36,18 +36,10 @@ module.exports = [
       'prefer-const': 'warn',
       'no-var': 'error',
       'object-shorthand': 'error',
-      'quote-props': ['error', 'as-needed'],
       'prefer-template': 'error',
       'prefer-arrow-callback': 'error',
       'arrow-body-style': ['warn', 'as-needed'],
       'no-duplicate-imports': 'warn',
-
-      // Formatting
-      'semi': ['warn', 'always'],
-      'quotes': ['warn', 'single', { avoidEscape: true }],
-      'comma-dangle': ['warn', 'always-multiline'],
-      'indent': ['warn', 2, { SwitchCase: 1 }],
-      'max-len': ['warn', { code: 100 }],
     },
   },
 ];
