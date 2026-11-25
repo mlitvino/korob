@@ -94,7 +94,9 @@ export type LocaleResource = {
     total: {
       income: string;
       expense: string;
-      allTime: string;
+      month: string;
+      week: string;
+      day: string;
     };
     startupError: {
       title: string;

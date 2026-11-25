@@ -96,7 +96,9 @@ const en: LocaleResource = {
     total: {
       income: 'Income',
       expense: 'Expense',
-      allTime: 'all-time',
+      month: 'Month',
+      week: 'Week',
+      day: 'Day',
     },
     startupError: {
       title: "Couldn't open your data",

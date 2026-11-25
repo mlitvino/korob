@@ -96,7 +96,9 @@ const ru: LocaleResource = {
     total: {
       income: 'Доходы',
       expense: 'Расходы',
-      allTime: 'за всё время',
+      month: 'Месяц',
+      week: 'Неделя',
+      day: 'День',
     },
     startupError: {
       title: 'Не удалось открыть данные',

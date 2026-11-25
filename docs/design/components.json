@@ -35,10 +35,10 @@
       "codeOnly": []
     },
     "TotalsCard": {
-      "code": ["frontend/src/components/Total.tsx", "frontend/src/app/(drawer)/index.tsx"],
+      "code": ["frontend/src/features/home/components/PeriodTotalsCard.tsx"],
       "shared": [],
-      "canvasOnly": ["income", "expense", "lang"],
-      "codeOnly": ["type"]
+      "canvasOnly": ["monthIncome", "monthExpense", "weekIncome", "weekExpense", "dayIncome", "dayExpense", "lang"],
+      "codeOnly": ["onSelectType"]
     },
     "BalancePanel": {
       "code": ["frontend/src/app/(drawer)/index.tsx"],

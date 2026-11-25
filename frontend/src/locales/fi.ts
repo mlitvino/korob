@@ -96,7 +96,9 @@ const fi: LocaleResource = {
     total: {
       income: 'Tulot',
       expense: 'Menot',
-      allTime: 'kaikki ajat',
+      month: 'Kuukausi',
+      week: 'Viikko',
+      day: 'Päivä',
     },
     startupError: {
       title: 'Tietoja ei voitu avata',

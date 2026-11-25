@@ -292,7 +292,7 @@
       "y": 1292
     },
     "TotalsCard.dc.html": {
-      "h": 144,
+      "h": 192,
       "page": "components",
       "title": "TotalsCard",
       "w": 328,
@@ -560,7 +560,7 @@
     },
     "specTotalsCard": {
       "page": "components",
-      "text": "TotalsCard\nProps: income · expense (cents) · lang\nTokens: surface, text, separator, radius-md, type-title / body / headline\nCode: components/Total.tsx\nContract: docs/design/components.json",
+      "text": "TotalsCard\nProps: month / week / day × income / expense (cents) · lang\nTokens: surface, text, separator, radius-md, type-body\nCode: features/home/components/PeriodTotalsCard.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 1776,
       "y": 3264

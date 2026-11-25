@@ -1,11 +1,12 @@
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import type { TransactionType } from '@/types/Transaction';
 import { useBalance } from '@/queries/transactions';
 import CircleButton from '@/components/CircleButton';
-import Total from '@/components/Total';
-import { gutter, opacity, radius, spacing, typography } from '@/constants/theme';
+import PeriodTotalsCard from '@/features/home/components/PeriodTotalsCard';
+import { gutter, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
@@ -25,33 +26,13 @@ export default function Index() {
     router.push('/transaction-modal?type=expense');
   };
 
-  const viewIncomeTransactions = () => {
-    router.push('/transactions?filter=income');
-  };
-
-  const viewExpenseTransactions = () => {
-    router.push('/transactions?filter=expense');
+  const viewTransactions = (type: TransactionType) => {
+    router.push(`/transactions?filter=${type}`);
   };
 
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
-      <View style={[styles.totalsCard, { backgroundColor: theme.surface }]}>
-        <Pressable
-          accessibilityRole="button"
-          onPress={viewIncomeTransactions}
-          style={({ pressed }) => [styles.totalColumn, pressed && styles.pressed]}
-        >
-          <Total type={'income'} />
-        </Pressable>
-        <View style={[styles.verticalSeparator, { backgroundColor: theme.separator }]} />
-        <Pressable
-          accessibilityRole="button"
-          onPress={viewExpenseTransactions}
-          style={({ pressed }) => [styles.totalColumn, pressed && styles.pressed]}
-        >
-          <Total type={'expense'} />
-        </Pressable>
-      </View>
+      <PeriodTotalsCard onSelectType={viewTransactions} />
 
       <View style={styles.content}>
         <View style={[styles.balancePanel, { backgroundColor: theme.surface }]}>
@@ -97,21 +78,6 @@ const styles = StyleSheet.create({
     paddingTop: spacing.xxxxl,
     paddingHorizontal: gutter,
     paddingBottom: gutter,
-  },
-  totalsCard: {
-    borderRadius: radius.md,
-    overflow: 'hidden',
-    flexDirection: 'row',
-  },
-  totalColumn: {
-    flex: 1,
-    minWidth: 0,
-  },
-  pressed: {
-    opacity: opacity.pressed,
-  },
-  verticalSeparator: {
-    width: StyleSheet.hairlineWidth,
   },
   content: {
     flex: 1,
