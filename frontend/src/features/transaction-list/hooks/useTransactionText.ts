@@ -1,9 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import {
-  formatTimeInput,
-  uses12HourClock,
-} from '@/features/transaction-form/utils/dateTimeHelpers';
+import { formatTimeInput, uses12HourClock } from '@/utils/dateTime';
 import { useCategoryName } from '@/hooks/useCategoryName';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { useCategoryById } from '@/queries/categories';

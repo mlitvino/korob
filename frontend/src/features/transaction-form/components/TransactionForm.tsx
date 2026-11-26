@@ -10,11 +10,7 @@ import { spacing } from '@/constants/theme';
 import CategoryChipList from '@/features/categories/CategoryChipList';
 import { useCategoryEditor } from '@/features/categories/useCategoryEditor';
 import { parseAmount } from '@/features/transaction-form/utils/amount';
-import {
-  formatDateInput,
-  formatTimeInput,
-  uses12HourClock,
-} from '@/features/transaction-form/utils/dateTimeHelpers';
+import { formatDateInput, formatTimeInput, uses12HourClock } from '@/utils/dateTime';
 import { useCategoryName } from '@/hooks/useCategoryName';
 import { useActiveCategories } from '@/queries/categories';
 import { MAX_COMMENT_LENGTH, type TransactionType } from '@/types/Transaction';
