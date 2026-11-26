@@ -18,6 +18,9 @@ const FILTERS: { value: FilterType; labelKey: FilterLabelKey }[] = [
   { value: 'expense', labelKey: 'total.expense' },
 ];
 
+/** Drawn lower than a touch target; `hitSlop` makes up the difference. */
+const FILTER_HEIGHT = 40;
+
 export function TransactionFilterBar({ filter, onFilterChange }: TransactionFilterBarProps) {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -33,6 +36,7 @@ export function TransactionFilterBar({ filter, onFilterChange }: TransactionFilt
           <Pressable
             key={value}
             accessibilityRole="button"
+            hitSlop={(touchTarget - FILTER_HEIGHT) / 2}
             accessibilityState={{ selected: isSelected }}
             style={({ pressed }) => [
               styles.filterButton,
@@ -44,7 +48,7 @@ export function TransactionFilterBar({ filter, onFilterChange }: TransactionFilt
             ]}
             onPress={() => onFilterChange(value)}
           >
-            <Text style={[typography.body, styles.filterText, { color: textColor }]}>
+            <Text style={[typography.bodySm, styles.filterText, { color: textColor }]}>
               {t(labelKey)}
             </Text>
           </Pressable>
@@ -58,11 +62,11 @@ const styles = StyleSheet.create({
   filterRow: {
     flexDirection: 'row',
     gap: spacing.sm,
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
   filterButton: {
     flex: 1,
-    minHeight: touchTarget,
+    minHeight: FILTER_HEIGHT,
     paddingHorizontal: spacing.sm,
     borderWidth: 1,
     borderRadius: radius.sm,

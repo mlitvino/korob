@@ -55,16 +55,19 @@ export function TransactionItem({
       ]}
     >
       <View style={styles.content}>
-        <View style={styles.metaRow}>
-          <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
-            {text.time}
-          </Text>
-          <Text style={[typography.bodySm, styles.metaText, { color: theme.text }]}>
+        <View style={styles.meta}>
+          <Text
+            numberOfLines={1}
+            style={[typography.bodySm, styles.category, { color: theme.text }]}
+          >
             {text.category}
+          </Text>
+          <Text style={[typography.caption, styles.time, { color: theme.text }]}>
+            {text.time}
           </Text>
         </View>
 
-        <Text style={[typography.title, styles.valueText, { color: valueColor }]}>
+        <Text style={[typography.body, styles.valueText, { color: valueColor }]}>
           {text.amount}
         </Text>
       </View>
@@ -93,9 +96,9 @@ export function TransactionItem({
 
 const styles = StyleSheet.create({
   transactionItem: {
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
-    borderRadius: radius.md,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    borderRadius: radius.sm,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
@@ -103,16 +106,19 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     minWidth: 0,
-    gap: spacing.xs,
-  },
-  metaRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    gap: spacing.sm,
+    gap: spacing.md,
   },
-  metaText: {
+  meta: {
+    flex: 1,
+    minWidth: 0,
+  },
+  category: {
+    fontWeight: '600',
     textTransform: 'capitalize',
+  },
+  time: {
     opacity: opacity.secondary,
   },
   valueText: {
