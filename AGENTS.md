@@ -11,6 +11,7 @@ This is the shared starting point for AI coding agents working in this repositor
 - One image per service, all tagged with the same commit SHA: `korob-proxy` and, once the Go backend exists, `korob-api` (service `api`, port 3000, in `backend/`). Only the proxy joins `edge_korob`; the proxy and `api` share the app's private `default` network, and the proxy forwards to `api:3000`.
 - Main app code is in [frontend/src](frontend/src).
 - Local persistence: SQLite via expo-sqlite + Drizzle in [frontend/src/db](frontend/src/db); settings in AsyncStorage via [frontend/src/storage](frontend/src/storage).
+- The only network call is exchange rates: [frontend/src/api/exchangeRates.ts](frontend/src/api/exchangeRates.ts) (Frankfurter v1, no key, reply checked before use) through `useExchangeRates`; the last rates are kept in AsyncStorage so totals still convert offline. Everything else works without a connection.
 
 ## Quick Commands
 
@@ -32,13 +33,14 @@ This is the shared starting point for AI coding agents working in this repositor
 - Keep Expo Router structure under [frontend/src/app](frontend/src/app): root stack + drawer group + modal route.
 - Keep feature-local UI and logic under [frontend/src/features](frontend/src/features), grouped by page/flow concern. `transaction-list` (drawer page) and `transaction-form` (modal flow) stay separate features even though both are about transactions.
 - Only truly reusable primitives go in [frontend/src/components](frontend/src/components) and [frontend/src/hooks](frontend/src/hooks); promote a view there once two features use it.
+- Shared pure helpers (no React) go in [frontend/src/utils](frontend/src/utils): `period.ts` (period bounds, `sumInBounds` for totals), `dateTime.ts`, `locale.ts`. Dates and money use the app language through `useLocale`, never the phone's (`toLocaleDateString(undefined)`).
 - Keep app settings state (settings, theme) in context modules under [frontend/src/contexts](frontend/src/contexts), with separate state and setter hooks.
 - Read and write database data only through TanStack Query hooks in [frontend/src/queries](frontend/src/queries). Every write is a mutation hook that invalidates the queries it affects; components never call repos directly.
 - Keep transaction domain model aligned with [frontend/src/types/Transaction.ts](frontend/src/types/Transaction.ts).
 - Deleting a category is a soft delete (`archivedAt`): the row stays so past transactions keep their category name; the UI says Delete and there is no restore. A transaction is deleted for good, only from its details sheet (tap a row in the list) or from selection mode on the list (long-press a row, then Delete selected; one confirmation for all selected rows).
 - The Updates drawer page ([frontend/src/features/updates](frontend/src/features/updates)) shows a hand-written, Russian-only changelog bundled in the JavaScript: [changelog.ts](frontend/src/features/updates/changelog.ts), newest release first, feature title plus one or two lines on how to use it, no bug fixes. **Before each `eas update` that adds a feature, add a release entry there** (ids are unique dates, sorted newest first; a test checks it). A new release id brings the unseen dot back in the drawer; the last opened id is kept in AsyncStorage (`STORAGE_KEYS.lastSeenUpdate`) by a small shared store in `useUnseenUpdates`. When a second shared persisted value appears, move that store into a `usePersistedValue(key)` hook in `storage/`.
 - A failed first load of data (migrations or the first read) shows `StartupErrorScreen` with Try again; mutation failures use `Alert.alert` with a translated message. A new startup path must not cache a rejected promise (`memoizeUntilFailure`).
-- Money is whole cents everywhere (`amountCents`, `parseAmount`, `formatCents`); never store or sum floats.
+- Money is whole cents everywhere (`amountCents`, `parseAmount`, `formatCents`); never store or sum floats. Totals in another currency convert each amount at the latest rate and round it to cents (`convertCents`, `sumInBounds`), shown with `≈`; a currency without a rate is left out and named by `MissingRatesNote`. A transaction's own amount and currency never change.
 - A schema change needs a committed migration: run `yarn migration:generate` (CI runs `make migrations-check` and fails without it).
 - A new string goes into all three locales (en, fi, ru) and `LocaleResource`; `locales/__tests__` checks they match.
 - Use theme and locale infrastructure from [frontend/src/constants/theme.ts](frontend/src/constants/theme.ts), [frontend/src/contexts/ThemeContext.tsx](frontend/src/contexts/ThemeContext.tsx), and [frontend/src/locales/index.ts](frontend/src/locales/index.ts).
@@ -54,7 +56,7 @@ This is the shared starting point for AI coding agents working in this repositor
 
 ## Testing Expectations
 
-- Render with `renderWithApp` ([frontend/src/testing/renderWithApp.tsx](frontend/src/testing/renderWithApp.tsx)) and use `createTestDb` (real SQLite) for database tests.
+- Render with `renderWithApp` ([frontend/src/testing/renderWithApp.tsx](frontend/src/testing/renderWithApp.tsx)) and use `createTestDb` (real SQLite) for database tests. Tests have no network: `fetch` rejects ([frontend/src/testing/jestSetup.ts](frontend/src/testing/jestSetup.ts)) unless a test mocks a reply.
 - Use `jest-expo` patterns already used under [frontend/src/components/__tests__](frontend/src/components/__tests__).
 - Add or update tests for behavioral changes; avoid shipping logic changes without coverage.
 - Theme colors are checked by `constants/__tests__/theme.test.ts` (text 4.5:1 on every surface, secondary text, amounts and non-text parts 3:1): a new color or theme must pass it.

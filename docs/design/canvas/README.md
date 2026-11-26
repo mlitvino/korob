@@ -36,7 +36,7 @@ which runs in the normal `yarn test`.
    `out_dir` = this folder). Do this first, so edits made in the browser are not lost. Moving boards or notes
    in the browser changes `canvas.json` (positions, order): adopt the live file before editing.
 2. Edit here (or change `theme.ts` and run `yarn design:tokens`).
-3. Publish from here (Claude: read the whole artifact once first, or the publish is refused; then Artifact publish with `root` = `project/`, `file_path` = one changed file and the others in `files` as `{"project/X": "X"}`). A publish over a newer
+3. Publish from here (Claude: read the whole artifact once first, or the publish is refused; then Artifact publish with `root` = `docs/design/canvas` (the folder that holds `project/`), `file_path` = one changed file and the others in `files` as `{"project/X": "project/X"}`). A publish over a newer
    browser edit is refused; pull again and redo the change.
 
 ## Screens page
