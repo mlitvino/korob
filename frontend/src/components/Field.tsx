@@ -15,7 +15,7 @@ import { opacity, radius, spacing, typography, type Theme } from '@/constants/th
 import { useTheme } from '@/contexts/ThemeContext';
 
 const MIN_HEIGHT = 64;
-const BORDER_WIDTH = 2;
+const BORDER_WIDTH = 1;
 /** `opacity.secondary` (0.7) as a hex alpha suffix; placeholders can't take opacity. */
 const SECONDARY_ALPHA_HEX = 'b3';
 
@@ -25,7 +25,7 @@ const boxStyle = (theme: Theme, focused: boolean): ViewStyle => ({
   paddingLeft: spacing.lg,
   borderRadius: radius.sm,
   borderWidth: BORDER_WIDTH,
-  borderColor: focused ? theme.focus : 'transparent',
+  borderColor: focused ? theme.focus : theme.outline,
   backgroundColor: theme.inset,
   justifyContent: 'center',
 });

@@ -94,13 +94,19 @@ describe('SettingsRow', () => {
 });
 
 describe('Field', () => {
-  it('shows an accent border while the input is focused', async () => {
+  it('outlines a picker like an input', async () => {
+    await renderThemed(<FieldPicker label="Date" value="26.11.2026" onPress={() => {}} />);
+
+    expect(screen.getByRole('button')).toHaveStyle({ borderColor: theme.outline });
+  });
+
+  it('has an outline, in the focus color while the input is focused', async () => {
     await renderThemed(<FieldInput label="Amount" testID="amount" />);
 
     const input = screen.getByTestId('amount');
     const box = () => styleOf(input.parent?.parent as never);
 
-    expect(box().borderColor).toBe('transparent');
+    expect(box().borderColor).toBe(theme.outline);
     fireEvent(input, 'focus');
     expect(box().borderColor).toBe(theme.accent);
   });
