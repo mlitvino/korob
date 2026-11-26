@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Transaction period bar</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 100%; display: flex; align-items: center; gap: 4px; font-family: Roboto, system-ui, sans-serif; color: var(--text)">
+  <button type="button" aria-label="Period type" style="flex: {{selectFlex}}; box-sizing: border-box; min-height: 40px; padding: 0 4px 0 12px; display: flex; align-items: center; gap: 4px; border: 1px solid var(--outline); border-radius: var(--radius-sm); background: transparent; color: var(--text); font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-line); font-weight: 600; white-space: nowrap">
+    <span style="flex: 1; text-align: left">{{modeLabel}}</span>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10l5 5 5-5z"></path></svg>
+  </button>
+  <sc-if value="{{hasTitle}}" hint-placeholder-val="{{ true }}">
+    <div style="flex: 1; min-width: 0; display: flex; align-items: center; min-height: 40px">
+      <sc-if value="{{hasArrows}}" hint-placeholder-val="{{ true }}">
+        <span style="width: 32px; height: 40px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></span>
+      </sc-if>
+      <span style="flex: 1; min-width: 0; text-align: center; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-line); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{title}}</span>
+      <sc-if value="{{hasArrows}}" hint-placeholder-val="{{ true }}">
+        <span style="width: 32px; height: 40px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></span>
+      </sc-if>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["day","week","month","year","all","range"],"default":"month"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":40}}'>
+var MODES = ['day', 'week', 'month', 'year', 'all', 'range'];
+var STR = {
+  en: ['Day', 'Week', 'Month', 'Year', 'All time', 'Period'],
+  fi: ['Päivä', 'Viikko', 'Kuukausi', 'Vuosi', 'Kaikki ajat', 'Jakso'],
+  ru: ['День', 'Неделя', 'Месяц', 'Год', 'Всё время', 'Период']
+};
+var TITLES = {
+  en: { day: 'Thu, Nov 26, 2026', week: 'Nov 23 – Nov 29', month: 'November 2026', year: '2026', range: 'Nov 1 – Nov 15' },
+  fi: { day: 'To 26. marrask. 2026', week: '23. marrask. – 29. marrask.', month: 'Marraskuu 2026', year: '2026', range: '1. marrask. – 15. marrask.' },
+  ru: { day: 'Чт, 26 нояб. 2026 г.', week: '23 нояб. – 29 нояб.', month: 'Ноябрь 2026 г.', year: '2026', range: '1 нояб. – 15 нояб.' }
+};
+class Component extends DCLogic {
+  renderVals() {
+    var mode = MODES.indexOf(this.props.mode) >= 0 ? this.props.mode : 'month';
+    var lang = STR[this.props.lang] ? this.props.lang : 'en';
+    return {
+      selectFlex: mode === 'all' ? '1' : 'none',
+      modeLabel: STR[lang][MODES.indexOf(mode)],
+      hasTitle: mode !== 'all',
+      hasArrows: mode !== 'range',
+      title: TITLES[lang][mode] || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

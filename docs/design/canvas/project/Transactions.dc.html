@@ -16,21 +16,27 @@ body{margin:0}
 </helmet>
 <div data-theme="{{theme}}" data-font-scale="{{fontScale}}" style="width: {{width}}px; height: 892px; display: flex; flex-direction: column; overflow: hidden; font-family: Roboto, system-ui, sans-serif; background: var(--background); color: var(--text)">
   <dc-import name="Header" variant="{{headerVariant}}" title="{{headerTitle}}" lang="{{lang}}" hint-size="100%,56px"></dc-import>
-  <main style="flex: 1; min-height: 0; box-sizing: border-box; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 12px">
-    <dc-import name="TransactionFilterBar" filter="all" lang="{{lang}}" hint-size="100%,48px"></dc-import>
-    <div style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 8px">
+  <main style="flex: 1; min-height: 0; box-sizing: border-box; padding: 8px 16px 0; display: flex; flex-direction: column; gap: 8px">
+    <dc-import name="TransactionPeriodBar" mode="{{period}}" lang="{{lang}}" hint-size="100%,40px"></dc-import>
+    <dc-import name="TransactionFilterBar" filter="all" lang="{{lang}}" hint-size="100%,40px"></dc-import>
+    <dc-import name="TransactionPeriodTotals" income="{{income}}" expense="{{expense}}" lang="{{lang}}" hint-size="100%,36px"></dc-import>
+    <div style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px">
       <sc-for list="{{rows}}" as="row" hint-placeholder-count="8">
-        <dc-import name="TransactionDateSeparator" label="{{row.date}}" hint-size="100%,24px"></dc-import>
-        <dc-import name="TransactionItem" kind="{{row.kind}}" time="{{row.time}}" category="{{row.category}}" amount="{{row.amount}}" selecting="{{selecting}}" selected="{{row.selected}}" href="TransactionDetails.dc.html" hint-size="100%,76px"></dc-import>
+        <dc-import name="TransactionDateSeparator" label="{{row.date}}" hint-size="100%,20px"></dc-import>
+        <dc-import name="TransactionItem" kind="{{row.kind}}" time="{{row.time}}" category="{{row.category}}" amount="{{row.amount}}" selecting="{{selecting}}" selected="{{row.selected}}" href="TransactionDetails.dc.html" hint-size="100%,52px"></dc-import>
       </sc-for>
+      <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+        <div class="is-secondary" style="padding-top: 20px; text-align: center; font-size: var(--type-body-size); line-height: var(--type-body-line)">{{emptyText}}</div>
+      </sc-if>
     </div>
   </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;global&quot;,&quot;dark&quot;,&quot;light&quot;,&quot;black&quot;,&quot;black_yellow&quot;],&quot;default&quot;:&quot;global&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fi&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;},&quot;width&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;412&quot;,&quot;360&quot;],&quot;default&quot;:&quot;412&quot;},&quot;fontScale&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;1.3&quot;],&quot;default&quot;:&quot;1&quot;},&quot;transactions&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;some&quot;,&quot;none&quot;],&quot;default&quot;:&quot;some&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;normal&quot;,&quot;selecting&quot;],&quot;default&quot;:&quot;normal&quot;},&quot;$preview&quot;:{&quot;width&quot;:412,&quot;height&quot;:892}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;global&quot;,&quot;dark&quot;,&quot;light&quot;,&quot;black&quot;,&quot;black_yellow&quot;],&quot;default&quot;:&quot;global&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fi&quot;,&quot;ru&quot;],&quot;default&quot;:&quot;en&quot;},&quot;width&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;412&quot;,&quot;360&quot;],&quot;default&quot;:&quot;412&quot;},&quot;fontScale&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;1.3&quot;],&quot;default&quot;:&quot;1&quot;},&quot;period&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;day&quot;,&quot;week&quot;,&quot;month&quot;,&quot;year&quot;,&quot;all&quot;,&quot;range&quot;],&quot;default&quot;:&quot;all&quot;},&quot;transactions&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;some&quot;,&quot;none&quot;],&quot;default&quot;:&quot;some&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;normal&quot;,&quot;selecting&quot;],&quot;default&quot;:&quot;normal&quot;},&quot;$preview&quot;:{&quot;width&quot;:412,&quot;height&quot;:892}}">
 var THEMES = ['dark', 'light', 'black', 'black_yellow'];
 var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
 var TITLE = { en: 'Transactions', fi: 'Tapahtumat', ru: 'Транзакции' };
+var EMPTY = { en: 'No transactions in this period', fi: 'Ei tapahtumia tällä jaksolla', ru: 'Нет транзакций за этот период' };
 var CAT = {
   en: { salary: 'Salary', freelance: 'Freelance', food: 'Food', transport: 'Transport', housing: 'Housing', entertainment: 'Entertainment', shopping: 'Shopping' },
   fi: { salary: 'Palkka', freelance: 'Freelance', food: 'Ruoka', transport: 'Liikenne', housing: 'Asuminen', entertainment: 'Viihde', shopping: 'Ostokset' },
@@ -71,7 +77,15 @@ class Component extends DCLogic {
     var p = this.props;
     var lang = TITLE[p.lang] ? p.lang : 'en';
     var money = new Intl.NumberFormat(LOCALE[lang], { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
+    var none = p.transactions === 'none';
+    var total = function (type) {
+      return (none ? [] : SEED).reduce(function (sum, t) { return t[1] === type ? sum + t[3] : sum; }, 0);
+    };
     return {
+      period: p.period || 'all',
+      income: total('income'),
+      expense: total('expense'),
+      empty: none, emptyText: EMPTY[lang],
       theme: THEMES.indexOf(p.theme) >= 0 ? p.theme : this.globalTheme(),
       lang: lang, title: TITLE[lang],
       width: p.width === '360' ? 360 : 412,
@@ -79,8 +93,7 @@ class Component extends DCLogic {
       selecting: p.mode === 'selecting',
       headerVariant: p.mode === 'selecting' ? 'selection' : 'drawer',
       headerTitle: p.mode === 'selecting' ? COUNT[lang](PICKED.length) : TITLE[lang],
-      // none: the app renders the filter bar over an empty list, with no message
-      rows: (p.transactions === 'none' ? [] : SEED).map(function (t, i) {
+      rows: (none ? [] : SEED).map(function (t, i) {
         var d = new Date(Date.now() - t[0] * 864e5);
         return {
           date: d.toLocaleDateString(LOCALE[lang], { weekday: 'short', day: '2-digit', month: 'short' }),

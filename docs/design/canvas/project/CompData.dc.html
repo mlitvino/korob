@@ -14,14 +14,15 @@
 body{margin:0}
 </style>
 </helmet>
-<div style="width: 1784px; min-height: 1140px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
+<div style="width: 1784px; min-height: 1300px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 24px; font-family: Roboto, system-ui, sans-serif; background: #18181b; color: #ececee">
   <div style="display: flex; gap: 48px; align-items: flex-start">
     <h1 style="margin: 0; flex: none; font-size: 28px; font-weight: 700">Totals, balance &amp; transactions</h1>
     <ul style="margin: 0; padding: 0 0 0 18px; font-size: 13px; line-height: 20px; color: #c4c4c8">
       <li>Totals card: full width; header title 20/600; padding 12/16; label stacks above the amount.</li>
       <li>Balance panel: full width with md circle buttons; balance block radius 8. Fits a 360 dp phone (bottom example).</li>
-      <li>Transaction item: radius 12; meta body-sm 14 secondary; amounts in the income and expense colors.</li>
+      <li>Transaction item: radius 8; category body-sm over time caption; amount body in the income and expense colors.</li>
       <li>Date separator: caption 12/600 caps, secondary 70%.</li>
+      <li>Period totals: Total / Income / Expense, caption label over body-sm 700 value. Other currencies convert at the latest rate, shown with ≈; a currency without a rate is left out and named in a caption note.</li>
     </ul>
   </div>
   <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
@@ -30,8 +31,14 @@ body{margin:0}
         <span class="is-secondary" style="font-size: 14px; font-weight: 600">{{t.name}}</span>
 
         <div style="display: flex; flex-direction: column; gap: 8px">
-          <span class="is-secondary" style="font-size: 12px">TotalsCard</span>
-          <dc-import name="TotalsCard" hint-size="100%,192px"></dc-import>
+          <span class="is-secondary" style="font-size: 12px">TotalsCard (other currency converted)</span>
+          <dc-import name="TotalsCard" rates="converted" hint-size="100%,192px"></dc-import>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="is-secondary" style="font-size: 12px">TransactionPeriodTotals (same currency / no rate yet)</span>
+          <dc-import name="TransactionPeriodTotals" hint-size="100%,36px"></dc-import>
+          <dc-import name="TransactionPeriodTotals" rates="missing" hint-size="100%,56px"></dc-import>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 8px">
@@ -41,9 +48,9 @@ body{margin:0}
 
         <div style="display: flex; flex-direction: column; gap: 8px">
           <span class="is-secondary" style="font-size: 12px">TransactionDateSeparator + TransactionItem (income / expense)</span>
-          <dc-import name="TransactionDateSeparator" label="Wed, Oct 28" hint-size="100%,24px"></dc-import>
-          <dc-import name="TransactionItem" kind="income" time="02:15 PM" category="Freelance" amount="€350.00" hint-size="100%,76px"></dc-import>
-          <dc-import name="TransactionItem" kind="expense" time="12:40 PM" category="Food" amount="€42.00" hint-size="100%,76px"></dc-import>
+          <dc-import name="TransactionDateSeparator" label="Wed, Oct 28" hint-size="100%,20px"></dc-import>
+          <dc-import name="TransactionItem" kind="income" time="02:15 PM" category="Freelance" amount="€350.00" hint-size="100%,52px"></dc-import>
+          <dc-import name="TransactionItem" kind="expense" time="12:40 PM" category="Food" amount="€42.00" hint-size="100%,52px"></dc-import>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 8px">

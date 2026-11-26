@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Transaction period totals</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 100%; display: flex; flex-direction: column; gap: 4px; font-family: Roboto, system-ui, sans-serif; color: var(--text)">
+  <div style="display: flex; gap: 8px">
+    <sc-for list="{{columns}}" as="c" hint-placeholder-count="3">
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center">
+        <span class="is-secondary" style="font-size: var(--type-caption-size); line-height: var(--type-caption-line); white-space: nowrap">{{c.label}}</span>
+        <span style="font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-line); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; color: {{c.color}}">{{c.value}}</span>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{hasNote}}" hint-placeholder-val="{{ false }}">
+    <span class="is-secondary" style="text-align: center; font-size: var(--type-caption-size); line-height: var(--type-caption-line)">{{note}}</span>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"income":{"editor":null,"default":285000},"expense":{"editor":null,"default":119200},"rates":{"editor":"enum","options":["same","converted","missing"],"default":"same"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":60}}'>
+var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
+var TOTAL = { en: ['Total', 'Income', 'Expense'], fi: ['Yhteensä', 'Tulot', 'Menot'], ru: ['Итого', 'Доходы', 'Расходы'] };
+var NOTE = {
+  en: 'USD not counted: no exchange rate yet',
+  fi: 'USD ei mukana: ei vielä vaihtokurssia',
+  ru: 'USD не учтены: нет курса'
+};
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    var lang = TOTAL[p.lang] ? p.lang : 'en';
+    var money = new Intl.NumberFormat(LOCALE[lang], { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
+    var income = p.income ?? 285000;
+    var expense = p.expense ?? 119200;
+    var mark = p.rates === 'converted' ? '≈ ' : '';
+    var value = function (cents) { return mark + money.format(cents / 100); };
+    return {
+      columns: [
+        { label: TOTAL[lang][0], value: value(income - expense), color: 'var(--text)' },
+        { label: TOTAL[lang][1], value: value(income), color: 'var(--income)' },
+        { label: TOTAL[lang][2], value: value(expense), color: 'var(--expense)' }
+      ],
+      hasNote: p.rates === 'missing',
+      note: NOTE[lang]
+    };
+  }
+}
+</script>
+</body>
+</html>

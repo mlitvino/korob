@@ -16,11 +16,11 @@ body{margin:0}
 </helmet>
 <div role="group" aria-label="Filter transactions" style="width: 100%; display: flex; gap: 8px">
   <sc-for list="{{chips}}" as="chip" hint-placeholder-count="3">
-    <button type="button" aria-pressed="{{chip.pressed}}" style="flex: 1; min-height: var(--touch-target); padding: 0 8px; border-radius: var(--radius-sm); font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-size); line-height: var(--type-body-line); font-weight: 600; border: 1px solid {{chip.border}}; background: {{chip.bg}}; color: {{chip.fg}}">{{chip.label}}</button>
+    <button type="button" aria-pressed="{{chip.pressed}}" style="flex: 1; min-height: 40px; padding: 0 8px; border-radius: var(--radius-sm); font-family: Roboto, system-ui, sans-serif; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-line); font-weight: 600; border: 1px solid {{chip.border}}; background: {{chip.bg}}; color: {{chip.fg}}">{{chip.label}}</button>
   </sc-for>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"filter":{"editor":"enum","options":["all","income","expense"],"default":"all"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":48}}'>
+<script type="text/x-dc" data-dc-script data-props='{"filter":{"editor":"enum","options":["all","income","expense"],"default":"all"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":40}}'>
 var STR = {
   en: ['All', 'Income', 'Expense'],
   fi: ['Kaikki', 'Tulot', 'Menot'],

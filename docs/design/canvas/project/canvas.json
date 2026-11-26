@@ -121,7 +121,7 @@
       "y": -661
     },
     "CompData.dc.html": {
-      "h": 1140,
+      "h": 1300,
       "page": "components",
       "title": "Totals, balance & transactions",
       "w": 1784,
@@ -317,7 +317,7 @@
       "y": 140
     },
     "TransactionFilterBar.dc.html": {
-      "h": 48,
+      "h": 40,
       "page": "components",
       "title": "TransactionFilterBar",
       "w": 328,
@@ -325,7 +325,7 @@
       "y": 3080
     },
     "TransactionItem.dc.html": {
-      "h": 80,
+      "h": 56,
       "page": "components",
       "title": "TransactionItem",
       "w": 328,
@@ -374,6 +374,38 @@
       "w": 412,
       "x": 2448,
       "y": 140
+    },
+    "TransactionPeriodBar.dc.html": {
+      "h": 40,
+      "page": "components",
+      "title": "TransactionPeriodBar",
+      "w": 328,
+      "x": 3000,
+      "y": 3080
+    },
+    "TransactionPeriodTotals.dc.html": {
+      "h": 60,
+      "page": "components",
+      "title": "TransactionPeriodTotals",
+      "w": 328,
+      "x": 3408,
+      "y": 3080
+    },
+    "PeriodChip.dc.html": {
+      "h": 48,
+      "page": "components",
+      "title": "PeriodChip",
+      "w": 96,
+      "x": 3816,
+      "y": 3080
+    },
+    "PeriodPicker.dc.html": {
+      "h": 360,
+      "page": "components",
+      "title": "PeriodPicker",
+      "w": 360,
+      "x": 2944,
+      "y": 3957
     }
   },
   "createdOnFiles": {
@@ -395,12 +427,16 @@
     "specTotalsCard",
     "specTransactionItem",
     "specTransactionFilterBar",
+    "specTransactionPeriodBar",
+    "specTransactionPeriodTotals",
+    "specPeriodChip",
     "specTransactionDateSeparator",
     "specCategorySheet",
     "specField",
     "specCategoryChip",
     "specCategoryEditorSheet",
     "specTransactionSheet",
+    "specPeriodPicker",
     "laneHome",
     "laneTransactions",
     "laneTools",
@@ -560,7 +596,7 @@
     },
     "specTotalsCard": {
       "page": "components",
-      "text": "TotalsCard\nProps: month / week / day × income / expense (cents) · lang\nTokens: surface, text, separator, radius-md, type-body\nCode: features/home/components/PeriodTotalsCard.tsx\nContract: docs/design/components.json",
+      "text": "TotalsCard\nProps: month / week / day × income / expense (cents) · rates same | converted | missing (canvas) · lang\nOther currencies convert at the latest rate (≈ before the values); a currency without a rate is named in a note under the rows\nTokens: surface, text, separator, radius-md, type-body\nCode: features/home/components/PeriodTotalsCard.tsx, components/MissingRatesNote.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 1776,
       "y": 3264
@@ -574,14 +610,14 @@
     },
     "specTransactionFilterBar": {
       "page": "components",
-      "text": "TransactionFilterBar\nProps: filter all | income | expense · lang (canvas)\nTokens: elevated (All), income / expense + contrast-text (selected), outline, radius-sm, type-body, touch-target\nCode: features/transaction-list/components/TransactionFilterBar.tsx\nContract: docs/design/components.json",
+      "text": "TransactionFilterBar\nProps: filter all | income | expense · lang (canvas)\nTokens: elevated (All), income / expense + contrast-text (selected), outline, radius-sm, type-body-sm, 40 dp + hitSlop\nCode: features/transaction-list/components/TransactionFilterBar.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 568,
       "y": 3168
     },
     "specTransactionItem": {
       "page": "components",
-      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added) · selecting · selected · href (canvas)\nTokens: canvas, text, income / expense, radius-md, type-body-sm / title\nStates: is-secondary (meta row)\nTap: opens the details sheet (TransactionSheet). Long-press: selection mode; then a tap toggles the checkbox on the right (selection fill, outline border)\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
+      "text": "TransactionItem\nProps: kind income | expense · time · category · amount (formatted; sign added) · selecting · selected · href (canvas)\nTokens: canvas, text, income / expense, radius-sm, type-body-sm / caption / body\nStates: is-secondary (time)\nTap: opens the details sheet (TransactionSheet). Long-press: selection mode; then a tap toggles the checkbox on the right (selection fill, outline border)\nCode: features/transaction-list/components/TransactionItem.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 0,
       "y": 4077
@@ -718,6 +754,34 @@
       "w": 520,
       "x": 5484,
       "y": 1292
+    },
+    "specTransactionPeriodBar": {
+      "page": "components",
+      "text": "TransactionPeriodBar\nProps: mode day | week | month | year | all | range · lang (canvas)\nDropdown: Paper Menu, elevated fill, check on the current mode\nTokens: outline, radius-sm, type-body-sm, 40 dp + hitSlop, one row\nCode: features/transaction-list/components/TransactionPeriodBar.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 3000,
+      "y": 3220
+    },
+    "specTransactionPeriodTotals": {
+      "page": "components",
+      "text": "TransactionPeriodTotals\nProps: income / expense (cents, canvas) · rates same | converted | missing (canvas) · lang (canvas)\nColumns: Total (income − expense, text) · Income (income) · Expense (expense); caption label over body-sm 700\nOther currencies convert at the latest rate (≈ before every value); a currency without a rate is left out and named in a caption note (MissingRatesNote)\nCode: features/transaction-list/components/TransactionPeriodTotals.tsx, components/MissingRatesNote.tsx\nContract: docs/design/components.json",
+      "w": 328,
+      "x": 3408,
+      "y": 3180
+    },
+    "specPeriodChip": {
+      "page": "components",
+      "text": "PeriodChip\nProps: label · selected · state default | pressed (canvas)\nPill, 48 dp, outline when off; selection fill + on-action-primary text when on\nTokens: outline, selection, on-action-primary, radius-full, type-body-sm 600\nCode: features/transaction-list/components/PeriodChip.tsx\nContract: docs/design/components.json",
+      "w": 240,
+      "x": 3816,
+      "y": 3168
+    },
+    "specPeriodPicker": {
+      "page": "components",
+      "text": "PeriodPicker\nProps: open month | year · lang (canvas)\nSheet with arrows that page the grid: 12 months of a year, or 12 years ending at this year; PeriodChip × 12, three per row\nTap the period title on Transactions to open it; day and week use the DatePicker calendar, range its range mode\nTokens: canvas, text, radius-lg, type-title\nCode: features/transaction-list/components/PeriodPicker.tsx, components/Sheet.tsx\nContract: docs/design/components.json",
+      "w": 360,
+      "x": 2944,
+      "y": 4357
     }
   },
   "order": [
@@ -748,6 +812,9 @@
     "CircleButton.dc.html",
     "Button.dc.html",
     "TransactionFilterBar.dc.html",
+    "TransactionPeriodBar.dc.html",
+    "TransactionPeriodTotals.dc.html",
+    "PeriodChip.dc.html",
     "Header.dc.html",
     "DrawerItem.dc.html",
     "TotalsCard.dc.html",
@@ -761,6 +828,7 @@
     "CategorySheet.dc.html",
     "CategoryEditorSheet.dc.html",
     "TransactionSheet.dc.html",
+    "PeriodPicker.dc.html",
     "CompNavigation.dc.html",
     "CompButtons.dc.html",
     "CompData.dc.html",

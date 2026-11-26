@@ -19,6 +19,33 @@
       "canvasOnly": ["lang"],
       "codeOnly": ["onFilterChange"]
     },
+    "TransactionPeriodTotals": {
+      "code": [
+        "frontend/src/features/transaction-list/components/TransactionPeriodTotals.tsx",
+        "frontend/src/components/MissingRatesNote.tsx"
+      ],
+      "shared": [],
+      "canvasOnly": ["income", "expense", "rates", "lang"],
+      "codeOnly": ["totals", "missing"]
+    },
+    "PeriodChip": {
+      "code": ["frontend/src/features/transaction-list/components/PeriodChip.tsx"],
+      "shared": ["label", "selected"],
+      "canvasOnly": ["state"],
+      "codeOnly": ["accessibilityLabel", "onPress", "style"]
+    },
+    "PeriodPicker": {
+      "code": ["frontend/src/features/transaction-list/components/PeriodPicker.tsx"],
+      "shared": ["open"],
+      "canvasOnly": ["lang"],
+      "codeOnly": ["anchor", "range", "onPickDate", "onPickRange", "onClose"]
+    },
+    "TransactionPeriodBar": {
+      "code": ["frontend/src/features/transaction-list/components/TransactionPeriodBar.tsx"],
+      "shared": ["mode"],
+      "canvasOnly": ["lang"],
+      "codeOnly": ["bounds", "onModePress", "onStep", "onTitlePress"]
+    },
     "Header": {
       "code": ["frontend/src/components/HeaderLeft.tsx", "frontend/src/app/(drawer)/_layout.tsx"],
       "shared": ["accessibilityLabel"],
@@ -35,10 +62,13 @@
       "codeOnly": []
     },
     "TotalsCard": {
-      "code": ["frontend/src/features/home/components/PeriodTotalsCard.tsx"],
+      "code": [
+        "frontend/src/features/home/components/PeriodTotalsCard.tsx",
+        "frontend/src/components/MissingRatesNote.tsx"
+      ],
       "shared": [],
-      "canvasOnly": ["monthIncome", "monthExpense", "weekIncome", "weekExpense", "dayIncome", "dayExpense", "lang"],
-      "codeOnly": ["onSelectType"]
+      "canvasOnly": ["monthIncome", "monthExpense", "weekIncome", "weekExpense", "dayIncome", "dayExpense", "rates", "lang"],
+      "codeOnly": ["onSelect"]
     },
     "BalancePanel": {
       "code": ["frontend/src/app/(drawer)/index.tsx"],

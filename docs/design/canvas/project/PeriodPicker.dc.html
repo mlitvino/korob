@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Period picker</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./tokens.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<section role="dialog" aria-label="{{title}}" style="width: 100%; box-sizing: border-box; padding: 8px 16px 16px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; flex-direction: column; font-family: Roboto, system-ui, sans-serif; background: var(--canvas); color: var(--text)">
+  <div aria-hidden="true" style="align-self: center; width: 32px; height: 4px; border-radius: var(--radius-full); opacity: 0.4; background: var(--text)"></div>
+  <h2 style="margin: 0; padding: 12px 0; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 700">{{title}}</h2>
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <button type="button" aria-label="{{previousLabel}}" style="width: var(--touch-target); height: var(--touch-target); padding: 0; border: none; background: transparent; color: inherit; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></button>
+      <span style="font-size: var(--type-title-size); line-height: var(--type-title-line)">{{pageTitle}}</span>
+      <button type="button" aria-label="{{nextLabel}}" style="width: var(--touch-target); height: var(--touch-target); padding: 0; border: none; background: transparent; color: inherit; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{cells}}" as="cell" hint-placeholder-count="12">
+        <dc-import name="PeriodChip" label="{{cell.label}}" selected="{{cell.selected}}" hint-size="100%,48px"></dc-import>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"open":{"editor":"enum","options":["month","year"],"default":"month"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":360,"height":360}}'>
+// Sample anchor: November 2026. Day and week use the DatePicker calendar; range uses its range mode.
+var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
+var STR = {
+  en: { month: 'Month', year: 'Year', prevYear: 'Previous year', nextYear: 'Next year', prevYears: 'Previous years', nextYears: 'Next years' },
+  fi: { month: 'Kuukausi', year: 'Vuosi', prevYear: 'Edellinen vuosi', nextYear: 'Seuraava vuosi', prevYears: 'Edelliset vuodet', nextYears: 'Seuraavat vuodet' },
+  ru: { month: 'Месяц', year: 'Год', prevYear: 'Предыдущий год', nextYear: 'Следующий год', prevYears: 'Предыдущие годы', nextYears: 'Следующие годы' }
+};
+var YEAR = 2026;
+var MONTH = 10;
+function capitalize(text) { return text.charAt(0).toLocaleUpperCase() + text.slice(1); }
+class Component extends DCLogic {
+  renderVals() {
+    var p = this.props;
+    var lang = STR[p.lang] ? p.lang : 'en';
+    var s = STR[lang];
+    var byYear = p.open === 'year';
+    var cells = [];
+    for (var i = 0; i < 12; i++) {
+      cells.push(byYear
+        ? { label: String(YEAR - 11 + i), selected: i === 11 }
+        : { label: capitalize(new Date(YEAR, i, 1).toLocaleDateString(LOCALE[lang], { month: 'short' })), selected: i === MONTH });
+    }
+    return {
+      title: byYear ? s.year : s.month,
+      pageTitle: byYear ? (YEAR - 11) + ' – ' + YEAR : String(YEAR),
+      previousLabel: byYear ? s.prevYears : s.prevYear,
+      nextLabel: byYear ? s.nextYears : s.nextYear,
+      cells: cells
+    };
+  }
+}
+</script>
+</body>
+</html>
