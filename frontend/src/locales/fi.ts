@@ -38,6 +38,7 @@ const fi: LocaleResource = {
       deleteSelectedTitle: 'Poistetaanko valitut ({{count}})?',
       empty: 'Ei tapahtumia',
       saveFailed: 'Tapahtuman tallennus epäonnistui',
+      enteredAs: 'Syötetty: {{amount}}',
     },
     category: {
       salary: 'Palkka',

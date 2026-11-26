@@ -38,6 +38,7 @@ const en: LocaleResource = {
       deleteSelectedTitle: 'Delete {{count}} selected?',
       empty: 'No transactions',
       saveFailed: 'Could not save the transaction',
+      enteredAs: 'Entered: {{amount}}',
     },
     category: {
       salary: 'Salary',

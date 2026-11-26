@@ -41,7 +41,6 @@ export function TransactionPeriodTotals({ totals }: TransactionPeriodTotalsProps
               minimumFontScale={0.7}
               style={[typography.bodySm, styles.value, { color }]}
             >
-              {totals.converted ? '≈ ' : ''}
               {formatCurrency(cents)}
             </Text>
           </View>

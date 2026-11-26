@@ -93,7 +93,6 @@ export default function PeriodTotalsCard({ onSelect }: PeriodTotalsCardProps) {
                 adjustsFontSizeToFit
                 minimumFontScale={0.6}
               >
-                {totals[period].converted ? '≈ ' : ''}
                 {formatCurrency(totals[period][type])}
               </Text>
             </Pressable>

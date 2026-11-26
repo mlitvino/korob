@@ -105,4 +105,23 @@ describe('TransactionDetailsSheet', () => {
     fireEvent.changeText(screen.getByLabelText('Comment'), 'new note');
     expect(save()).toBeEnabled();
   });
+
+  it('shows a converted amount and what was entered', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ base: 'EUR', date: '2026-11-25', rates: { USD: 1.25 } }),
+    });
+
+    await openSheet({ ...transaction('expense-food'), currency: 'USD' });
+
+    // 12.00 USD / 1.25
+    await waitFor(() => expect(screen.getByRole('header')).toHaveTextContent(/−€9\.60/));
+    expect(screen.getByText('Entered: $12.00')).toBeOnTheScreen();
+  });
+
+  it('does not repeat an amount entered in the selected currency', async () => {
+    await openSheet(transaction('expense-food'));
+
+    expect(screen.queryByText(/Entered:/)).not.toBeOnTheScreen();
+  });
 });

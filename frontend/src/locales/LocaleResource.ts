@@ -36,6 +36,7 @@ export type LocaleResource = {
       deleteSelectedTitle: string;
       empty: string;
       saveFailed: string;
+      enteredAs: string;
     };
     category: {
       salary: string;

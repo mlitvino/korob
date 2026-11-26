@@ -22,8 +22,6 @@ export const isWithin = ({ occurredAt }: Transaction, bounds: Bounds | null) =>
 
 /** Income and expense in one currency, in cents. */
 export type Totals = Record<TransactionType, number> & {
-  /** Some amounts were converted from another currency at the latest rate. */
-  converted: boolean;
   /** Currencies left out because there is no rate for them yet. */
   missing: CurrencyCode[];
 };
@@ -38,7 +36,7 @@ export function sumInBounds(
   bounds: Bounds | null,
   rates: ExchangeRates | null = null,
 ): Totals {
-  const totals: Totals = { income: 0, expense: 0, converted: false, missing: [] };
+  const totals: Totals = { income: 0, expense: 0, missing: [] };
   for (const transaction of transactions) {
     if (!isWithin(transaction, bounds)) {
       continue;
@@ -51,7 +49,6 @@ export function sumInBounds(
       continue;
     }
     totals[transaction.type] += cents;
-    totals.converted ||= transaction.currency !== currency;
   }
   return totals;
 }

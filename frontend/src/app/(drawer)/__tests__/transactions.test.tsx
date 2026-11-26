@@ -272,7 +272,7 @@ describe('Transactions period', () => {
     expect(screen.getByText('No transactions')).toBeOnTheScreen();
   });
 
-  it('converts another currency into the totals, marked as approximate', async () => {
+  it('shows another currency converted, in the totals and in its row', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ base: 'EUR', date: '2026-11-25', rates: { USD: 1.25 } }),
@@ -285,7 +285,9 @@ describe('Transactions period', () => {
     await choose('day');
 
     // 25.00 EUR + 25.00 USD / 1.25
-    await waitFor(() => expect(screen.getByTestId('total-expense')).toHaveTextContent('≈ €45.00'));
+    await waitFor(() => expect(screen.getByTestId('total-expense')).toHaveTextContent('€45.00'));
+    expect(screen.getByTestId('total-expense')).not.toHaveTextContent(/≈/);
+    expect(screen.getByText('−€20.00')).toBeOnTheScreen();
     expect(screen.queryByTestId('missing-rates')).not.toBeOnTheScreen();
   });
 

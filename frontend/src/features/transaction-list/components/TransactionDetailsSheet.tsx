@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/Button';
 import { FieldInput } from '@/components/Field';
 import Sheet from '@/components/Sheet';
+import { opacity, typography } from '@/constants/theme';
+import { useTheme } from '@/contexts/ThemeContext';
 import { useTransactionText } from '@/features/transaction-list/hooks/useTransactionText';
 import { useDeleteTransaction, useUpdateTransactionComment } from '@/queries/transactions';
 import { MAX_COMMENT_LENGTH, type Transaction } from '@/types/Transaction';
@@ -17,6 +19,7 @@ type Props = {
 
 export function TransactionDetailsSheet({ transaction, visible, onClose }: Props) {
   const { t } = useTranslation();
+  const theme = useTheme();
   const text = useTransactionText(transaction);
   const [comment, setComment] = useState('');
   const updateComment = useUpdateTransactionComment();
@@ -69,6 +72,13 @@ export function TransactionDetailsSheet({ transaction, visible, onClose }: Props
       closeLabel={t('common.cancel')}
       onClose={onClose}
     >
+      {text.entered
+        ? (
+          <Text style={[typography.bodySm, styles.entered, { color: theme.text }]}>
+            {t('transaction.enteredAs', { amount: text.entered })}
+          </Text>
+        )
+        : null}
       <FieldInput
         label={t('transaction.comment')}
         placeholder={t('transaction.commentPlaceholder')}
@@ -86,3 +96,9 @@ export function TransactionDetailsSheet({ transaction, visible, onClose }: Props
     </Sheet>
   );
 }
+
+const styles = StyleSheet.create({
+  entered: {
+    opacity: opacity.secondary,
+  },
+});

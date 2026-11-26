@@ -19,6 +19,7 @@ about 60 lines. History is in `git log -- docs/design`.
 - A failed first load shows `StartupErrorScreen` as an overlay, not a route — no deep link can reach it, and it covers the drawer; its text does not promise the data is safe, because a failed migration cannot guarantee that.
 - Every error screen (startup, both `ErrorBoundary` fallbacks) has Restart (`Updates.reloadAsync`) — a caught error never crashes, so expo-updates never rolls back a bad update; reloading is how a fixed one gets in.
 - Totals convert other currencies at the latest rate, not the rate of each transaction's day — one cached request instead of one per day, so it also works offline; each converted amount is rounded to cents before summing, so totals stay whole cents.
+- The currency is chosen only in Settings; every screen converts on read with no `≈`, and nothing converted is stored — user decision: fixing the value at save was too complex.
 - Save and delete failures stay native alerts — they are not screens; the canvas lists their texts in a sticky on the Screens page.
 
 ## Content

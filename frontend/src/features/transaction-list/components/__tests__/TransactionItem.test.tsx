@@ -84,3 +84,12 @@ describe('TransactionItem selection', () => {
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 });
+
+describe('TransactionItem amount', () => {
+  it('keeps the entered amount while there is no rate', async () => {
+    renderWithApp(row({ transaction: { ...transaction('expense-food'), currency: 'USD' } }));
+
+    await waitFor(() => expect(screen.getByText('Food')).toBeOnTheScreen());
+    expect(screen.getByText('−$12.00')).toBeOnTheScreen();
+  });
+});

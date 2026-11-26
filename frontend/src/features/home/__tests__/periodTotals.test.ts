@@ -24,9 +24,9 @@ const tx = (
 describe('periodTotals', () => {
   it('is all zeros without transactions', () => {
     expect(periodTotals([], 'EUR', now)).toEqual({
-      month: { income: 0, expense: 0, converted: false, missing: [] },
-      week: { income: 0, expense: 0, converted: false, missing: [] },
-      day: { income: 0, expense: 0, converted: false, missing: [] },
+      month: { income: 0, expense: 0, missing: [] },
+      week: { income: 0, expense: 0, missing: [] },
+      day: { income: 0, expense: 0, missing: [] },
     });
   });
 
@@ -83,7 +83,6 @@ describe('periodTotals', () => {
 
     expect(totals.day.income).toBe(1000);
     expect(totals.day.missing).toEqual(['USD']);
-    expect(totals.day.converted).toBe(false);
   });
 
   it('converts another currency with the rates', () => {
@@ -97,6 +96,6 @@ describe('periodTotals', () => {
       { base: 'EUR', date: '2026-11-25', rates: { USD: 1.25 } },
     );
 
-    expect(totals.day).toEqual({ income: 2600, expense: 0, converted: true, missing: [] });
+    expect(totals.day).toEqual({ income: 2600, expense: 0, missing: [] });
   });
 });

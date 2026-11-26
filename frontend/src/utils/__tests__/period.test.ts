@@ -137,7 +137,6 @@ describe('sumInBounds', () => {
     expect(sumInBounds(transactions, 'EUR', day)).toEqual({
       income: 1000,
       expense: 300,
-      converted: false,
       missing: ['USD'],
     });
   });
@@ -152,7 +151,6 @@ describe('sumInBounds', () => {
     expect(sumInBounds(transactions, 'EUR', day, rates)).toEqual({
       income: 1000,
       expense: 1208,
-      converted: true,
       missing: [],
     });
   });

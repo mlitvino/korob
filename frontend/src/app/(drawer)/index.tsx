@@ -6,15 +6,14 @@ import type { TransactionType } from '@/types/Transaction';
 import type { Period } from '@/features/home/periodTotals';
 import { useBalance } from '@/queries/transactions';
 import CircleButton from '@/components/CircleButton';
+import { MissingRatesNote } from '@/components/MissingRatesNote';
 import PeriodTotalsCard from '@/features/home/components/PeriodTotalsCard';
 import { gutter, radius, spacing, typography } from '@/constants/theme';
 import { useTheme } from '@/contexts/ThemeContext';
-import { useCurrency } from '@/contexts/SettingsContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 export default function Index() {
-  const currency = useCurrency();
-  const balance = useBalance(currency);
+  const balance = useBalance();
   const theme = useTheme();
   const formatCurrency = useCurrencyFormatter();
   const { t } = useTranslation();
@@ -58,8 +57,9 @@ export default function Index() {
               adjustsFontSizeToFit
               minimumFontScale={0.5}
             >
-              {formatCurrency(balance)}
+              {formatCurrency(balance.cents)}
             </Text>
+            <MissingRatesNote missing={balance.missing} />
           </View>
 
           <CircleButton

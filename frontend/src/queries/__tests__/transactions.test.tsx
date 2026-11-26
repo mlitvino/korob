@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClientProvider } from '@tanstack/react-query';
 
+import { SettingsProvider } from '@/contexts/SettingsContext';
 import { createTestDb, type TestDb } from '@/db/testing/createTestDb';
 import { TransactionsRepo } from '@/db/transactions.repo';
 import { createTestQueryClient } from '@/testing/createTestQueryClient';
@@ -23,7 +25,9 @@ jest.mock('@/db/storage', () => ({
   initDb: () => Promise.resolve(),
 }));
 
-beforeEach(() => {
+beforeEach(async () => {
+  // rates kept by one test must not reach the next
+  await AsyncStorage.clear();
   mockTestDb = createTestDb();
 });
 
@@ -53,7 +57,7 @@ function useTransactionsApi() {
   return {
     transactions: useTransactions(),
     isLoading: useTransactionsQuery().isPending,
-    balance: useBalance('EUR'),
+    balance: useBalance(),
     add: useAddTransaction(),
     clear: useClearTransactions(),
   };
@@ -62,7 +66,9 @@ function useTransactionsApi() {
 async function renderLoaded() {
   const client = createTestQueryClient();
   const wrapper = ({ children }: { children: ReactNode }) => (
-    <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    <SettingsProvider>
+      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+    </SettingsProvider>
   );
   const view = renderHook(useTransactionsApi, { wrapper });
   await waitFor(() => expect(view.result.current.isLoading).toBe(false));
@@ -76,7 +82,7 @@ describe('transaction queries', () => {
     const { result } = await renderLoaded();
 
     expect(result.current.transactions).toEqual([income]);
-    expect(result.current.balance).toBe(10000);
+    expect(result.current.balance.cents).toBe(10000);
   });
 
   it('shows an added transaction once it is saved and nets the balance', async () => {
@@ -88,17 +94,31 @@ describe('transaction queries', () => {
 
     await act(() => result.current.add.mutateAsync(expense));
     await waitFor(() => expect(result.current.transactions).toHaveLength(2));
-    expect(result.current.balance).toBe(7000);
+    expect(result.current.balance.cents).toBe(7000);
   });
 
-  it('only counts transactions in the requested currency', async () => {
+  it('converts another currency into the balance', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ base: 'EUR', date: '2026-11-25', rates: { USD: 1.25 } }),
+    });
+    await TransactionsRepo.insert(income);
+    await TransactionsRepo.insert(usdIncome);
+
     const { result } = await renderLoaded();
 
-    await act(() => result.current.add.mutateAsync(income));
-    await act(() => result.current.add.mutateAsync(usdIncome));
+    // 100.00 EUR + 500.00 USD / 1.25
+    await waitFor(() => expect(result.current.balance.cents).toBe(50000));
+    expect(result.current.balance.missing).toEqual([]);
+  });
 
-    await waitFor(() => expect(result.current.transactions).toHaveLength(2));
-    expect(result.current.balance).toBe(10000);
+  it('leaves a currency without a rate out of the balance and names it', async () => {
+    await TransactionsRepo.insert(income);
+    await TransactionsRepo.insert(usdIncome);
+
+    const { result } = await renderLoaded();
+
+    expect(result.current.balance).toEqual({ cents: 10000, missing: ['USD'] });
   });
 
   it('does not show a transaction that failed to save', async () => {
@@ -129,6 +149,6 @@ describe('transaction queries', () => {
     await act(() => result.current.clear.mutateAsync());
 
     await waitFor(() => expect(result.current.transactions).toEqual([]));
-    expect(result.current.balance).toBe(0);
+    expect(result.current.balance.cents).toBe(0);
   });
 });

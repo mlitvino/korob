@@ -24,7 +24,7 @@ export type Transaction = {
   categoryId: string;
   /** Always positive, in whole cents of `currency`; the sign comes from `type`. */
   amountCents: number;
-  /** Currency the amount was entered in. Never converted. */
+  /** Currency the amount was entered in; stored as is, converted only on screen. */
   currency: CurrencyCode;
   /** When the money moved; picked by the user. */
   occurredAt: Date;

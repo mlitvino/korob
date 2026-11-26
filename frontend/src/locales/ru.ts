@@ -38,6 +38,7 @@ const ru: LocaleResource = {
       deleteSelectedTitle: 'Удалить выбранные ({{count}})?',
       empty: 'Нет транзакций',
       saveFailed: 'Не удалось сохранить транзакцию',
+      enteredAs: 'Введено: {{amount}}',
     },
     category: {
       salary: 'Зарплата',

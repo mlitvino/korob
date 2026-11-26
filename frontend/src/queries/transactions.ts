@@ -1,10 +1,13 @@
 import { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { useCurrency } from '@/contexts/SettingsContext';
 import { TransactionsRepo } from '@/db/transactions.repo';
+import { useExchangeRates } from '@/queries/exchangeRates';
 import { readAfterMigrations } from '@/queries/queryClient';
 import type { CurrencyCode } from '@/types/Currency';
 import type { Transaction } from '@/types/Transaction';
+import { sumInBounds } from '@/utils/period';
 
 export const transactionsKey = ['transactions'] as const;
 
@@ -21,16 +24,16 @@ export function useTransactions(): Transaction[] {
   return useTransactionsQuery().data ?? NO_TRANSACTIONS;
 }
 
-export function useBalance(currency: CurrencyCode): number {
+/** All-time balance in the selected currency; others converted, or named when there is no rate. */
+export function useBalance(): { cents: number; missing: CurrencyCode[] } {
   const transactions = useTransactions();
+  const currency = useCurrency();
+  const rates = useExchangeRates();
 
-  return useMemo(() =>
-    transactions
-      .filter((t) => t.currency === currency)
-      .reduce(
-        (balance, t) => (t.type === 'income' ? balance + t.amountCents : balance - t.amountCents),
-        0,
-      ), [transactions, currency]);
+  return useMemo(() => {
+    const { income, expense, missing } = sumInBounds(transactions, currency, null, rates);
+    return { cents: income - expense, missing };
+  }, [currency, rates, transactions]);
 }
 
 export function useAddTransaction() {
