@@ -34,6 +34,7 @@ export type LocaleResource = {
       cancelSelection: string;
       deleteSelected: string;
       deleteSelectedTitle: string;
+      empty: string;
       saveFailed: string;
     };
     category: {
@@ -91,7 +92,27 @@ export type LocaleResource = {
       updatesNew: string;
       settings: string;
     };
+    period: {
+      day: string;
+      week: string;
+      month: string;
+      year: string;
+      all: string;
+      range: string;
+      previous: string;
+      next: string;
+      change: string;
+      previousYear: string;
+      nextYear: string;
+      select: string;
+      previousYears: string;
+      nextYears: string;
+      pickMonth: string;
+      pickYear: string;
+    };
     total: {
+      net: string;
+      notCounted: string;
       income: string;
       expense: string;
       month: string;

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import type { Transaction, TransactionType } from '@/types/Transaction';
+import { isWithin, type Bounds } from '@/utils/period';
 
 export type FilterType = 'all' | TransactionType;
 
@@ -10,7 +11,14 @@ export type VisibleTransaction = {
   showDateSeparator: boolean;
 };
 
-export function useFilteredTransactions(transactions: Transaction[], filter: FilterType) {
+export const isTypeFilter = (value: unknown): value is FilterType =>
+  value === 'all' || value === 'income' || value === 'expense';
+
+export function useFilteredTransactions(
+  transactions: Transaction[],
+  filter: FilterType,
+  bounds: Bounds | null,
+) {
   return useMemo(() => {
     const getTimestamp = (value: string | Date) => {
       const timestamp = new Date(value).getTime();
@@ -19,6 +27,7 @@ export function useFilteredTransactions(transactions: Transaction[], filter: Fil
 
     const sortedTransactions = transactions
       .filter((transaction) => filter === 'all' || transaction.type === filter)
+      .filter((transaction) => isWithin(transaction, bounds))
       .sort((a, b) => getTimestamp(b.occurredAt) - getTimestamp(a.occurredAt));
 
     let previousDateKey = '';
@@ -35,5 +44,5 @@ export function useFilteredTransactions(transactions: Transaction[], filter: Fil
         showDateSeparator,
       } satisfies VisibleTransaction;
     });
-  }, [filter, transactions]);
+  }, [bounds, filter, transactions]);
 }

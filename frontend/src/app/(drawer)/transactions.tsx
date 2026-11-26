@@ -1,10 +1,7 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Alert, BackHandler, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useFocusEffect, useLocalSearchParams, useNavigation } from 'expo-router';
+import { useMemo, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import DrawerMenuButton from '@/components/DrawerMenuButton';
-import HeaderLeft from '@/components/HeaderLeft';
 import { TransactionItem } from '@/features/transaction-list/components/TransactionItem';
 import {
   TransactionDateSeparator,
@@ -13,132 +10,50 @@ import {
   TransactionDetailsSheet,
 } from '@/features/transaction-list/components/TransactionDetailsSheet';
 import { TransactionFilterBar } from '@/features/transaction-list/components/TransactionFilterBar';
-import { useTransactionSelection } from '@/features/transaction-list/hooks/useTransactionSelection';
-import { useDeleteTransactions, useTransactions } from '@/queries/transactions';
-import { gutter, opacity, spacing, typography } from '@/constants/theme';
-import { useTheme } from '@/contexts/ThemeContext';
+import { PeriodPicker } from '@/features/transaction-list/components/PeriodPicker';
+import { TransactionPeriodBar } from '@/features/transaction-list/components/TransactionPeriodBar';
+import {
+  TransactionPeriodTotals,
+} from '@/features/transaction-list/components/TransactionPeriodTotals';
 import {
   useFilteredTransactions,
-  type FilterType,
   type VisibleTransaction,
 } from '@/features/transaction-list/hooks/useFilteredTransactions';
+import { useListFilters } from '@/features/transaction-list/hooks/useListFilters';
+import { useSelectionMode } from '@/features/transaction-list/hooks/useSelectionMode';
+import { useTransactionTotals } from '@/features/transaction-list/hooks/useTransactionTotals';
+import { useTransactions } from '@/queries/transactions';
+import { gutter, opacity, spacing, typography } from '@/constants/theme';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useCurrency } from '@/contexts/SettingsContext';
 import type { Transaction } from '@/types/Transaction';
+import type { PeriodMode } from '@/utils/period';
 
 export default function Transactions() {
   const theme = useTheme();
   const { t } = useTranslation();
-  const navigation = useNavigation();
   const transactions = useTransactions();
-  const { filter: filterParam } = useLocalSearchParams<{ filter?: FilterType }>();
-  const [filter, setFilter] = useState<FilterType>(() => filterParam ?? 'all');
-  const visibleTransactions = useFilteredTransactions(transactions, filter);
+  const { filter, setFilter, period } = useListFilters();
+  const [picker, setPicker] = useState<Exclude<PeriodMode, 'all'> | null>(null);
+  const currency = useCurrency();
+  const totals = useTransactionTotals(transactions, currency, period.bounds);
+  const visibleTransactions = useFilteredTransactions(transactions, filter, period.bounds);
   const visibleIds = useMemo(
     () => visibleTransactions.map(({ transaction }) => transaction.id),
     [visibleTransactions],
   );
-  const selection = useTransactionSelection(visibleIds);
-  // mutate is stable; the mutation result object is not, so the header effect must not depend on it
-  const { mutate: deleteMany, isPending: deleting } = useDeleteTransactions();
+  const selection = useSelectionMode(visibleIds);
   const [details, setDetails] = useState<Transaction | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
 
-  useEffect(() => {
-    if (filterParam) {
-      setFilter(filterParam);
-    }
-  }, [filterParam]);
-
-  const confirmDeleteSelected = useCallback(() => {
-    const ids = [...selection.selectedIds];
-    Alert.alert(
-      t('transaction.deleteSelectedTitle', { count: ids.length }),
-      t('transaction.deleteMessage'),
-      [
-        { text: t('common.cancel'), style: 'cancel' },
-        {
-          text: t('transaction.delete'),
-          style: 'destructive',
-          onPress: () => {
-            deleteMany(ids, {
-              onSuccess: selection.clear,
-              onError: (error) => {
-                console.warn('Failed to delete transactions', error);
-                Alert.alert(t('transaction.deleteFailed'));
-              },
-            });
-          },
-        },
-      ],
-    );
-  }, [deleteMany, selection.clear, selection.selectedIds, t]);
-
-  // Selection mode replaces the header and keeps the drawer from opening by swipe.
-  useLayoutEffect(() => {
-    if (!selection.selecting) {
-      navigation.setOptions({
-        title: t('nav.transactions'),
-        headerLeft: () => <DrawerMenuButton />,
-        headerRight: undefined,
-        swipeEnabled: true,
-      });
+  const pressMode = (mode: PeriodMode) => {
+    // a range has no default, so the mode changes only once the calendar is confirmed
+    if (mode === 'range') {
+      setPicker('range');
       return;
     }
-    navigation.setOptions({
-      title: t('transaction.selectedCount', { count: selection.selectedIds.size }),
-      headerLeft: () => (
-        <HeaderLeft
-          icon="close"
-          accessibilityLabel={t('transaction.cancelSelection')}
-          onPress={selection.clear}
-          style={styles.headerLeft}
-        />
-      ),
-      headerRight: () => (
-        <View style={styles.headerRight}>
-          <Pressable
-            accessibilityRole="button"
-            onPress={selection.allSelected ? selection.clear : selection.selectAll}
-            style={({ pressed }) => [styles.textButton, { opacity: pressed ? opacity.pressed : 1 }]}
-          >
-            <Text style={[typography.bodySm, styles.textButtonLabel, { color: theme.text }]}>
-              {t(selection.allSelected ? 'transaction.deselectAll' : 'transaction.selectAll')}
-            </Text>
-          </Pressable>
-          <HeaderLeft
-            icon="delete"
-            accessibilityLabel={t('transaction.deleteSelected')}
-            onPress={deleting ? () => {} : confirmDeleteSelected}
-          />
-        </View>
-      ),
-      swipeEnabled: false,
-    });
-  }, [
-    confirmDeleteSelected,
-    deleting,
-    navigation,
-    selection,
-    t,
-    theme.text,
-  ]);
-
-  // Back leaves selection mode; leaving the screen ends it too.
-  const selectingRef = useRef(selection.selecting);
-  selectingRef.current = selection.selecting;
-  const clearSelection = selection.clear;
-  useFocusEffect(useCallback(() => {
-    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (!selectingRef.current) {
-        return false;
-      }
-      clearSelection();
-      return true;
-    });
-    return () => {
-      subscription.remove();
-      clearSelection();
-    };
-  }, [clearSelection]));
+    period.select(mode);
+  };
 
   const openDetails = (transaction: Transaction) => {
     setDetails(transaction);
@@ -147,7 +62,15 @@ export default function Transactions() {
 
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
+      <TransactionPeriodBar
+        mode={period.mode}
+        bounds={period.bounds}
+        onModePress={pressMode}
+        onStep={period.step}
+        onTitlePress={() => setPicker(period.mode === 'all' ? null : period.mode)}
+      />
       <TransactionFilterBar filter={filter} onFilterChange={setFilter} />
+      <TransactionPeriodTotals totals={totals} />
 
       <FlatList
         style={styles.transactionList}
@@ -156,6 +79,11 @@ export default function Transactions() {
         data={visibleTransactions}
         extraData={selection.selectedIds}
         keyExtractor={({ transaction }) => transaction.id}
+        ListEmptyComponent={
+          <Text style={[typography.body, styles.empty, { color: theme.text }]}>
+            {t('transaction.empty')}
+          </Text>
+        }
         renderItem={({ item: { transaction, occurredAt, showDateSeparator } }: {
           item: VisibleTransaction;
         }) => (
@@ -174,6 +102,15 @@ export default function Transactions() {
         )}
       />
 
+      <PeriodPicker
+        open={picker}
+        anchor={period.anchor}
+        range={period.mode === 'range' ? period.bounds : null}
+        onPickDate={period.pickDate}
+        onPickRange={period.pickRange}
+        onClose={() => setPicker(null)}
+      />
+
       {details
         ? (
           <TransactionDetailsSheet
@@ -190,7 +127,7 @@ export default function Transactions() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.sm,
     paddingHorizontal: gutter,
   },
   transactionList: {
@@ -198,26 +135,15 @@ const styles = StyleSheet.create({
   },
   transactionListContent: {
     flexGrow: 1,
-    gap: spacing.sm,
+    gap: spacing.xs,
     paddingBottom: spacing.lg,
   },
   listItem: {
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
-  headerLeft: {
-    marginLeft: spacing.xs,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: spacing.xs,
-  },
-  textButton: {
-    minHeight: 40,
-    paddingHorizontal: spacing.md,
-    justifyContent: 'center',
-  },
-  textButtonLabel: {
-    fontWeight: '600',
+  empty: {
+    paddingTop: spacing.xl,
+    textAlign: 'center',
+    opacity: opacity.secondary,
   },
 });
