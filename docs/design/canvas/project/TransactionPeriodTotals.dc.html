@@ -28,7 +28,7 @@ body{margin:0}
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"income":{"editor":null,"default":285000},"expense":{"editor":null,"default":119200},"rates":{"editor":"enum","options":["same","converted","missing"],"default":"same"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":60}}'>
+<script type="text/x-dc" data-dc-script data-props='{"income":{"editor":null,"default":285000},"expense":{"editor":null,"default":119200},"rates":{"editor":"enum","options":["same","missing"],"default":"same"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":60}}'>
 var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
 var TOTAL = { en: ['Total', 'Income', 'Expense'], fi: ['Yhteensä', 'Tulot', 'Menot'], ru: ['Итого', 'Доходы', 'Расходы'] };
 var NOTE = {
@@ -43,8 +43,7 @@ class Component extends DCLogic {
     var money = new Intl.NumberFormat(LOCALE[lang], { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
     var income = p.income ?? 285000;
     var expense = p.expense ?? 119200;
-    var mark = p.rates === 'converted' ? '≈ ' : '';
-    var value = function (cents) { return mark + money.format(cents / 100); };
+    var value = function (cents) { return money.format(cents / 100); };
     return {
       columns: [
         { label: TOTAL[lang][0], value: value(income - expense), color: 'var(--text)' },

@@ -20,6 +20,7 @@ body{margin:0}
     <dc-import name="TransactionPeriodBar" mode="{{period}}" lang="{{lang}}" hint-size="100%,40px"></dc-import>
     <dc-import name="TransactionFilterBar" filter="all" lang="{{lang}}" hint-size="100%,40px"></dc-import>
     <dc-import name="TransactionPeriodTotals" income="{{income}}" expense="{{expense}}" lang="{{lang}}" hint-size="100%,36px"></dc-import>
+    <div aria-hidden="true" style="flex: none; height: 2px; background: var(--separator)"></div>
     <div style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px">
       <sc-for list="{{rows}}" as="row" hint-placeholder-count="8">
         <dc-import name="TransactionDateSeparator" label="{{row.date}}" hint-size="100%,20px"></dc-import>

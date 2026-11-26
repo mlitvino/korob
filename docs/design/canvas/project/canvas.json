@@ -526,7 +526,7 @@
     },
     "specBalancePanel": {
       "page": "components",
-      "text": "BalancePanel\nProps: balance (cents) · lang · incomeHref · expenseHref\nUses: CircleButton × 2\nTokens: surface, inset, text, radius-md / sm, type-body / display\nCode: app/(drawer)/index.tsx\nContract: docs/design/components.json",
+      "text": "BalancePanel\nProps: balance (cents) · lang · incomeHref · expenseHref\nUses: CircleButton × 2\nTokens: surface, inset, text, radius-md / sm, type-body / display\nCode: app/(drawer)/index.tsx\nContract: docs/design/components.json\nIn code: other currencies convert at the latest rate; one without a rate is named under the amount (MissingRatesNote, not drawn)",
       "w": 328,
       "x": 2184,
       "y": 3232
@@ -575,7 +575,7 @@
     },
     "specField": {
       "page": "components",
-      "text": "FieldInput · FieldPicker\nInput: label · placeholder · value · error (message, expense color) · multiline (wraps body text) · maxLength (counter under a multiline field) · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
+      "text": "FieldInput · FieldPicker\nInput: label · placeholder · value · error (message, expense color) · multiline (wraps body text) · maxLength (counter under a multiline field) · state default | focused (canvas)\nPicker: label · value · href (canvas)\nTokens: inset, text, outline (idle border), focus (role), radius-sm, type-caption / title / body\nStates: is-focused, is-secondary\nCode: components/Field.tsx (FieldInput, FieldPicker)\nContract: docs/design/components.json",
       "w": 328,
       "x": 408,
       "y": 4157
@@ -596,7 +596,7 @@
     },
     "specTotalsCard": {
       "page": "components",
-      "text": "TotalsCard\nProps: month / week / day × income / expense (cents) · rates same | converted | missing (canvas) · lang\nOther currencies convert at the latest rate (≈ before the values); a currency without a rate is named in a note under the rows\nTokens: surface, text, separator, radius-md, type-body\nCode: features/home/components/PeriodTotalsCard.tsx, components/MissingRatesNote.tsx\nContract: docs/design/components.json",
+      "text": "TotalsCard\nProps: month / week / day × income / expense (cents) · rates same | missing (canvas) · lang\nOther currencies convert at the latest rate, unmarked; a currency without a rate is named in a note under the rows\nTokens: surface, text, separator, radius-md, type-body\nCode: features/home/components/PeriodTotalsCard.tsx, components/MissingRatesNote.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 1776,
       "y": 3264
@@ -624,7 +624,7 @@
     },
     "specTransactionSheet": {
       "page": "components",
-      "text": "TransactionSheet\nCanvas-only composite: Sheet + comment field + Save + Delete, opened by tapping a transaction row\nProps: kind income | expense · amount · category · comment filled | empty · lang · href (canvas)\nTitle: signed amount · category; comment (multiline, max 500) with Save; Delete asks to confirm\nTokens: canvas, text, radius-lg, type-title\nCode: features/transaction-list/components/TransactionItem.tsx, components/Sheet.tsx\nContract: docs/design/components.json",
+      "text": "TransactionSheet\nCanvas-only composite: Sheet + comment field + Save + Delete, opened by tapping a transaction row\nProps: kind income | expense · amount · category · comment filled | empty · lang · href (canvas)\nTitle: signed amount · category; comment (multiline, max 500) with Save; Delete asks to confirm\nTokens: canvas, text, radius-lg, type-title\nCode: features/transaction-list/components/TransactionItem.tsx, components/Sheet.tsx\nContract: docs/design/components.json\nIn code: amount in the Settings currency; \"Entered: …\" line above Comment when it differs (not drawn)",
       "w": 360,
       "x": 2504,
       "y": 4129
@@ -764,7 +764,7 @@
     },
     "specTransactionPeriodTotals": {
       "page": "components",
-      "text": "TransactionPeriodTotals\nProps: income / expense (cents, canvas) · rates same | converted | missing (canvas) · lang (canvas)\nColumns: Total (income − expense, text) · Income (income) · Expense (expense); caption label over body-sm 700\nOther currencies convert at the latest rate (≈ before every value); a currency without a rate is left out and named in a caption note (MissingRatesNote)\nCode: features/transaction-list/components/TransactionPeriodTotals.tsx, components/MissingRatesNote.tsx\nContract: docs/design/components.json",
+      "text": "TransactionPeriodTotals\nProps: income / expense (cents, canvas) · rates same | missing (canvas) · lang (canvas)\nColumns: Total (income − expense, text) · Income (income) · Expense (expense); caption label over body-sm 700\nOther currencies convert at the latest rate, unmarked; a currency without a rate is left out and named in a caption note (MissingRatesNote)\nCode: features/transaction-list/components/TransactionPeriodTotals.tsx, components/MissingRatesNote.tsx\nContract: docs/design/components.json",
       "w": 328,
       "x": 3408,
       "y": 3180

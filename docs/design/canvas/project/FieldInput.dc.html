@@ -16,7 +16,7 @@ body{margin:0}
 </style>
 </helmet>
 <div style="width: 100%; display: flex; flex-direction: column; gap: 4px; font-family: Roboto, system-ui, sans-serif">
-<label class="{{stateClass}}" style="width: 100%; min-height: 64px; box-sizing: border-box; padding: 8px 16px; border-radius: var(--radius-sm); border: 2px solid transparent; display: flex; flex-direction: column; justify-content: center; font-family: Roboto, system-ui, sans-serif; background: var(--inset); color: var(--text)">
+<label class="{{stateClass}}" style="width: 100%; min-height: 64px; box-sizing: border-box; padding: 8px 16px; border-radius: var(--radius-sm); border: 2px solid var(--outline); display: flex; flex-direction: column; justify-content: center; font-family: Roboto, system-ui, sans-serif; background: var(--inset); color: var(--text)">
   <span class="is-secondary" style="font-size: var(--type-caption-size); line-height: var(--type-caption-line)">{{label}}</span>
   <sc-if value="{{single}}" hint-placeholder-val="{{ true }}">
   <input class="kf-input" type="text" inputmode="decimal" placeholder="{{placeholder}}" value="{{value}}" style="width: 100%; padding: 0; border: 0; outline: 0; font-family: inherit; font-size: var(--type-title-size); line-height: var(--type-title-line); font-weight: 400; background: transparent; color: inherit">

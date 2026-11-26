@@ -22,7 +22,7 @@ body{margin:0}
       <li>Balance panel: full width with md circle buttons; balance block radius 8. Fits a 360 dp phone (bottom example).</li>
       <li>Transaction item: radius 8; category body-sm over time caption; amount body in the income and expense colors.</li>
       <li>Date separator: caption 12/600 caps, secondary 70%.</li>
-      <li>Period totals: Total / Income / Expense, caption label over body-sm 700 value. Other currencies convert at the latest rate, shown with ≈; a currency without a rate is left out and named in a caption note.</li>
+      <li>Period totals: Total / Income / Expense, caption label over body-sm 700 value. Other currencies convert at the latest rate, unmarked; a currency without a rate is left out and named in a caption note.</li>
     </ul>
   </div>
   <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
@@ -31,8 +31,8 @@ body{margin:0}
         <span class="is-secondary" style="font-size: 14px; font-weight: 600">{{t.name}}</span>
 
         <div style="display: flex; flex-direction: column; gap: 8px">
-          <span class="is-secondary" style="font-size: 12px">TotalsCard (other currency converted)</span>
-          <dc-import name="TotalsCard" rates="converted" hint-size="100%,192px"></dc-import>
+          <span class="is-secondary" style="font-size: 12px">TotalsCard (no rate yet)</span>
+          <dc-import name="TotalsCard" rates="missing" hint-size="100%,220px"></dc-import>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 8px">

@@ -32,7 +32,7 @@ body{margin:0}
   </sc-if>
 </section>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"monthIncome":{"editor":null,"default":285000},"monthExpense":{"editor":null,"default":119200},"weekIncome":{"editor":null,"default":35000},"weekExpense":{"editor":null,"default":10500},"dayIncome":{"editor":null,"default":0},"dayExpense":{"editor":null,"default":4200},"rates":{"editor":"enum","options":["same","converted","missing"],"default":"same"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":220}}'>
+<script type="text/x-dc" data-dc-script data-props='{"monthIncome":{"editor":null,"default":285000},"monthExpense":{"editor":null,"default":119200},"weekIncome":{"editor":null,"default":35000},"weekExpense":{"editor":null,"default":10500},"dayIncome":{"editor":null,"default":0},"dayExpense":{"editor":null,"default":4200},"rates":{"editor":"enum","options":["same","missing"],"default":"same"},"lang":{"editor":"enum","options":["en","fi","ru"],"default":"en"},"$preview":{"width":328,"height":220}}'>
 var LOCALE = { en: 'en-US', fi: 'fi-FI', ru: 'ru-RU' };
 var STR = {
   en: ['Income', 'Expense', 'Month', 'Week', 'Day'],
@@ -52,15 +52,14 @@ class Component extends DCLogic {
     var lang = STR[this.props.lang] ? this.props.lang : 'en';
     var s = STR[lang];
     var p = this.props;
-    var mark = p.rates === 'converted' ? '\u2248 ' : '';
     var line = '1px solid var(--separator)';
     return {
       incomeTitle: s[0],
       expenseTitle: s[1],
       rows: [
-        { label: s[2], income: mark + money(p.monthIncome ?? 285000, lang), expense: mark + money(p.monthExpense ?? 119200, lang), divider: 'none' },
-        { label: s[3], income: mark + money(p.weekIncome ?? 35000, lang), expense: mark + money(p.weekExpense ?? 10500, lang), divider: line },
-        { label: s[4], income: mark + money(p.dayIncome ?? 0, lang), expense: mark + money(p.dayExpense ?? 4200, lang), divider: line }
+        { label: s[2], income: money(p.monthIncome ?? 285000, lang), expense: money(p.monthExpense ?? 119200, lang), divider: 'none' },
+        { label: s[3], income: money(p.weekIncome ?? 35000, lang), expense: money(p.weekExpense ?? 10500, lang), divider: line },
+        { label: s[4], income: money(p.dayIncome ?? 0, lang), expense: money(p.dayExpense ?? 4200, lang), divider: line }
       ],
       hasNote: p.rates === 'missing',
       note: NOTE[lang]
