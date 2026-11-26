@@ -71,6 +71,7 @@ export default function Transactions() {
       />
       <TransactionFilterBar filter={filter} onFilterChange={setFilter} />
       <TransactionPeriodTotals totals={totals} />
+      <View style={[styles.separator, { backgroundColor: theme.separator }]} />
 
       <FlatList
         style={styles.transactionList}
@@ -129,6 +130,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: spacing.sm,
     paddingHorizontal: gutter,
+  },
+  separator: {
+    height: 2,
   },
   transactionList: {
     alignSelf: 'stretch',
