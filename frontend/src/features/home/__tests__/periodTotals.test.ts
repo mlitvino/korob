@@ -1,4 +1,4 @@
-import { periodBounds, periodTotals } from '@/features/home/periodTotals';
+import { periodTotals } from '@/features/home/periodTotals';
 import type { Transaction } from '@/types/Transaction';
 
 // Wednesday 2026-11-25, 15:30 local time
@@ -21,35 +21,12 @@ const tx = (
   updatedAt: occurredAt,
 });
 
-describe('periodBounds', () => {
-  it('starts the week on Monday', () => {
-    expect(periodBounds('week', now)).toEqual({
-      start: new Date(2026, 10, 23),
-      end: new Date(2026, 10, 30),
-    });
-  });
-
-  it('treats Sunday as the last day of its week', () => {
-    const sunday = new Date(2026, 10, 29, 9);
-    expect(periodBounds('week', sunday).start).toEqual(new Date(2026, 10, 23));
-  });
-
-  it('rolls a week over a month boundary', () => {
-    const friday = new Date(2026, 11, 4);
-    expect(periodBounds('week', friday).start).toEqual(new Date(2026, 10, 30));
-  });
-
-  it('ends December at the start of January', () => {
-    expect(periodBounds('month', new Date(2026, 11, 31)).end).toEqual(new Date(2027, 0, 1));
-  });
-});
-
 describe('periodTotals', () => {
   it('is all zeros without transactions', () => {
     expect(periodTotals([], 'EUR', now)).toEqual({
-      month: { income: 0, expense: 0 },
-      week: { income: 0, expense: 0 },
-      day: { income: 0, expense: 0 },
+      month: { income: 0, expense: 0, converted: false, missing: [] },
+      week: { income: 0, expense: 0, converted: false, missing: [] },
+      day: { income: 0, expense: 0, converted: false, missing: [] },
     });
   });
 
@@ -64,9 +41,9 @@ describe('periodTotals', () => {
       now,
     );
 
-    expect(totals.day).toEqual({ income: 0, expense: 500 });
-    expect(totals.week).toEqual({ income: 2000, expense: 500 });
-    expect(totals.month).toEqual({ income: 2000, expense: 800 });
+    expect(totals.day).toMatchObject({ income: 0, expense: 500 });
+    expect(totals.week).toMatchObject({ income: 2000, expense: 500 });
+    expect(totals.month).toMatchObject({ income: 2000, expense: 800 });
   });
 
   it('leaves out the day before the period and days after it', () => {
@@ -81,8 +58,8 @@ describe('periodTotals', () => {
       now,
     );
 
-    expect(totals.week).toEqual({ income: 0, expense: 0 });
-    expect(totals.month).toEqual({ income: 100, expense: 400 });
+    expect(totals.week).toMatchObject({ income: 0, expense: 0 });
+    expect(totals.month).toMatchObject({ income: 100, expense: 400 });
   });
 
   it('counts a transaction dated later today', () => {
@@ -94,7 +71,7 @@ describe('periodTotals', () => {
     expect(totals.day.income).toBe(700);
   });
 
-  it('counts only the selected currency', () => {
+  it('leaves out another currency while there is no rate, and says so', () => {
     const totals = periodTotals(
       [
         tx('eur', 'income', 1000, now),
@@ -105,5 +82,21 @@ describe('periodTotals', () => {
     );
 
     expect(totals.day.income).toBe(1000);
+    expect(totals.day.missing).toEqual(['USD']);
+    expect(totals.day.converted).toBe(false);
+  });
+
+  it('converts another currency with the rates', () => {
+    const totals = periodTotals(
+      [
+        tx('eur', 'income', 1000, now),
+        tx('usd', 'income', 2000, now, 'USD'),
+      ],
+      'EUR',
+      now,
+      { base: 'EUR', date: '2026-11-25', rates: { USD: 1.25 } },
+    );
+
+    expect(totals.day).toEqual({ income: 2600, expense: 0, converted: true, missing: [] });
   });
 });

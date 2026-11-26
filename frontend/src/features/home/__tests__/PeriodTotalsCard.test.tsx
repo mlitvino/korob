@@ -28,7 +28,7 @@ describe('PeriodTotalsCard', () => {
   });
 
   it('shows the month, week and day rows with their totals', () => {
-    renderWithApp(<PeriodTotalsCard onSelectType={jest.fn()} />);
+    renderWithApp(<PeriodTotalsCard onSelect={jest.fn()} />);
 
     expect(screen.getByText('Month')).toBeOnTheScreen();
     expect(screen.getByText('Week')).toBeOnTheScreen();
@@ -37,14 +37,25 @@ describe('PeriodTotalsCard', () => {
     expect(screen.getAllByText('€5.00')).toHaveLength(3);
   });
 
-  it('reports which type was tapped', () => {
-    const onSelectType = jest.fn();
-    renderWithApp(<PeriodTotalsCard onSelectType={onSelectType} />);
+  it('reports which type and period were tapped', () => {
+    const onSelect = jest.fn();
+    renderWithApp(<PeriodTotalsCard onSelect={onSelect} />);
 
     fireEvent.press(screen.getByLabelText('Day, Expense'));
     fireEvent.press(screen.getByLabelText('Week, Income'));
 
-    expect(onSelectType).toHaveBeenNthCalledWith(1, 'expense');
-    expect(onSelectType).toHaveBeenNthCalledWith(2, 'income');
+    expect(onSelect).toHaveBeenNthCalledWith(1, 'expense', 'day');
+    expect(onSelect).toHaveBeenNthCalledWith(2, 'income', 'week');
+  });
+
+  it('asks for every type when a period name is tapped', () => {
+    const onSelect = jest.fn();
+    renderWithApp(<PeriodTotalsCard onSelect={onSelect} />);
+
+    fireEvent.press(screen.getByRole('button', { name: 'Month' }));
+    fireEvent.press(screen.getByRole('button', { name: 'Day' }));
+
+    expect(onSelect).toHaveBeenNthCalledWith(1, 'all', 'month');
+    expect(onSelect).toHaveBeenNthCalledWith(2, 'all', 'day');
   });
 });

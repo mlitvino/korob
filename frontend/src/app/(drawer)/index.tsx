@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import type { TransactionType } from '@/types/Transaction';
+import type { Period } from '@/features/home/periodTotals';
 import { useBalance } from '@/queries/transactions';
 import CircleButton from '@/components/CircleButton';
 import PeriodTotalsCard from '@/features/home/components/PeriodTotalsCard';
@@ -26,13 +27,13 @@ export default function Index() {
     router.push('/transaction-modal?type=expense');
   };
 
-  const viewTransactions = (type: TransactionType) => {
-    router.push(`/transactions?filter=${type}`);
+  const viewTransactions = (type: TransactionType | 'all', period: Period) => {
+    router.push(`/transactions?filter=${type}&period=${period}`);
   };
 
   return (
     <View style={[styles.screen, { backgroundColor: theme.background }]}>
-      <PeriodTotalsCard onSelectType={viewTransactions} />
+      <PeriodTotalsCard onSelect={viewTransactions} />
 
       <View style={styles.content}>
         <View style={[styles.balancePanel, { backgroundColor: theme.surface }]}>

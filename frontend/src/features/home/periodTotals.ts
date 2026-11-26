@@ -1,57 +1,22 @@
-import type { CurrencyCode } from '@/types/Currency';
-import type { Transaction, TransactionType } from '@/types/Transaction';
+import type { CurrencyCode, ExchangeRates } from '@/types/Currency';
+import type { Transaction } from '@/types/Transaction';
+import { periodBounds, sumInBounds, type CalendarPeriod, type Totals } from '@/utils/period';
 
-export type Period = 'month' | 'week' | 'day';
+/** Periods the Home card shows, each one a link to the list. */
+export type Period = Exclude<CalendarPeriod, 'year'>;
 
 export const PERIODS: readonly Period[] = ['month', 'week', 'day'];
 
-export type PeriodTotals = Record<Period, Record<TransactionType, number>>;
+export type PeriodTotals = Record<Period, Totals>;
 
-/** Local-time bounds of the period containing `now`; the end is exclusive. Weeks start on Monday. */
-export function periodBounds(period: Period, now: Date): { start: Date; end: Date } {
-  const year = now.getFullYear();
-  const month = now.getMonth();
-  const date = now.getDate();
-
-  if (period === 'month') {
-    return { start: new Date(year, month, 1), end: new Date(year, month + 1, 1) };
-  }
-
-  if (period === 'week') {
-    const sinceMonday = (now.getDay() + 6) % 7;
-    return {
-      start: new Date(year, month, date - sinceMonday),
-      end: new Date(year, month, date - sinceMonday + 7),
-    };
-  }
-
-  return { start: new Date(year, month, date), end: new Date(year, month, date + 1) };
-}
-
-/** Sums income and expense cents per period for one currency, by `occurredAt`. */
+/** Income and expense per period in `currency`, by `occurredAt`; others converted with `rates`. */
 export function periodTotals(
   transactions: Transaction[],
   currency: CurrencyCode,
   now: Date,
+  rates: ExchangeRates | null = null,
 ): PeriodTotals {
-  const totals: PeriodTotals = {
-    month: { income: 0, expense: 0 },
-    week: { income: 0, expense: 0 },
-    day: { income: 0, expense: 0 },
-  };
-  const bounds = PERIODS.map((period) => ({ period, ...periodBounds(period, now) }));
-
-  for (const transaction of transactions) {
-    if (transaction.currency !== currency) {
-      continue;
-    }
-
-    for (const { period, start, end } of bounds) {
-      if (transaction.occurredAt >= start && transaction.occurredAt < end) {
-        totals[period][transaction.type] += transaction.amountCents;
-      }
-    }
-  }
-
-  return totals;
+  const sum = (period: Period) =>
+    sumInBounds(transactions, currency, periodBounds(period, now), rates);
+  return { month: sum('month'), week: sum('week'), day: sum('day') };
 }
