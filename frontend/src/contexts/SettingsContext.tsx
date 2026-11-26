@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useMemo, ReactNode } from 
 import { usePersistedState } from '@/hooks/usePersistedState';
 import { changeLanguage, getCurrentLanguage, resources, type LanguageName } from '@/locales';
 import { STORAGE_KEYS } from '@/storage/persist';
-import type { CurrencyCode } from '@/types/Currency';
+import { CURRENCIES, type CurrencyCode } from '@/types/Currency';
 
 type SettingsProviderProps = {
   children: ReactNode;
@@ -14,7 +14,6 @@ type SettingsDispatch = {
   setLanguage: (language: LanguageName) => void;
 };
 
-const CURRENCIES: readonly CurrencyCode[] = ['EUR', 'USD'];
 const initialCurrency: CurrencyCode = 'EUR';
 
 const isCurrency = (value: unknown): value is CurrencyCode =>

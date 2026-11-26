@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'jest-expo',
+  setupFiles: ['<rootDir>/src/testing/jestSetup.ts'],
 
   // Design checks run only via `yarn test:design`.
   testPathIgnorePatterns: ['/node_modules/', '/__design__/'],

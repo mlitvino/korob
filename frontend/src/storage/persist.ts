@@ -35,6 +35,7 @@ const getStorage = (): StorageLike => {
 
 export const STORAGE_KEYS = {
   currency: 'settings.currency',
+  exchangeRates: 'cache.exchangeRates',
   language: 'settings.language',
   lastSeenUpdate: 'updates.lastSeen',
   theme: 'settings.theme',
